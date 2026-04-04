@@ -1,7 +1,7 @@
 import { cc, FFIType } from "bun:ffi";
 import wrapper from "./main.c" with { type: "file" };
 
-const { i32, cstring, bool, f32, pointer } = FFIType;
+const { i32, cstring, bool, f32 } = FFIType;
 
 export const symbols = cc({
   source: wrapper,

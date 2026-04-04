@@ -2,8 +2,14 @@
   "name": "rraylib",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "lint": "oxlint src/*",
+    "fmt": "oxfmt src/*"
+  },
   "devDependencies": {
-    "@types/bun": "^1.3.11"
+    "@types/bun": "^1.3.11",
+    "oxfmt": "^0.43.0",
+    "oxlint": "^1.58.0"
   },
   "peerDependencies": {
     "typescript": "^5"
