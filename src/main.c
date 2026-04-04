@@ -27,3 +27,15 @@ void ClearBackgroundW(Color color) {
 void DrawRectangleW(int posX, int posY, int width, int height, Color color) {
     DrawRectangle(posX, posY, width, height, color);
 }
+
+void SetTargetFPSW(int fps) {
+    SetTargetFPS(fps);
+}
+
+float GetFrameTimeW() {
+    return GetFrameTime();
+}
+
+void DrawTextW(const char* text, int posX, int posY, int fontSize, Color color) {
+    DrawText(text, posX, posY, fontSize, color);
+}
