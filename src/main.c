@@ -228,3 +228,38 @@ void DrawSplineSegmentBezierCubicW(int p1x, int p1y, int c2x, int c2y, int c3x, 
     float t; memcpy(&t, &thick, sizeof(float));
     DrawSplineSegmentBezierCubic((Vector2){p1x, p1y}, (Vector2){c2x, c2y}, (Vector2){c3x, c3y}, (Vector2){p4x, p4y}, t, color);
 }
+
+void GetSplinePointLinearW(float* out, int startPx, int startPy, int endPx, int endPy, int t) {
+    float tf; memcpy(&tf, &t, sizeof(float));
+    Vector2 result = GetSplinePointLinear((Vector2){startPx, startPy}, (Vector2){endPx, endPy}, tf);
+    out[0] = result.x;
+    out[1] = result.y;
+}
+
+void GetSplinePointBasisW(float* out, int p1x, int p1y, int p2x, int p2y, int p3x, int p3y, int p4x, int p4y, int t) {
+    float tf; memcpy(&tf, &t, sizeof(float));
+    Vector2 result = GetSplinePointBasis((Vector2){p1x, p1y}, (Vector2){p2x, p2y}, (Vector2){p3x, p3y}, (Vector2){p4x, p4y}, tf);
+    out[0] = result.x;
+    out[1] = result.y;
+}
+
+void GetSplinePointCatmullRomW(float* out, int p1x, int p1y, int p2x, int p2y, int p3x, int p3y, int p4x, int p4y, int t) {
+    float tf; memcpy(&tf, &t, sizeof(float));
+    Vector2 result = GetSplinePointCatmullRom((Vector2){p1x, p1y}, (Vector2){p2x, p2y}, (Vector2){p3x, p3y}, (Vector2){p4x, p4y}, tf);
+    out[0] = result.x;
+    out[1] = result.y;
+}
+
+void GetSplinePointBezierQuadW(float* out, int p1x, int p1y, int c2x, int c2y, int p3x, int p3y, int t) {
+    float tf; memcpy(&tf, &t, sizeof(float));
+    Vector2 result = GetSplinePointBezierQuad((Vector2){p1x, p1y}, (Vector2){c2x, c2y}, (Vector2){p3x, p3y}, tf);
+    out[0] = result.x;
+    out[1] = result.y;
+}
+
+void GetSplinePointBezierCubicW(float* out, int p1x, int p1y, int c2x, int c2y, int c3x, int c3y, int p4x, int p4y, int t) {
+    float tf; memcpy(&tf, &t, sizeof(float));
+    Vector2 result = GetSplinePointBezierCubic((Vector2){p1x, p1y}, (Vector2){c2x, c2y}, (Vector2){c3x, c3y}, (Vector2){p4x, p4y}, tf);
+    out[0] = result.x;
+    out[1] = result.y;
+}

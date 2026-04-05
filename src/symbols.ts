@@ -67,5 +67,10 @@ export const symbols = cc({
     DrawSplineSegmentCatmullRomW: { args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
     DrawSplineSegmentBezierQuadraticW: { args: [i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
     DrawSplineSegmentBezierCubicW: { args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    GetSplinePointLinearW: { args: [ptr, i32, i32, i32, i32, i32], returns: FFIType.void },
+    GetSplinePointBasisW: { args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    GetSplinePointCatmullRomW: { args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    GetSplinePointBezierQuadW: { args: [ptr, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    GetSplinePointBezierCubicW: { args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
   },
 });

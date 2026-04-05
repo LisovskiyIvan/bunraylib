@@ -4,6 +4,8 @@ import { cstr, color, f2i, type Color } from "./utils";
 export { color };
 export type { Color, Vec2, Rectangle };
 
+const _vec2Buf = new Float32Array(2);
+
 export class Raylib {
   private static initialized = false;
 
@@ -502,5 +504,72 @@ export class Raylib {
   /** Draw spline segment: Cubic Bezier, 2 points + 2 control points */
   static drawSplineSegmentBezierCubic(p1: Vec2, c2: Vec2, c3: Vec2, p4: Vec2, thick: number, col: Color): void {
     r.symbols.DrawSplineSegmentBezierCubicW(p1.x, p1.y, c2.x, c2.y, c3.x, c3.y, p4.x, p4.y, f2i(thick), col);
+  }
+
+  /**
+   * Get (evaluate) spline point: Linear.
+   * @param startPos - Start position
+   * @param endPos - End position
+   * @param t - Interpolation factor [0.0 .. 1.0]
+   * @returns Evaluated point as Vec2
+   */
+  static getSplinePointLinear(startPos: Vec2, endPos: Vec2, t: number): Vec2 {
+    r.symbols.GetSplinePointLinearW(_vec2Buf, startPos.x, startPos.y, endPos.x, endPos.y, f2i(t));
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  /**
+   * Get (evaluate) spline point: B-Spline.
+   * @param p1 - Point 1
+   * @param p2 - Point 2
+   * @param p3 - Point 3
+   * @param p4 - Point 4
+   * @param t - Interpolation factor [0.0 .. 1.0]
+   * @returns Evaluated point as Vec2
+   */
+  static getSplinePointBasis(p1: Vec2, p2: Vec2, p3: Vec2, p4: Vec2, t: number): Vec2 {
+    r.symbols.GetSplinePointBasisW(_vec2Buf, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y, f2i(t));
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  /**
+   * Get (evaluate) spline point: Catmull-Rom.
+   * @param p1 - Point 1
+   * @param p2 - Point 2
+   * @param p3 - Point 3
+   * @param p4 - Point 4
+   * @param t - Interpolation factor [0.0 .. 1.0]
+   * @returns Evaluated point as Vec2
+   */
+  static getSplinePointCatmullRom(p1: Vec2, p2: Vec2, p3: Vec2, p4: Vec2, t: number): Vec2 {
+    r.symbols.GetSplinePointCatmullRomW(_vec2Buf, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y, f2i(t));
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  /**
+   * Get (evaluate) spline point: Quadratic Bezier.
+   * @param p1 - Start point
+   * @param c2 - Control point
+   * @param p3 - End point
+   * @param t - Interpolation factor [0.0 .. 1.0]
+   * @returns Evaluated point as Vec2
+   */
+  static getSplinePointBezierQuad(p1: Vec2, c2: Vec2, p3: Vec2, t: number): Vec2 {
+    r.symbols.GetSplinePointBezierQuadW(_vec2Buf, p1.x, p1.y, c2.x, c2.y, p3.x, p3.y, f2i(t));
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  /**
+   * Get (evaluate) spline point: Cubic Bezier.
+   * @param p1 - Start point
+   * @param c2 - Control point 1
+   * @param c3 - Control point 2
+   * @param p4 - End point
+   * @param t - Interpolation factor [0.0 .. 1.0]
+   * @returns Evaluated point as Vec2
+   */
+  static getSplinePointBezierCubic(p1: Vec2, c2: Vec2, c3: Vec2, p4: Vec2, t: number): Vec2 {
+    r.symbols.GetSplinePointBezierCubicW(_vec2Buf, p1.x, p1.y, c2.x, c2.y, c3.x, c3.y, p4.x, p4.y, f2i(t));
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 }
