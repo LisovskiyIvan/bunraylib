@@ -178,3 +178,53 @@ void DrawPolyLinesW(int centerX, int centerY, int sides, int radius, int rotatio
 void DrawPolyLinesExW(int centerX, int centerY, int sides, int radius, int rotation, int lineThick, Color color) {
     DrawPolyLinesEx((Vector2){centerX, centerY}, sides, radius, rotation, lineThick, color);
 }
+
+void DrawSplineLinearW(const float* points, int pointCount, int thick, Color color) {
+    float t; memcpy(&t, &thick, sizeof(float));
+    DrawSplineLinear((const Vector2*)points, pointCount, t, color);
+}
+
+void DrawSplineBasisW(const float* points, int pointCount, int thick, Color color) {
+    float t; memcpy(&t, &thick, sizeof(float));
+    DrawSplineBasis((const Vector2*)points, pointCount, t, color);
+}
+
+void DrawSplineCatmullRomW(const float* points, int pointCount, int thick, Color color) {
+    float t; memcpy(&t, &thick, sizeof(float));
+    DrawSplineCatmullRom((const Vector2*)points, pointCount, t, color);
+}
+
+void DrawSplineBezierQuadraticW(const float* points, int pointCount, int thick, Color color) {
+    float t; memcpy(&t, &thick, sizeof(float));
+    DrawSplineBezierQuadratic((const Vector2*)points, pointCount, t, color);
+}
+
+void DrawSplineBezierCubicW(const float* points, int pointCount, int thick, Color color) {
+    float t; memcpy(&t, &thick, sizeof(float));
+    DrawSplineBezierCubic((const Vector2*)points, pointCount, t, color);
+}
+
+void DrawSplineSegmentLinearW(int p1x, int p1y, int p2x, int p2y, int thick, Color color) {
+    float t; memcpy(&t, &thick, sizeof(float));
+    DrawSplineSegmentLinear((Vector2){p1x, p1y}, (Vector2){p2x, p2y}, t, color);
+}
+
+void DrawSplineSegmentBasisW(int p1x, int p1y, int p2x, int p2y, int p3x, int p3y, int p4x, int p4y, int thick, Color color) {
+    float t; memcpy(&t, &thick, sizeof(float));
+    DrawSplineSegmentBasis((Vector2){p1x, p1y}, (Vector2){p2x, p2y}, (Vector2){p3x, p3y}, (Vector2){p4x, p4y}, t, color);
+}
+
+void DrawSplineSegmentCatmullRomW(int p1x, int p1y, int p2x, int p2y, int p3x, int p3y, int p4x, int p4y, int thick, Color color) {
+    float t; memcpy(&t, &thick, sizeof(float));
+    DrawSplineSegmentCatmullRom((Vector2){p1x, p1y}, (Vector2){p2x, p2y}, (Vector2){p3x, p3y}, (Vector2){p4x, p4y}, t, color);
+}
+
+void DrawSplineSegmentBezierQuadraticW(int p1x, int p1y, int c2x, int c2y, int p3x, int p3y, int thick, Color color) {
+    float t; memcpy(&t, &thick, sizeof(float));
+    DrawSplineSegmentBezierQuadratic((Vector2){p1x, p1y}, (Vector2){c2x, c2y}, (Vector2){p3x, p3y}, t, color);
+}
+
+void DrawSplineSegmentBezierCubicW(int p1x, int p1y, int c2x, int c2y, int c3x, int c3y, int p4x, int p4y, int thick, Color color) {
+    float t; memcpy(&t, &thick, sizeof(float));
+    DrawSplineSegmentBezierCubic((Vector2){p1x, p1y}, (Vector2){c2x, c2y}, (Vector2){c3x, c3y}, (Vector2){p4x, p4y}, t, color);
+}

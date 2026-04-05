@@ -92,6 +92,27 @@ while (!Raylib.windowShouldClose()) {
   Raylib.drawPolyLines({ x: 220, y: 600 }, 6, 30, 90, green);
   Raylib.drawPolyLinesEx({ x: 290, y: 600 }, 8, 30, 0, 2, blue);
 
+  const splinePoints = new Float32Array([
+    50, 700,
+    200, 650,
+    350, 750,
+    500, 680,
+    650, 720,
+    800, 660,
+    950, 700,
+  ]);
+  Raylib.drawSplineLinear(splinePoints, splinePoints.length, 2, white);
+  Raylib.drawSplineBasis(splinePoints, splinePoints.length, 3, yellow);
+  Raylib.drawSplineCatmullRom(splinePoints, splinePoints.length, 2, cyan);
+  Raylib.drawSplineBezierQuadratic(splinePoints, splinePoints.length, 3, magenta);
+  Raylib.drawSplineBezierCubic(splinePoints, splinePoints.length, 2, orange);
+
+  Raylib.drawSplineSegmentLinear({ x: 50, y: 750 }, { x: 200, y: 770 }, 3, red);
+  Raylib.drawSplineSegmentBasis({ x: 250, y: 770 }, { x: 350, y: 740 }, { x: 450, y: 780 }, { x: 550, y: 750 }, 3, green);
+  Raylib.drawSplineSegmentCatmullRom({ x: 600, y: 750 }, { x: 700, y: 780 }, { x: 800, y: 740 }, { x: 900, y: 760 }, 3, blue);
+  Raylib.drawSplineSegmentBezierQuadratic({ x: 50, y: 790 }, { x: 150, y: 760 }, { x: 250, y: 790 }, 3, magenta);
+  Raylib.drawSplineSegmentBezierCubic({ x: 300, y: 790 }, { x: 400, y: 750 }, { x: 500, y: 810 }, { x: 600, y: 780 }, 3, orange);
+
   Raylib.endDrawing();
 }
 
