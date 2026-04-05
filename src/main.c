@@ -1,6 +1,6 @@
 #include <string.h>
 #include <raylib.h>
-#include <stdio.h>
+
 void InitWindowW(int width, int height, const char* title) {
     InitWindow(width, height, title);
 }
@@ -262,4 +262,60 @@ void GetSplinePointBezierCubicW(float* out, int p1x, int p1y, int c2x, int c2y, 
     Vector2 result = GetSplinePointBezierCubic((Vector2){p1x, p1y}, (Vector2){c2x, c2y}, (Vector2){c3x, c3y}, (Vector2){p4x, p4y}, tf);
     out[0] = result.x;
     out[1] = result.y;
+}
+
+bool CheckCollisionRecsW(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) {
+    Rectangle r1 = { x1, y1, w1, h1 };
+    Rectangle r2 = { x2, y2, w2, h2 };
+    return CheckCollisionRecs(r1, r2);
+}
+
+bool CheckCollisionCirclesW(int cx1, int cy1, int r1, int cx2, int cy2, int r2) {
+    return CheckCollisionCircles((Vector2){cx1, cy1}, r1, (Vector2){cx2, cy2}, r2);
+}
+
+bool CheckCollisionCircleRecW(int cx, int cy, int radius, int rx, int ry, int rw, int rh) {
+    return CheckCollisionCircleRec((Vector2){cx, cy}, radius, (Rectangle){rx, ry, rw, rh});
+}
+
+bool CheckCollisionCircleLineW(int cx, int cy, int radius, int p1x, int p1y, int p2x, int p2y) {
+    return CheckCollisionCircleLine((Vector2){cx, cy}, radius, (Vector2){p1x, p1y}, (Vector2){p2x, p2y});
+}
+
+bool CheckCollisionPointRecW(int px, int py, int rx, int ry, int rw, int rh) {
+    return CheckCollisionPointRec((Vector2){px, py}, (Rectangle){rx, ry, rw, rh});
+}
+
+bool CheckCollisionPointCircleW(int px, int py, int cx, int cy, int radius) {
+    return CheckCollisionPointCircle((Vector2){px, py}, (Vector2){cx, cy}, radius);
+}
+
+bool CheckCollisionPointTriangleW(int px, int py, int p1x, int p1y, int p2x, int p2y, int p3x, int p3y) {
+    return CheckCollisionPointTriangle((Vector2){px, py}, (Vector2){p1x, p1y}, (Vector2){p2x, p2y}, (Vector2){p3x, p3y});
+}
+
+bool CheckCollisionPointLineW(int px, int py, int p1x, int p1y, int p2x, int p2y, int threshold) {
+    return CheckCollisionPointLine((Vector2){px, py}, (Vector2){p1x, p1y}, (Vector2){p2x, p2y}, threshold);
+}
+
+bool CheckCollisionPointPolyW(int px, int py, const float* points, int pointCount) {
+    return CheckCollisionPointPoly((Vector2){px, py}, (const Vector2*)points, pointCount);
+}
+
+bool CheckCollisionLinesW(float* out, int s1x, int s1y, int e1x, int e1y, int s2x, int s2y, int e2x, int e2y) {
+    Vector2 cp;
+    bool result = CheckCollisionLines((Vector2){s1x, s1y}, (Vector2){e1x, e1y}, (Vector2){s2x, s2y}, (Vector2){e2x, e2y}, &cp);
+    out[0] = cp.x;
+    out[1] = cp.y;
+    return result;
+}
+
+void GetCollisionRecW(float* out, int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) {
+    Rectangle r1 = { x1, y1, w1, h1 };
+    Rectangle r2 = { x2, y2, w2, h2 };
+    Rectangle result = GetCollisionRec(r1, r2);
+    out[0] = result.x;
+    out[1] = result.y;
+    out[2] = result.width;
+    out[3] = result.height;
 }

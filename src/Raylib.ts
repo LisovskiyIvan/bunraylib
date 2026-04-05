@@ -5,6 +5,8 @@ export { color };
 export type { Color, Vec2, Rectangle };
 
 const _vec2Buf = new Float32Array(2);
+const _recBuf = new Float32Array(4);
+const _colPtBuf = new Float32Array(2);
 
 export class Raylib {
   private static initialized = false;
@@ -445,7 +447,12 @@ export class Raylib {
    * Draw spline: Linear. Minimum 2 points.
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
-  static drawSplineLinear(points: Float32Array, pointCount: number, thick: number, col: Color): void {
+  static drawSplineLinear(
+    points: Float32Array,
+    pointCount: number,
+    thick: number,
+    col: Color,
+  ): void {
     r.symbols.DrawSplineLinearW(points, pointCount, f2i(thick), col);
   }
 
@@ -453,7 +460,12 @@ export class Raylib {
    * Draw spline: B-Spline. Minimum 4 points.
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
-  static drawSplineBasis(points: Float32Array, pointCount: number, thick: number, col: Color): void {
+  static drawSplineBasis(
+    points: Float32Array,
+    pointCount: number,
+    thick: number,
+    col: Color,
+  ): void {
     r.symbols.DrawSplineBasisW(points, pointCount, f2i(thick), col);
   }
 
@@ -461,7 +473,12 @@ export class Raylib {
    * Draw spline: Catmull-Rom. Minimum 4 points.
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
-  static drawSplineCatmullRom(points: Float32Array, pointCount: number, thick: number, col: Color): void {
+  static drawSplineCatmullRom(
+    points: Float32Array,
+    pointCount: number,
+    thick: number,
+    col: Color,
+  ): void {
     r.symbols.DrawSplineCatmullRomW(points, pointCount, f2i(thick), col);
   }
 
@@ -469,7 +486,12 @@ export class Raylib {
    * Draw spline: Quadratic Bezier. Minimum 3 points (1 control point).
    * Points layout: [p1, c2, p3, c4, ...] packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
-  static drawSplineBezierQuadratic(points: Float32Array, pointCount: number, thick: number, col: Color): void {
+  static drawSplineBezierQuadratic(
+    points: Float32Array,
+    pointCount: number,
+    thick: number,
+    col: Color,
+  ): void {
     r.symbols.DrawSplineBezierQuadraticW(points, pointCount, f2i(thick), col);
   }
 
@@ -477,7 +499,12 @@ export class Raylib {
    * Draw spline: Cubic Bezier. Minimum 4 points (2 control points).
    * Points layout: [p1, c2, c3, p4, c5, c6, ...] packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
-  static drawSplineBezierCubic(points: Float32Array, pointCount: number, thick: number, col: Color): void {
+  static drawSplineBezierCubic(
+    points: Float32Array,
+    pointCount: number,
+    thick: number,
+    col: Color,
+  ): void {
     r.symbols.DrawSplineBezierCubicW(points, pointCount, f2i(thick), col);
   }
 
@@ -487,23 +514,92 @@ export class Raylib {
   }
 
   /** Draw spline segment: B-Spline, 4 points */
-  static drawSplineSegmentBasis(p1: Vec2, p2: Vec2, p3: Vec2, p4: Vec2, thick: number, col: Color): void {
-    r.symbols.DrawSplineSegmentBasisW(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y, f2i(thick), col);
+  static drawSplineSegmentBasis(
+    p1: Vec2,
+    p2: Vec2,
+    p3: Vec2,
+    p4: Vec2,
+    thick: number,
+    col: Color,
+  ): void {
+    r.symbols.DrawSplineSegmentBasisW(
+      p1.x,
+      p1.y,
+      p2.x,
+      p2.y,
+      p3.x,
+      p3.y,
+      p4.x,
+      p4.y,
+      f2i(thick),
+      col,
+    );
   }
 
   /** Draw spline segment: Catmull-Rom, 4 points */
-  static drawSplineSegmentCatmullRom(p1: Vec2, p2: Vec2, p3: Vec2, p4: Vec2, thick: number, col: Color): void {
-    r.symbols.DrawSplineSegmentCatmullRomW(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y, f2i(thick), col);
+  static drawSplineSegmentCatmullRom(
+    p1: Vec2,
+    p2: Vec2,
+    p3: Vec2,
+    p4: Vec2,
+    thick: number,
+    col: Color,
+  ): void {
+    r.symbols.DrawSplineSegmentCatmullRomW(
+      p1.x,
+      p1.y,
+      p2.x,
+      p2.y,
+      p3.x,
+      p3.y,
+      p4.x,
+      p4.y,
+      f2i(thick),
+      col,
+    );
   }
 
   /** Draw spline segment: Quadratic Bezier, 2 points + 1 control point */
-  static drawSplineSegmentBezierQuadratic(p1: Vec2, c2: Vec2, p3: Vec2, thick: number, col: Color): void {
-    r.symbols.DrawSplineSegmentBezierQuadraticW(p1.x, p1.y, c2.x, c2.y, p3.x, p3.y, f2i(thick), col);
+  static drawSplineSegmentBezierQuadratic(
+    p1: Vec2,
+    c2: Vec2,
+    p3: Vec2,
+    thick: number,
+    col: Color,
+  ): void {
+    r.symbols.DrawSplineSegmentBezierQuadraticW(
+      p1.x,
+      p1.y,
+      c2.x,
+      c2.y,
+      p3.x,
+      p3.y,
+      f2i(thick),
+      col,
+    );
   }
 
   /** Draw spline segment: Cubic Bezier, 2 points + 2 control points */
-  static drawSplineSegmentBezierCubic(p1: Vec2, c2: Vec2, c3: Vec2, p4: Vec2, thick: number, col: Color): void {
-    r.symbols.DrawSplineSegmentBezierCubicW(p1.x, p1.y, c2.x, c2.y, c3.x, c3.y, p4.x, p4.y, f2i(thick), col);
+  static drawSplineSegmentBezierCubic(
+    p1: Vec2,
+    c2: Vec2,
+    c3: Vec2,
+    p4: Vec2,
+    thick: number,
+    col: Color,
+  ): void {
+    r.symbols.DrawSplineSegmentBezierCubicW(
+      p1.x,
+      p1.y,
+      c2.x,
+      c2.y,
+      c3.x,
+      c3.y,
+      p4.x,
+      p4.y,
+      f2i(thick),
+      col,
+    );
   }
 
   /**
@@ -528,7 +624,18 @@ export class Raylib {
    * @returns Evaluated point as Vec2
    */
   static getSplinePointBasis(p1: Vec2, p2: Vec2, p3: Vec2, p4: Vec2, t: number): Vec2 {
-    r.symbols.GetSplinePointBasisW(_vec2Buf, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y, f2i(t));
+    r.symbols.GetSplinePointBasisW(
+      _vec2Buf,
+      p1.x,
+      p1.y,
+      p2.x,
+      p2.y,
+      p3.x,
+      p3.y,
+      p4.x,
+      p4.y,
+      f2i(t),
+    );
     return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
@@ -542,7 +649,18 @@ export class Raylib {
    * @returns Evaluated point as Vec2
    */
   static getSplinePointCatmullRom(p1: Vec2, p2: Vec2, p3: Vec2, p4: Vec2, t: number): Vec2 {
-    r.symbols.GetSplinePointCatmullRomW(_vec2Buf, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y, f2i(t));
+    r.symbols.GetSplinePointCatmullRomW(
+      _vec2Buf,
+      p1.x,
+      p1.y,
+      p2.x,
+      p2.y,
+      p3.x,
+      p3.y,
+      p4.x,
+      p4.y,
+      f2i(t),
+    );
     return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
@@ -569,7 +687,144 @@ export class Raylib {
    * @returns Evaluated point as Vec2
    */
   static getSplinePointBezierCubic(p1: Vec2, c2: Vec2, c3: Vec2, p4: Vec2, t: number): Vec2 {
-    r.symbols.GetSplinePointBezierCubicW(_vec2Buf, p1.x, p1.y, c2.x, c2.y, c3.x, c3.y, p4.x, p4.y, f2i(t));
+    r.symbols.GetSplinePointBezierCubicW(
+      _vec2Buf,
+      p1.x,
+      p1.y,
+      c2.x,
+      c2.y,
+      c3.x,
+      c3.y,
+      p4.x,
+      p4.y,
+      f2i(t),
+    );
     return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  /** Check collision between two rectangles */
+  static checkCollisionRecs(rec1: Rectangle, rec2: Rectangle): boolean {
+    return r.symbols.CheckCollisionRecsW(
+      rec1.x,
+      rec1.y,
+      rec1.width,
+      rec1.height,
+      rec2.x,
+      rec2.y,
+      rec2.width,
+      rec2.height,
+    );
+  }
+
+  /** Check collision between two circles */
+  static checkCollisionCircles(
+    center1: Vec2,
+    radius1: number,
+    center2: Vec2,
+    radius2: number,
+  ): boolean {
+    return r.symbols.CheckCollisionCirclesW(
+      center1.x,
+      center1.y,
+      radius1,
+      center2.x,
+      center2.y,
+      radius2,
+    );
+  }
+
+  /** Check collision between circle and rectangle */
+  static checkCollisionCircleRec(center: Vec2, radius: number, rec: Rectangle): boolean {
+    return r.symbols.CheckCollisionCircleRecW(
+      center.x,
+      center.y,
+      radius,
+      rec.x,
+      rec.y,
+      rec.width,
+      rec.height,
+    );
+  }
+
+  /** Check if circle collides with a line created between two points [p1] and [p2] */
+  static checkCollisionCircleLine(center: Vec2, radius: number, p1: Vec2, p2: Vec2): boolean {
+    return r.symbols.CheckCollisionCircleLineW(center.x, center.y, radius, p1.x, p1.y, p2.x, p2.y);
+  }
+
+  /** Check if point is inside rectangle */
+  static checkCollisionPointRec(point: Vec2, rec: Rectangle): boolean {
+    return r.symbols.CheckCollisionPointRecW(point.x, point.y, rec.x, rec.y, rec.width, rec.height);
+  }
+
+  /** Check if point is inside circle */
+  static checkCollisionPointCircle(point: Vec2, center: Vec2, radius: number): boolean {
+    return r.symbols.CheckCollisionPointCircleW(point.x, point.y, center.x, center.y, radius);
+  }
+
+  /** Check if point is inside a triangle */
+  static checkCollisionPointTriangle(point: Vec2, p1: Vec2, p2: Vec2, p3: Vec2): boolean {
+    return r.symbols.CheckCollisionPointTriangleW(
+      point.x,
+      point.y,
+      p1.x,
+      p1.y,
+      p2.x,
+      p2.y,
+      p3.x,
+      p3.y,
+    );
+  }
+
+  /** Check if point belongs to line created between two points [p1] and [p2] with defined margin [threshold] */
+  static checkCollisionPointLine(point: Vec2, p1: Vec2, p2: Vec2, threshold: number): boolean {
+    return r.symbols.CheckCollisionPointLineW(point.x, point.y, p1.x, p1.y, p2.x, p2.y, threshold);
+  }
+
+  /**
+   * Check if point is within a polygon described by array of vertices.
+   * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
+   */
+  static checkCollisionPointPoly(point: Vec2, points: Float32Array, pointCount: number): boolean {
+    return r.symbols.CheckCollisionPointPolyW(point.x, point.y, points, pointCount);
+  }
+
+  /**
+   * Check collision between two lines defined by two points each.
+   * @returns Object with `collides` boolean and `collisionPoint` Vec2 (valid only if collides is true)
+   */
+  static checkCollisionLines(
+    startPos1: Vec2,
+    endPos1: Vec2,
+    startPos2: Vec2,
+    endPos2: Vec2,
+  ): { collides: boolean; collisionPoint: Vec2 } {
+    const collides = r.symbols.CheckCollisionLinesW(
+      _colPtBuf,
+      startPos1.x,
+      startPos1.y,
+      endPos1.x,
+      endPos1.y,
+      startPos2.x,
+      startPos2.y,
+      endPos2.x,
+      endPos2.y,
+    );
+    return { collides, collisionPoint: { x: _colPtBuf[0]!, y: _colPtBuf[1]! } };
+  }
+
+  /** Get collision rectangle for two rectangles collision. Returns null if no overlap */
+  static getCollisionRec(rec1: Rectangle, rec2: Rectangle): Rectangle {
+    r.symbols.GetCollisionRecW(
+      _recBuf,
+      rec1.x,
+      rec1.y,
+      rec1.width,
+      rec1.height,
+      rec2.x,
+      rec2.y,
+      rec2.width,
+      rec2.height,
+    );
+    return { x: _recBuf[0]!, y: _recBuf[1]!, width: _recBuf[2]!, height: _recBuf[3]! };
   }
 }

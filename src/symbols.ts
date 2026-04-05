@@ -1,7 +1,7 @@
 import { cc, FFIType } from "bun:ffi";
 import wrapper from "./main.c" with { type: "file" };
 
-const { i32, cstring, bool, f32, ptr, f64 } = FFIType;
+const { i32, cstring, bool, f32, ptr } = FFIType;
 
 export const symbols = cc({
   source: wrapper,
@@ -63,14 +63,52 @@ export const symbols = cc({
     DrawSplineBezierQuadraticW: { args: [ptr, i32, i32, i32], returns: FFIType.void },
     DrawSplineBezierCubicW: { args: [ptr, i32, i32, i32], returns: FFIType.void },
     DrawSplineSegmentLinearW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
-    DrawSplineSegmentBasisW: { args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
-    DrawSplineSegmentCatmullRomW: { args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
-    DrawSplineSegmentBezierQuadraticW: { args: [i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
-    DrawSplineSegmentBezierCubicW: { args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawSplineSegmentBasisW: {
+      args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
+    DrawSplineSegmentCatmullRomW: {
+      args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
+    DrawSplineSegmentBezierQuadraticW: {
+      args: [i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
+    DrawSplineSegmentBezierCubicW: {
+      args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
     GetSplinePointLinearW: { args: [ptr, i32, i32, i32, i32, i32], returns: FFIType.void },
-    GetSplinePointBasisW: { args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
-    GetSplinePointCatmullRomW: { args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
-    GetSplinePointBezierQuadW: { args: [ptr, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
-    GetSplinePointBezierCubicW: { args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    GetSplinePointBasisW: {
+      args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
+    GetSplinePointCatmullRomW: {
+      args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
+    GetSplinePointBezierQuadW: {
+      args: [ptr, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
+    GetSplinePointBezierCubicW: {
+      args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
+    CheckCollisionRecsW: { args: [i32, i32, i32, i32, i32, i32, i32, i32], returns: bool },
+    CheckCollisionCirclesW: { args: [i32, i32, i32, i32, i32, i32], returns: bool },
+    CheckCollisionCircleRecW: { args: [i32, i32, i32, i32, i32, i32, i32], returns: bool },
+    CheckCollisionCircleLineW: { args: [i32, i32, i32, i32, i32, i32, i32], returns: bool },
+    CheckCollisionPointRecW: { args: [i32, i32, i32, i32, i32, i32], returns: bool },
+    CheckCollisionPointCircleW: { args: [i32, i32, i32, i32, i32], returns: bool },
+    CheckCollisionPointTriangleW: { args: [i32, i32, i32, i32, i32, i32, i32, i32], returns: bool },
+    CheckCollisionPointLineW: { args: [i32, i32, i32, i32, i32, i32, i32], returns: bool },
+    CheckCollisionPointPolyW: { args: [i32, i32, ptr, i32], returns: bool },
+    CheckCollisionLinesW: { args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32], returns: bool },
+    GetCollisionRecW: {
+      args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
   },
 });
