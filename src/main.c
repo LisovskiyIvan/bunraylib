@@ -102,20 +102,14 @@ void DrawRingW(int centerX, int centerY, int innerRadius, int outerRadius, int s
     DrawRing((Vector2){centerX, centerY}, innerRadius, outerRadius, sa, ea, segments, color);
 }
 
-void DrawRingLinesW(float centerX, float centerY, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, Color color) {
-    DrawRingLines((Vector2){centerX, centerY}, innerRadius, outerRadius, startAngle, endAngle, segments, color);
+void DrawRingLinesW(int centerX, int centerY, int innerRadius, int outerRadius, int startAngle, int endAngle, int segments, Color color) {
+    float sa, ea;
+    memcpy(&sa, &startAngle, sizeof(float));
+    memcpy(&ea, &endAngle, sizeof(float));
+    DrawRingLines((Vector2){centerX, centerY}, innerRadius, outerRadius, sa, ea, segments, color);
 }
 
-void DrawRectangleVW(float posX, float posY, float width, float height, Color color) {
-    DrawRectangleV((Vector2){posX, posY}, (Vector2){width, height}, color);
-}
-
-void DrawRectangleRecW(float x, float y, float width, float height, Color color) {
-    Rectangle rec = { x, y, width, height };
-    DrawRectangleRec(rec, color);
-}
-
-void DrawRectangleProW(float x, float y, float width, float height, float originX, float originY, float rotation, Color color) {
+void DrawRectangleProW(int x, int y, int width, int height, int originX, int originY, int rotation, Color color) {
     Rectangle rec = { x, y, width, height };
     DrawRectanglePro(rec, (Vector2){originX, originY}, rotation, color);
 }
@@ -128,7 +122,7 @@ void DrawRectangleGradientHW(int posX, int posY, int width, int height, Color le
     DrawRectangleGradientH(posX, posY, width, height, left, right);
 }
 
-void DrawRectangleGradientExW(float x, float y, float width, float height, Color topLeft, Color bottomLeft, Color topRight, Color bottomRight) {
+void DrawRectangleGradientExW(int x, int y, int width, int height, Color topLeft, Color bottomLeft, Color topRight, Color bottomRight) {
     Rectangle rec = { x, y, width, height };
     DrawRectangleGradientEx(rec, topLeft, bottomLeft, topRight, bottomRight);
 }
@@ -137,31 +131,31 @@ void DrawRectangleLinesW(int posX, int posY, int width, int height, Color color)
     DrawRectangleLines(posX, posY, width, height, color);
 }
 
-void DrawRectangleLinesExW(float x, float y, float width, float height, float lineThick, Color color) {
+void DrawRectangleLinesExW(int x, int y, int width, int height, int lineThick, Color color) {
     Rectangle rec = { x, y, width, height };
     DrawRectangleLinesEx(rec, lineThick, color);
 }
 
-void DrawRectangleRoundedW(float x, float y, float width, float height, float roundness, int segments, Color color) {
+void DrawRectangleRoundedW(int x, int y, int width, int height, int roundness, int segments, Color color) {
     Rectangle rec = { x, y, width, height };
     DrawRectangleRounded(rec, roundness, segments, color);
 }
 
-void DrawRectangleRoundedLinesW(float x, float y, float width, float height, float roundness, int segments, Color color) {
+void DrawRectangleRoundedLinesW(int x, int y, int width, int height, int roundness, int segments, Color color) {
     Rectangle rec = { x, y, width, height };
     DrawRectangleRoundedLines(rec, roundness, segments, color);
 }
 
-void DrawRectangleRoundedLinesExW(float x, float y, float width, float height, float roundness, int segments, float lineThick, Color color) {
+void DrawRectangleRoundedLinesExW(int x, int y, int width, int height, int roundness, int segments, int lineThick, Color color) {
     Rectangle rec = { x, y, width, height };
     DrawRectangleRoundedLinesEx(rec, roundness, segments, lineThick, color);
 }
 
-void DrawTriangleW(float x1, float y1, float x2, float y2, float x3, float y3, Color color) {
+void DrawTriangleW(int x1, int y1, int x2, int y2, int x3, int y3, Color color) {
     DrawTriangle((Vector2){x1, y1}, (Vector2){x2, y2}, (Vector2){x3, y3}, color);
 }
 
-void DrawTriangleLinesW(float x1, float y1, float x2, float y2, float x3, float y3, Color color) {
+void DrawTriangleLinesW(int x1, int y1, int x2, int y2, int x3, int y3, Color color) {
     DrawTriangleLines((Vector2){x1, y1}, (Vector2){x2, y2}, (Vector2){x3, y3}, color);
 }
 
@@ -173,14 +167,14 @@ void DrawTriangleStripW(const float* points, int pointCount, Color color) {
     DrawTriangleStrip((const Vector2*)points, pointCount, color);
 }
 
-void DrawPolyW(float centerX, float centerY, int sides, float radius, float rotation, Color color) {
+void DrawPolyW(int centerX, int centerY, int sides, int radius, int rotation, Color color) {
     DrawPoly((Vector2){centerX, centerY}, sides, radius, rotation, color);
 }
 
-void DrawPolyLinesW(float centerX, float centerY, int sides, float radius, float rotation, Color color) {
+void DrawPolyLinesW(int centerX, int centerY, int sides, int radius, int rotation, Color color) {
     DrawPolyLines((Vector2){centerX, centerY}, sides, radius, rotation, color);
 }
 
-void DrawPolyLinesExW(float centerX, float centerY, int sides, float radius, float rotation, float lineThick, Color color) {
+void DrawPolyLinesExW(int centerX, int centerY, int sides, int radius, int rotation, int lineThick, Color color) {
     DrawPolyLinesEx((Vector2){centerX, centerY}, sides, radius, rotation, lineThick, color);
 }

@@ -1,7 +1,7 @@
 import { Raylib, color } from "../src";
 import type { Vec2, Rectangle } from "../src/types";
 
-Raylib.initWindow(800, 600, "Shape Drawing Demo");
+Raylib.initWindow(1200, 800, "Shape Drawing Demo");
 Raylib.setTargetFPS(60);
 
 const center: Vec2 = { x: 400, y: 300 };
@@ -50,47 +50,47 @@ while (!Raylib.windowShouldClose()) {
   Raylib.drawEllipseLines(180, 230, 40, 25, green);
 
   Raylib.drawRing({ x: 260, y: 230 }, 15, 30, 0, 360, 32, red);
-  // Raylib.drawRingLines({ x: 340, y: 230 }, 15, 30, Math.PI * 0.25, Math.PI * 1.75, 24, yellow);
+  Raylib.drawRingLines({ x: 340, y: 230 }, 15, 30, 0, 270, 24, yellow);
 
-  // Raylib.drawRectangle(100, 280, 150, 60, red);
-  // Raylib.drawRectangleV({ x: 270, y: 280 }, { x: 150, y: 60 }, green);
-  // Raylib.drawRectangleRec({ x: 440, y: 280, width: 150, height: 60 }, blue);
-  // Raylib.drawRectanglePro({ x: 610, y: 280, width: 150, height: 60 }, { x: 75, y: 30 }, Math.PI / 6, yellow);
+  Raylib.drawRectangle(100, 280, 150, 60, red);
+  Raylib.drawRectangleV({ x: 270, y: 280 }, { x: 150, y: 60 }, green);
+  Raylib.drawRectangleRec({ x: 440, y: 280, width: 150, height: 60 }, blue);
+  Raylib.drawRectanglePro({ x: 610, y: 280, width: 150, height: 60 }, { x: 75, y: 30 }, Math.PI / 6, yellow);
 
-  // Raylib.drawRectangleGradientV(100, 360, 150, 50, red, blue);
-  // Raylib.drawRectangleGradientH(270, 360, 150, 50, green, yellow);
-  // Raylib.drawRectangleGradientEx({ x: 440, y: 360, width: 150, height: 50 }, red, green, blue, yellow);
+  Raylib.drawRectangleGradientV(100, 360, 150, 50, red, blue);
+  Raylib.drawRectangleGradientH(270, 360, 150, 50, green, yellow);
+  Raylib.drawRectangleGradientEx({ x: 440, y: 360, width: 150, height: 50 }, red, green, blue, yellow);
 
-  // Raylib.drawRectangleLines(100, 430, 150, 50, white);
-  // Raylib.drawRectangleLinesEx({ x: 270, y: 430, width: 150, height: 50 }, 3, cyan);
-  // Raylib.drawRectangleRounded({ x: 440, y: 430, width: 150, height: 50 }, 0.2, 16, magenta);
-  // Raylib.drawRectangleRoundedLines({ x: 610, y: 430, width: 150, height: 50 }, 0.3, 16, orange);
-  // Raylib.drawRectangleRoundedLinesEx({ x: 100, y: 500, width: 150, height: 50 }, 0.4, 16, 2, white);
+  Raylib.drawRectangleLines(100, 430, 150, 50, white);
+  Raylib.drawRectangleLinesEx({ x: 270, y: 430, width: 150, height: 50 }, 3, cyan);
+  Raylib.drawRectangleRounded({ x: 440, y: 430, width: 150, height: 50 }, 5, 16, magenta);
+  Raylib.drawRectangleRoundedLines({ x: 610, y: 430, width: 150, height: 50 }, 1, 16, orange);
+  Raylib.drawRectangleRoundedLinesEx({ x: 100, y: 500, width: 150, height: 50 }, 2, 16, 2, white);
 
-  // Raylib.drawTriangle({ x: 350, y: 500 }, { x: 300, y: 560 }, { x: 400, y: 560 }, red);
-  // Raylib.drawTriangleLines({ x: 450, y: 500 }, { x: 400, y: 560 }, { x: 500, y: 560 }, green);
+  Raylib.drawTriangle({ x: 350, y: 500 }, { x: 300, y: 560 }, { x: 400, y: 560 }, red);
+  Raylib.drawTriangleLines({ x: 450, y: 500 }, { x: 400, y: 560 }, { x: 500, y: 560 }, green);
 
-  // const triangleFanPoints = new Float64Array([
-  //   600, 530,
-  //   550, 580,
-  //   575, 550,
-  //   600, 580,
-  //   625, 550,
-  //   650, 580,
-  // ]);
-  // Raylib.drawTriangleFan(triangleFanPoints, 6, blue);
+  const triangleFanPoints = new Float32Array([
+    600, 530,
+    550, 580,
+    575, 550,
+    600, 580,
+    625, 550,
+    650, 580,
+  ]);
+  Raylib.drawTriangleFan(triangleFanPoints, triangleFanPoints.length, blue);
 
-  // const triangleStripPoints = new Float64Array([
-  //   680, 500,
-  //   700, 560,
-  //   720, 520,
-  //   740, 580,
-  // ]);
-  // Raylib.drawTriangleStrip(triangleStripPoints, 4, yellow);
+  const triangleStripPoints = new Float32Array([
+    680, 500,
+    700, 560,
+    720, 520,
+    740, 580,
+  ]);
+  Raylib.drawTriangleStrip(triangleStripPoints, triangleStripPoints.length, yellow);
 
-  // Raylib.drawPoly({ x: 150, y: 600 }, 5, 30, 0, red);
-  // Raylib.drawPolyLines({ x: 220, y: 600 }, 6, 30, 0, green);
-  // Raylib.drawPolyLinesEx({ x: 290, y: 600 }, 8, 30, 0, 2, blue);
+  Raylib.drawPoly({ x: 150, y: 600 }, 5, 30, 120, red);
+  Raylib.drawPolyLines({ x: 220, y: 600 }, 6, 30, 90, green);
+  Raylib.drawPolyLinesEx({ x: 290, y: 600 }, 8, 30, 0, 2, blue);
 
   Raylib.endDrawing();
 }
