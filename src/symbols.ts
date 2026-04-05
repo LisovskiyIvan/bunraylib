@@ -1,7 +1,7 @@
 import { cc, FFIType } from "bun:ffi";
 import wrapper from "./main.c" with { type: "file" };
 
-const { i32, cstring, bool, f32 } = FFIType;
+const { i32, cstring, bool, f32, ptr, f64 } = FFIType;
 
 export const symbols = cc({
   source: wrapper,
@@ -18,5 +18,37 @@ export const symbols = cc({
     SetTargetFPSW: { args: [i32], returns: FFIType.void },
     GetFrameTimeW: { args: [], returns: f32 },
     DrawTextW: { args: [cstring, i32, i32, i32, i32], returns: FFIType.void },
+    DrawPixelW: { args: [i32, i32, i32], returns: FFIType.void },
+    DrawLineW: { args: [i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawLineExW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawLineStripW: { args: [ptr, i32, i32], returns: FFIType.void },
+    DrawLineBezierW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawCircleW: { args: [i32, i32, i32, i32], returns: FFIType.void },
+    DrawCircleSectorW: { args: [i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawCircleSectorLinesW: { args: [i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawCircleGradientW: { args: [i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawCircleLinesW: { args: [i32, i32, i32, i32], returns: FFIType.void },
+    DrawEllipseW: { args: [i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawEllipseLinesW: { args: [i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawRingW: { args: [i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawRingLinesW: { args: [f32, f32, f32, f32, f32, f32, i32, i32], returns: FFIType.void },
+    DrawRectangleVW: { args: [f32, f32, f32, f32, i32], returns: FFIType.void },
+    DrawRectangleRecW: { args: [f32, f32, f32, f32, i32], returns: FFIType.void },
+    DrawRectangleProW: { args: [f32, f32, f32, f32, f32, f32, f32, i32], returns: FFIType.void },
+    DrawRectangleGradientVW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawRectangleGradientHW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawRectangleGradientExW: { args: [f32, f32, f32, f32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawRectangleLinesW: { args: [i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawRectangleLinesExW: { args: [f32, f32, f32, f32, f32, i32], returns: FFIType.void },
+    DrawRectangleRoundedW: { args: [f32, f32, f32, f32, f32, i32, i32], returns: FFIType.void },
+    DrawRectangleRoundedLinesW: { args: [f32, f32, f32, f32, f32, i32, i32], returns: FFIType.void },
+    DrawRectangleRoundedLinesExW: { args: [f32, f32, f32, f32, f32, i32, f32, i32], returns: FFIType.void },
+    DrawTriangleW: { args: [f32, f32, f32, f32, f32, f32, i32], returns: FFIType.void },
+    DrawTriangleLinesW: { args: [f32, f32, f32, f32, f32, f32, i32], returns: FFIType.void },
+    DrawTriangleFanW: { args: [ptr, i32, i32], returns: FFIType.void },
+    DrawTriangleStripW: { args: [ptr, i32, i32], returns: FFIType.void },
+    DrawPolyW: { args: [f32, f32, i32, f32, f32, i32], returns: FFIType.void },
+    DrawPolyLinesW: { args: [f32, f32, i32, f32, f32, i32], returns: FFIType.void },
+    DrawPolyLinesExW: { args: [f32, f32, i32, f32, f32, f32, i32], returns: FFIType.void },
   },
 });
