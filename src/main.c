@@ -1,6 +1,8 @@
 #include <string.h>
 #include <raylib.h>
 
+static float i2f(int i) { float f; memcpy(&f, &i, sizeof(float)); return f; }
+
 void InitWindowW(int width, int height, const char* title) {
     InitWindow(width, height, title);
 }
@@ -318,4 +320,115 @@ void GetCollisionRecW(float* out, int x1, int y1, int w1, int h1, int x2, int y2
     out[1] = result.y;
     out[2] = result.width;
     out[3] = result.height;
+}
+
+void BeginMode2DW(int offX, int offY, int tarX, int tarY, int rotation, int zoom) {
+    float r, z;
+    memcpy(&r, &rotation, sizeof(float));
+    memcpy(&z, &zoom, sizeof(float));
+    Camera2D cam = { {offX, offY}, {tarX, tarY}, r, z };
+    BeginMode2D(cam);
+}
+
+void EndMode2DW() {
+    EndMode2D();
+}
+
+void BeginMode3DW(int posX, int posY, int posZ, int tarX, int tarY, int tarZ, int upX, int upY, int upZ, int fovy, int projection) {
+    Camera3D cam = { {i2f(posX), i2f(posY), i2f(posZ)}, {i2f(tarX), i2f(tarY), i2f(tarZ)}, {i2f(upX), i2f(upY), i2f(upZ)}, i2f(fovy), projection };
+    BeginMode3D(cam);
+}
+
+void EndMode3DW() {
+    EndMode3D();
+}
+
+void DrawLine3DW(int sx, int sy, int sz, int ex, int ey, int ez, Color color) {
+    DrawLine3D((Vector3){i2f(sx), i2f(sy), i2f(sz)}, (Vector3){i2f(ex), i2f(ey), i2f(ez)}, color);
+}
+
+void DrawPoint3DW(int px, int py, int pz, Color color) {
+    DrawPoint3D((Vector3){i2f(px), i2f(py), i2f(pz)}, color);
+}
+
+void DrawCircle3DW(int cx, int cy, int cz, int radius, int rax, int ray_, int raz, int angle, Color color) {
+    DrawCircle3D((Vector3){i2f(cx), i2f(cy), i2f(cz)}, i2f(radius), (Vector3){i2f(rax), i2f(ray_), i2f(raz)}, i2f(angle), color);
+}
+
+void DrawTriangle3DW(int v1x, int v1y, int v1z, int v2x, int v2y, int v2z, int v3x, int v3y, int v3z, Color color) {
+    DrawTriangle3D(
+        (Vector3){i2f(v1x), i2f(v1y), i2f(v1z)},
+        (Vector3){i2f(v2x), i2f(v2y), i2f(v2z)},
+        (Vector3){i2f(v3x), i2f(v3y), i2f(v3z)},
+        color
+    );
+}
+
+void DrawTriangleStrip3DW(const float* points, int pointCount, Color color) {
+    DrawTriangleStrip3D((const Vector3*)points, pointCount, color);
+}
+
+void DrawCubeW(int px, int py, int pz, int w, int h, int l, Color color) {
+    DrawCube((Vector3){i2f(px), i2f(py), i2f(pz)}, i2f(w), i2f(h), i2f(l), color);
+}
+
+void DrawCubeVW(int px, int py, int pz, int sx, int sy, int sz, Color color) {
+    DrawCubeV((Vector3){i2f(px), i2f(py), i2f(pz)}, (Vector3){i2f(sx), i2f(sy), i2f(sz)}, color);
+}
+
+void DrawCubeWiresW(int px, int py, int pz, int w, int h, int l, Color color) {
+    DrawCubeWires((Vector3){i2f(px), i2f(py), i2f(pz)}, i2f(w), i2f(h), i2f(l), color);
+}
+
+void DrawCubeWiresVW(int px, int py, int pz, int sx, int sy, int sz, Color color) {
+    DrawCubeWiresV((Vector3){i2f(px), i2f(py), i2f(pz)}, (Vector3){i2f(sx), i2f(sy), i2f(sz)}, color);
+}
+
+void DrawSphereW(int cx, int cy, int cz, int radius, Color color) {
+    DrawSphere((Vector3){i2f(cx), i2f(cy), i2f(cz)}, i2f(radius), color);
+}
+
+void DrawSphereExW(int cx, int cy, int cz, int radius, int rings, int slices, Color color) {
+    DrawSphereEx((Vector3){i2f(cx), i2f(cy), i2f(cz)}, i2f(radius), rings, slices, color);
+}
+
+void DrawSphereWiresW(int cx, int cy, int cz, int radius, int rings, int slices, Color color) {
+    DrawSphereWires((Vector3){i2f(cx), i2f(cy), i2f(cz)}, i2f(radius), rings, slices, color);
+}
+
+void DrawCylinderW(int px, int py, int pz, int rt, int rb, int h, int slices, Color color) {
+    DrawCylinder((Vector3){i2f(px), i2f(py), i2f(pz)}, i2f(rt), i2f(rb), i2f(h), slices, color);
+}
+
+void DrawCylinderExW(int sx, int sy, int sz, int ex, int ey, int ez, int sr, int er, int sides, Color color) {
+    DrawCylinderEx((Vector3){i2f(sx), i2f(sy), i2f(sz)}, (Vector3){i2f(ex), i2f(ey), i2f(ez)}, i2f(sr), i2f(er), sides, color);
+}
+
+void DrawCylinderWiresW(int px, int py, int pz, int rt, int rb, int h, int slices, Color color) {
+    DrawCylinderWires((Vector3){i2f(px), i2f(py), i2f(pz)}, i2f(rt), i2f(rb), i2f(h), slices, color);
+}
+
+void DrawCylinderWiresExW(int sx, int sy, int sz, int ex, int ey, int ez, int sr, int er, int sides, Color color) {
+    DrawCylinderWiresEx((Vector3){i2f(sx), i2f(sy), i2f(sz)}, (Vector3){i2f(ex), i2f(ey), i2f(ez)}, i2f(sr), i2f(er), sides, color);
+}
+
+void DrawCapsuleW(int sx, int sy, int sz, int ex, int ey, int ez, int radius, int slices, int rings, Color color) {
+    DrawCapsule((Vector3){i2f(sx), i2f(sy), i2f(sz)}, (Vector3){i2f(ex), i2f(ey), i2f(ez)}, i2f(radius), slices, rings, color);
+}
+
+void DrawCapsuleWiresW(int sx, int sy, int sz, int ex, int ey, int ez, int radius, int slices, int rings, Color color) {
+    DrawCapsuleWires((Vector3){i2f(sx), i2f(sy), i2f(sz)}, (Vector3){i2f(ex), i2f(ey), i2f(ez)}, i2f(radius), slices, rings, color);
+}
+
+void DrawPlaneW(int cx, int cy, int cz, int sw, int sh, Color color) {
+    DrawPlane((Vector3){i2f(cx), i2f(cy), i2f(cz)}, (Vector2){i2f(sw), i2f(sh)}, color);
+}
+
+void DrawRayW(int px, int py, int pz, int dx, int dy, int dz, Color color) {
+    Ray ray = { {i2f(px), i2f(py), i2f(pz)}, {i2f(dx), i2f(dy), i2f(dz)} };
+    DrawRay(ray, color);
+}
+
+void DrawGridW(int slices, int spacing) {
+    DrawGrid(slices, spacing);
 }

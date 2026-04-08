@@ -1,8 +1,8 @@
 import { symbols as r } from "./symbols";
-import type { Vec2, Rectangle } from "./types";
+import type { Vec2, Vec3, Rectangle, Camera2D, Camera3D, Ray } from "./types";
 import { cstr, color, f2i, type Color } from "./utils";
 export { color };
-export type { Color, Vec2, Rectangle };
+export type { Color, Vec2, Vec3, Rectangle, Camera2D, Camera3D, Ray };
 
 const _vec2Buf = new Float32Array(2);
 const _recBuf = new Float32Array(4);
@@ -36,6 +36,39 @@ export class Raylib {
   /** End canvas drawing and swap buffers (double buffering) */
   static endDrawing(): void {
     r.symbols.EndDrawingW();
+  }
+
+  /** Begin 2D mode with custom camera */
+  static beginMode2D(camera: Camera2D): void {
+    r.symbols.BeginMode2DW(
+      camera.offset.x,
+      camera.offset.y,
+      camera.target.x,
+      camera.target.y,
+      f2i(camera.rotation),
+      f2i(camera.zoom),
+    );
+  }
+
+  /** Ends 2D mode with custom camera */
+  static endMode2D(): void {
+    r.symbols.EndMode2DW();
+  }
+
+  /** Begin 3D mode with custom camera */
+  static beginMode3D(camera: Camera3D): void {
+    r.symbols.BeginMode3DW(
+      f2i(camera.position.x), f2i(camera.position.y), f2i(camera.position.z),
+      f2i(camera.target.x), f2i(camera.target.y), f2i(camera.target.z),
+      f2i(camera.up.x), f2i(camera.up.y), f2i(camera.up.z),
+      f2i(camera.fovy),
+      camera.projection,
+    );
+  }
+
+  /** Ends 3D mode with custom camera */
+  static endMode3D(): void {
+    r.symbols.EndMode3DW();
   }
 
   /** Set background color (used before drawing) */
@@ -826,5 +859,225 @@ export class Raylib {
       rec2.height,
     );
     return { x: _recBuf[0]!, y: _recBuf[1]!, width: _recBuf[2]!, height: _recBuf[3]! };
+  }
+
+  /** Draw a line in 3D world space */
+  static drawLine3D(startPos: Vec3, endPos: Vec3, col: Color): void {
+    r.symbols.DrawLine3DW(
+      f2i(startPos.x), f2i(startPos.y), f2i(startPos.z),
+      f2i(endPos.x), f2i(endPos.y), f2i(endPos.z),
+      col,
+    );
+  }
+
+  /** Draw a point in 3D space */
+  static drawPoint3D(position: Vec3, col: Color): void {
+    r.symbols.DrawPoint3DW(f2i(position.x), f2i(position.y), f2i(position.z), col);
+  }
+
+  /** Draw a circle in 3D world space */
+  static drawCircle3D(
+    center: Vec3,
+    radius: number,
+    rotationAxis: Vec3,
+    rotationAngle: number,
+    col: Color,
+  ): void {
+    r.symbols.DrawCircle3DW(
+      f2i(center.x), f2i(center.y), f2i(center.z),
+      f2i(radius),
+      f2i(rotationAxis.x), f2i(rotationAxis.y), f2i(rotationAxis.z),
+      f2i(rotationAngle),
+      col,
+    );
+  }
+
+  /** Draw a color-filled triangle (vertex in counter-clockwise order!) */
+  static drawTriangle3D(v1: Vec3, v2: Vec3, v3: Vec3, col: Color): void {
+    r.symbols.DrawTriangle3DW(
+      f2i(v1.x), f2i(v1.y), f2i(v1.z),
+      f2i(v2.x), f2i(v2.y), f2i(v2.z),
+      f2i(v3.x), f2i(v3.y), f2i(v3.z),
+      col,
+    );
+  }
+
+  /** Draw a triangle strip defined by points. Points packed as [x0,y0,z0, x1,y1,z1, ...] in Float32Array */
+  static drawTriangleStrip3D(points: Float32Array, pointCount: number, col: Color): void {
+    r.symbols.DrawTriangleStrip3DW(points, pointCount, col);
+  }
+
+  /** Draw cube */
+  static drawCube(position: Vec3, width: number, height: number, length: number, col: Color): void {
+    r.symbols.DrawCubeW(
+      f2i(position.x), f2i(position.y), f2i(position.z),
+      f2i(width), f2i(height), f2i(length),
+      col,
+    );
+  }
+
+  /** Draw cube (Vector version) */
+  static drawCubeV(position: Vec3, size: Vec3, col: Color): void {
+    r.symbols.DrawCubeVW(
+      f2i(position.x), f2i(position.y), f2i(position.z),
+      f2i(size.x), f2i(size.y), f2i(size.z),
+      col,
+    );
+  }
+
+  /** Draw cube wires */
+  static drawCubeWires(position: Vec3, width: number, height: number, length: number, col: Color): void {
+    r.symbols.DrawCubeWiresW(
+      f2i(position.x), f2i(position.y), f2i(position.z),
+      f2i(width), f2i(height), f2i(length),
+      col,
+    );
+  }
+
+  /** Draw cube wires (Vector version) */
+  static drawCubeWiresV(position: Vec3, size: Vec3, col: Color): void {
+    r.symbols.DrawCubeWiresVW(
+      f2i(position.x), f2i(position.y), f2i(position.z),
+      f2i(size.x), f2i(size.y), f2i(size.z),
+      col,
+    );
+  }
+
+  /** Draw sphere */
+  static drawSphere(centerPos: Vec3, radius: number, col: Color): void {
+    r.symbols.DrawSphereW(f2i(centerPos.x), f2i(centerPos.y), f2i(centerPos.z), f2i(radius), col);
+  }
+
+  /** Draw sphere with extended parameters */
+  static drawSphereEx(centerPos: Vec3, radius: number, rings: number, slices: number, col: Color): void {
+    r.symbols.DrawSphereExW(
+      f2i(centerPos.x), f2i(centerPos.y), f2i(centerPos.z),
+      f2i(radius), rings, slices, col,
+    );
+  }
+
+  /** Draw sphere wires */
+  static drawSphereWires(centerPos: Vec3, radius: number, rings: number, slices: number, col: Color): void {
+    r.symbols.DrawSphereWiresW(
+      f2i(centerPos.x), f2i(centerPos.y), f2i(centerPos.z),
+      f2i(radius), rings, slices, col,
+    );
+  }
+
+  /** Draw a cylinder/cone */
+  static drawCylinder(
+    position: Vec3,
+    radiusTop: number,
+    radiusBottom: number,
+    height: number,
+    slices: number,
+    col: Color,
+  ): void {
+    r.symbols.DrawCylinderW(
+      f2i(position.x), f2i(position.y), f2i(position.z),
+      f2i(radiusTop), f2i(radiusBottom), f2i(height), slices, col,
+    );
+  }
+
+  /** Draw a cylinder with base at startPos and top at endPos */
+  static drawCylinderEx(
+    startPos: Vec3,
+    endPos: Vec3,
+    startRadius: number,
+    endRadius: number,
+    sides: number,
+    col: Color,
+  ): void {
+    r.symbols.DrawCylinderExW(
+      f2i(startPos.x), f2i(startPos.y), f2i(startPos.z),
+      f2i(endPos.x), f2i(endPos.y), f2i(endPos.z),
+      f2i(startRadius), f2i(endRadius), sides, col,
+    );
+  }
+
+  /** Draw a cylinder/cone wires */
+  static drawCylinderWires(
+    position: Vec3,
+    radiusTop: number,
+    radiusBottom: number,
+    height: number,
+    slices: number,
+    col: Color,
+  ): void {
+    r.symbols.DrawCylinderWiresW(
+      f2i(position.x), f2i(position.y), f2i(position.z),
+      f2i(radiusTop), f2i(radiusBottom), f2i(height), slices, col,
+    );
+  }
+
+  /** Draw a cylinder wires with base at startPos and top at endPos */
+  static drawCylinderWiresEx(
+    startPos: Vec3,
+    endPos: Vec3,
+    startRadius: number,
+    endRadius: number,
+    sides: number,
+    col: Color,
+  ): void {
+    r.symbols.DrawCylinderWiresExW(
+      f2i(startPos.x), f2i(startPos.y), f2i(startPos.z),
+      f2i(endPos.x), f2i(endPos.y), f2i(endPos.z),
+      f2i(startRadius), f2i(endRadius), sides, col,
+    );
+  }
+
+  /** Draw a capsule with the center of its sphere caps at startPos and endPos */
+  static drawCapsule(
+    startPos: Vec3,
+    endPos: Vec3,
+    radius: number,
+    slices: number,
+    rings: number,
+    col: Color,
+  ): void {
+    r.symbols.DrawCapsuleW(
+      f2i(startPos.x), f2i(startPos.y), f2i(startPos.z),
+      f2i(endPos.x), f2i(endPos.y), f2i(endPos.z),
+      f2i(radius), slices, rings, col,
+    );
+  }
+
+  /** Draw capsule wireframe */
+  static drawCapsuleWires(
+    startPos: Vec3,
+    endPos: Vec3,
+    radius: number,
+    slices: number,
+    rings: number,
+    col: Color,
+  ): void {
+    r.symbols.DrawCapsuleWiresW(
+      f2i(startPos.x), f2i(startPos.y), f2i(startPos.z),
+      f2i(endPos.x), f2i(endPos.y), f2i(endPos.z),
+      f2i(radius), slices, rings, col,
+    );
+  }
+
+  /** Draw a plane XZ */
+  static drawPlane(centerPos: Vec3, size: Vec2, col: Color): void {
+    r.symbols.DrawPlaneW(
+      f2i(centerPos.x), f2i(centerPos.y), f2i(centerPos.z),
+      f2i(size.x), f2i(size.y),
+      col,
+    );
+  }
+
+  /** Draw a ray line */
+  static drawRay(ray: Ray, col: Color): void {
+    r.symbols.DrawRayW(
+      f2i(ray.position.x), f2i(ray.position.y), f2i(ray.position.z),
+      f2i(ray.direction.x), f2i(ray.direction.y), f2i(ray.direction.z),
+      col,
+    );
+  }
+
+  /** Draw a grid */
+  static drawGrid(slices: number, spacing: number): void {
+    r.symbols.DrawGridW(slices, spacing);
   }
 }
