@@ -331,5 +331,15 @@ export const symbols = cc({
       args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
       returns: FFIType.void,
     },
+
+    // Model
+    LoadModelW: { args: [cstring], returns: i32 },
+    UnloadModelW: { args: [i32], returns: FFIType.void },
+    IsModelValidW: { args: [i32], returns: bool },
+    GetModelBoundingBoxW: { args: [ptr, ptr, i32], returns: FFIType.void },
+    DrawModelW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawModelExW: { args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawModelWiresW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawModelWiresExW: { args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
   },
 });

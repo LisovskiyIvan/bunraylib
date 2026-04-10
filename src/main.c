@@ -3,6 +3,17 @@
 
 static float i2f(int i) { float f; memcpy(&f, &i, sizeof(float)); return f; }
 
+#define MAX_MODELS 64
+static Model modelRegistry[MAX_MODELS] = {0};
+static bool modelUsed[MAX_MODELS] = {0};
+
+static int modelAlloc() {
+    for (int i = 0; i < MAX_MODELS; i++) {
+        if (!modelUsed[i]) { modelUsed[i] = true; return i; }
+    }
+    return -1;
+}
+
 void InitWindowW(int width, int height, const char* title) {
     InitWindow(width, height, title);
 }
@@ -808,4 +819,79 @@ void DrawTextureProW(unsigned int id, int w, int h,
     Rectangle src = { srcX, srcY, srcW, srcH };
     Rectangle dst = { dstX, dstY, dstW, dstH };
     DrawTexturePro(tex, src, dst, (Vector2){originX, originY}, r, tint);
+}
+
+// --- Model registry ---
+
+int LoadModelW(const char* fileName) {
+    int slot = modelAlloc();
+    if (slot < 0) return -1;
+    modelRegistry[slot] = LoadModel(fileName);
+    return slot;
+}
+
+void UnloadModelW(int id) {
+    if (id < 0 || id >= MAX_MODELS || !modelUsed[id]) return;
+    UnloadModel(modelRegistry[id]);
+    modelUsed[id] = false;
+}
+
+bool IsModelValidW(int id) {
+    if (id < 0 || id >= MAX_MODELS || !modelUsed[id]) return false;
+    return IsModelValid(modelRegistry[id]);
+}
+
+void GetModelBoundingBoxW(float* outMin, float* outMax, int id) {
+    BoundingBox bb = {0};
+    if (id >= 0 && id < MAX_MODELS && modelUsed[id]) {
+        bb = GetModelBoundingBox(modelRegistry[id]);
+    }
+    outMin[0] = bb.min.x; outMin[1] = bb.min.y; outMin[2] = bb.min.z;
+    outMax[0] = bb.max.x; outMax[1] = bb.max.y; outMax[2] = bb.max.z;
+}
+
+void DrawModelW(int id, int posX, int posY, int posZ, int scale, Color tint) {
+    if (id < 0 || id >= MAX_MODELS || !modelUsed[id]) return;
+    float s;
+    memcpy(&s, &scale, sizeof(float));
+    DrawModel(modelRegistry[id], (Vector3){i2f(posX), i2f(posY), i2f(posZ)}, s, tint);
+}
+
+void DrawModelExW(int id,
+    int posX, int posY, int posZ,
+    int rotAxisX, int rotAxisY, int rotAxisZ, int rotAngle,
+    int scaleX, int scaleY, int scaleZ, Color tint) {
+    if (id < 0 || id >= MAX_MODELS || !modelUsed[id]) return;
+    float ra, sx, sy, sz;
+    memcpy(&ra, &rotAngle, sizeof(float));
+    memcpy(&sx, &scaleX, sizeof(float));
+    memcpy(&sy, &scaleY, sizeof(float));
+    memcpy(&sz, &scaleZ, sizeof(float));
+    DrawModelEx(modelRegistry[id],
+        (Vector3){i2f(posX), i2f(posY), i2f(posZ)},
+        (Vector3){i2f(rotAxisX), i2f(rotAxisY), i2f(rotAxisZ)}, ra,
+        (Vector3){sx, sy, sz}, tint);
+}
+
+void DrawModelWiresW(int id, int posX, int posY, int posZ, int scale, Color tint) {
+    if (id < 0 || id >= MAX_MODELS || !modelUsed[id]) return;
+    float s;
+    memcpy(&s, &scale, sizeof(float));
+    DrawModelWires(modelRegistry[id], (Vector3){i2f(posX), i2f(posY), i2f(posZ)}, s, tint);
+}
+
+void DrawModelWiresExW(int id,
+    int posX, int posY, int posZ,
+    int rotAxisX, int rotAxisY, int rotAxisZ, int rotAngle,
+    int scaleX, int scaleY, int scaleZ, Color tint) {
+    if (id < 0 || id >= MAX_MODELS || !modelUsed[id]) return;
+    float ra, sx, sy, sz;
+    memcpy(&ra, &rotAngle, sizeof(float));
+    memcpy(&sx, &scaleX, sizeof(float));
+    memcpy(&sy, &scaleY, sizeof(float));
+    memcpy(&sz, &scaleZ, sizeof(float));
+    DrawModelWiresEx(modelRegistry[id],
+        (Vector3){i2f(posX), i2f(posY), i2f(posZ)},
+        (Vector3){i2f(rotAxisX), i2f(rotAxisY), i2f(rotAxisZ)}, ra,
+        (Vector3){sx, sy, sz}, tint);
 }

@@ -1,5 +1,5 @@
 import { symbols as r } from "./symbols";
-import type { Vec2, Vec3, Rectangle, Camera2D, Camera3D, Ray, Texture2D, RenderTexture2D } from "./types";
+import type { Vec2, Vec3, Rectangle, Camera2D, Camera3D, Ray, Texture2D, RenderTexture2D, Model, BoundingBox } from "./types";
 import { cstr, f2i } from "./utils";
 import { CString } from "bun:ffi";
 import type { Color } from "./types";
@@ -1828,6 +1828,73 @@ export class Raylib {
       dest.x, dest.y, dest.width, dest.height,
       origin.x, origin.y,
       f2i(rotation),
+      tint,
+    );
+  }
+
+  // --- Model ---
+
+  private static _bbMin = new Float32Array(3);
+  private static _bbMax = new Float32Array(3);
+
+  static loadModel(fileName: string): Model {
+    return r.symbols.LoadModelW(cstr(fileName));
+  }
+
+  static unloadModel(model: Model): void {
+    r.symbols.UnloadModelW(model);
+  }
+
+  static isModelValid(model: Model): boolean {
+    return r.symbols.IsModelValidW(model);
+  }
+
+  static getModelBoundingBox(model: Model): BoundingBox {
+    r.symbols.GetModelBoundingBoxW(this._bbMin, this._bbMax, model);
+    return {
+      min: { x: this._bbMin[0]!, y: this._bbMin[1]!, z: this._bbMin[2]! },
+      max: { x: this._bbMax[0]!, y: this._bbMax[1]!, z: this._bbMax[2]! },
+    };
+  }
+
+  static drawModel(model: Model, position: Vec3, scale: number, tint: Color): void {
+    r.symbols.DrawModelW(model, f2i(position.x), f2i(position.y), f2i(position.z), f2i(scale), tint);
+  }
+
+  static drawModelEx(
+    model: Model,
+    position: Vec3,
+    rotationAxis: Vec3,
+    rotationAngle: number,
+    scale: Vec3,
+    tint: Color,
+  ): void {
+    r.symbols.DrawModelExW(
+      model,
+      f2i(position.x), f2i(position.y), f2i(position.z),
+      f2i(rotationAxis.x), f2i(rotationAxis.y), f2i(rotationAxis.z), f2i(rotationAngle),
+      f2i(scale.x), f2i(scale.y), f2i(scale.z),
+      tint,
+    );
+  }
+
+  static drawModelWires(model: Model, position: Vec3, scale: number, tint: Color): void {
+    r.symbols.DrawModelWiresW(model, f2i(position.x), f2i(position.y), f2i(position.z), f2i(scale), tint);
+  }
+
+  static drawModelWiresEx(
+    model: Model,
+    position: Vec3,
+    rotationAxis: Vec3,
+    rotationAngle: number,
+    scale: Vec3,
+    tint: Color,
+  ): void {
+    r.symbols.DrawModelWiresExW(
+      model,
+      f2i(position.x), f2i(position.y), f2i(position.z),
+      f2i(rotationAxis.x), f2i(rotationAxis.y), f2i(rotationAxis.z), f2i(rotationAngle),
+      f2i(scale.x), f2i(scale.y), f2i(scale.z),
       tint,
     );
   }
