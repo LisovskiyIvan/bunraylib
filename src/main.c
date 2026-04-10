@@ -14,6 +14,17 @@ static int modelAlloc() {
     return -1;
 }
 
+#define MAX_FONTS 32
+static Font fontRegistry[MAX_FONTS] = {0};
+static bool fontUsed[MAX_FONTS] = {0};
+
+static int fontAlloc() {
+    for (int i = 0; i < MAX_FONTS; i++) {
+        if (!fontUsed[i]) { fontUsed[i] = true; return i; }
+    }
+    return -1;
+}
+
 void InitWindowW(int width, int height, const char* title) {
     InitWindow(width, height, title);
 }
@@ -895,3 +906,198 @@ void DrawModelWiresExW(int id,
         (Vector3){i2f(rotAxisX), i2f(rotAxisY), i2f(rotAxisZ)}, ra,
         (Vector3){sx, sy, sz}, tint);
 }
+
+// --- Shapes Vec variants ---
+
+void DrawPixelVW(int x, int y, Color color) {
+    DrawPixelV((Vector2){x, y}, color);
+}
+
+void DrawLineVW(int startX, int startY, int endX, int endY, Color color) {
+    DrawLineV((Vector2){startX, startY}, (Vector2){endX, endY}, color);
+}
+
+void DrawCircleVW(int x, int y, int radius, Color color) {
+    float r;
+    memcpy(&r, &radius, sizeof(float));
+    DrawCircleV((Vector2){x, y}, r, color);
+}
+
+void DrawCircleLinesVW(int x, int y, int radius, Color color) {
+    float r;
+    memcpy(&r, &radius, sizeof(float));
+    DrawCircleLinesV((Vector2){x, y}, r, color);
+}
+
+void DrawRectangleVW(int posX, int posY, int sizeX, int sizeY, Color color) {
+    DrawRectangleV((Vector2){posX, posY}, (Vector2){sizeX, sizeY}, color);
+}
+
+void DrawRectangleRecW(int x, int y, int w, int h, Color color) {
+    DrawRectangleRec((Rectangle){x, y, w, h}, color);
+}
+
+void SetShapesTextureW(unsigned int texId, int texW, int texH, int recX, int recY, int recW, int recH) {
+    Texture2D tex = { texId, texW, texH, 1, 7 };
+    Rectangle rec = { recX, recY, recW, recH };
+    SetShapesTexture(tex, rec);
+}
+
+void GetShapesTextureW(unsigned int* outId, int* outW, int* outH) {
+    Texture2D tex = GetShapesTexture();
+    *outId = tex.id;
+    *outW = tex.width;
+    *outH = tex.height;
+}
+
+void GetShapesTextureRectangleW(float* out) {
+    Rectangle rec = GetShapesTextureRectangle();
+    out[0] = rec.x; out[1] = rec.y; out[2] = rec.width; out[3] = rec.height;
+}
+
+// --- Color utilities ---
+
+int ColorToIntW(Color color) { return ColorToInt(color); }
+
+void ColorNormalizeW(float* out, Color color) {
+    Vector4 v = ColorNormalize(color);
+    out[0] = v.x; out[1] = v.y; out[2] = v.z; out[3] = v.w;
+}
+
+int ColorFromNormalizedW(int x, int y, int z, int w) {
+    float fx, fy, fz, fw;
+    memcpy(&fx, &x, sizeof(float));
+    memcpy(&fy, &y, sizeof(float));
+    memcpy(&fz, &z, sizeof(float));
+    memcpy(&fw, &w, sizeof(float));
+    Color c = ColorFromNormalized((Vector4){fx, fy, fz, fw});
+    return *((int*)&c);
+}
+
+void ColorToHSWW(float* out, Color color) {
+    Vector3 v = ColorToHSV(color);
+    out[0] = v.x; out[1] = v.y; out[2] = v.z;
+}
+
+int ColorFromHSWW(int hue, int saturation, int value) {
+    float h, s, v;
+    memcpy(&h, &hue, sizeof(float));
+    memcpy(&s, &saturation, sizeof(float));
+    memcpy(&v, &value, sizeof(float));
+    Color c = ColorFromHSV(h, s, v);
+    return *((int*)&c);
+}
+
+int ColorTintW(Color color, Color tint) {
+    Color c = ColorTint(color, tint);
+    return *((int*)&c);
+}
+
+int ColorBrightnessW(Color color, int factor) {
+    float f;
+    memcpy(&f, &factor, sizeof(float));
+    Color c = ColorBrightness(color, f);
+    return *((int*)&c);
+}
+
+int ColorContrastW(Color color, int contrast) {
+    float c_val;
+    memcpy(&c_val, &contrast, sizeof(float));
+    Color c = ColorContrast(color, c_val);
+    return *((int*)&c);
+}
+
+int ColorAlphaW(Color color, int alpha) {
+    float a;
+    memcpy(&a, &alpha, sizeof(float));
+    Color c = ColorAlpha(color, a);
+    return *((int*)&c);
+}
+
+int ColorAlphaBlendW(Color dst, Color src, Color tint) {
+    Color c = ColorAlphaBlend(dst, src, tint);
+    return *((int*)&c);
+}
+
+int ColorLerpW(Color color1, Color color2, int factor) {
+    float f;
+    memcpy(&f, &factor, sizeof(float));
+    Color c = ColorLerp(color1, color2, f);
+    return *((int*)&c);
+}
+
+int GetColorW(unsigned int hexValue) {
+    Color c = GetColor(hexValue);
+    return *((int*)&c);
+}
+
+int FadeW(Color color, int alpha) {
+    float a;
+    memcpy(&a, &alpha, sizeof(float));
+    Color c = Fade(color, a);
+    return *((int*)&c);
+}
+
+bool ColorIsEqualW(Color col1, Color col2) { return ColorIsEqual(col1, col2); }
+
+int GetPixelDataSizeW(int width, int height, int format) { return GetPixelDataSize(width, height, format); }
+
+// --- Font registry ---
+
+int LoadFontW(const char* fileName) {
+    int slot = fontAlloc();
+    if (slot < 0) return -1;
+    fontRegistry[slot] = LoadFont(fileName);
+    return slot;
+}
+
+int LoadFontExW(const char* fileName, int fontSize) {
+    int slot = fontAlloc();
+    if (slot < 0) return -1;
+    fontRegistry[slot] = LoadFontEx(fileName, fontSize, NULL, 0);
+    return slot;
+}
+
+int GetFontDefaultW() {
+    int slot = fontAlloc();
+    if (slot < 0) return -1;
+    fontRegistry[slot] = GetFontDefault();
+    return slot;
+}
+
+void UnloadFontW(int id) {
+    if (id < 0 || id >= MAX_FONTS || !fontUsed[id]) return;
+    UnloadFont(fontRegistry[id]);
+    fontUsed[id] = false;
+}
+
+bool IsFontValidW(int id) {
+    if (id < 0 || id >= MAX_FONTS || !fontUsed[id]) return false;
+    return IsFontValid(fontRegistry[id]);
+}
+
+int MeasureTextW(const char* text, int fontSize) {
+    return MeasureText(text, fontSize);
+}
+
+void MeasureTextExW(float* out, int fontId, const char* text, int fontSize, int spacing) {
+    float sp;
+    memcpy(&sp, &spacing, sizeof(float));
+    Vector2 v = MeasureTextEx(fontRegistry[fontId], text, fontSize, sp);
+    out[0] = v.x; out[1] = v.y;
+}
+
+void DrawTextExW(int fontId, const char* text, int posX, int posY, int fontSize, int spacing, Color tint) {
+    float sp;
+    memcpy(&sp, &spacing, sizeof(float));
+    DrawTextEx(fontRegistry[fontId], text, (Vector2){posX, posY}, fontSize, sp, tint);
+}
+
+void DrawTextProW(int fontId, const char* text, int posX, int posY, int originX, int originY, int rotation, int fontSize, int spacing, Color tint) {
+    float rot, sp;
+    memcpy(&rot, &rotation, sizeof(float));
+    memcpy(&sp, &spacing, sizeof(float));
+    DrawTextPro(fontRegistry[fontId], text, (Vector2){posX, posY}, (Vector2){originX, originY}, rot, fontSize, sp, tint);
+}
+
+void SetTextLineSpacingW(int spacing) { SetTextLineSpacing(spacing); }

@@ -39,6 +39,8 @@ export type RenderTexture2D = {
 
 export type Model = number;
 
+export type Font = number;
+
 export type BoundingBox = {
   min: Vec3;
   max: Vec3;

@@ -1,5 +1,5 @@
 import { symbols as r } from "./symbols";
-import type { Vec2, Vec3, Rectangle, Camera2D, Camera3D, Ray, Texture2D, RenderTexture2D, Model, BoundingBox } from "./types";
+import type { Vec2, Vec3, Rectangle, Camera2D, Camera3D, Ray, Texture2D, RenderTexture2D, Model, BoundingBox, Font } from "./types";
 import { cstr, f2i } from "./utils";
 import { CString } from "bun:ffi";
 import type { Color } from "./types";
@@ -109,7 +109,7 @@ export class Raylib {
 
   /** Draw a pixel (using vector position) */
   static drawPixelV(position: Vec2, col: Color): void {
-    r.symbols.DrawPixelW(position.x, position.y, col);
+    r.symbols.DrawPixelVW(position.x, position.y, col);
   }
 
   /** Draw a line */
@@ -119,7 +119,7 @@ export class Raylib {
 
   /** Draw a line (using vector positions) */
   static drawLineV(startPos: Vec2, endPos: Vec2, col: Color): void {
-    r.symbols.DrawLineW(startPos.x, startPos.y, endPos.x, endPos.y, col);
+    r.symbols.DrawLineVW(startPos.x, startPos.y, endPos.x, endPos.y, col);
   }
 
   /** Draw a line with defined thickness */
@@ -144,7 +144,7 @@ export class Raylib {
 
   /** Draw a color-filled circle (using vector center) */
   static drawCircleV(center: Vec2, radius: number, col: Color): void {
-    r.symbols.DrawCircleW(center.x, center.y, radius, col);
+    r.symbols.DrawCircleVW(center.x, center.y, f2i(radius), col);
   }
 
   /**
@@ -221,7 +221,7 @@ export class Raylib {
 
   /** Draw circle outline (using vector center) */
   static drawCircleLinesV(center: Vec2, radius: number, col: Color): void {
-    r.symbols.DrawCircleLinesW(center.x, center.y, radius, col);
+    r.symbols.DrawCircleLinesVW(center.x, center.y, f2i(radius), col);
   }
 
   /** Draw a color-filled ellipse */
@@ -310,12 +310,11 @@ export class Raylib {
 
   /** Draw a color-filled rectangle (using vector position and size) */
   static drawRectangleV(pos: Vec2, size: Vec2, col: Color): void {
-    r.symbols.DrawRectangleW(pos.x, pos.y, size.x, size.y, col);
+    r.symbols.DrawRectangleVW(pos.x, pos.y, size.x, size.y, col);
   }
 
-  /** Draw a color-filled rectangle (using Rectangle struct) */
   static drawRectangleRec(rec: Rectangle, col: Color): void {
-    r.symbols.DrawRectangleW(rec.x, rec.y, rec.width, rec.height, col);
+    r.symbols.DrawRectangleRecW(rec.x, rec.y, rec.width, rec.height, col);
   }
 
   /** Draw a color-filled rectangle with pro parameters (rotation and origin) */
@@ -1897,5 +1896,106 @@ export class Raylib {
       f2i(scale.x), f2i(scale.y), f2i(scale.z),
       tint,
     );
+  }
+
+  // --- Shapes texture ---
+
+  static setShapesTexture(texture: Texture2D, source: Rectangle): void {
+    r.symbols.SetShapesTextureW(texture.id, texture.width, texture.height, source.x, source.y, source.width, source.height);
+  }
+
+  private static _shapesTexId = new Uint32Array(1);
+  private static _shapesTexW = new Int32Array(1);
+  private static _shapesTexH = new Int32Array(1);
+
+  static getShapesTexture(): Texture2D {
+    r.symbols.GetShapesTextureW(this._shapesTexId, this._shapesTexW, this._shapesTexH);
+    return { id: this._shapesTexId[0]!, width: this._shapesTexW[0]!, height: this._shapesTexH[0]! };
+  }
+
+  static getShapesTextureRectangle(): Rectangle {
+    r.symbols.GetShapesTextureRectangleW(_recBuf);
+    return { x: _recBuf[0]!, y: _recBuf[1]!, width: _recBuf[2]!, height: _recBuf[3]! };
+  }
+
+  // --- Color utilities ---
+
+  private static _vec4Buf = new Float32Array(4);
+  private static _vec3Buf2 = new Float32Array(3);
+
+  static colorToInt(c: Color): number { return r.symbols.ColorToIntW(c); }
+
+  static colorNormalize(c: Color): { x: number; y: number; z: number; w: number } {
+    r.symbols.ColorNormalizeW(this._vec4Buf, c);
+    return { x: this._vec4Buf[0]!, y: this._vec4Buf[1]!, z: this._vec4Buf[2]!, w: this._vec4Buf[3]! };
+  }
+
+  static colorFromNormalized(normalized: { x: number; y: number; z: number; w: number }): Color {
+    return r.symbols.ColorFromNormalizedW(f2i(normalized.x), f2i(normalized.y), f2i(normalized.z), f2i(normalized.w));
+  }
+
+  static colorToHSV(c: Color): { h: number; s: number; v: number } {
+    r.symbols.ColorToHSWW(this._vec3Buf2, c);
+    return { h: this._vec3Buf2[0]!, s: this._vec3Buf2[1]!, v: this._vec3Buf2[2]! };
+  }
+
+  static colorFromHSV(hue: number, saturation: number, value: number): Color {
+    return r.symbols.ColorFromHSWW(f2i(hue), f2i(saturation), f2i(value));
+  }
+
+  static colorTint(color: Color, tint: Color): Color { return r.symbols.ColorTintW(color, tint); }
+  static colorBrightness(color: Color, factor: number): Color { return r.symbols.ColorBrightnessW(color, f2i(factor)); }
+  static colorContrast(color: Color, contrast: number): Color { return r.symbols.ColorContrastW(color, f2i(contrast)); }
+  static colorAlpha(color: Color, alpha: number): Color { return r.symbols.ColorAlphaW(color, f2i(alpha)); }
+  static colorAlphaBlend(dst: Color, src: Color, tint: Color): Color { return r.symbols.ColorAlphaBlendW(dst, src, tint); }
+  static colorLerp(color1: Color, color2: Color, factor: number): Color { return r.symbols.ColorLerpW(color1, color2, f2i(factor)); }
+  static getColor(hexValue: number): Color { return r.symbols.GetColorW(hexValue); }
+  static fade(color: Color, alpha: number): Color { return r.symbols.FadeW(color, f2i(alpha)); }
+  static colorIsEqual(col1: Color, col2: Color): boolean { return r.symbols.ColorIsEqualW(col1, col2); }
+  static getPixelDataSize(width: number, height: number, format: number): number { return r.symbols.GetPixelDataSizeW(width, height, format); }
+
+  // --- Font ---
+
+  private static _vec2Buf2 = new Float32Array(2);
+
+  static loadFont(fileName: string): Font {
+    return r.symbols.LoadFontW(cstr(fileName));
+  }
+
+  static loadFontEx(fileName: string, fontSize: number): Font {
+    return r.symbols.LoadFontExW(cstr(fileName), fontSize);
+  }
+
+  static getFontDefault(): Font {
+    return r.symbols.GetFontDefaultW();
+  }
+
+  static unloadFont(font: Font): void {
+    r.symbols.UnloadFontW(font);
+  }
+
+  static isFontValid(font: Font): boolean {
+    return r.symbols.IsFontValidW(font);
+  }
+
+  static measureText(text: string, fontSize: number): number {
+    return r.symbols.MeasureTextW(cstr(text), fontSize);
+  }
+
+  static measureTextEx(font: Font, text: string, fontSize: number, spacing: number): Vec2 {
+    r.symbols.MeasureTextExW(this._vec2Buf2, font, cstr(text), fontSize, f2i(spacing));
+    return { x: this._vec2Buf2[0]!, y: this._vec2Buf2[1]! };
+  }
+
+  static drawTextEx(font: Font, text: string, position: Vec2, fontSize: number, spacing: number, tint: Color): void {
+    r.symbols.DrawTextExW(font, cstr(text), position.x, position.y, fontSize, f2i(spacing), tint);
+  }
+
+  static drawTextPro(font: Font, text: string, position: Vec2, origin: Vec2, rotation: number, fontSize: number, spacing: number, tint: Color): void {
+    r.symbols.DrawTextProW(font, cstr(text), position.x, position.y, origin.x, origin.y, f2i(rotation), fontSize, f2i(spacing), tint);
+  }
+
+  static setTextLineSpacing(spacing: number): void {
+    r.symbols.SetTextLineSpacingW(spacing);
   }
 }
