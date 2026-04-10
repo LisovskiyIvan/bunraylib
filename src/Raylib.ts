@@ -1,9 +1,8 @@
 import { symbols as r } from "./symbols";
 import type { Vec2, Vec3, Rectangle, Camera2D, Camera3D, Ray } from "./types";
-import { cstr, color, f2i, type Color } from "./utils";
+import { cstr, f2i } from "./utils";
 import { CString } from "bun:ffi";
-export { color };
-export type { Color, Vec2, Vec3, Rectangle, Camera2D, Camera3D, Ray };
+import type { Color } from "./types";
 
 const _vec2Buf = new Float32Array(2);
 const _recBuf = new Float32Array(4);

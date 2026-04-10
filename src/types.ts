@@ -23,3 +23,5 @@ export type Ray = {
   position: Vec3;
   direction: Vec3;
 };
+
+export type Color = number;

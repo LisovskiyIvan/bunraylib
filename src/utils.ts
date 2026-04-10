@@ -14,6 +14,3 @@ export function f2i(val: number): number {
 export const color = (r: number, g: number, b: number, a: number = 255) => {
   return (a << 24) | (b << 16) | (g << 8) | r;
 };
-
-export type Color = number;
-export type Vec2 = { x: number; y: number };
