@@ -432,3 +432,288 @@ void DrawRayW(int px, int py, int pz, int dx, int dy, int dz, Color color) {
 void DrawGridW(int slices, int spacing) {
     DrawGrid(slices, spacing);
 }
+
+// --- Window state ---
+
+bool IsWindowReadyW() { return IsWindowReady(); }
+bool IsWindowFullscreenW() { return IsWindowFullscreen(); }
+bool IsWindowHiddenW() { return IsWindowHidden(); }
+bool IsWindowMinimizedW() { return IsWindowMinimized(); }
+bool IsWindowMaximizedW() { return IsWindowMaximized(); }
+bool IsWindowFocusedW() { return IsWindowFocused(); }
+bool IsWindowResizedW() { return IsWindowResized(); }
+bool IsWindowStateW(unsigned int flag) { return IsWindowState(flag); }
+
+void SetWindowStateW(unsigned int flags) { SetWindowState(flags); }
+void ClearWindowStateW(unsigned int flags) { ClearWindowState(flags); }
+void ToggleFullscreenW() { ToggleFullscreen(); }
+void ToggleBorderlessWindowedW() { ToggleBorderlessWindowed(); }
+void MaximizeWindowW() { MaximizeWindow(); }
+void MinimizeWindowW() { MinimizeWindow(); }
+void RestoreWindowW() { RestoreWindow(); }
+
+void SetWindowTitleW(const char* title) { SetWindowTitle(title); }
+void SetWindowPositionW(int x, int y) { SetWindowPosition(x, y); }
+void SetWindowMonitorW(int monitor) { SetWindowMonitor(monitor); }
+void SetWindowMinSizeW(int w, int h) { SetWindowMinSize(w, h); }
+void SetWindowMaxSizeW(int w, int h) { SetWindowMaxSize(w, h); }
+void SetWindowSizeW(int w, int h) { SetWindowSize(w, h); }
+void SetWindowOpacityW(float opacity) { SetWindowOpacity(opacity); }
+void SetWindowFocusedW() { SetWindowFocused(); }
+
+int GetScreenWidthW() { return GetScreenWidth(); }
+int GetScreenHeightW() { return GetScreenHeight(); }
+int GetRenderWidthW() { return GetRenderWidth(); }
+int GetRenderHeightW() { return GetRenderHeight(); }
+
+int GetMonitorCountW() { return GetMonitorCount(); }
+int GetCurrentMonitorW() { return GetCurrentMonitor(); }
+
+void GetMonitorPositionW(float* out, int monitor) {
+    Vector2 v = GetMonitorPosition(monitor);
+    out[0] = v.x; out[1] = v.y;
+}
+
+int GetMonitorWidthW(int monitor) { return GetMonitorWidth(monitor); }
+int GetMonitorHeightW(int monitor) { return GetMonitorHeight(monitor); }
+int GetMonitorPhysicalWidthW(int monitor) { return GetMonitorPhysicalWidth(monitor); }
+int GetMonitorPhysicalHeightW(int monitor) { return GetMonitorPhysicalHeight(monitor); }
+int GetMonitorRefreshRateW(int monitor) { return GetMonitorRefreshRate(monitor); }
+
+void GetWindowPositionW(float* out) {
+    Vector2 v = GetWindowPosition();
+    out[0] = v.x; out[1] = v.y;
+}
+
+void GetWindowScaleDPIW(float* out) {
+    Vector2 v = GetWindowScaleDPI();
+    out[0] = v.x; out[1] = v.y;
+}
+
+const char* GetMonitorNameW(int monitor) { return GetMonitorName(monitor); }
+
+void SetClipboardTextW(const char* text) { SetClipboardText(text); }
+const char* GetClipboardTextW() { return GetClipboardText(); }
+
+void EnableEventWaitingW() { EnableEventWaiting(); }
+void DisableEventWaitingW() { DisableEventWaiting(); }
+
+// --- Cursor ---
+
+void ShowCursorW() { ShowCursor(); }
+void HideCursorW() { HideCursor(); }
+bool IsCursorHiddenW() { return IsCursorHidden(); }
+void EnableCursorW() { EnableCursor(); }
+void DisableCursorW() { DisableCursor(); }
+bool IsCursorOnScreenW() { return IsCursorOnScreen(); }
+
+// --- Drawing modes ---
+
+void BeginTextureModeW(unsigned int id) {
+    RenderTexture2D rt = { id, {0}, {0} };
+    BeginTextureMode(rt);
+}
+void EndTextureModeW() { EndTextureMode(); }
+
+void BeginBlendModeW(int mode) { BeginBlendMode(mode); }
+void EndBlendModeW() { EndBlendMode(); }
+
+void BeginScissorModeW(int x, int y, int w, int h) { BeginScissorMode(x, y, w, h); }
+void EndScissorModeW() { EndScissorMode(); }
+
+// --- Timing ---
+
+double GetTimeW() { return GetTime(); }
+int GetFPSW() { return GetFPS(); }
+void SwapScreenBufferW() { SwapScreenBuffer(); }
+void PollInputEventsW() { PollInputEvents(); }
+void WaitTimeW(double seconds) { WaitTime(seconds); }
+
+// --- Random ---
+
+void SetRandomSeedW(unsigned int seed) { SetRandomSeed(seed); }
+int GetRandomValueW(int min, int max) { return GetRandomValue(min, max); }
+
+// --- Misc ---
+
+void TakeScreenshotW(const char* fileName) { TakeScreenshot(fileName); }
+void SetConfigFlagsW(unsigned int flags) { SetConfigFlags(flags); }
+void OpenURLW(const char* url) { OpenURL(url); }
+
+// --- Input: Keyboard ---
+
+bool IsKeyPressedW(int key) { return IsKeyPressed(key); }
+bool IsKeyPressedRepeatW(int key) { return IsKeyPressedRepeat(key); }
+bool IsKeyDownW(int key) { return IsKeyDown(key); }
+bool IsKeyReleasedW(int key) { return IsKeyReleased(key); }
+bool IsKeyUpW(int key) { return IsKeyUp(key); }
+int GetKeyPressedW() { return GetKeyPressed(); }
+int GetCharPressedW() { return GetCharPressed(); }
+void SetExitKeyW(int key) { SetExitKey(key); }
+
+// --- Input: Gamepad ---
+
+bool IsGamepadAvailableW(int gamepad) { return IsGamepadAvailable(gamepad); }
+const char* GetGamepadNameW(int gamepad) { return GetGamepadName(gamepad); }
+bool IsGamepadButtonPressedW(int gamepad, int button) { return IsGamepadButtonPressed(gamepad, button); }
+bool IsGamepadButtonDownW(int gamepad, int button) { return IsGamepadButtonDown(gamepad, button); }
+bool IsGamepadButtonReleasedW(int gamepad, int button) { return IsGamepadButtonReleased(gamepad, button); }
+bool IsGamepadButtonUpW(int gamepad, int button) { return IsGamepadButtonUp(gamepad, button); }
+int GetGamepadButtonPressedW() { return GetGamepadButtonPressed(); }
+int GetGamepadAxisCountW(int gamepad) { return GetGamepadAxisCount(gamepad); }
+float GetGamepadAxisMovementW(int gamepad, int axis) { return GetGamepadAxisMovement(gamepad, axis); }
+int SetGamepadMappingsW(const char* mappings) { return SetGamepadMappings(mappings); }
+
+// --- Input: Mouse ---
+
+bool IsMouseButtonPressedW(int button) { return IsMouseButtonPressed(button); }
+bool IsMouseButtonDownW(int button) { return IsMouseButtonDown(button); }
+bool IsMouseButtonReleasedW(int button) { return IsMouseButtonReleased(button); }
+bool IsMouseButtonUpW(int button) { return IsMouseButtonUp(button); }
+int GetMouseXW() { return GetMouseX(); }
+int GetMouseYW() { return GetMouseY(); }
+
+void GetMousePositionW(float* out) {
+    Vector2 v = GetMousePosition();
+    out[0] = v.x; out[1] = v.y;
+}
+
+void GetMouseDeltaW(float* out) {
+    Vector2 v = GetMouseDelta();
+    out[0] = v.x; out[1] = v.y;
+}
+
+void SetMousePositionW(int x, int y) { SetMousePosition(x, y); }
+void SetMouseOffsetW(int x, int y) { SetMouseOffset(x, y); }
+
+void SetMouseScaleW(float scaleX, float scaleY) { SetMouseScale(scaleX, scaleY); }
+float GetMouseWheelMoveW() { return GetMouseWheelMove(); }
+
+void GetMouseWheelMoveVW(float* out) {
+    Vector2 v = GetMouseWheelMoveV();
+    out[0] = v.x; out[1] = v.y;
+}
+
+void SetMouseCursorW(int cursor) { SetMouseCursor(cursor); }
+
+// --- Input: Touch ---
+
+int GetTouchXW() { return GetTouchX(); }
+int GetTouchYW() { return GetTouchY(); }
+
+void GetTouchPositionW(float* out, int index) {
+    Vector2 v = GetTouchPosition(index);
+    out[0] = v.x; out[1] = v.y;
+}
+
+int GetTouchPointIdW(int index) { return GetTouchPointId(index); }
+int GetTouchPointCountW() { return GetTouchPointCount(); }
+
+// --- Gestures ---
+
+void SetGesturesEnabledW(unsigned int flags) { SetGesturesEnabled(flags); }
+bool IsGestureDetectedW(unsigned int gesture) { return IsGestureDetected(gesture); }
+int GetGestureDetectedW() { return GetGestureDetected(); }
+float GetGestureHoldDurationW() { return GetGestureHoldDuration(); }
+
+void GetGestureDragVectorW(float* out) {
+    Vector2 v = GetGestureDragVector();
+    out[0] = v.x; out[1] = v.y;
+}
+
+float GetGestureDragAngleW() { return GetGestureDragAngle(); }
+
+void GetGesturePinchVectorW(float* out) {
+    Vector2 v = GetGesturePinchVector();
+    out[0] = v.x; out[1] = v.y;
+}
+
+float GetGesturePinchAngleW() { return GetGesturePinchAngle(); }
+
+// --- Camera system ---
+
+void UpdateCameraW(float* pos, float* tar, float* up, float* fovy, int* projection, int mode) {
+    Camera3D cam = {
+        {pos[0], pos[1], pos[2]},
+        {tar[0], tar[1], tar[2]},
+        {up[0], up[1], up[2]},
+        fovy[0],
+        projection[0]
+    };
+    UpdateCamera(&cam, mode);
+    pos[0] = cam.position.x; pos[1] = cam.position.y; pos[2] = cam.position.z;
+    tar[0] = cam.target.x;   tar[1] = cam.target.y;   tar[2] = cam.target.z;
+    up[0]  = cam.up.x;       up[1]  = cam.up.y;       up[2]  = cam.up.z;
+    fovy[0] = cam.fovy;
+    projection[0] = cam.projection;
+}
+
+void UpdateCameraProW(float* pos, float* tar, float* up, float* fovy, int* projection,
+                      float mx, float my, float mz, float rx, float ry, float rz, float zoom) {
+    Camera3D cam = {
+        {pos[0], pos[1], pos[2]},
+        {tar[0], tar[1], tar[2]},
+        {up[0], up[1], up[2]},
+        fovy[0],
+        projection[0]
+    };
+    UpdateCameraPro(&cam, (Vector3){mx, my, mz}, (Vector3){rx, ry, rz}, zoom);
+    pos[0] = cam.position.x; pos[1] = cam.position.y; pos[2] = cam.position.z;
+    tar[0] = cam.target.x;   tar[1] = cam.target.y;   tar[2] = cam.target.z;
+    up[0]  = cam.up.x;       up[1]  = cam.up.y;       up[2]  = cam.up.z;
+    fovy[0] = cam.fovy;
+    projection[0] = cam.projection;
+}
+
+// --- Screen-space ---
+
+void GetScreenToWorldRayW(float* outPos, float* outDir, int screenX, int screenY,
+    int camPosX, int camPosY, int camPosZ, int camTarX, int camTarY, int camTarZ,
+    int camUpX, int camUpY, int camUpZ, int camFovy, int camProj) {
+    Camera3D cam = {
+        {i2f(camPosX), i2f(camPosY), i2f(camPosZ)},
+        {i2f(camTarX), i2f(camTarY), i2f(camTarZ)},
+        {i2f(camUpX), i2f(camUpY), i2f(camUpZ)},
+        i2f(camFovy), camProj
+    };
+    Ray r = GetScreenToWorldRay((Vector2){screenX, screenY}, cam);
+    outPos[0] = r.position.x; outPos[1] = r.position.y; outPos[2] = r.position.z;
+    outDir[0] = r.direction.x; outDir[1] = r.direction.y; outDir[2] = r.direction.z;
+}
+
+void GetWorldToScreenW(float* out, int posX, int posY, int posZ,
+    int camPosX, int camPosY, int camPosZ, int camTarX, int camTarY, int camTarZ,
+    int camUpX, int camUpY, int camUpZ, int camFovy, int camProj) {
+    Camera3D cam = {
+        {i2f(camPosX), i2f(camPosY), i2f(camPosZ)},
+        {i2f(camTarX), i2f(camTarY), i2f(camTarZ)},
+        {i2f(camUpX), i2f(camUpY), i2f(camUpZ)},
+        i2f(camFovy), camProj
+    };
+    Vector2 v = GetWorldToScreen((Vector3){i2f(posX), i2f(posY), i2f(posZ)}, cam);
+    out[0] = v.x; out[1] = v.y;
+}
+
+void GetWorldToScreen2DW(float* out, int posX, int posY,
+    int offX, int offY, int tarX, int tarY, int rotation, int zoom) {
+    float r, z;
+    memcpy(&r, &rotation, sizeof(float));
+    memcpy(&z, &zoom, sizeof(float));
+    Camera2D cam = { {offX, offY}, {tarX, tarY}, r, z };
+    Vector2 v = GetWorldToScreen2D((Vector2){posX, posY}, cam);
+    out[0] = v.x; out[1] = v.y;
+}
+
+void GetScreenToWorld2DW(float* out, int posX, int posY,
+    int offX, int offY, int tarX, int tarY, int rotation, int zoom) {
+    float r, z;
+    memcpy(&r, &rotation, sizeof(float));
+    memcpy(&z, &zoom, sizeof(float));
+    Camera2D cam = { {offX, offY}, {tarX, tarY}, r, z };
+    Vector2 v = GetScreenToWorld2D((Vector2){posX, posY}, cam);
+    out[0] = v.x; out[1] = v.y;
+}
+
+// --- DrawFPS ---
+
+void DrawFPSW(int posX, int posY) { DrawFPS(posX, posY); }

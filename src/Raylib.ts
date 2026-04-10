@@ -1,6 +1,7 @@
 import { symbols as r } from "./symbols";
 import type { Vec2, Vec3, Rectangle, Camera2D, Camera3D, Ray } from "./types";
 import { cstr, color, f2i, type Color } from "./utils";
+import { CString } from "bun:ffi";
 export { color };
 export type { Color, Vec2, Vec3, Rectangle, Camera2D, Camera3D, Ray };
 
@@ -58,9 +59,15 @@ export class Raylib {
   /** Begin 3D mode with custom camera */
   static beginMode3D(camera: Camera3D): void {
     r.symbols.BeginMode3DW(
-      f2i(camera.position.x), f2i(camera.position.y), f2i(camera.position.z),
-      f2i(camera.target.x), f2i(camera.target.y), f2i(camera.target.z),
-      f2i(camera.up.x), f2i(camera.up.y), f2i(camera.up.z),
+      f2i(camera.position.x),
+      f2i(camera.position.y),
+      f2i(camera.position.z),
+      f2i(camera.target.x),
+      f2i(camera.target.y),
+      f2i(camera.target.z),
+      f2i(camera.up.x),
+      f2i(camera.up.y),
+      f2i(camera.up.z),
       f2i(camera.fovy),
       camera.projection,
     );
@@ -858,14 +865,23 @@ export class Raylib {
       rec2.width,
       rec2.height,
     );
-    return { x: _recBuf[0]!, y: _recBuf[1]!, width: _recBuf[2]!, height: _recBuf[3]! };
+    return {
+      x: _recBuf[0]!,
+      y: _recBuf[1]!,
+      width: _recBuf[2]!,
+      height: _recBuf[3]!,
+    };
   }
 
   /** Draw a line in 3D world space */
   static drawLine3D(startPos: Vec3, endPos: Vec3, col: Color): void {
     r.symbols.DrawLine3DW(
-      f2i(startPos.x), f2i(startPos.y), f2i(startPos.z),
-      f2i(endPos.x), f2i(endPos.y), f2i(endPos.z),
+      f2i(startPos.x),
+      f2i(startPos.y),
+      f2i(startPos.z),
+      f2i(endPos.x),
+      f2i(endPos.y),
+      f2i(endPos.z),
       col,
     );
   }
@@ -884,9 +900,13 @@ export class Raylib {
     col: Color,
   ): void {
     r.symbols.DrawCircle3DW(
-      f2i(center.x), f2i(center.y), f2i(center.z),
+      f2i(center.x),
+      f2i(center.y),
+      f2i(center.z),
       f2i(radius),
-      f2i(rotationAxis.x), f2i(rotationAxis.y), f2i(rotationAxis.z),
+      f2i(rotationAxis.x),
+      f2i(rotationAxis.y),
+      f2i(rotationAxis.z),
       f2i(rotationAngle),
       col,
     );
@@ -895,9 +915,15 @@ export class Raylib {
   /** Draw a color-filled triangle (vertex in counter-clockwise order!) */
   static drawTriangle3D(v1: Vec3, v2: Vec3, v3: Vec3, col: Color): void {
     r.symbols.DrawTriangle3DW(
-      f2i(v1.x), f2i(v1.y), f2i(v1.z),
-      f2i(v2.x), f2i(v2.y), f2i(v2.z),
-      f2i(v3.x), f2i(v3.y), f2i(v3.z),
+      f2i(v1.x),
+      f2i(v1.y),
+      f2i(v1.z),
+      f2i(v2.x),
+      f2i(v2.y),
+      f2i(v2.z),
+      f2i(v3.x),
+      f2i(v3.y),
+      f2i(v3.z),
       col,
     );
   }
@@ -910,8 +936,12 @@ export class Raylib {
   /** Draw cube */
   static drawCube(position: Vec3, width: number, height: number, length: number, col: Color): void {
     r.symbols.DrawCubeW(
-      f2i(position.x), f2i(position.y), f2i(position.z),
-      f2i(width), f2i(height), f2i(length),
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(width),
+      f2i(height),
+      f2i(length),
       col,
     );
   }
@@ -919,17 +949,31 @@ export class Raylib {
   /** Draw cube (Vector version) */
   static drawCubeV(position: Vec3, size: Vec3, col: Color): void {
     r.symbols.DrawCubeVW(
-      f2i(position.x), f2i(position.y), f2i(position.z),
-      f2i(size.x), f2i(size.y), f2i(size.z),
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(size.x),
+      f2i(size.y),
+      f2i(size.z),
       col,
     );
   }
 
   /** Draw cube wires */
-  static drawCubeWires(position: Vec3, width: number, height: number, length: number, col: Color): void {
+  static drawCubeWires(
+    position: Vec3,
+    width: number,
+    height: number,
+    length: number,
+    col: Color,
+  ): void {
     r.symbols.DrawCubeWiresW(
-      f2i(position.x), f2i(position.y), f2i(position.z),
-      f2i(width), f2i(height), f2i(length),
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(width),
+      f2i(height),
+      f2i(length),
       col,
     );
   }
@@ -937,8 +981,12 @@ export class Raylib {
   /** Draw cube wires (Vector version) */
   static drawCubeWiresV(position: Vec3, size: Vec3, col: Color): void {
     r.symbols.DrawCubeWiresVW(
-      f2i(position.x), f2i(position.y), f2i(position.z),
-      f2i(size.x), f2i(size.y), f2i(size.z),
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(size.x),
+      f2i(size.y),
+      f2i(size.z),
       col,
     );
   }
@@ -949,18 +997,40 @@ export class Raylib {
   }
 
   /** Draw sphere with extended parameters */
-  static drawSphereEx(centerPos: Vec3, radius: number, rings: number, slices: number, col: Color): void {
+  static drawSphereEx(
+    centerPos: Vec3,
+    radius: number,
+    rings: number,
+    slices: number,
+    col: Color,
+  ): void {
     r.symbols.DrawSphereExW(
-      f2i(centerPos.x), f2i(centerPos.y), f2i(centerPos.z),
-      f2i(radius), rings, slices, col,
+      f2i(centerPos.x),
+      f2i(centerPos.y),
+      f2i(centerPos.z),
+      f2i(radius),
+      rings,
+      slices,
+      col,
     );
   }
 
   /** Draw sphere wires */
-  static drawSphereWires(centerPos: Vec3, radius: number, rings: number, slices: number, col: Color): void {
+  static drawSphereWires(
+    centerPos: Vec3,
+    radius: number,
+    rings: number,
+    slices: number,
+    col: Color,
+  ): void {
     r.symbols.DrawSphereWiresW(
-      f2i(centerPos.x), f2i(centerPos.y), f2i(centerPos.z),
-      f2i(radius), rings, slices, col,
+      f2i(centerPos.x),
+      f2i(centerPos.y),
+      f2i(centerPos.z),
+      f2i(radius),
+      rings,
+      slices,
+      col,
     );
   }
 
@@ -974,8 +1044,14 @@ export class Raylib {
     col: Color,
   ): void {
     r.symbols.DrawCylinderW(
-      f2i(position.x), f2i(position.y), f2i(position.z),
-      f2i(radiusTop), f2i(radiusBottom), f2i(height), slices, col,
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(radiusTop),
+      f2i(radiusBottom),
+      f2i(height),
+      slices,
+      col,
     );
   }
 
@@ -989,9 +1065,16 @@ export class Raylib {
     col: Color,
   ): void {
     r.symbols.DrawCylinderExW(
-      f2i(startPos.x), f2i(startPos.y), f2i(startPos.z),
-      f2i(endPos.x), f2i(endPos.y), f2i(endPos.z),
-      f2i(startRadius), f2i(endRadius), sides, col,
+      f2i(startPos.x),
+      f2i(startPos.y),
+      f2i(startPos.z),
+      f2i(endPos.x),
+      f2i(endPos.y),
+      f2i(endPos.z),
+      f2i(startRadius),
+      f2i(endRadius),
+      sides,
+      col,
     );
   }
 
@@ -1005,8 +1088,14 @@ export class Raylib {
     col: Color,
   ): void {
     r.symbols.DrawCylinderWiresW(
-      f2i(position.x), f2i(position.y), f2i(position.z),
-      f2i(radiusTop), f2i(radiusBottom), f2i(height), slices, col,
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(radiusTop),
+      f2i(radiusBottom),
+      f2i(height),
+      slices,
+      col,
     );
   }
 
@@ -1020,9 +1109,16 @@ export class Raylib {
     col: Color,
   ): void {
     r.symbols.DrawCylinderWiresExW(
-      f2i(startPos.x), f2i(startPos.y), f2i(startPos.z),
-      f2i(endPos.x), f2i(endPos.y), f2i(endPos.z),
-      f2i(startRadius), f2i(endRadius), sides, col,
+      f2i(startPos.x),
+      f2i(startPos.y),
+      f2i(startPos.z),
+      f2i(endPos.x),
+      f2i(endPos.y),
+      f2i(endPos.z),
+      f2i(startRadius),
+      f2i(endRadius),
+      sides,
+      col,
     );
   }
 
@@ -1036,9 +1132,16 @@ export class Raylib {
     col: Color,
   ): void {
     r.symbols.DrawCapsuleW(
-      f2i(startPos.x), f2i(startPos.y), f2i(startPos.z),
-      f2i(endPos.x), f2i(endPos.y), f2i(endPos.z),
-      f2i(radius), slices, rings, col,
+      f2i(startPos.x),
+      f2i(startPos.y),
+      f2i(startPos.z),
+      f2i(endPos.x),
+      f2i(endPos.y),
+      f2i(endPos.z),
+      f2i(radius),
+      slices,
+      rings,
+      col,
     );
   }
 
@@ -1052,17 +1155,27 @@ export class Raylib {
     col: Color,
   ): void {
     r.symbols.DrawCapsuleWiresW(
-      f2i(startPos.x), f2i(startPos.y), f2i(startPos.z),
-      f2i(endPos.x), f2i(endPos.y), f2i(endPos.z),
-      f2i(radius), slices, rings, col,
+      f2i(startPos.x),
+      f2i(startPos.y),
+      f2i(startPos.z),
+      f2i(endPos.x),
+      f2i(endPos.y),
+      f2i(endPos.z),
+      f2i(radius),
+      slices,
+      rings,
+      col,
     );
   }
 
   /** Draw a plane XZ */
   static drawPlane(centerPos: Vec3, size: Vec2, col: Color): void {
     r.symbols.DrawPlaneW(
-      f2i(centerPos.x), f2i(centerPos.y), f2i(centerPos.z),
-      f2i(size.x), f2i(size.y),
+      f2i(centerPos.x),
+      f2i(centerPos.y),
+      f2i(centerPos.z),
+      f2i(size.x),
+      f2i(size.y),
       col,
     );
   }
@@ -1070,8 +1183,12 @@ export class Raylib {
   /** Draw a ray line */
   static drawRay(ray: Ray, col: Color): void {
     r.symbols.DrawRayW(
-      f2i(ray.position.x), f2i(ray.position.y), f2i(ray.position.z),
-      f2i(ray.direction.x), f2i(ray.direction.y), f2i(ray.direction.z),
+      f2i(ray.position.x),
+      f2i(ray.position.y),
+      f2i(ray.position.z),
+      f2i(ray.direction.x),
+      f2i(ray.direction.y),
+      f2i(ray.direction.z),
       col,
     );
   }
@@ -1079,5 +1196,531 @@ export class Raylib {
   /** Draw a grid */
   static drawGrid(slices: number, spacing: number): void {
     r.symbols.DrawGridW(slices, spacing);
+  }
+
+  // --- Window state ---
+
+  static isWindowReady(): boolean {
+    return r.symbols.IsWindowReadyW();
+  }
+  static isWindowFullscreen(): boolean {
+    return r.symbols.IsWindowFullscreenW();
+  }
+  static isWindowHidden(): boolean {
+    return r.symbols.IsWindowHiddenW();
+  }
+  static isWindowMinimized(): boolean {
+    return r.symbols.IsWindowMinimizedW();
+  }
+  static isWindowMaximized(): boolean {
+    return r.symbols.IsWindowMaximizedW();
+  }
+  static isWindowFocused(): boolean {
+    return r.symbols.IsWindowFocusedW();
+  }
+  static isWindowResized(): boolean {
+    return r.symbols.IsWindowResizedW();
+  }
+  static isWindowState(flag: number): boolean {
+    return r.symbols.IsWindowStateW(flag);
+  }
+  static setWindowState(flags: number): void {
+    r.symbols.SetWindowStateW(flags);
+  }
+  static clearWindowState(flags: number): void {
+    r.symbols.ClearWindowStateW(flags);
+  }
+  static toggleFullscreen(): void {
+    r.symbols.ToggleFullscreenW();
+  }
+  static toggleBorderlessWindowed(): void {
+    r.symbols.ToggleBorderlessWindowedW();
+  }
+  static maximizeWindow(): void {
+    r.symbols.MaximizeWindowW();
+  }
+  static minimizeWindow(): void {
+    r.symbols.MinimizeWindowW();
+  }
+  static restoreWindow(): void {
+    r.symbols.RestoreWindowW();
+  }
+  static setWindowTitle(title: string): void {
+    r.symbols.SetWindowTitleW(cstr(title));
+  }
+  static setWindowPosition(x: number, y: number): void {
+    r.symbols.SetWindowPositionW(x, y);
+  }
+  static setWindowMonitor(monitor: number): void {
+    r.symbols.SetWindowMonitorW(monitor);
+  }
+  static setWindowMinSize(w: number, h: number): void {
+    r.symbols.SetWindowMinSizeW(w, h);
+  }
+  static setWindowMaxSize(w: number, h: number): void {
+    r.symbols.SetWindowMaxSizeW(w, h);
+  }
+  static setWindowSize(w: number, h: number): void {
+    r.symbols.SetWindowSizeW(w, h);
+  }
+  static setWindowOpacity(opacity: number): void {
+    r.symbols.SetWindowOpacityW(opacity);
+  }
+  static setWindowFocused(): void {
+    r.symbols.SetWindowFocusedW();
+  }
+  static getScreenWidth(): number {
+    return r.symbols.GetScreenWidthW();
+  }
+  static getScreenHeight(): number {
+    return r.symbols.GetScreenHeightW();
+  }
+  static getRenderWidth(): number {
+    return r.symbols.GetRenderWidthW();
+  }
+  static getRenderHeight(): number {
+    return r.symbols.GetRenderHeightW();
+  }
+  static getMonitorCount(): number {
+    return r.symbols.GetMonitorCountW();
+  }
+  static getCurrentMonitor(): number {
+    return r.symbols.GetCurrentMonitorW();
+  }
+
+  static getMonitorPosition(monitor: number): Vec2 {
+    r.symbols.GetMonitorPositionW(_vec2Buf, monitor);
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  static getMonitorWidth(monitor: number): number {
+    return r.symbols.GetMonitorWidthW(monitor);
+  }
+  static getMonitorHeight(monitor: number): number {
+    return r.symbols.GetMonitorHeightW(monitor);
+  }
+  static getMonitorPhysicalWidth(monitor: number): number {
+    return r.symbols.GetMonitorPhysicalWidthW(monitor);
+  }
+  static getMonitorPhysicalHeight(monitor: number): number {
+    return r.symbols.GetMonitorPhysicalHeightW(monitor);
+  }
+  static getMonitorRefreshRate(monitor: number): number {
+    return r.symbols.GetMonitorRefreshRateW(monitor);
+  }
+
+  static getWindowPosition(): Vec2 {
+    r.symbols.GetWindowPositionW(_vec2Buf);
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  static getWindowScaleDPI(): Vec2 {
+    r.symbols.GetWindowScaleDPIW(_vec2Buf);
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  static getMonitorName(monitor: number): string {
+    const ptr = r.symbols.GetMonitorNameW(monitor);
+    if (!ptr) return "";
+    return ptr.toString();
+  }
+
+  static setClipboardText(text: string): void {
+    r.symbols.SetClipboardTextW(cstr(text));
+  }
+
+  static getClipboardText(): string {
+    const ptr = r.symbols.GetClipboardTextW();
+    if (!ptr) return "";
+    return new CString(ptr).toString();
+  }
+
+  static enableEventWaiting(): void {
+    r.symbols.EnableEventWaitingW();
+  }
+  static disableEventWaiting(): void {
+    r.symbols.DisableEventWaitingW();
+  }
+
+  // --- Cursor ---
+
+  static showCursor(): void {
+    r.symbols.ShowCursorW();
+  }
+  static hideCursor(): void {
+    r.symbols.HideCursorW();
+  }
+  static isCursorHidden(): boolean {
+    return r.symbols.IsCursorHiddenW();
+  }
+  static enableCursor(): void {
+    r.symbols.EnableCursorW();
+  }
+  static disableCursor(): void {
+    r.symbols.DisableCursorW();
+  }
+  static isCursorOnScreen(): boolean {
+    return r.symbols.IsCursorOnScreenW();
+  }
+
+  // --- Drawing modes ---
+
+  static beginTextureMode(renderTextureId: number): void {
+    r.symbols.BeginTextureModeW(renderTextureId);
+  }
+  static endTextureMode(): void {
+    r.symbols.EndTextureModeW();
+  }
+  static beginBlendMode(mode: number): void {
+    r.symbols.BeginBlendModeW(mode);
+  }
+  static endBlendMode(): void {
+    r.symbols.EndBlendModeW();
+  }
+  static beginScissorMode(x: number, y: number, w: number, h: number): void {
+    r.symbols.BeginScissorModeW(x, y, w, h);
+  }
+  static endScissorMode(): void {
+    r.symbols.EndScissorModeW();
+  }
+
+  // --- Timing ---
+
+  static getTime(): number {
+    return r.symbols.GetTimeW();
+  }
+  static getFPS(): number {
+    return r.symbols.GetFPSW();
+  }
+  static swapScreenBuffer(): void {
+    r.symbols.SwapScreenBufferW();
+  }
+  static pollInputEvents(): void {
+    r.symbols.PollInputEventsW();
+  }
+  static waitTime(seconds: number): void {
+    r.symbols.WaitTimeW(seconds);
+  }
+
+  // --- Random ---
+
+  static setRandomSeed(seed: number): void {
+    r.symbols.SetRandomSeedW(seed);
+  }
+  static getRandomValue(min: number, max: number): number {
+    return r.symbols.GetRandomValueW(min, max);
+  }
+
+  // --- Misc ---
+
+  static takeScreenshot(fileName: string): void {
+    r.symbols.TakeScreenshotW(cstr(fileName));
+  }
+  static setConfigFlags(flags: number): void {
+    r.symbols.SetConfigFlagsW(flags);
+  }
+  static openURL(url: string): void {
+    r.symbols.OpenURLW(cstr(url));
+  }
+
+  // --- Input: Keyboard ---
+
+  static isKeyPressed(key: number): boolean {
+    return r.symbols.IsKeyPressedW(key);
+  }
+  static isKeyPressedRepeat(key: number): boolean {
+    return r.symbols.IsKeyPressedRepeatW(key);
+  }
+  static isKeyDown(key: number): boolean {
+    return r.symbols.IsKeyDownW(key);
+  }
+  static isKeyReleased(key: number): boolean {
+    return r.symbols.IsKeyReleasedW(key);
+  }
+  static isKeyUp(key: number): boolean {
+    return r.symbols.IsKeyUpW(key);
+  }
+  static getKeyPressed(): number {
+    return r.symbols.GetKeyPressedW();
+  }
+  static getCharPressed(): number {
+    return r.symbols.GetCharPressedW();
+  }
+  static setExitKey(key: number): void {
+    r.symbols.SetExitKeyW(key);
+  }
+
+  // --- Input: Gamepad ---
+
+  static isGamepadAvailable(gamepad: number): boolean {
+    return r.symbols.IsGamepadAvailableW(gamepad);
+  }
+  static getGamepadName(gamepad: number): string {
+    const cstr = r.symbols.GetGamepadNameW(gamepad);
+    if (!cstr) return "";
+    return cstr.toString();
+  }
+  static isGamepadButtonPressed(gamepad: number, button: number): boolean {
+    return r.symbols.IsGamepadButtonPressedW(gamepad, button);
+  }
+  static isGamepadButtonDown(gamepad: number, button: number): boolean {
+    return r.symbols.IsGamepadButtonDownW(gamepad, button);
+  }
+  static isGamepadButtonReleased(gamepad: number, button: number): boolean {
+    return r.symbols.IsGamepadButtonReleasedW(gamepad, button);
+  }
+  static isGamepadButtonUp(gamepad: number, button: number): boolean {
+    return r.symbols.IsGamepadButtonUpW(gamepad, button);
+  }
+  static getGamepadButtonPressed(): number {
+    return r.symbols.GetGamepadButtonPressedW();
+  }
+  static getGamepadAxisCount(gamepad: number): number {
+    return r.symbols.GetGamepadAxisCountW(gamepad);
+  }
+  static getGamepadAxisMovement(gamepad: number, axis: number): number {
+    return r.symbols.GetGamepadAxisMovementW(gamepad, axis);
+  }
+  static setGamepadMappings(mappings: string): number {
+    return r.symbols.SetGamepadMappingsW(cstr(mappings));
+  }
+
+  // --- Input: Mouse ---
+
+  static isMouseButtonPressed(button: number): boolean {
+    return r.symbols.IsMouseButtonPressedW(button);
+  }
+  static isMouseButtonDown(button: number): boolean {
+    return r.symbols.IsMouseButtonDownW(button);
+  }
+  static isMouseButtonReleased(button: number): boolean {
+    return r.symbols.IsMouseButtonReleasedW(button);
+  }
+  static isMouseButtonUp(button: number): boolean {
+    return r.symbols.IsMouseButtonUpW(button);
+  }
+  static getMouseX(): number {
+    return r.symbols.GetMouseXW();
+  }
+  static getMouseY(): number {
+    return r.symbols.GetMouseYW();
+  }
+
+  static getMousePosition(): Vec2 {
+    r.symbols.GetMousePositionW(_vec2Buf);
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  static getMouseDelta(): Vec2 {
+    r.symbols.GetMouseDeltaW(_vec2Buf);
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  static setMousePosition(x: number, y: number): void {
+    r.symbols.SetMousePositionW(x, y);
+  }
+  static setMouseOffset(x: number, y: number): void {
+    r.symbols.SetMouseOffsetW(x, y);
+  }
+  static setMouseScale(scaleX: number, scaleY: number): void {
+    r.symbols.SetMouseScaleW(scaleX, scaleY);
+  }
+  static getMouseWheelMove(): number {
+    return r.symbols.GetMouseWheelMoveW();
+  }
+
+  static getMouseWheelMoveV(): Vec2 {
+    r.symbols.GetMouseWheelMoveVW(_vec2Buf);
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  static setMouseCursor(cursor: number): void {
+    r.symbols.SetMouseCursorW(cursor);
+  }
+
+  // --- Input: Touch ---
+
+  static getTouchX(): number {
+    return r.symbols.GetTouchXW();
+  }
+  static getTouchY(): number {
+    return r.symbols.GetTouchYW();
+  }
+
+  static getTouchPosition(index: number): Vec2 {
+    r.symbols.GetTouchPositionW(_vec2Buf, index);
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  static getTouchPointId(index: number): number {
+    return r.symbols.GetTouchPointIdW(index);
+  }
+  static getTouchPointCount(): number {
+    return r.symbols.GetTouchPointCountW();
+  }
+
+  // --- Gestures ---
+
+  static setGesturesEnabled(flags: number): void {
+    r.symbols.SetGesturesEnabledW(flags);
+  }
+  static isGestureDetected(gesture: number): boolean {
+    return r.symbols.IsGestureDetectedW(gesture);
+  }
+  static getGestureDetected(): number {
+    return r.symbols.GetGestureDetectedW();
+  }
+  static getGestureHoldDuration(): number {
+    return r.symbols.GetGestureHoldDurationW();
+  }
+
+  static getGestureDragVector(): Vec2 {
+    r.symbols.GetGestureDragVectorW(_vec2Buf);
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  static getGestureDragAngle(): number {
+    return r.symbols.GetGestureDragAngleW();
+  }
+
+  static getGesturePinchVector(): Vec2 {
+    r.symbols.GetGesturePinchVectorW(_vec2Buf);
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  static getGesturePinchAngle(): number {
+    return r.symbols.GetGesturePinchAngleW();
+  }
+
+  // --- Camera ---
+
+  static updateCamera(camera: Camera3D, mode: number): Camera3D {
+    const pos = new Float32Array([camera.position.x, camera.position.y, camera.position.z]);
+    const tar = new Float32Array([camera.target.x, camera.target.y, camera.target.z]);
+    const up = new Float32Array([camera.up.x, camera.up.y, camera.up.z]);
+    const fovy = new Float32Array([camera.fovy]);
+    const proj = new Int32Array([camera.projection]);
+    r.symbols.UpdateCameraW(pos, tar, up, fovy, proj, mode);
+    return {
+      position: { x: pos[0]!, y: pos[1]!, z: pos[2]! },
+      target: { x: tar[0]!, y: tar[1]!, z: tar[2]! },
+      up: { x: up[0]!, y: up[1]!, z: up[2]! },
+      fovy: fovy[0]!,
+      projection: proj[0]! as Camera3D["projection"],
+    };
+  }
+
+  static updateCameraPro(camera: Camera3D, movement: Vec3, rotation: Vec3, zoom: number): Camera3D {
+    const pos = new Float32Array([camera.position.x, camera.position.y, camera.position.z]);
+    const tar = new Float32Array([camera.target.x, camera.target.y, camera.target.z]);
+    const up = new Float32Array([camera.up.x, camera.up.y, camera.up.z]);
+    const fovy = new Float32Array([camera.fovy]);
+    const proj = new Int32Array([camera.projection]);
+    r.symbols.UpdateCameraProW(
+      pos,
+      tar,
+      up,
+      fovy,
+      proj,
+      movement.x,
+      movement.y,
+      movement.z,
+      rotation.x,
+      rotation.y,
+      rotation.z,
+      zoom,
+    );
+    return {
+      position: { x: pos[0]!, y: pos[1]!, z: pos[2]! },
+      target: { x: tar[0]!, y: tar[1]!, z: tar[2]! },
+      up: { x: up[0]!, y: up[1]!, z: up[2]! },
+      fovy: fovy[0]!,
+      projection: proj[0]! as Camera3D["projection"],
+    };
+  }
+
+  // --- Screen-space ---
+
+  static getScreenToWorldRay(position: Vec2, camera: Camera3D): Ray {
+    const outPos = new Float32Array(3);
+    const outDir = new Float32Array(3);
+    r.symbols.GetScreenToWorldRayW(
+      outPos,
+      outDir,
+      position.x,
+      position.y,
+      f2i(camera.position.x),
+      f2i(camera.position.y),
+      f2i(camera.position.z),
+      f2i(camera.target.x),
+      f2i(camera.target.y),
+      f2i(camera.target.z),
+      f2i(camera.up.x),
+      f2i(camera.up.y),
+      f2i(camera.up.z),
+      f2i(camera.fovy),
+      camera.projection,
+    );
+    return {
+      position: { x: outPos[0]!, y: outPos[1]!, z: outPos[2]! },
+      direction: { x: outDir[0]!, y: outDir[1]!, z: outDir[2]! },
+    };
+  }
+
+  static getWorldToScreen(position: Vec3, camera: Camera3D): Vec2 {
+    r.symbols.GetWorldToScreenW(
+      _vec2Buf,
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(camera.position.x),
+      f2i(camera.position.y),
+      f2i(camera.position.z),
+      f2i(camera.target.x),
+      f2i(camera.target.y),
+      f2i(camera.target.z),
+      f2i(camera.up.x),
+      f2i(camera.up.y),
+      f2i(camera.up.z),
+      f2i(camera.fovy),
+      camera.projection,
+    );
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  static getWorldToScreen2D(position: Vec2, camera: Camera2D): Vec2 {
+    r.symbols.GetWorldToScreen2DW(
+      _vec2Buf,
+      position.x,
+      position.y,
+      camera.offset.x,
+      camera.offset.y,
+      camera.target.x,
+      camera.target.y,
+      f2i(camera.rotation),
+      f2i(camera.zoom),
+    );
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  static getScreenToWorld2D(position: Vec2, camera: Camera2D): Vec2 {
+    r.symbols.GetScreenToWorld2DW(
+      _vec2Buf,
+      position.x,
+      position.y,
+      camera.offset.x,
+      camera.offset.y,
+      camera.target.x,
+      camera.target.y,
+      f2i(camera.rotation),
+      f2i(camera.zoom),
+    );
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  // --- DrawFPS ---
+
+  static drawFPS(posX: number, posY: number): void {
+    r.symbols.DrawFPSW(posX, posY);
   }
 }

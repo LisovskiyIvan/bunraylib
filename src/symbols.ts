@@ -112,12 +112,18 @@ export const symbols = cc({
     },
     BeginMode2DW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
     EndMode2DW: { args: [], returns: FFIType.void },
-    BeginMode3DW: { args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    BeginMode3DW: {
+      args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
     EndMode3DW: { args: [], returns: FFIType.void },
     DrawLine3DW: { args: [i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
     DrawPoint3DW: { args: [i32, i32, i32, i32], returns: FFIType.void },
     DrawCircle3DW: { args: [i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
-    DrawTriangle3DW: { args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawTriangle3DW: {
+      args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
     DrawTriangleStrip3DW: { args: [ptr, i32, i32], returns: FFIType.void },
     DrawCubeW: { args: [i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
     DrawCubeVW: { args: [i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
@@ -127,13 +133,184 @@ export const symbols = cc({
     DrawSphereExW: { args: [i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
     DrawSphereWiresW: { args: [i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
     DrawCylinderW: { args: [i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
-    DrawCylinderExW: { args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawCylinderExW: {
+      args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
     DrawCylinderWiresW: { args: [i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
-    DrawCylinderWiresExW: { args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
-    DrawCapsuleW: { args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
-    DrawCapsuleWiresW: { args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawCylinderWiresExW: {
+      args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
+    DrawCapsuleW: {
+      args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
+    DrawCapsuleWiresW: {
+      args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
     DrawPlaneW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
     DrawRayW: { args: [i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
     DrawGridW: { args: [i32, i32], returns: FFIType.void },
+
+    // Window state
+    IsWindowReadyW: { args: [], returns: bool },
+    IsWindowFullscreenW: { args: [], returns: bool },
+    IsWindowHiddenW: { args: [], returns: bool },
+    IsWindowMinimizedW: { args: [], returns: bool },
+    IsWindowMaximizedW: { args: [], returns: bool },
+    IsWindowFocusedW: { args: [], returns: bool },
+    IsWindowResizedW: { args: [], returns: bool },
+    IsWindowStateW: { args: [i32], returns: bool },
+    SetWindowStateW: { args: [i32], returns: FFIType.void },
+    ClearWindowStateW: { args: [i32], returns: FFIType.void },
+    ToggleFullscreenW: { args: [], returns: FFIType.void },
+    ToggleBorderlessWindowedW: { args: [], returns: FFIType.void },
+    MaximizeWindowW: { args: [], returns: FFIType.void },
+    MinimizeWindowW: { args: [], returns: FFIType.void },
+    RestoreWindowW: { args: [], returns: FFIType.void },
+    SetWindowTitleW: { args: [cstring], returns: FFIType.void },
+    SetWindowPositionW: { args: [i32, i32], returns: FFIType.void },
+    SetWindowMonitorW: { args: [i32], returns: FFIType.void },
+    SetWindowMinSizeW: { args: [i32, i32], returns: FFIType.void },
+    SetWindowMaxSizeW: { args: [i32, i32], returns: FFIType.void },
+    SetWindowSizeW: { args: [i32, i32], returns: FFIType.void },
+    SetWindowOpacityW: { args: [f32], returns: FFIType.void },
+    SetWindowFocusedW: { args: [], returns: FFIType.void },
+    GetScreenWidthW: { args: [], returns: i32 },
+    GetScreenHeightW: { args: [], returns: i32 },
+    GetRenderWidthW: { args: [], returns: i32 },
+    GetRenderHeightW: { args: [], returns: i32 },
+    GetMonitorCountW: { args: [], returns: i32 },
+    GetCurrentMonitorW: { args: [], returns: i32 },
+    GetMonitorPositionW: { args: [ptr, i32], returns: FFIType.void },
+    GetMonitorWidthW: { args: [i32], returns: i32 },
+    GetMonitorHeightW: { args: [i32], returns: i32 },
+    GetMonitorPhysicalWidthW: { args: [i32], returns: i32 },
+    GetMonitorPhysicalHeightW: { args: [i32], returns: i32 },
+    GetMonitorRefreshRateW: { args: [i32], returns: i32 },
+    GetWindowPositionW: { args: [ptr], returns: FFIType.void },
+    GetWindowScaleDPIW: { args: [ptr], returns: FFIType.void },
+    GetMonitorNameW: { args: [i32], returns: ptr },
+    SetClipboardTextW: { args: [cstring], returns: FFIType.void },
+    GetClipboardTextW: { args: [], returns: ptr },
+    EnableEventWaitingW: { args: [], returns: FFIType.void },
+    DisableEventWaitingW: { args: [], returns: FFIType.void },
+
+    // Cursor
+    ShowCursorW: { args: [], returns: FFIType.void },
+    HideCursorW: { args: [], returns: FFIType.void },
+    IsCursorHiddenW: { args: [], returns: bool },
+    EnableCursorW: { args: [], returns: FFIType.void },
+    DisableCursorW: { args: [], returns: FFIType.void },
+    IsCursorOnScreenW: { args: [], returns: bool },
+
+    // Drawing modes
+    BeginTextureModeW: { args: [i32], returns: FFIType.void },
+    EndTextureModeW: { args: [], returns: FFIType.void },
+    BeginBlendModeW: { args: [i32], returns: FFIType.void },
+    EndBlendModeW: { args: [], returns: FFIType.void },
+    BeginScissorModeW: { args: [i32, i32, i32, i32], returns: FFIType.void },
+    EndScissorModeW: { args: [], returns: FFIType.void },
+
+    // Timing
+    GetTimeW: { args: [], returns: FFIType.f64 },
+    GetFPSW: { args: [], returns: i32 },
+    SwapScreenBufferW: { args: [], returns: FFIType.void },
+    PollInputEventsW: { args: [], returns: FFIType.void },
+    WaitTimeW: { args: [FFIType.f64], returns: FFIType.void },
+
+    // Random
+    SetRandomSeedW: { args: [i32], returns: FFIType.void },
+    GetRandomValueW: { args: [i32, i32], returns: i32 },
+
+    // Misc
+    TakeScreenshotW: { args: [cstring], returns: FFIType.void },
+    SetConfigFlagsW: { args: [i32], returns: FFIType.void },
+    OpenURLW: { args: [cstring], returns: FFIType.void },
+
+    // Input: Keyboard
+    IsKeyPressedW: { args: [i32], returns: bool },
+    IsKeyPressedRepeatW: { args: [i32], returns: bool },
+    IsKeyDownW: { args: [i32], returns: bool },
+    IsKeyReleasedW: { args: [i32], returns: bool },
+    IsKeyUpW: { args: [i32], returns: bool },
+    GetKeyPressedW: { args: [], returns: i32 },
+    GetCharPressedW: { args: [], returns: i32 },
+    SetExitKeyW: { args: [i32], returns: FFIType.void },
+
+    // Input: Gamepad
+    IsGamepadAvailableW: { args: [i32], returns: bool },
+    GetGamepadNameW: { args: [i32], returns: cstring },
+    IsGamepadButtonPressedW: { args: [i32, i32], returns: bool },
+    IsGamepadButtonDownW: { args: [i32, i32], returns: bool },
+    IsGamepadButtonReleasedW: { args: [i32, i32], returns: bool },
+    IsGamepadButtonUpW: { args: [i32, i32], returns: bool },
+    GetGamepadButtonPressedW: { args: [], returns: i32 },
+    GetGamepadAxisCountW: { args: [i32], returns: i32 },
+    GetGamepadAxisMovementW: { args: [i32, i32], returns: f32 },
+    SetGamepadMappingsW: { args: [cstring], returns: i32 },
+
+    // Input: Mouse
+    IsMouseButtonPressedW: { args: [i32], returns: bool },
+    IsMouseButtonDownW: { args: [i32], returns: bool },
+    IsMouseButtonReleasedW: { args: [i32], returns: bool },
+    IsMouseButtonUpW: { args: [i32], returns: bool },
+    GetMouseXW: { args: [], returns: i32 },
+    GetMouseYW: { args: [], returns: i32 },
+    GetMousePositionW: { args: [ptr], returns: FFIType.void },
+    GetMouseDeltaW: { args: [ptr], returns: FFIType.void },
+    SetMousePositionW: { args: [i32, i32], returns: FFIType.void },
+    SetMouseOffsetW: { args: [i32, i32], returns: FFIType.void },
+    SetMouseScaleW: { args: [f32, f32], returns: FFIType.void },
+    GetMouseWheelMoveW: { args: [], returns: f32 },
+    GetMouseWheelMoveVW: { args: [ptr], returns: FFIType.void },
+    SetMouseCursorW: { args: [i32], returns: FFIType.void },
+
+    // Input: Touch
+    GetTouchXW: { args: [], returns: i32 },
+    GetTouchYW: { args: [], returns: i32 },
+    GetTouchPositionW: { args: [ptr, i32], returns: FFIType.void },
+    GetTouchPointIdW: { args: [i32], returns: i32 },
+    GetTouchPointCountW: { args: [], returns: i32 },
+
+    // Gestures
+    SetGesturesEnabledW: { args: [i32], returns: FFIType.void },
+    IsGestureDetectedW: { args: [i32], returns: bool },
+    GetGestureDetectedW: { args: [], returns: i32 },
+    GetGestureHoldDurationW: { args: [], returns: f32 },
+    GetGestureDragVectorW: { args: [ptr], returns: FFIType.void },
+    GetGestureDragAngleW: { args: [], returns: f32 },
+    GetGesturePinchVectorW: { args: [ptr], returns: FFIType.void },
+    GetGesturePinchAngleW: { args: [], returns: f32 },
+
+    // Camera
+    UpdateCameraW: { args: [ptr, ptr, ptr, ptr, ptr, i32], returns: FFIType.void },
+    UpdateCameraProW: {
+      args: [ptr, ptr, ptr, ptr, ptr, f32, f32, f32, f32, f32, f32, f32],
+      returns: FFIType.void,
+    },
+
+    // Screen-space
+    GetScreenToWorldRayW: {
+      args: [ptr, ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
+    GetWorldToScreenW: {
+      args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
+    GetWorldToScreen2DW: {
+      args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
+    GetScreenToWorld2DW: {
+      args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
+
+    // DrawFPS
+    DrawFPSW: { args: [i32, i32], returns: FFIType.void },
   },
 });
