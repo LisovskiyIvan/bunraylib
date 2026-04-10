@@ -25,3 +25,14 @@ export type Ray = {
 };
 
 export type Color = number;
+
+export type Texture2D = {
+  id: number;
+  width: number;
+  height: number;
+};
+
+export type RenderTexture2D = {
+  id: number;
+  texture: Texture2D;
+};

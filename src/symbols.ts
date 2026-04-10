@@ -207,7 +207,7 @@ export const symbols = cc({
     IsCursorOnScreenW: { args: [], returns: bool },
 
     // Drawing modes
-    BeginTextureModeW: { args: [i32], returns: FFIType.void },
+    BeginTextureModeW: { args: [i32, i32, i32], returns: FFIType.void },
     EndTextureModeW: { args: [], returns: FFIType.void },
     BeginBlendModeW: { args: [i32], returns: FFIType.void },
     EndBlendModeW: { args: [], returns: FFIType.void },
@@ -312,5 +312,24 @@ export const symbols = cc({
 
     // DrawFPS
     DrawFPSW: { args: [i32, i32], returns: FFIType.void },
+
+    // Texture
+    LoadTextureW: { args: [ptr, ptr, ptr, cstring], returns: FFIType.void },
+    UnloadTextureW: { args: [i32], returns: FFIType.void },
+    IsTextureValidW: { args: [i32, i32, i32], returns: bool },
+    LoadRenderTextureW: { args: [ptr, ptr, ptr, ptr, i32, i32], returns: FFIType.void },
+    UnloadRenderTextureW: { args: [i32], returns: FFIType.void },
+    IsRenderTextureValidW: { args: [i32], returns: bool },
+    GenTextureMipmapsW: { args: [i32], returns: FFIType.void },
+    SetTextureFilterW: { args: [i32, i32], returns: FFIType.void },
+    SetTextureWrapW: { args: [i32, i32], returns: FFIType.void },
+    DrawTextureW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawTextureVW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawTextureExW: { args: [i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawTextureRecW: { args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+    DrawTextureProW: {
+      args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+      returns: FFIType.void,
+    },
   },
 });

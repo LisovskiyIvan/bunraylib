@@ -1,5 +1,5 @@
 import { symbols as r } from "./symbols";
-import type { Vec2, Vec3, Rectangle, Camera2D, Camera3D, Ray } from "./types";
+import type { Vec2, Vec3, Rectangle, Camera2D, Camera3D, Ray, Texture2D, RenderTexture2D } from "./types";
 import { cstr, f2i } from "./utils";
 import { CString } from "bun:ffi";
 import type { Color } from "./types";
@@ -1364,8 +1364,8 @@ export class Raylib {
 
   // --- Drawing modes ---
 
-  static beginTextureMode(renderTextureId: number): void {
-    r.symbols.BeginTextureModeW(renderTextureId);
+  static beginTextureMode(target: RenderTexture2D): void {
+    r.symbols.BeginTextureModeW(target.id, target.texture.width, target.texture.height);
   }
   static endTextureMode(): void {
     r.symbols.EndTextureModeW();
@@ -1721,5 +1721,114 @@ export class Raylib {
 
   static drawFPS(posX: number, posY: number): void {
     r.symbols.DrawFPSW(posX, posY);
+  }
+
+  // --- Texture ---
+
+  private static _texOutId = new Uint32Array(1);
+  private static _texOutTexId = new Uint32Array(1);
+  private static _texOutW = new Int32Array(1);
+  private static _texOutH = new Int32Array(1);
+
+  static loadTexture(fileName: string): Texture2D {
+    r.symbols.LoadTextureW(this._texOutId, this._texOutW, this._texOutH, cstr(fileName));
+    return {
+      id: this._texOutId[0]!,
+      width: this._texOutW[0]!,
+      height: this._texOutH[0]!,
+    };
+  }
+
+  static unloadTexture(texture: Texture2D): void {
+    r.symbols.UnloadTextureW(texture.id);
+  }
+
+  static isTextureValid(texture: Texture2D): boolean {
+    return r.symbols.IsTextureValidW(texture.id, texture.width, texture.height);
+  }
+
+  static loadRenderTexture(width: number, height: number): RenderTexture2D {
+    r.symbols.LoadRenderTextureW(
+      this._texOutId,
+      this._texOutTexId,
+      this._texOutW,
+      this._texOutH,
+      width,
+      height,
+    );
+    return {
+      id: this._texOutId[0]!,
+      texture: {
+        id: this._texOutTexId[0]!,
+        width: this._texOutW[0]!,
+        height: this._texOutH[0]!,
+      },
+    };
+  }
+
+  static unloadRenderTexture(target: RenderTexture2D): void {
+    r.symbols.UnloadRenderTextureW(target.id);
+  }
+
+  static isRenderTextureValid(target: RenderTexture2D): boolean {
+    return r.symbols.IsRenderTextureValidW(target.id);
+  }
+
+  static genTextureMipmaps(texture: Texture2D): void {
+    r.symbols.GenTextureMipmapsW(texture.id);
+  }
+
+  static setTextureFilter(texture: Texture2D, filter: number): void {
+    r.symbols.SetTextureFilterW(texture.id, filter);
+  }
+
+  static setTextureWrap(texture: Texture2D, wrap: number): void {
+    r.symbols.SetTextureWrapW(texture.id, wrap);
+  }
+
+  static drawTexture(texture: Texture2D, posX: number, posY: number, tint: Color): void {
+    r.symbols.DrawTextureW(texture.id, texture.width, texture.height, posX, posY, tint);
+  }
+
+  static drawTextureEx(
+    texture: Texture2D,
+    position: Vec2,
+    rotation: number,
+    scale: number,
+    tint: Color,
+  ): void {
+    r.symbols.DrawTextureExW(texture.id, texture.width, texture.height, position.x, position.y, f2i(rotation), f2i(scale), tint);
+  }
+
+  static drawTextureRec(
+    texture: Texture2D,
+    source: Rectangle,
+    position: Vec2,
+    tint: Color,
+  ): void {
+    r.symbols.DrawTextureRecW(
+      texture.id, texture.width, texture.height,
+      source.x, source.y, source.width, source.height,
+      position.x, position.y,
+      tint,
+    );
+  }
+
+  static drawTexturePro(
+    texture: Texture2D,
+    source: Rectangle,
+    dest: Rectangle,
+    origin: Vec2,
+    rotation: number,
+    tint: Color,
+  ): void {
+    r.symbols.DrawTextureProW(
+      texture.id, texture.width, texture.height,
+      source.x, source.y, source.width, source.height,
+      dest.x, dest.y, dest.width, dest.height,
+      origin.x, origin.y,
+      f2i(rotation),
+      tint,
+    );
   }
 }

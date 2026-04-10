@@ -42,11 +42,6 @@ while (!Raylib.windowShouldClose()) {
   Raylib.beginDrawing();
   Raylib.clearBackground(COLORS.DARKGRAY);
 
-  Raylib.beginBlendMode(blendMode);
-  Raylib.drawCircle(x, y, 20, COLORS.RED);
-  Raylib.drawCircle(mouse.x, mouse.y, 10, COLORS.SKYBLUE);
-  Raylib.endBlendMode();
-
   const panelBg = mouseInRect ? COLORS.GRAY : COLORS.DARKPURPLE;
   Raylib.drawRectangle(20, 60, 200, 60, panelBg);
   Raylib.drawText("Hover me!", 35, 75, 20, COLORS.WHITE);
@@ -75,10 +70,14 @@ while (!Raylib.windowShouldClose()) {
 
   if (Raylib.isKeyPressed(KEYS.ONE)) Raylib.setClipboardText("Hello from rraylib!");
   if (Raylib.isKeyPressed(KEYS.TWO)) Raylib.setClipboardText("rraylib is awesome");
-
   Raylib.drawText("[1/2] Set clipboard text", 20, ty, 16, COLORS.LIGHTGRAY);
 
   if (showFps) Raylib.drawFPS(Raylib.getScreenWidth() - 100, 10);
+
+  Raylib.beginBlendMode(blendMode);
+  Raylib.drawCircle(x | 0, y | 0, 20, COLORS.RED);
+  Raylib.drawCircle(mouse.x | 0, mouse.y | 0, 10, COLORS.SKYBLUE);
+  Raylib.endBlendMode();
 
   Raylib.endDrawing();
 }
