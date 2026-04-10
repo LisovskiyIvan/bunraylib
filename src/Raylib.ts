@@ -1321,7 +1321,7 @@ export class Raylib {
   static getMonitorName(monitor: number): string {
     const ptr = r.symbols.GetMonitorNameW(monitor);
     if (!ptr) return "";
-    return ptr.toString();
+    return new CString(ptr).toString();
   }
 
   static setClipboardText(text: string): void {

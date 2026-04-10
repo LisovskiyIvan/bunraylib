@@ -31,6 +31,7 @@ export const COLORS = {
   BLANK: color(0, 0, 0, 0),
   MAGENTA: color(255, 0, 255),
   RAYWHITE: color(245, 245, 245),
+  CYAN: color(0, 255, 255),
 } as const;
 
 export const KEYS = {
