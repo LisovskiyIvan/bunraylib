@@ -43,7 +43,7 @@ while (!Raylib.windowShouldClose()) {
   );
 
   const stripPoints = new Float32Array([-8, 1, 2, -7, 3, 2, -6, 1, 2, -5, 3, 2, -4, 1, 2]);
-  Raylib.drawTriangleStrip3D(stripPoints, stripPoints.length / 3, COLORS.GREEN);
+  Raylib.drawTriangleStrip3D(stripPoints, COLORS.GREEN);
 
   Raylib.drawCube({ x: -4, y: 1, z: -6 }, 2, 2, 2, COLORS.RED);
   Raylib.drawCubeWires({ x: -4, y: 1, z: -6 }, 2, 2, 2, COLORS.WHITE);

@@ -151,8 +151,8 @@ export class Raylib {
   }
 
   /** Draw lines sequence as a strip. Points are packed as [x0,y0, x1,y1, ...] in Float32Array */
-  static drawLineStrip(points: Float32Array, pointCount: number, col: Color): void {
-    r.symbols.DrawLineStripW(points, pointCount, col);
+  static drawLineStrip(points: Float32Array, col: Color): void {
+    r.symbols.DrawLineStripW(points, points.length / 2, col);
   }
 
   /** Draw line segment with Bezier easing */
@@ -467,13 +467,13 @@ export class Raylib {
   }
 
   /** Draw a triangle fan. Points are packed as [x0,y0, x1,y1, ...] in Float32Array */
-  static drawTriangleFan(points: Float32Array, pointCount: number, col: Color): void {
-    r.symbols.DrawTriangleFanW(points, pointCount, col);
+  static drawTriangleFan(points: Float32Array, col: Color): void {
+    r.symbols.DrawTriangleFanW(points, points.length / 2, col);
   }
 
   /** Draw a triangle strip. Points are packed as [x0,y0, x1,y1, ...] in Float32Array */
-  static drawTriangleStrip(points: Float32Array, pointCount: number, col: Color): void {
-    r.symbols.DrawTriangleStripW(points, pointCount, col);
+  static drawTriangleStrip(points: Float32Array, col: Color): void {
+    r.symbols.DrawTriangleStripW(points, points.length / 2, col);
   }
 
   /** Draw a regular polygon (color-filled) */
@@ -510,11 +510,10 @@ export class Raylib {
    */
   static drawSplineLinear(
     points: Float32Array,
-    pointCount: number,
     thick: number,
     col: Color,
   ): void {
-    r.symbols.DrawSplineLinearW(points, pointCount, f2i(thick), col);
+    r.symbols.DrawSplineLinearW(points, points.length / 2, f2i(thick), col);
   }
 
   /**
@@ -523,11 +522,10 @@ export class Raylib {
    */
   static drawSplineBasis(
     points: Float32Array,
-    pointCount: number,
     thick: number,
     col: Color,
   ): void {
-    r.symbols.DrawSplineBasisW(points, pointCount, f2i(thick), col);
+    r.symbols.DrawSplineBasisW(points, points.length / 2, f2i(thick), col);
   }
 
   /**
@@ -536,11 +534,10 @@ export class Raylib {
    */
   static drawSplineCatmullRom(
     points: Float32Array,
-    pointCount: number,
     thick: number,
     col: Color,
   ): void {
-    r.symbols.DrawSplineCatmullRomW(points, pointCount, f2i(thick), col);
+    r.symbols.DrawSplineCatmullRomW(points, points.length / 2, f2i(thick), col);
   }
 
   /**
@@ -549,11 +546,10 @@ export class Raylib {
    */
   static drawSplineBezierQuadratic(
     points: Float32Array,
-    pointCount: number,
     thick: number,
     col: Color,
   ): void {
-    r.symbols.DrawSplineBezierQuadraticW(points, pointCount, f2i(thick), col);
+    r.symbols.DrawSplineBezierQuadraticW(points, points.length / 2, f2i(thick), col);
   }
 
   /**
@@ -562,11 +558,10 @@ export class Raylib {
    */
   static drawSplineBezierCubic(
     points: Float32Array,
-    pointCount: number,
     thick: number,
     col: Color,
   ): void {
-    r.symbols.DrawSplineBezierCubicW(points, pointCount, f2i(thick), col);
+    r.symbols.DrawSplineBezierCubicW(points, points.length / 2, f2i(thick), col);
   }
 
   /** Draw spline segment: Linear, 2 points */
@@ -845,8 +840,8 @@ export class Raylib {
    * Check if point is within a polygon described by array of vertices.
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
-  static checkCollisionPointPoly(point: Vec2, points: Float32Array, pointCount: number): boolean {
-    return r.symbols.CheckCollisionPointPolyW(point.x, point.y, points, pointCount);
+  static checkCollisionPointPoly(point: Vec2, points: Float32Array): boolean {
+    return r.symbols.CheckCollisionPointPolyW(point.x, point.y, points, points.length / 2);
   }
 
   /**
@@ -950,8 +945,8 @@ export class Raylib {
   }
 
   /** Draw a triangle strip defined by points. Points packed as [x0,y0,z0, x1,y1,z1, ...] in Float32Array */
-  static drawTriangleStrip3D(points: Float32Array, pointCount: number, col: Color): void {
-    r.symbols.DrawTriangleStrip3DW(points, pointCount, col);
+  static drawTriangleStrip3D(points: Float32Array, col: Color): void {
+    r.symbols.DrawTriangleStrip3DW(points, points.length / 3, col);
   }
 
   /** Draw cube */
@@ -2693,18 +2688,16 @@ export class Raylib {
   static imageDrawTriangleFan(
     dst: Image,
     points: Float32Array,
-    pointCount: number,
     color: Color,
   ): void {
-    r.symbols.ImageDrawTriangleFanW(dst, points, pointCount, color);
+    r.symbols.ImageDrawTriangleFanW(dst, points, points.length / 2, color);
   }
   static imageDrawTriangleStrip(
     dst: Image,
     points: Float32Array,
-    pointCount: number,
     color: Color,
   ): void {
-    r.symbols.ImageDrawTriangleStripW(dst, points, pointCount, color);
+    r.symbols.ImageDrawTriangleStripW(dst, points, points.length / 2, color);
   }
   static imageDraw(
     dst: Image,

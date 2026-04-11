@@ -136,11 +136,11 @@ describe("CheckCollisionPointPoly", () => {
   const poly = new Float32Array([0, 0, 100, 0, 100, 100, 0, 100]);
 
   test("point inside poly", () => {
-    expect(Raylib.checkCollisionPointPoly({ x: 50, y: 50 }, poly, 4)).toBe(true);
+    expect(Raylib.checkCollisionPointPoly({ x: 50, y: 50 }, poly)).toBe(true);
   });
 
   test("point outside poly", () => {
-    expect(Raylib.checkCollisionPointPoly({ x: 150, y: 50 }, poly, 4)).toBe(false);
+    expect(Raylib.checkCollisionPointPoly({ x: 150, y: 50 }, poly)).toBe(false);
   });
 });
 
