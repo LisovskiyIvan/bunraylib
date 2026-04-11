@@ -1,5 +1,28 @@
 import { symbols as r } from "./symbols";
-import type { Vec2, Vec3, Rectangle, Camera2D, Camera3D, Ray, Texture2D, RenderTexture2D, Model, BoundingBox, Font } from "./types";
+import type {
+  Vec2,
+  Vec3,
+  Rectangle,
+  Camera2D,
+  Camera3D,
+  Ray,
+  Texture2D,
+  RenderTexture2D,
+  Model,
+  BoundingBox,
+  Font,
+  Image,
+  Shader,
+  Wave,
+  Sound,
+  Music,
+  AudioStream,
+  Material,
+  Mesh,
+  ModelAnimation,
+  RayCollision,
+  GlyphInfo,
+} from "./types";
 import { cstr, f2i } from "./utils";
 import { CString } from "bun:ffi";
 import type { Color } from "./types";
@@ -1796,19 +1819,29 @@ export class Raylib {
     scale: number,
     tint: Color,
   ): void {
-    r.symbols.DrawTextureExW(texture.id, texture.width, texture.height, position.x, position.y, f2i(rotation), f2i(scale), tint);
+    r.symbols.DrawTextureExW(
+      texture.id,
+      texture.width,
+      texture.height,
+      position.x,
+      position.y,
+      f2i(rotation),
+      f2i(scale),
+      tint,
+    );
   }
 
-  static drawTextureRec(
-    texture: Texture2D,
-    source: Rectangle,
-    position: Vec2,
-    tint: Color,
-  ): void {
+  static drawTextureRec(texture: Texture2D, source: Rectangle, position: Vec2, tint: Color): void {
     r.symbols.DrawTextureRecW(
-      texture.id, texture.width, texture.height,
-      source.x, source.y, source.width, source.height,
-      position.x, position.y,
+      texture.id,
+      texture.width,
+      texture.height,
+      source.x,
+      source.y,
+      source.width,
+      source.height,
+      position.x,
+      position.y,
       tint,
     );
   }
@@ -1822,10 +1855,19 @@ export class Raylib {
     tint: Color,
   ): void {
     r.symbols.DrawTextureProW(
-      texture.id, texture.width, texture.height,
-      source.x, source.y, source.width, source.height,
-      dest.x, dest.y, dest.width, dest.height,
-      origin.x, origin.y,
+      texture.id,
+      texture.width,
+      texture.height,
+      source.x,
+      source.y,
+      source.width,
+      source.height,
+      dest.x,
+      dest.y,
+      dest.width,
+      dest.height,
+      origin.x,
+      origin.y,
       f2i(rotation),
       tint,
     );
@@ -1857,7 +1899,14 @@ export class Raylib {
   }
 
   static drawModel(model: Model, position: Vec3, scale: number, tint: Color): void {
-    r.symbols.DrawModelW(model, f2i(position.x), f2i(position.y), f2i(position.z), f2i(scale), tint);
+    r.symbols.DrawModelW(
+      model,
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(scale),
+      tint,
+    );
   }
 
   static drawModelEx(
@@ -1870,15 +1919,29 @@ export class Raylib {
   ): void {
     r.symbols.DrawModelExW(
       model,
-      f2i(position.x), f2i(position.y), f2i(position.z),
-      f2i(rotationAxis.x), f2i(rotationAxis.y), f2i(rotationAxis.z), f2i(rotationAngle),
-      f2i(scale.x), f2i(scale.y), f2i(scale.z),
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(rotationAxis.x),
+      f2i(rotationAxis.y),
+      f2i(rotationAxis.z),
+      f2i(rotationAngle),
+      f2i(scale.x),
+      f2i(scale.y),
+      f2i(scale.z),
       tint,
     );
   }
 
   static drawModelWires(model: Model, position: Vec3, scale: number, tint: Color): void {
-    r.symbols.DrawModelWiresW(model, f2i(position.x), f2i(position.y), f2i(position.z), f2i(scale), tint);
+    r.symbols.DrawModelWiresW(
+      model,
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(scale),
+      tint,
+    );
   }
 
   static drawModelWiresEx(
@@ -1891,9 +1954,16 @@ export class Raylib {
   ): void {
     r.symbols.DrawModelWiresExW(
       model,
-      f2i(position.x), f2i(position.y), f2i(position.z),
-      f2i(rotationAxis.x), f2i(rotationAxis.y), f2i(rotationAxis.z), f2i(rotationAngle),
-      f2i(scale.x), f2i(scale.y), f2i(scale.z),
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(rotationAxis.x),
+      f2i(rotationAxis.y),
+      f2i(rotationAxis.z),
+      f2i(rotationAngle),
+      f2i(scale.x),
+      f2i(scale.y),
+      f2i(scale.z),
       tint,
     );
   }
@@ -1901,7 +1971,15 @@ export class Raylib {
   // --- Shapes texture ---
 
   static setShapesTexture(texture: Texture2D, source: Rectangle): void {
-    r.symbols.SetShapesTextureW(texture.id, texture.width, texture.height, source.x, source.y, source.width, source.height);
+    r.symbols.SetShapesTextureW(
+      texture.id,
+      texture.width,
+      texture.height,
+      source.x,
+      source.y,
+      source.width,
+      source.height,
+    );
   }
 
   private static _shapesTexId = new Uint32Array(1);
@@ -1923,36 +2001,68 @@ export class Raylib {
   private static _vec4Buf = new Float32Array(4);
   private static _vec3Buf2 = new Float32Array(3);
 
-  static colorToInt(c: Color): number { return r.symbols.ColorToIntW(c); }
+  static colorToInt(c: Color): number {
+    return r.symbols.ColorToIntW(c);
+  }
 
   static colorNormalize(c: Color): { x: number; y: number; z: number; w: number } {
     r.symbols.ColorNormalizeW(this._vec4Buf, c);
-    return { x: this._vec4Buf[0]!, y: this._vec4Buf[1]!, z: this._vec4Buf[2]!, w: this._vec4Buf[3]! };
+    return {
+      x: this._vec4Buf[0]!,
+      y: this._vec4Buf[1]!,
+      z: this._vec4Buf[2]!,
+      w: this._vec4Buf[3]!,
+    };
   }
 
   static colorFromNormalized(normalized: { x: number; y: number; z: number; w: number }): Color {
-    return r.symbols.ColorFromNormalizedW(f2i(normalized.x), f2i(normalized.y), f2i(normalized.z), f2i(normalized.w));
+    return r.symbols.ColorFromNormalizedW(
+      f2i(normalized.x),
+      f2i(normalized.y),
+      f2i(normalized.z),
+      f2i(normalized.w),
+    );
   }
 
   static colorToHSV(c: Color): { h: number; s: number; v: number } {
-    r.symbols.ColorToHSWW(this._vec3Buf2, c);
+    r.symbols.ColorToHSVW(this._vec3Buf2, c);
     return { h: this._vec3Buf2[0]!, s: this._vec3Buf2[1]!, v: this._vec3Buf2[2]! };
   }
 
   static colorFromHSV(hue: number, saturation: number, value: number): Color {
-    return r.symbols.ColorFromHSWW(f2i(hue), f2i(saturation), f2i(value));
+    return r.symbols.ColorFromHSVW(f2i(hue), f2i(saturation), f2i(value));
   }
 
-  static colorTint(color: Color, tint: Color): Color { return r.symbols.ColorTintW(color, tint); }
-  static colorBrightness(color: Color, factor: number): Color { return r.symbols.ColorBrightnessW(color, f2i(factor)); }
-  static colorContrast(color: Color, contrast: number): Color { return r.symbols.ColorContrastW(color, f2i(contrast)); }
-  static colorAlpha(color: Color, alpha: number): Color { return r.symbols.ColorAlphaW(color, f2i(alpha)); }
-  static colorAlphaBlend(dst: Color, src: Color, tint: Color): Color { return r.symbols.ColorAlphaBlendW(dst, src, tint); }
-  static colorLerp(color1: Color, color2: Color, factor: number): Color { return r.symbols.ColorLerpW(color1, color2, f2i(factor)); }
-  static getColor(hexValue: number): Color { return r.symbols.GetColorW(hexValue); }
-  static fade(color: Color, alpha: number): Color { return r.symbols.FadeW(color, f2i(alpha)); }
-  static colorIsEqual(col1: Color, col2: Color): boolean { return r.symbols.ColorIsEqualW(col1, col2); }
-  static getPixelDataSize(width: number, height: number, format: number): number { return r.symbols.GetPixelDataSizeW(width, height, format); }
+  static colorTint(color: Color, tint: Color): Color {
+    return r.symbols.ColorTintW(color, tint);
+  }
+  static colorBrightness(color: Color, factor: number): Color {
+    return r.symbols.ColorBrightnessW(color, f2i(factor));
+  }
+  static colorContrast(color: Color, contrast: number): Color {
+    return r.symbols.ColorContrastW(color, f2i(contrast));
+  }
+  static colorAlpha(color: Color, alpha: number): Color {
+    return r.symbols.ColorAlphaW(color, f2i(alpha));
+  }
+  static colorAlphaBlend(dst: Color, src: Color, tint: Color): Color {
+    return r.symbols.ColorAlphaBlendW(dst, src, tint);
+  }
+  static colorLerp(color1: Color, color2: Color, factor: number): Color {
+    return r.symbols.ColorLerpW(color1, color2, f2i(factor));
+  }
+  static getColor(hexValue: number): Color {
+    return r.symbols.GetColorW(hexValue);
+  }
+  static fade(color: Color, alpha: number): Color {
+    return r.symbols.FadeW(color, f2i(alpha));
+  }
+  static colorIsEqual(col1: Color, col2: Color): boolean {
+    return r.symbols.ColorIsEqualW(col1, col2);
+  }
+  static getPixelDataSize(width: number, height: number, format: number): number {
+    return r.symbols.GetPixelDataSizeW(width, height, format);
+  }
 
   // --- Font ---
 
@@ -1987,15 +2097,1615 @@ export class Raylib {
     return { x: this._vec2Buf2[0]!, y: this._vec2Buf2[1]! };
   }
 
-  static drawTextEx(font: Font, text: string, position: Vec2, fontSize: number, spacing: number, tint: Color): void {
+  static drawTextEx(
+    font: Font,
+    text: string,
+    position: Vec2,
+    fontSize: number,
+    spacing: number,
+    tint: Color,
+  ): void {
     r.symbols.DrawTextExW(font, cstr(text), position.x, position.y, fontSize, f2i(spacing), tint);
   }
 
-  static drawTextPro(font: Font, text: string, position: Vec2, origin: Vec2, rotation: number, fontSize: number, spacing: number, tint: Color): void {
-    r.symbols.DrawTextProW(font, cstr(text), position.x, position.y, origin.x, origin.y, f2i(rotation), fontSize, f2i(spacing), tint);
+  static drawTextPro(
+    font: Font,
+    text: string,
+    position: Vec2,
+    origin: Vec2,
+    rotation: number,
+    fontSize: number,
+    spacing: number,
+    tint: Color,
+  ): void {
+    r.symbols.DrawTextProW(
+      font,
+      cstr(text),
+      position.x,
+      position.y,
+      origin.x,
+      origin.y,
+      f2i(rotation),
+      fontSize,
+      f2i(spacing),
+      tint,
+    );
   }
 
   static setTextLineSpacing(spacing: number): void {
     r.symbols.SetTextLineSpacingW(spacing);
+  }
+
+  // --- Core extensions ---
+
+  static setGamepadVibration(
+    gamepad: number,
+    leftMotor: number,
+    rightMotor: number,
+    duration: number,
+  ): void {
+    r.symbols.SetGamepadVibrationW(gamepad, leftMotor, rightMotor, duration);
+  }
+
+  static traceLog(logLevel: number, text: string): void {
+    r.symbols.TraceLogW(logLevel, cstr(text));
+  }
+
+  static setTraceLogLevel(logLevel: number): void {
+    r.symbols.SetTraceLogLevelW(logLevel);
+  }
+
+  static setWindowIcon(image: Image): void {
+    r.symbols.SetWindowIconW(image);
+  }
+
+  static getClipboardImage(): Image {
+    return r.symbols.GetClipboardImageW();
+  }
+
+  // --- Screen-space extended ---
+
+  private static _rayPosBuf2 = new Float32Array(3);
+  private static _rayDirBuf2 = new Float32Array(3);
+
+  static getScreenToWorldRayEx(
+    position: Vec2,
+    camera: Camera3D,
+    width: number,
+    height: number,
+  ): Ray {
+    r.symbols.GetScreenToWorldRayExW(
+      this._rayPosBuf2,
+      this._rayDirBuf2,
+      position.x,
+      position.y,
+      width,
+      height,
+      f2i(camera.position.x),
+      f2i(camera.position.y),
+      f2i(camera.position.z),
+      f2i(camera.target.x),
+      f2i(camera.target.y),
+      f2i(camera.target.z),
+      f2i(camera.up.x),
+      f2i(camera.up.y),
+      f2i(camera.up.z),
+      f2i(camera.fovy),
+      camera.projection,
+    );
+    return {
+      position: { x: this._rayPosBuf2[0]!, y: this._rayPosBuf2[1]!, z: this._rayPosBuf2[2]! },
+      direction: { x: this._rayDirBuf2[0]!, y: this._rayDirBuf2[1]!, z: this._rayDirBuf2[2]! },
+    };
+  }
+
+  static getWorldToScreenEx(position: Vec3, camera: Camera3D, width: number, height: number): Vec2 {
+    r.symbols.GetWorldToScreenExW(
+      _vec2Buf,
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(camera.position.x),
+      f2i(camera.position.y),
+      f2i(camera.position.z),
+      f2i(camera.target.x),
+      f2i(camera.target.y),
+      f2i(camera.target.z),
+      f2i(camera.up.x),
+      f2i(camera.up.y),
+      f2i(camera.up.z),
+      f2i(camera.fovy),
+      camera.projection,
+      width,
+      height,
+    );
+    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+  }
+
+  private static _matBuf = new Float32Array(16);
+
+  static getCameraMatrix(camera: Camera3D): Float32Array {
+    r.symbols.GetCameraMatrixW(
+      this._matBuf,
+      f2i(camera.position.x),
+      f2i(camera.position.y),
+      f2i(camera.position.z),
+      f2i(camera.target.x),
+      f2i(camera.target.y),
+      f2i(camera.target.z),
+      f2i(camera.up.x),
+      f2i(camera.up.y),
+      f2i(camera.up.z),
+      f2i(camera.fovy),
+      camera.projection,
+    );
+    return new Float32Array(this._matBuf);
+  }
+
+  static getCameraMatrix2D(camera: Camera2D): Float32Array {
+    r.symbols.GetCameraMatrix2DW(
+      this._matBuf,
+      camera.offset.x,
+      camera.offset.y,
+      camera.target.x,
+      camera.target.y,
+      f2i(camera.rotation),
+      f2i(camera.zoom),
+    );
+    return new Float32Array(this._matBuf);
+  }
+
+  // --- File system ---
+
+  static fileExists(fileName: string): boolean {
+    return r.symbols.FileExistsW(cstr(fileName));
+  }
+  static directoryExists(dirPath: string): boolean {
+    return r.symbols.DirectoryExistsW(cstr(dirPath));
+  }
+  static isFileExtension(fileName: string, ext: string): boolean {
+    return r.symbols.IsFileExtensionW(cstr(fileName), cstr(ext));
+  }
+  static getFileLength(fileName: string): number {
+    return r.symbols.GetFileLengthW(cstr(fileName));
+  }
+
+  static getFileExtension(fileName: string): string {
+    const ptr = r.symbols.GetFileExtensionW(cstr(fileName));
+    if (!ptr) return "";
+    return new CString(ptr).toString();
+  }
+
+  static getFileName(filePath: string): string {
+    const ptr = r.symbols.GetFileNameW(cstr(filePath));
+    if (!ptr) return "";
+    return new CString(ptr).toString();
+  }
+
+  static getFileNameWithoutExt(filePath: string): string {
+    const ptr = r.symbols.GetFileNameWithoutExtW(cstr(filePath));
+    if (!ptr) return "";
+    return new CString(ptr).toString();
+  }
+
+  static getDirectoryPath(filePath: string): string {
+    const ptr = r.symbols.GetDirectoryPathW(cstr(filePath));
+    if (!ptr) return "";
+    return new CString(ptr).toString();
+  }
+
+  static getPrevDirectoryPath(dirPath: string): string {
+    const ptr = r.symbols.GetPrevDirectoryPathW(cstr(dirPath));
+    if (!ptr) return "";
+    return new CString(ptr).toString();
+  }
+
+  static getWorkingDirectory(): string {
+    const ptr = r.symbols.GetWorkingDirectoryW();
+    if (!ptr) return "";
+    return new CString(ptr).toString();
+  }
+
+  static getApplicationDirectory(): string {
+    const ptr = r.symbols.GetApplicationDirectoryW();
+    if (!ptr) return "";
+    return new CString(ptr).toString();
+  }
+
+  static makeDirectory(dirPath: string): number {
+    return r.symbols.MakeDirectoryW(cstr(dirPath));
+  }
+  static changeDirectory(dir: string): boolean {
+    return r.symbols.ChangeDirectoryW(cstr(dir));
+  }
+  static isPathFile(path: string): boolean {
+    return r.symbols.IsPathFileW(cstr(path));
+  }
+  static isFileNameValid(fileName: string): boolean {
+    return r.symbols.IsFileNameValidW(cstr(fileName));
+  }
+  static getFileModTime(fileName: string): number {
+    return Number(r.symbols.GetFileModTimeW(cstr(fileName)));
+  }
+
+  static loadFileText(fileName: string): string {
+    const ptr = r.symbols.LoadFileTextW(cstr(fileName));
+    if (!ptr) return "";
+    return new CString(ptr).toString();
+  }
+
+  static unloadFileText(text: string): void {
+    r.symbols.UnloadFileTextW(Buffer.from(text));
+  }
+  static saveFileText(fileName: string, text: string): boolean {
+    return r.symbols.SaveFileTextW(cstr(fileName), cstr(text));
+  }
+
+  static computeCRC32(data: Uint8Array, dataSize: number): number {
+    return r.symbols.ComputeCRC32W(data, dataSize);
+  }
+
+  // --- Shader ---
+
+  static loadShader(vsFileName: string | null, fsFileName: string): Shader {
+    return r.symbols.LoadShaderW(vsFileName ? cstr(vsFileName) : Buffer.alloc(0), cstr(fsFileName));
+  }
+
+  static loadShaderFromMemory(vsCode: string | null, fsCode: string): Shader {
+    return r.symbols.LoadShaderFromMemoryW(vsCode ? cstr(vsCode) : Buffer.alloc(0), cstr(fsCode));
+  }
+
+  static isShaderValid(shader: Shader): boolean {
+    return r.symbols.IsShaderValidW(shader);
+  }
+  static getShaderLocation(shader: Shader, uniformName: string): number {
+    return r.symbols.GetShaderLocationW(shader, cstr(uniformName));
+  }
+  static getShaderLocationAttrib(shader: Shader, attribName: string): number {
+    return r.symbols.GetShaderLocationAttribW(shader, cstr(attribName));
+  }
+
+  static setShaderValueMatrix(shader: Shader, locIndex: number, mat: Float32Array): void {
+    r.symbols.SetShaderValueMatrixW(shader, locIndex, mat);
+  }
+
+  static setShaderValueTexture(shader: Shader, locIndex: number, texture: Texture2D): void {
+    r.symbols.SetShaderValueTextureW(shader, locIndex, texture.id, texture.width, texture.height);
+  }
+
+  static unloadShader(shader: Shader): void {
+    r.symbols.UnloadShaderW(shader);
+  }
+  static beginShaderMode(shader: Shader): void {
+    r.symbols.BeginShaderModeW(shader);
+  }
+  static endShaderMode(): void {
+    r.symbols.EndShaderModeW();
+  }
+
+  // --- Image loading ---
+
+  static loadImage(fileName: string): Image {
+    return r.symbols.LoadImageW(cstr(fileName));
+  }
+  static loadImageRaw(
+    fileName: string,
+    width: number,
+    height: number,
+    format: number,
+    headerSize: number,
+  ): Image {
+    return r.symbols.LoadImageRawW(cstr(fileName), width, height, format, headerSize);
+  }
+
+  private static _imgAnimSlot = new Int32Array(1);
+  private static _imgAnimFrames = new Int32Array(1);
+
+  static loadImageAnim(fileName: string): { image: Image; frames: number } {
+    r.symbols.LoadImageAnimW(this._imgAnimSlot, this._imgAnimFrames, cstr(fileName));
+    return { image: this._imgAnimSlot[0]!, frames: this._imgAnimFrames[0]! };
+  }
+
+  static loadImageFromMemory(fileType: string, fileData: Uint8Array, dataSize: number): Image {
+    return r.symbols.LoadImageFromMemoryW(cstr(fileType), fileData, dataSize);
+  }
+
+  static loadImageFromTexture(texture: Texture2D): Image {
+    return r.symbols.LoadImageFromTextureW(texture.id, texture.width, texture.height);
+  }
+
+  static loadImageFromScreen(): Image {
+    return r.symbols.LoadImageFromScreenW();
+  }
+  static isImageValid(image: Image): boolean {
+    return r.symbols.IsImageValidW(image);
+  }
+  static unloadImage(image: Image): void {
+    r.symbols.UnloadImageW(image);
+  }
+  static exportImage(image: Image, fileName: string): boolean {
+    return r.symbols.ExportImageW(image, cstr(fileName));
+  }
+  static exportImageAsCode(image: Image, fileName: string): boolean {
+    return r.symbols.ExportImageAsCodeW(image, cstr(fileName));
+  }
+
+  // --- Image generation ---
+
+  static genImageColor(width: number, height: number, color: Color): Image {
+    return r.symbols.GenImageColorW(width, height, color);
+  }
+  static genImageGradientLinear(
+    width: number,
+    height: number,
+    direction: number,
+    start: Color,
+    end: Color,
+  ): Image {
+    return r.symbols.GenImageGradientLinearW(width, height, direction, start, end);
+  }
+  static genImageGradientRadial(
+    width: number,
+    height: number,
+    density: number,
+    inner: Color,
+    outer: Color,
+  ): Image {
+    return r.symbols.GenImageGradientRadialW(width, height, f2i(density), inner, outer);
+  }
+  static genImageGradientSquare(
+    width: number,
+    height: number,
+    density: number,
+    inner: Color,
+    outer: Color,
+  ): Image {
+    return r.symbols.GenImageGradientSquareW(width, height, f2i(density), inner, outer);
+  }
+  static genImageChecked(
+    width: number,
+    height: number,
+    checksX: number,
+    checksY: number,
+    col1: Color,
+    col2: Color,
+  ): Image {
+    return r.symbols.GenImageCheckedW(width, height, checksX, checksY, col1, col2);
+  }
+  static genImageWhiteNoise(width: number, height: number, factor: number): Image {
+    return r.symbols.GenImageWhiteNoiseW(width, height, f2i(factor));
+  }
+  static genImagePerlinNoise(
+    width: number,
+    height: number,
+    offsetX: number,
+    offsetY: number,
+    scale: number,
+  ): Image {
+    return r.symbols.GenImagePerlinNoiseW(width, height, offsetX, offsetY, f2i(scale));
+  }
+  static genImageCellular(width: number, height: number, tileSize: number): Image {
+    return r.symbols.GenImageCellularW(width, height, tileSize);
+  }
+  static genImageText(width: number, height: number, text: string): Image {
+    return r.symbols.GenImageTextW(width, height, cstr(text));
+  }
+
+  // --- Image manipulation ---
+
+  static imageCopy(image: Image): Image {
+    return r.symbols.ImageCopyW(image);
+  }
+  static imageFromImage(image: Image, rec: Rectangle): Image {
+    return r.symbols.ImageFromImageW(image, rec.x, rec.y, rec.width, rec.height);
+  }
+  static imageFromChannel(image: Image, selectedChannel: number): Image {
+    return r.symbols.ImageFromChannelW(image, selectedChannel);
+  }
+  static imageText(text: string, fontSize: number, color: Color): Image {
+    return r.symbols.ImageTextW(cstr(text), fontSize, color);
+  }
+  static imageTextEx(
+    font: Font,
+    text: string,
+    fontSize: number,
+    spacing: number,
+    tint: Color,
+  ): Image {
+    return r.symbols.ImageTextExW(font, cstr(text), fontSize, f2i(spacing), tint);
+  }
+
+  static imageFormat(image: Image, newFormat: number): void {
+    r.symbols.ImageFormatW(image, newFormat);
+  }
+  static imageCrop(image: Image, rec: Rectangle): void {
+    r.symbols.ImageCropW(image, rec.x, rec.y, rec.width, rec.height);
+  }
+  static imageAlphaCrop(image: Image, threshold: number): void {
+    r.symbols.ImageAlphaCropW(image, f2i(threshold));
+  }
+  static imageAlphaClear(image: Image, color: Color, threshold: number): void {
+    r.symbols.ImageAlphaClearW(image, color, f2i(threshold));
+  }
+  static imageAlphaMask(image: Image, alphaMask: Image): void {
+    r.symbols.ImageAlphaMaskW(image, alphaMask);
+  }
+  static imageAlphaPremultiply(image: Image): void {
+    r.symbols.ImageAlphaPremultiplyW(image);
+  }
+  static imageBlurGaussian(image: Image, blurSize: number): void {
+    r.symbols.ImageBlurGaussianW(image, blurSize);
+  }
+  static imageResize(image: Image, newWidth: number, newHeight: number): void {
+    r.symbols.ImageResizeW(image, newWidth, newHeight);
+  }
+  static imageResizeNN(image: Image, newWidth: number, newHeight: number): void {
+    r.symbols.ImageResizeNNW(image, newWidth, newHeight);
+  }
+  static imageResizeCanvas(
+    image: Image,
+    newWidth: number,
+    newHeight: number,
+    offsetX: number,
+    offsetY: number,
+    fill: Color,
+  ): void {
+    r.symbols.ImageResizeCanvasW(image, newWidth, newHeight, offsetX, offsetY, fill);
+  }
+  static imageMipmaps(image: Image): void {
+    r.symbols.ImageMipmapsW(image);
+  }
+  static imageDither(image: Image, rBpp: number, gBpp: number, bBpp: number, aBpp: number): void {
+    r.symbols.ImageDitherW(image, rBpp, gBpp, bBpp, aBpp);
+  }
+  static imageFlipVertical(image: Image): void {
+    r.symbols.ImageFlipVerticalW(image);
+  }
+  static imageFlipHorizontal(image: Image): void {
+    r.symbols.ImageFlipHorizontalW(image);
+  }
+  static imageRotate(image: Image, degrees: number): void {
+    r.symbols.ImageRotateW(image, f2i(degrees));
+  }
+  static imageRotateCW(image: Image): void {
+    r.symbols.ImageRotateCWW(image);
+  }
+  static imageRotateCCW(image: Image): void {
+    r.symbols.ImageRotateCCWW(image);
+  }
+  static imageColorTint(image: Image, color: Color): void {
+    r.symbols.ImageColorTintW(image, color);
+  }
+  static imageColorInvert(image: Image): void {
+    r.symbols.ImageColorInvertW(image);
+  }
+  static imageColorGrayscale(image: Image): void {
+    r.symbols.ImageColorGrayscaleW(image);
+  }
+  static imageColorContrast(image: Image, contrast: number): void {
+    r.symbols.ImageColorContrastW(image, f2i(contrast));
+  }
+  static imageColorBrightness(image: Image, brightness: number): void {
+    r.symbols.ImageColorBrightnessW(image, brightness);
+  }
+  static imageColorReplace(image: Image, color: Color, replace: Color): void {
+    r.symbols.ImageColorReplaceW(image, color, replace);
+  }
+
+  // --- Image info ---
+
+  static getImageAlphaBorder(image: Image, threshold: number): Rectangle {
+    r.symbols.GetImageAlphaBorderW(_recBuf, image, f2i(threshold));
+    return { x: _recBuf[0]!, y: _recBuf[1]!, width: _recBuf[2]!, height: _recBuf[3]! };
+  }
+
+  static getImageColor(image: Image, x: number, y: number): Color {
+    return r.symbols.GetImageColorW(image, x, y);
+  }
+
+  // --- Image drawing ---
+
+  static imageClearBackground(dst: Image, color: Color): void {
+    r.symbols.ImageClearBackgroundW(dst, color);
+  }
+  static imageDrawPixel(dst: Image, posX: number, posY: number, color: Color): void {
+    r.symbols.ImageDrawPixelW(dst, posX, posY, color);
+  }
+  static imageDrawPixelV(dst: Image, position: Vec2, color: Color): void {
+    r.symbols.ImageDrawPixelVW(dst, position.x, position.y, color);
+  }
+  static imageDrawLine(
+    dst: Image,
+    startX: number,
+    startY: number,
+    endX: number,
+    endY: number,
+    color: Color,
+  ): void {
+    r.symbols.ImageDrawLineW(dst, startX, startY, endX, endY, color);
+  }
+  static imageDrawLineV(dst: Image, start: Vec2, end: Vec2, color: Color): void {
+    r.symbols.ImageDrawLineVW(dst, start.x, start.y, end.x, end.y, color);
+  }
+  static imageDrawLineEx(dst: Image, start: Vec2, end: Vec2, thick: number, color: Color): void {
+    r.symbols.ImageDrawLineExW(dst, start.x, start.y, end.x, end.y, thick, color);
+  }
+  static imageDrawCircle(
+    dst: Image,
+    centerX: number,
+    centerY: number,
+    radius: number,
+    color: Color,
+  ): void {
+    r.symbols.ImageDrawCircleW(dst, centerX, centerY, radius, color);
+  }
+  static imageDrawCircleV(dst: Image, center: Vec2, radius: number, color: Color): void {
+    r.symbols.ImageDrawCircleVW(dst, center.x, center.y, radius, color);
+  }
+  static imageDrawCircleLines(
+    dst: Image,
+    centerX: number,
+    centerY: number,
+    radius: number,
+    color: Color,
+  ): void {
+    r.symbols.ImageDrawCircleLinesW(dst, centerX, centerY, radius, color);
+  }
+  static imageDrawCircleLinesV(dst: Image, center: Vec2, radius: number, color: Color): void {
+    r.symbols.ImageDrawCircleLinesVW(dst, center.x, center.y, radius, color);
+  }
+  static imageDrawRectangle(
+    dst: Image,
+    posX: number,
+    posY: number,
+    w: number,
+    h: number,
+    color: Color,
+  ): void {
+    r.symbols.ImageDrawRectangleW(dst, posX, posY, w, h, color);
+  }
+  static imageDrawRectangleV(dst: Image, position: Vec2, size: Vec2, color: Color): void {
+    r.symbols.ImageDrawRectangleVW(dst, position.x, position.y, size.x, size.y, color);
+  }
+  static imageDrawRectangleRec(dst: Image, rec: Rectangle, color: Color): void {
+    r.symbols.ImageDrawRectangleRecW(dst, rec.x, rec.y, rec.width, rec.height, color);
+  }
+  static imageDrawRectangleLines(dst: Image, rec: Rectangle, thick: number, color: Color): void {
+    r.symbols.ImageDrawRectangleLinesW(dst, rec.x, rec.y, rec.width, rec.height, thick, color);
+  }
+  static imageDrawTriangle(dst: Image, v1: Vec2, v2: Vec2, v3: Vec2, color: Color): void {
+    r.symbols.ImageDrawTriangleW(dst, v1.x, v1.y, v2.x, v2.y, v3.x, v3.y, color);
+  }
+  static imageDrawTriangleEx(
+    dst: Image,
+    v1: Vec2,
+    v2: Vec2,
+    v3: Vec2,
+    c1: Color,
+    c2: Color,
+    c3: Color,
+  ): void {
+    r.symbols.ImageDrawTriangleExW(dst, v1.x, v1.y, v2.x, v2.y, v3.x, v3.y, c1, c2, c3);
+  }
+  static imageDrawTriangleLines(dst: Image, v1: Vec2, v2: Vec2, v3: Vec2, color: Color): void {
+    r.symbols.ImageDrawTriangleLinesW(dst, v1.x, v1.y, v2.x, v2.y, v3.x, v3.y, color);
+  }
+  static imageDrawTriangleFan(
+    dst: Image,
+    points: Float32Array,
+    pointCount: number,
+    color: Color,
+  ): void {
+    r.symbols.ImageDrawTriangleFanW(dst, points, pointCount, color);
+  }
+  static imageDrawTriangleStrip(
+    dst: Image,
+    points: Float32Array,
+    pointCount: number,
+    color: Color,
+  ): void {
+    r.symbols.ImageDrawTriangleStripW(dst, points, pointCount, color);
+  }
+  static imageDraw(
+    dst: Image,
+    src: Image,
+    srcRec: Rectangle,
+    dstRec: Rectangle,
+    tint: Color,
+  ): void {
+    r.symbols.ImageDrawW(
+      dst,
+      src,
+      srcRec.x,
+      srcRec.y,
+      srcRec.width,
+      srcRec.height,
+      dstRec.x,
+      dstRec.y,
+      dstRec.width,
+      dstRec.height,
+      tint,
+    );
+  }
+  static imageDrawText(
+    dst: Image,
+    text: string,
+    posX: number,
+    posY: number,
+    fontSize: number,
+    color: Color,
+  ): void {
+    r.symbols.ImageDrawTextW(dst, cstr(text), posX, posY, fontSize, color);
+  }
+  static imageDrawTextEx(
+    dst: Image,
+    font: Font,
+    text: string,
+    position: Vec2,
+    fontSize: number,
+    spacing: number,
+    tint: Color,
+  ): void {
+    r.symbols.ImageDrawTextExW(
+      dst,
+      font,
+      cstr(text),
+      position.x,
+      position.y,
+      fontSize,
+      f2i(spacing),
+      tint,
+    );
+  }
+
+  // --- Texture extensions ---
+
+  static loadTextureFromImage(image: Image): Texture2D {
+    r.symbols.LoadTextureFromImageW(this._texOutId, this._texOutW, this._texOutH, image);
+    return { id: this._texOutId[0]!, width: this._texOutW[0]!, height: this._texOutH[0]! };
+  }
+
+  static loadTextureCubemap(image: Image, layout: number): Texture2D {
+    r.symbols.LoadTextureCubemapW(this._texOutId, this._texOutW, this._texOutH, image, layout);
+    return { id: this._texOutId[0]!, width: this._texOutW[0]!, height: this._texOutH[0]! };
+  }
+
+  static updateTexture(texture: Texture2D, pixels: Uint8Array): void {
+    r.symbols.UpdateTextureW(texture.id, texture.width, texture.height, pixels);
+  }
+
+  static updateTextureRec(texture: Texture2D, rec: Rectangle, pixels: Uint8Array): void {
+    r.symbols.UpdateTextureRecW(
+      texture.id,
+      texture.width,
+      texture.height,
+      rec.x,
+      rec.y,
+      rec.width,
+      rec.height,
+      pixels,
+    );
+  }
+
+  static drawTextureNPatch(
+    texture: Texture2D,
+    nPatchInfo: {
+      source: Rectangle;
+      left: number;
+      top: number;
+      right: number;
+      bottom: number;
+      layout: number;
+    },
+    dest: Rectangle,
+    origin: Vec2,
+    rotation: number,
+    tint: Color,
+  ): void {
+    r.symbols.DrawTextureNPatchW(
+      texture.id,
+      texture.width,
+      texture.height,
+      nPatchInfo.source.x,
+      nPatchInfo.source.y,
+      nPatchInfo.source.width,
+      nPatchInfo.source.height,
+      nPatchInfo.left,
+      nPatchInfo.top,
+      nPatchInfo.right,
+      nPatchInfo.bottom,
+      nPatchInfo.layout,
+      dest.x,
+      dest.y,
+      dest.width,
+      dest.height,
+      origin.x,
+      origin.y,
+      f2i(rotation),
+      tint,
+    );
+  }
+
+  static getPixelColor(srcPtr: number, format: number): Color {
+    return r.symbols.GetPixelColorW(srcPtr, format);
+  }
+  static setPixelColor(dstPtr: number, color: Color, format: number): void {
+    r.symbols.SetPixelColorW(dstPtr, color, format);
+  }
+
+  // --- Model drawing extensions ---
+
+  static drawModelPoints(model: Model, position: Vec3, scale: number, tint: Color): void {
+    r.symbols.DrawModelPointsW(
+      model,
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(scale),
+      tint,
+    );
+  }
+
+  static drawModelPointsEx(
+    model: Model,
+    position: Vec3,
+    rotationAxis: Vec3,
+    rotationAngle: number,
+    scale: Vec3,
+    tint: Color,
+  ): void {
+    r.symbols.DrawModelPointsExW(
+      model,
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(rotationAxis.x),
+      f2i(rotationAxis.y),
+      f2i(rotationAxis.z),
+      f2i(rotationAngle),
+      f2i(scale.x),
+      f2i(scale.y),
+      f2i(scale.z),
+      tint,
+    );
+  }
+
+  static drawBoundingBox(box: BoundingBox, color: Color): void {
+    r.symbols.DrawBoundingBoxW(
+      f2i(box.min.x),
+      f2i(box.min.y),
+      f2i(box.min.z),
+      f2i(box.max.x),
+      f2i(box.max.y),
+      f2i(box.max.z),
+      color,
+    );
+  }
+
+  private static _bbMinCam = new Float32Array(3);
+  private static _bbMaxCam = new Float32Array(3);
+
+  static drawBillboard(
+    camera: Camera3D,
+    texture: Texture2D,
+    position: Vec3,
+    scale: number,
+    tint: Color,
+  ): void {
+    r.symbols.DrawBillboardW(
+      f2i(camera.position.x),
+      f2i(camera.position.y),
+      f2i(camera.position.z),
+      f2i(camera.target.x),
+      f2i(camera.target.y),
+      f2i(camera.target.z),
+      f2i(camera.up.x),
+      f2i(camera.up.y),
+      f2i(camera.up.z),
+      f2i(camera.fovy),
+      camera.projection,
+      texture.id,
+      texture.width,
+      texture.height,
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(scale),
+      tint,
+    );
+  }
+
+  static drawBillboardRec(
+    camera: Camera3D,
+    texture: Texture2D,
+    source: Rectangle,
+    position: Vec3,
+    size: Vec2,
+    tint: Color,
+  ): void {
+    r.symbols.DrawBillboardRecW(
+      f2i(camera.position.x),
+      f2i(camera.position.y),
+      f2i(camera.position.z),
+      f2i(camera.target.x),
+      f2i(camera.target.y),
+      f2i(camera.target.z),
+      f2i(camera.up.x),
+      f2i(camera.up.y),
+      f2i(camera.up.z),
+      f2i(camera.fovy),
+      camera.projection,
+      texture.id,
+      texture.width,
+      texture.height,
+      source.x,
+      source.y,
+      source.width,
+      source.height,
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(size.x),
+      f2i(size.y),
+      tint,
+    );
+  }
+
+  static drawBillboardPro(
+    camera: Camera3D,
+    texture: Texture2D,
+    source: Rectangle,
+    position: Vec3,
+    up: Vec3,
+    size: Vec2,
+    origin: Vec2,
+    rotation: number,
+    tint: Color,
+  ): void {
+    r.symbols.DrawBillboardProW(
+      f2i(camera.position.x),
+      f2i(camera.position.y),
+      f2i(camera.position.z),
+      f2i(camera.target.x),
+      f2i(camera.target.y),
+      f2i(camera.target.z),
+      f2i(camera.up.x),
+      f2i(camera.up.y),
+      f2i(camera.up.z),
+      f2i(camera.fovy),
+      camera.projection,
+      texture.id,
+      texture.width,
+      texture.height,
+      source.x,
+      source.y,
+      source.width,
+      source.height,
+      f2i(position.x),
+      f2i(position.y),
+      f2i(position.z),
+      f2i(up.x),
+      f2i(up.y),
+      f2i(up.z),
+      f2i(size.x),
+      f2i(size.y),
+      f2i(origin.x),
+      f2i(origin.y),
+      f2i(rotation),
+      tint,
+    );
+  }
+
+  // --- Model from mesh ---
+
+  static loadModelFromMesh(mesh: Mesh): Model {
+    return r.symbols.LoadModelFromMeshW(mesh);
+  }
+
+  // --- Mesh management ---
+
+  static unloadMesh(mesh: Mesh): void {
+    r.symbols.UnloadMeshW(mesh);
+  }
+  static uploadMesh(mesh: Mesh, dynamic: boolean): void {
+    r.symbols.UploadMeshW(mesh, dynamic);
+  }
+
+  static getMeshBoundingBox(mesh: Mesh): BoundingBox {
+    r.symbols.GetMeshBoundingBoxW(this._bbMin, this._bbMax, mesh);
+    return {
+      min: { x: this._bbMin[0]!, y: this._bbMin[1]!, z: this._bbMin[2]! },
+      max: { x: this._bbMax[0]!, y: this._bbMax[1]!, z: this._bbMax[2]! },
+    };
+  }
+
+  static genMeshTangents(mesh: Mesh): void {
+    r.symbols.GenMeshTangentsW(mesh);
+  }
+  static exportMesh(mesh: Mesh, fileName: string): boolean {
+    return r.symbols.ExportMeshW(mesh, cstr(fileName));
+  }
+  static exportMeshAsCode(mesh: Mesh, fileName: string): boolean {
+    return r.symbols.ExportMeshAsCodeW(mesh, cstr(fileName));
+  }
+
+  // --- Mesh generation ---
+
+  static genMeshPoly(sides: number, radius: number): Mesh {
+    return r.symbols.GenMeshPolyW(sides, f2i(radius));
+  }
+  static genMeshPlane(width: number, length: number, resX: number, resZ: number): Mesh {
+    return r.symbols.GenMeshPlaneW(f2i(width), f2i(length), resX, resZ);
+  }
+  static genMeshCube(width: number, height: number, length: number): Mesh {
+    return r.symbols.GenMeshCubeW(f2i(width), f2i(height), f2i(length));
+  }
+  static genMeshSphere(radius: number, rings: number, slices: number): Mesh {
+    return r.symbols.GenMeshSphereW(f2i(radius), rings, slices);
+  }
+  static genMeshHemiSphere(radius: number, rings: number, slices: number): Mesh {
+    return r.symbols.GenMeshHemiSphereW(f2i(radius), rings, slices);
+  }
+  static genMeshCylinder(radius: number, height: number, slices: number): Mesh {
+    return r.symbols.GenMeshCylinderW(f2i(radius), f2i(height), slices);
+  }
+  static genMeshCone(radius: number, height: number, slices: number): Mesh {
+    return r.symbols.GenMeshConeW(f2i(radius), f2i(height), slices);
+  }
+  static genMeshTorus(radius: number, size: number, radSeg: number, sides: number): Mesh {
+    return r.symbols.GenMeshTorusW(f2i(radius), f2i(size), radSeg, sides);
+  }
+  static genMeshKnot(radius: number, size: number, radSeg: number, sides: number): Mesh {
+    return r.symbols.GenMeshKnotW(f2i(radius), f2i(size), radSeg, sides);
+  }
+  static genMeshHeightmap(heightmap: Image, size: Vec3): Mesh {
+    return r.symbols.GenMeshHeightmapW(heightmap, f2i(size.x), f2i(size.y), f2i(size.z));
+  }
+  static genMeshCubicmap(cubicmap: Image, cubeSize: Vec3): Mesh {
+    return r.symbols.GenMeshCubicmapW(cubicmap, f2i(cubeSize.x), f2i(cubeSize.y), f2i(cubeSize.z));
+  }
+
+  // --- Material management ---
+
+  static loadMaterialDefault(): Material {
+    return r.symbols.LoadMaterialDefaultW();
+  }
+  static isMaterialValid(material: Material): boolean {
+    return r.symbols.IsMaterialValidW(material);
+  }
+  static unloadMaterial(material: Material): void {
+    r.symbols.UnloadMaterialW(material);
+  }
+  static setMaterialTexture(material: Material, mapType: number, texture: Texture2D): void {
+    r.symbols.SetMaterialTextureW(material, mapType, texture.id, texture.width, texture.height);
+  }
+  static setModelMeshMaterial(model: Model, meshId: number, materialId: number): void {
+    r.symbols.SetModelMeshMaterialW(model, meshId, materialId);
+  }
+
+  // --- Model animations ---
+
+  private static _animSlotStart = new Int32Array(1);
+  private static _animCount = new Int32Array(1);
+
+  static loadModelAnimations(fileName: string): { startSlot: number; count: number } {
+    r.symbols.LoadModelAnimationsW(this._animSlotStart, this._animCount, cstr(fileName));
+    return { startSlot: this._animSlotStart[0]!, count: this._animCount[0]! };
+  }
+
+  static updateModelAnimation(model: Model, anim: ModelAnimation, frame: number): void {
+    r.symbols.UpdateModelAnimationW(model, anim, frame);
+  }
+  static updateModelAnimationBones(model: Model, anim: ModelAnimation, frame: number): void {
+    r.symbols.UpdateModelAnimationBonesW(model, anim, frame);
+  }
+  static unloadModelAnimation(anim: ModelAnimation): void {
+    r.symbols.UnloadModelAnimationW(anim);
+  }
+  static unloadModelAnimations(startSlot: number, count: number): void {
+    r.symbols.UnloadModelAnimationsW(startSlot, count);
+  }
+  static isModelAnimationValid(model: Model, anim: ModelAnimation): boolean {
+    return r.symbols.IsModelAnimationValidW(model, anim);
+  }
+
+  // --- Collision detection ---
+
+  static checkCollisionSpheres(
+    center1: Vec3,
+    radius1: number,
+    center2: Vec3,
+    radius2: number,
+  ): boolean {
+    return r.symbols.CheckCollisionSpheresW(
+      f2i(center1.x),
+      f2i(center1.y),
+      f2i(center1.z),
+      f2i(radius1),
+      f2i(center2.x),
+      f2i(center2.y),
+      f2i(center2.z),
+      f2i(radius2),
+    );
+  }
+
+  static checkCollisionBoxes(box1: BoundingBox, box2: BoundingBox): boolean {
+    return r.symbols.CheckCollisionBoxesW(
+      f2i(box1.min.x),
+      f2i(box1.min.y),
+      f2i(box1.min.z),
+      f2i(box1.max.x),
+      f2i(box1.max.y),
+      f2i(box1.max.z),
+      f2i(box2.min.x),
+      f2i(box2.min.y),
+      f2i(box2.min.z),
+      f2i(box2.max.x),
+      f2i(box2.max.y),
+      f2i(box2.max.z),
+    );
+  }
+
+  static checkCollisionBoxSphere(box: BoundingBox, center: Vec3, radius: number): boolean {
+    return r.symbols.CheckCollisionBoxSphereW(
+      f2i(box.min.x),
+      f2i(box.min.y),
+      f2i(box.min.z),
+      f2i(box.max.x),
+      f2i(box.max.y),
+      f2i(box.max.z),
+      f2i(center.x),
+      f2i(center.y),
+      f2i(center.z),
+      f2i(radius),
+    );
+  }
+
+  private static _rcHit = new Uint8Array(1);
+  private static _rcDist = new Float32Array(1);
+  private static _rcPt = new Float32Array(3);
+  private static _rcNorm = new Float32Array(3);
+
+  static getRayCollisionSphere(ray: Ray, center: Vec3, radius: number): RayCollision {
+    r.symbols.GetRayCollisionSphereW(
+      this._rcHit,
+      this._rcDist,
+      this._rcPt,
+      this._rcNorm,
+      f2i(ray.position.x),
+      f2i(ray.position.y),
+      f2i(ray.position.z),
+      f2i(ray.direction.x),
+      f2i(ray.direction.y),
+      f2i(ray.direction.z),
+      f2i(center.x),
+      f2i(center.y),
+      f2i(center.z),
+      f2i(radius),
+    );
+    return {
+      hit: this._rcHit[0]! !== 0,
+      distance: this._rcDist[0]!,
+      point: { x: this._rcPt[0]!, y: this._rcPt[1]!, z: this._rcPt[2]! },
+      normal: { x: this._rcNorm[0]!, y: this._rcNorm[1]!, z: this._rcNorm[2]! },
+    };
+  }
+
+  static getRayCollisionBox(ray: Ray, box: BoundingBox): RayCollision {
+    r.symbols.GetRayCollisionBoxW(
+      this._rcHit,
+      this._rcDist,
+      this._rcPt,
+      this._rcNorm,
+      f2i(ray.position.x),
+      f2i(ray.position.y),
+      f2i(ray.position.z),
+      f2i(ray.direction.x),
+      f2i(ray.direction.y),
+      f2i(ray.direction.z),
+      f2i(box.min.x),
+      f2i(box.min.y),
+      f2i(box.min.z),
+      f2i(box.max.x),
+      f2i(box.max.y),
+      f2i(box.max.z),
+    );
+    return {
+      hit: this._rcHit[0]! !== 0,
+      distance: this._rcDist[0]!,
+      point: { x: this._rcPt[0]!, y: this._rcPt[1]!, z: this._rcPt[2]! },
+      normal: { x: this._rcNorm[0]!, y: this._rcNorm[1]!, z: this._rcNorm[2]! },
+    };
+  }
+
+  static getRayCollisionTriangle(ray: Ray, p1: Vec3, p2: Vec3, p3: Vec3): RayCollision {
+    r.symbols.GetRayCollisionTriangleW(
+      this._rcHit,
+      this._rcDist,
+      this._rcPt,
+      this._rcNorm,
+      f2i(ray.position.x),
+      f2i(ray.position.y),
+      f2i(ray.position.z),
+      f2i(ray.direction.x),
+      f2i(ray.direction.y),
+      f2i(ray.direction.z),
+      f2i(p1.x),
+      f2i(p1.y),
+      f2i(p1.z),
+      f2i(p2.x),
+      f2i(p2.y),
+      f2i(p2.z),
+      f2i(p3.x),
+      f2i(p3.y),
+      f2i(p3.z),
+    );
+    return {
+      hit: this._rcHit[0]! !== 0,
+      distance: this._rcDist[0]!,
+      point: { x: this._rcPt[0]!, y: this._rcPt[1]!, z: this._rcPt[2]! },
+      normal: { x: this._rcNorm[0]!, y: this._rcNorm[1]!, z: this._rcNorm[2]! },
+    };
+  }
+
+  static getRayCollisionQuad(ray: Ray, p1: Vec3, p2: Vec3, p3: Vec3, p4: Vec3): RayCollision {
+    r.symbols.GetRayCollisionQuadW(
+      this._rcHit,
+      this._rcDist,
+      this._rcPt,
+      this._rcNorm,
+      f2i(ray.position.x),
+      f2i(ray.position.y),
+      f2i(ray.position.z),
+      f2i(ray.direction.x),
+      f2i(ray.direction.y),
+      f2i(ray.direction.z),
+      f2i(p1.x),
+      f2i(p1.y),
+      f2i(p1.z),
+      f2i(p2.x),
+      f2i(p2.y),
+      f2i(p2.z),
+      f2i(p3.x),
+      f2i(p3.y),
+      f2i(p3.z),
+      f2i(p4.x),
+      f2i(p4.y),
+      f2i(p4.z),
+    );
+    return {
+      hit: this._rcHit[0]! !== 0,
+      distance: this._rcDist[0]!,
+      point: { x: this._rcPt[0]!, y: this._rcPt[1]!, z: this._rcPt[2]! },
+      normal: { x: this._rcNorm[0]!, y: this._rcNorm[1]!, z: this._rcNorm[2]! },
+    };
+  }
+
+  // --- Audio device ---
+
+  static initAudioDevice(): void {
+    r.symbols.InitAudioDeviceW();
+  }
+  static closeAudioDevice(): void {
+    r.symbols.CloseAudioDeviceW();
+  }
+  static isAudioDeviceReady(): boolean {
+    return r.symbols.IsAudioDeviceReadyW();
+  }
+  static setMasterVolume(volume: number): void {
+    r.symbols.SetMasterVolumeW(volume);
+  }
+  static getMasterVolume(): number {
+    return r.symbols.GetMasterVolumeW();
+  }
+
+  // --- Wave ---
+
+  static loadWave(fileName: string): Wave {
+    return r.symbols.LoadWaveW(cstr(fileName));
+  }
+  static loadWaveFromMemory(fileType: string, fileData: Uint8Array, dataSize: number): Wave {
+    return r.symbols.LoadWaveFromMemoryW(cstr(fileType), fileData, dataSize);
+  }
+  static isWaveValid(wave: Wave): boolean {
+    return r.symbols.IsWaveValidW(wave);
+  }
+  static unloadWave(wave: Wave): void {
+    r.symbols.UnloadWaveW(wave);
+  }
+  static exportWave(wave: Wave, fileName: string): boolean {
+    return r.symbols.ExportWaveW(wave, cstr(fileName));
+  }
+  static exportWaveAsCode(wave: Wave, fileName: string): boolean {
+    return r.symbols.ExportWaveAsCodeW(wave, cstr(fileName));
+  }
+  static waveCopy(wave: Wave): Wave {
+    return r.symbols.WaveCopyW(wave);
+  }
+  static waveCrop(wave: Wave, initFrame: number, finalFrame: number): void {
+    r.symbols.WaveCropW(wave, initFrame, finalFrame);
+  }
+  static waveFormat(wave: Wave, sampleRate: number, sampleSize: number, channels: number): void {
+    r.symbols.WaveFormatW(wave, sampleRate, sampleSize, channels);
+  }
+
+  // --- Sound ---
+
+  static loadSound(fileName: string): Sound {
+    return r.symbols.LoadSoundW(cstr(fileName));
+  }
+  static loadSoundFromWave(wave: Wave): Sound {
+    return r.symbols.LoadSoundFromWaveW(wave);
+  }
+  static loadSoundAlias(source: Sound): Sound {
+    return r.symbols.LoadSoundAliasW(source);
+  }
+  static isSoundValid(sound: Sound): boolean {
+    return r.symbols.IsSoundValidW(sound);
+  }
+  static unloadSound(sound: Sound): void {
+    r.symbols.UnloadSoundW(sound);
+  }
+  static unloadSoundAlias(alias: Sound): void {
+    r.symbols.UnloadSoundAliasW(alias);
+  }
+  static playSound(sound: Sound): void {
+    r.symbols.PlaySoundW(sound);
+  }
+  static stopSound(sound: Sound): void {
+    r.symbols.StopSoundW(sound);
+  }
+  static pauseSound(sound: Sound): void {
+    r.symbols.PauseSoundW(sound);
+  }
+  static resumeSound(sound: Sound): void {
+    r.symbols.ResumeSoundW(sound);
+  }
+  static isSoundPlaying(sound: Sound): boolean {
+    return r.symbols.IsSoundPlayingW(sound);
+  }
+  static setSoundVolume(sound: Sound, volume: number): void {
+    r.symbols.SetSoundVolumeW(sound, volume);
+  }
+  static setSoundPitch(sound: Sound, pitch: number): void {
+    r.symbols.SetSoundPitchW(sound, pitch);
+  }
+  static setSoundPan(sound: Sound, pan: number): void {
+    r.symbols.SetSoundPanW(sound, pan);
+  }
+
+  // --- Music ---
+
+  static loadMusicStream(fileName: string): Music {
+    return r.symbols.LoadMusicStreamW(cstr(fileName));
+  }
+  static loadMusicStreamFromMemory(fileType: string, data: Uint8Array, dataSize: number): Music {
+    return r.symbols.LoadMusicStreamFromMemoryW(cstr(fileType), data, dataSize);
+  }
+  static isMusicValid(music: Music): boolean {
+    return r.symbols.IsMusicValidW(music);
+  }
+  static unloadMusicStream(music: Music): void {
+    r.symbols.UnloadMusicStreamW(music);
+  }
+  static playMusicStream(music: Music): void {
+    r.symbols.PlayMusicStreamW(music);
+  }
+  static isMusicStreamPlaying(music: Music): boolean {
+    return r.symbols.IsMusicStreamPlayingW(music);
+  }
+  static updateMusicStream(music: Music): void {
+    r.symbols.UpdateMusicStreamW(music);
+  }
+  static stopMusicStream(music: Music): void {
+    r.symbols.StopMusicStreamW(music);
+  }
+  static pauseMusicStream(music: Music): void {
+    r.symbols.PauseMusicStreamW(music);
+  }
+  static resumeMusicStream(music: Music): void {
+    r.symbols.ResumeMusicStreamW(music);
+  }
+  static seekMusicStream(music: Music, position: number): void {
+    r.symbols.SeekMusicStreamW(music, position);
+  }
+  static setMusicVolume(music: Music, volume: number): void {
+    r.symbols.SetMusicVolumeW(music, volume);
+  }
+  static setMusicPitch(music: Music, pitch: number): void {
+    r.symbols.SetMusicPitchW(music, pitch);
+  }
+  static setMusicPan(music: Music, pan: number): void {
+    r.symbols.SetMusicPanW(music, pan);
+  }
+  static getMusicTimeLength(music: Music): number {
+    return r.symbols.GetMusicTimeLengthW(music);
+  }
+  static getMusicTimePlayed(music: Music): number {
+    return r.symbols.GetMusicTimePlayedW(music);
+  }
+
+  // --- AudioStream ---
+
+  static loadAudioStream(sampleRate: number, sampleSize: number, channels: number): AudioStream {
+    return r.symbols.LoadAudioStreamW(sampleRate, sampleSize, channels);
+  }
+  static isAudioStreamValid(stream: AudioStream): boolean {
+    return r.symbols.IsAudioStreamValidW(stream);
+  }
+  static unloadAudioStream(stream: AudioStream): void {
+    r.symbols.UnloadAudioStreamW(stream);
+  }
+  static isAudioStreamProcessed(stream: AudioStream): boolean {
+    return r.symbols.IsAudioStreamProcessedW(stream);
+  }
+  static playAudioStream(stream: AudioStream): void {
+    r.symbols.PlayAudioStreamW(stream);
+  }
+  static pauseAudioStream(stream: AudioStream): void {
+    r.symbols.PauseAudioStreamW(stream);
+  }
+  static resumeAudioStream(stream: AudioStream): void {
+    r.symbols.ResumeAudioStreamW(stream);
+  }
+  static isAudioStreamPlaying(stream: AudioStream): boolean {
+    return r.symbols.IsAudioStreamPlayingW(stream);
+  }
+  static stopAudioStream(stream: AudioStream): void {
+    r.symbols.StopAudioStreamW(stream);
+  }
+  static setAudioStreamVolume(stream: AudioStream, volume: number): void {
+    r.symbols.SetAudioStreamVolumeW(stream, volume);
+  }
+  static setAudioStreamPitch(stream: AudioStream, pitch: number): void {
+    r.symbols.SetAudioStreamPitchW(stream, pitch);
+  }
+  static setAudioStreamPan(stream: AudioStream, pan: number): void {
+    r.symbols.SetAudioStreamPanW(stream, pan);
+  }
+  static setAudioStreamBufferSizeDefault(size: number): void {
+    r.symbols.SetAudioStreamBufferSizeDefaultW(size);
+  }
+
+  // --- Font/Text remaining ---
+
+  static loadFontFromImage(image: Image, key: Color, firstChar: number): Font {
+    return r.symbols.LoadFontFromImageW(image, key, firstChar);
+  }
+  static loadFontFromMemory(
+    fileType: string,
+    fileData: Uint8Array,
+    dataSize: number,
+    fontSize: number,
+  ): Font {
+    return r.symbols.LoadFontFromMemoryW(cstr(fileType), fileData, dataSize, fontSize);
+  }
+  static exportFontAsCode(font: Font, fileName: string): boolean {
+    return r.symbols.ExportFontAsCodeW(font, cstr(fileName));
+  }
+  static drawTextCodepoint(
+    font: Font,
+    codepoint: number,
+    position: Vec2,
+    fontSize: number,
+    tint: Color,
+  ): void {
+    r.symbols.DrawTextCodepointW(font, codepoint, position.x, position.y, f2i(fontSize), tint);
+  }
+  static drawTextCodepoints(
+    font: Font,
+    codepoints: Int32Array,
+    count: number,
+    position: Vec2,
+    fontSize: number,
+    spacing: number,
+    tint: Color,
+  ): void {
+    r.symbols.DrawTextCodepointsW(
+      font,
+      codepoints,
+      count,
+      position.x,
+      position.y,
+      f2i(fontSize),
+      f2i(spacing),
+      tint,
+    );
+  }
+  static getGlyphIndex(font: Font, codepoint: number): number {
+    return r.symbols.GetGlyphIndexW(font, codepoint);
+  }
+
+  private static _glyphValue = new Int32Array(1);
+  private static _glyphOffsetX = new Int32Array(1);
+  private static _glyphOffsetY = new Int32Array(1);
+  private static _glyphAdvanceX = new Int32Array(1);
+  private static _glyphImageSlot = new Int32Array(1);
+
+  static getGlyphInfo(font: Font, codepoint: number): GlyphInfo {
+    r.symbols.GetGlyphInfoW(
+      this._glyphValue,
+      this._glyphOffsetX,
+      this._glyphOffsetY,
+      this._glyphAdvanceX,
+      this._glyphImageSlot,
+      font,
+      codepoint,
+    );
+    return {
+      value: this._glyphValue[0]!,
+      offsetX: this._glyphOffsetX[0]!,
+      offsetY: this._glyphOffsetY[0]!,
+      advanceX: this._glyphAdvanceX[0]!,
+      image: this._glyphImageSlot[0]!,
+    };
+  }
+
+  static getGlyphAtlasRec(font: Font, codepoint: number): Rectangle {
+    r.symbols.GetGlyphAtlasRecW(_recBuf, font, codepoint);
+    return { x: _recBuf[0]!, y: _recBuf[1]!, width: _recBuf[2]!, height: _recBuf[3]! };
+  }
+
+  private static _cpSize = new Int32Array(1);
+
+  static getCodepoint(text: string): { codepoint: number; size: number } {
+    const cp = r.symbols.GetCodepointW(cstr(text), this._cpSize);
+    return { codepoint: cp, size: this._cpSize[0]! };
+  }
+
+  static getCodepointNext(text: string): { codepoint: number; size: number } {
+    const cp = r.symbols.GetCodepointNextW(cstr(text), this._cpSize);
+    return { codepoint: cp, size: this._cpSize[0]! };
+  }
+
+  static getCodepointPrevious(text: string): { codepoint: number; size: number } {
+    const cp = r.symbols.GetCodepointPreviousW(cstr(text), this._cpSize);
+    return { codepoint: cp, size: this._cpSize[0]! };
+  }
+
+  static getCodepointCount(text: string): number {
+    return r.symbols.GetCodepointCountW(cstr(text));
+  }
+  static textIsEqual(text1: string, text2: string): boolean {
+    return r.symbols.TextIsEqualW(cstr(text1), cstr(text2));
+  }
+  static textLength(text: string): number {
+    return r.symbols.TextLengthW(cstr(text));
+  }
+  static textToInteger(text: string): number {
+    return r.symbols.TextToIntegerW(cstr(text));
+  }
+  static textToFloat(text: string): number {
+    return r.symbols.TextToFloatW(cstr(text));
+  }
+  static textFindIndex(text: string, find: string): number {
+    return r.symbols.TextFindIndexW(cstr(text), cstr(find));
+  }
+
+  static imageToPOT(image: Image, fill: number): void {
+    r.symbols.ImageToPOTW(image, fill);
+  }
+
+  static imageKernelConvolution(image: Image, kernel: Float32Array): void {
+    r.symbols.ImageKernelConvolutionW(image, kernel, kernel.length);
+  }
+
+  static unloadImageColors(ptr: number): void {
+    r.symbols.UnloadImageColorsW(ptr);
+  }
+  static unloadImagePalette(ptr: number): void {
+    r.symbols.UnloadImagePaletteW(ptr);
+  }
+
+  static loadImageAnimFromMemory(
+    fileType: string,
+    data: Buffer | Uint8Array,
+    frames?: Int32Array,
+  ): Image {
+    return r.symbols.LoadImageAnimFromMemoryW(
+      cstr(fileType),
+      data,
+      data.length,
+      frames ?? new Int32Array(1),
+    );
+  }
+
+  static unloadFontData(ptr: number, glyphCount: number): void {
+    r.symbols.UnloadFontDataW(ptr, glyphCount);
+  }
+  static unloadUTF8(ptr: number): void {
+    r.symbols.UnloadUTF8W(ptr);
+  }
+  static unloadCodepoints(ptr: number): void {
+    r.symbols.UnloadCodepointsW(ptr);
+  }
+
+  static textCopy(dst: ArrayBuffer, src: string): number {
+    return r.symbols.TextCopyW(dst, cstr(src));
+  }
+
+  private static _textAppendPos = new Int32Array(1);
+
+  static textAppend(text: ArrayBuffer, append: string, position: number): number {
+    this._textAppendPos[0] = position;
+    r.symbols.TextAppendW(text, cstr(append), this._textAppendPos);
+    return this._textAppendPos[0]!;
+  }
+
+  static updateMeshBuffer(
+    mesh: Mesh,
+    index: number,
+    data: Buffer | Uint8Array,
+    offset: number,
+  ): void {
+    r.symbols.UpdateMeshBufferW(mesh, index, data, data.length, offset);
+  }
+
+  static getRayCollisionMesh(
+    ray: Ray,
+    mesh: Mesh,
+    transform: { m: Float32Array } | Float32Array,
+  ): RayCollision {
+    const m = transform instanceof Float32Array ? transform : transform.m;
+    r.symbols.GetRayCollisionMeshW(
+      this._rcHit,
+      this._rcDist,
+      this._rcPt,
+      this._rcNorm,
+      f2i(ray.position.x),
+      f2i(ray.position.y),
+      f2i(ray.position.z),
+      f2i(ray.direction.x),
+      f2i(ray.direction.y),
+      f2i(ray.direction.z),
+      mesh,
+      f2i(m[0]!),
+      f2i(m[4]!),
+      f2i(m[8]!),
+      f2i(m[12]!),
+      f2i(m[1]!),
+      f2i(m[5]!),
+      f2i(m[9]!),
+      f2i(m[13]!),
+      f2i(m[2]!),
+      f2i(m[6]!),
+      f2i(m[10]!),
+      f2i(m[14]!),
+      f2i(m[3]!),
+      f2i(m[7]!),
+      f2i(m[11]!),
+      f2i(m[15]!),
+    );
+    return {
+      hit: this._rcHit[0]! !== 0,
+      distance: this._rcDist[0]!,
+      point: { x: this._rcPt[0]!, y: this._rcPt[1]!, z: this._rcPt[2]! },
+      normal: { x: this._rcNorm[0]!, y: this._rcNorm[1]!, z: this._rcNorm[2]! },
+    };
+  }
+
+  static unloadRandomSequence(ptr: number): void {
+    r.symbols.UnloadRandomSequenceW(ptr);
+  }
+  static memFree(ptr: number): void {
+    r.symbols.MemFreeW(ptr);
+  }
+  static unloadFileData(ptr: number): void {
+    r.symbols.UnloadFileDataW(ptr);
+  }
+  static saveFileData(fileName: string, data: Uint8Array | Buffer): boolean {
+    return r.symbols.SaveFileDataW(cstr(fileName), data, data.length);
+  }
+  static exportDataAsCode(data: Uint8Array | Buffer, fileName: string): boolean {
+    return r.symbols.ExportDataAsCodeW(data, data.length, cstr(fileName));
+  }
+  static loadWaveSamples(wave: Wave): number {
+    return r.symbols.LoadWaveSamplesW(wave) as number;
+  }
+  static unloadWaveSamples(ptr: number): void {
+    r.symbols.UnloadWaveSamplesW(ptr);
+  }
+  static setWindowIcons(images: number, count: number): void {
+    r.symbols.SetWindowIconsW(images, count);
   }
 }

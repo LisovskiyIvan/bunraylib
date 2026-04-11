@@ -1,0 +1,30 @@
+import { FFIType } from "bun:ffi";
+const { i32, cstring, bool, ptr } = FFIType;
+
+export const filesystemSymbols = {
+  FileExistsW: { args: [cstring], returns: bool },
+  DirectoryExistsW: { args: [cstring], returns: bool },
+  IsFileExtensionW: { args: [cstring, cstring], returns: bool },
+  GetFileLengthW: { args: [cstring], returns: i32 },
+  GetFileExtensionW: { args: [cstring], returns: ptr },
+  GetFileNameW: { args: [cstring], returns: ptr },
+  GetFileNameWithoutExtW: { args: [cstring], returns: ptr },
+  GetDirectoryPathW: { args: [cstring], returns: ptr },
+  GetPrevDirectoryPathW: { args: [cstring], returns: ptr },
+  GetWorkingDirectoryW: { args: [], returns: ptr },
+  GetApplicationDirectoryW: { args: [], returns: ptr },
+  MakeDirectoryW: { args: [cstring], returns: i32 },
+  ChangeDirectoryW: { args: [cstring], returns: bool },
+  IsPathFileW: { args: [cstring], returns: bool },
+  IsFileNameValidW: { args: [cstring], returns: bool },
+  GetFileModTimeW: { args: [cstring], returns: FFIType.i64 },
+  LoadFileTextW: { args: [cstring], returns: ptr },
+  UnloadFileTextW: { args: [ptr], returns: FFIType.void },
+  SaveFileTextW: { args: [cstring, cstring], returns: bool },
+  ComputeCRC32W: { args: [ptr, i32], returns: i32 },
+  UnloadRandomSequenceW: { args: [ptr], returns: FFIType.void },
+  MemFreeW: { args: [ptr], returns: FFIType.void },
+  UnloadFileDataW: { args: [ptr], returns: FFIType.void },
+  SaveFileDataW: { args: [cstring, ptr, i32], returns: bool },
+  ExportDataAsCodeW: { args: [ptr, i32, cstring], returns: bool },
+} as const;
