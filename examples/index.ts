@@ -3,7 +3,7 @@ import type { Camera3D } from "../src/types";
 
 Raylib.setConfigFlags(0x00000004);
 Raylib.initWindow(1200, 800, "Input & Window Demo");
-Raylib.setTargetFPS(60);
+Raylib.setTargetFPS(300);
 
 let x = 600;
 let y = 400;

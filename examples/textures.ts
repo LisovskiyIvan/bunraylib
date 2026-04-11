@@ -1,4 +1,4 @@
-import { Raylib, COLORS, KEYS, TEXTURE } from "../src";
+import { Raylib, COLORS, KEYS } from "../src";
 import { join } from "path";
 
 Raylib.initWindow(1200, 800, "Texture Demo");

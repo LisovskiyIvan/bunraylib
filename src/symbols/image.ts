@@ -77,7 +77,7 @@ export const imageSymbols = {
   ImageDrawTriangleFanW: { args: [i32, ptr, i32, i32], returns: FFIType.void },
   ImageDrawTriangleStripW: { args: [i32, ptr, i32, i32], returns: FFIType.void },
   ImageDrawW: {
-    args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+    args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
     returns: FFIType.void,
   },
   ImageDrawTextW: { args: [i32, cstring, i32, i32, i32, i32], returns: FFIType.void },

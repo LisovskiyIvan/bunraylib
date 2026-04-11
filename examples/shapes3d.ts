@@ -2,7 +2,7 @@ import { Raylib, COLORS, KEYS, CAMERA } from "../src";
 import type { Camera3D } from "../src/types";
 
 Raylib.initWindow(1200, 800, "3D Shapes Demo");
-Raylib.setTargetFPS(60);
+Raylib.setTargetFPS(300);
 
 const camera: Camera3D = {
   position: { x: 20, y: 20, z: 20 },

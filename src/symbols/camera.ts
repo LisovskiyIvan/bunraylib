@@ -15,11 +15,11 @@ export const cameraSymbols = {
     returns: FFIType.void,
   },
   GetScreenToWorldRayW: {
-    args: [ptr, ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+    args: [ptr, ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
     returns: FFIType.void,
   },
   GetWorldToScreenW: {
-    args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+    args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
     returns: FFIType.void,
   },
   GetWorldToScreen2DW: {
@@ -35,11 +35,11 @@ export const cameraSymbols = {
     returns: FFIType.void,
   },
   GetWorldToScreenExW: {
-    args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+    args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
     returns: FFIType.void,
   },
   GetCameraMatrixW: {
-    args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
+    args: [ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
     returns: FFIType.void,
   },
   GetCameraMatrix2DW: { args: [ptr, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
