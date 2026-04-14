@@ -2820,10 +2820,10 @@ export class Raylib {
   }
 
   static getPixelColor(srcPtr: number, format: number): Color {
-    return r.symbols.GetPixelColorW(srcPtr, format);
+    return r.symbols.GetPixelColorW(srcPtr as any, format);
   }
   static setPixelColor(dstPtr: number, color: Color, format: number): void {
-    r.symbols.SetPixelColorW(dstPtr, color, format);
+    r.symbols.SetPixelColorW(dstPtr as any, color, format);
   }
 
   // --- Model drawing extensions ---
@@ -3584,10 +3584,10 @@ export class Raylib {
   }
 
   static unloadImageColors(ptr: number): void {
-    r.symbols.UnloadImageColorsW(ptr);
+    r.symbols.UnloadImageColorsW(ptr as any);
   }
   static unloadImagePalette(ptr: number): void {
-    r.symbols.UnloadImagePaletteW(ptr);
+    r.symbols.UnloadImagePaletteW(ptr as any);
   }
 
   static loadImageAnimFromMemory(
@@ -3604,22 +3604,22 @@ export class Raylib {
   }
 
   static unloadFontData(ptr: number, glyphCount: number): void {
-    r.symbols.UnloadFontDataW(ptr, glyphCount);
+    r.symbols.UnloadFontDataW(ptr as any, glyphCount);
   }
   static unloadUTF8(ptr: number): void {
-    r.symbols.UnloadUTF8W(ptr);
+    r.symbols.UnloadUTF8W(ptr as any);
   }
   static unloadCodepoints(ptr: number): void {
-    r.symbols.UnloadCodepointsW(ptr);
+    r.symbols.UnloadCodepointsW(ptr as any);
   }
 
-  static textCopy(dst: ArrayBuffer, src: string): number {
+  static textCopy(dst: Uint8Array, src: string): number {
     return r.symbols.TextCopyW(dst, cstr(src));
   }
 
   private static _textAppendPos = new Int32Array(1);
 
-  static textAppend(text: ArrayBuffer, append: string, position: number): number {
+  static textAppend(text: Uint8Array, append: string, position: number): number {
     this._textAppendPos[0] = position;
     r.symbols.TextAppendW(text, cstr(append), this._textAppendPos);
     return this._textAppendPos[0]!;
@@ -3678,13 +3678,13 @@ export class Raylib {
   }
 
   static unloadRandomSequence(ptr: number): void {
-    r.symbols.UnloadRandomSequenceW(ptr);
+    r.symbols.UnloadRandomSequenceW(ptr as any);
   }
   static memFree(ptr: number): void {
-    r.symbols.MemFreeW(ptr);
+    r.symbols.MemFreeW(ptr as any);
   }
   static unloadFileData(ptr: number): void {
-    r.symbols.UnloadFileDataW(ptr);
+    r.symbols.UnloadFileDataW(ptr as any);
   }
   static saveFileData(fileName: string, data: Uint8Array | Buffer): boolean {
     return r.symbols.SaveFileDataW(cstr(fileName), data, data.length);
@@ -3696,9 +3696,9 @@ export class Raylib {
     return r.symbols.LoadWaveSamplesW(wave) as number;
   }
   static unloadWaveSamples(ptr: number): void {
-    r.symbols.UnloadWaveSamplesW(ptr);
+    r.symbols.UnloadWaveSamplesW(ptr as any);
   }
   static setWindowIcons(images: number, count: number): void {
-    r.symbols.SetWindowIconsW(images, count);
+    r.symbols.SetWindowIconsW(images as any, count);
   }
 }

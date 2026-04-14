@@ -1,5 +1,6 @@
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
 import { Raylib } from "../src";
+import type { CameraProjection } from "../src/types";
 import { join } from "path";
 
 beforeAll(() => {
@@ -69,7 +70,7 @@ describe("Model drawing", () => {
       target: { x: 0, y: 0, z: 0 },
       up: { x: 0, y: 1, z: 0 },
       fovy: 45,
-      projection: 0,
+      projection: 0 as CameraProjection,
     };
     Raylib.beginDrawing();
     Raylib.clearBackground(0);
@@ -87,7 +88,7 @@ describe("Model drawing", () => {
       target: { x: 0, y: 0, z: 0 },
       up: { x: 0, y: 1, z: 0 },
       fovy: 45,
-      projection: 0,
+      projection: 0 as CameraProjection,
     };
     Raylib.beginDrawing();
     Raylib.clearBackground(0);
@@ -112,7 +113,7 @@ describe("Model drawing", () => {
       target: { x: 0, y: 0, z: 0 },
       up: { x: 0, y: 1, z: 0 },
       fovy: 45,
-      projection: 0,
+      projection: 0 as CameraProjection,
     };
     Raylib.beginDrawing();
     Raylib.clearBackground(0);
