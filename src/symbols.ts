@@ -19,7 +19,6 @@ import { filesystemSymbols } from "./symbols/filesystem";
 export const symbols = cc({
   source: wrapper,
   library: ["raylib"],
-  flags: ["-I./../assets/include"],
   symbols: {
     ...windowSymbols,
     ...shapesSymbols,

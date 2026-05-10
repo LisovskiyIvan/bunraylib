@@ -1,4 +1,4 @@
-#include "raylib.h"
+#include <raylib.h>
 #include <string.h>
 
 void DrawRectangleW(int posX, int posY, int width, int height, Color color) {
@@ -48,7 +48,9 @@ void DrawCircleSectorLinesW(int centerX, int centerY, int radius, int startAngle
 }
 
 void DrawCircleGradientW(int centerX, int centerY, int radius, Color inner, Color outer) {
-    DrawCircleGradient(centerX, centerY, radius, inner, outer);
+    float r;
+    memcpy(&r, &radius, sizeof(float));
+    DrawCircleGradient((Vector2){centerX, centerY}, r, inner, outer);
 }
 
 void DrawCircleLinesW(int centerX, int centerY, int radius, Color color) {

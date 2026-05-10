@@ -45,11 +45,6 @@ export const draw3dSymbols = {
     args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
     returns: FFIType.void,
   },
-  DrawModelPointsW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
-  DrawModelPointsExW: {
-    args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32],
-    returns: FFIType.void,
-  },
   DrawBoundingBoxW: { args: [i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
   DrawBillboardW: {
     args: [

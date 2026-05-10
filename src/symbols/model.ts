@@ -32,8 +32,7 @@ export const modelSymbols = {
   SetModelMeshMaterialW: { args: [i32, i32, i32], returns: FFIType.void },
   LoadModelAnimationsW: { args: [ptr, ptr, cstring], returns: FFIType.void },
   UpdateModelAnimationW: { args: [i32, i32, i32], returns: FFIType.void },
-  UpdateModelAnimationBonesW: { args: [i32, i32, i32], returns: FFIType.void },
-  UnloadModelAnimationW: { args: [i32], returns: FFIType.void },
+  UpdateModelAnimationExW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
   UnloadModelAnimationsW: { args: [i32, i32], returns: FFIType.void },
   IsModelAnimationValidW: { args: [i32, i32], returns: bool },
 } as const;

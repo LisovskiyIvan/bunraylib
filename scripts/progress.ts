@@ -1,14 +1,26 @@
-import { readFileSync, writeFileSync } from "fs";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "fs";
 
-const RAYLIB_H = "assets/include/raylib.h";
+const RAYLIB_H = [process.env.RAYLIB_H, "/usr/include/raylib.h", "/usr/local/include/raylib.h"].find(
+  (path): path is string => !!path && existsSync(path),
+);
 const SYMBOLS_TS = "src/symbols.ts";
+const SYMBOLS_DIR = "src/symbols";
 const OUTPUT = "PROGRESS.md";
 
+if (!RAYLIB_H) {
+  throw new Error("Unable to locate raylib.h. Set RAYLIB_H to your raylib 6.0 header path.");
+}
+
 const h = readFileSync(RAYLIB_H, "utf-8");
-const sym = readFileSync(SYMBOLS_TS, "utf-8");
+const symbolSources = [
+  readFileSync(SYMBOLS_TS, "utf-8"),
+  ...readdirSync(SYMBOLS_DIR)
+    .filter((name) => name.endsWith(".ts"))
+    .map((name) => readFileSync(`${SYMBOLS_DIR}/${name}`, "utf-8")),
+];
 
 const implementedRaw = new Set(
-  [...sym.matchAll(/(\w+):\s*\{/g)].map((m) => m[1]!),
+  symbolSources.flatMap((source) => [...source.matchAll(/(\w+):\s*\{/g)].map((m) => m[1]!)),
 );
 const implemented = new Set(
   [...implementedRaw].map((s) => s.replace(/W$/, "")),

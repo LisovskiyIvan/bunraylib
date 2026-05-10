@@ -136,29 +136,6 @@ void DrawModelWiresExW(int id,
         (Vector3){sx, sy, sz}, tint);
 }
 
-void DrawModelPointsW(int id, int posX, int posY, int posZ, int scale, Color tint) {
-    if (id < 0 || id >= MAX_MODELS || !modelUsed[id]) return;
-    float s;
-    memcpy(&s, &scale, sizeof(float));
-    DrawModelPoints(modelRegistry[id], (Vector3){i2f(posX), i2f(posY), i2f(posZ)}, s, tint);
-}
-
-void DrawModelPointsExW(int id,
-    int posX, int posY, int posZ,
-    int rotAxisX, int rotAxisY, int rotAxisZ, int rotAngle,
-    int scaleX, int scaleY, int scaleZ, Color tint) {
-    if (id < 0 || id >= MAX_MODELS || !modelUsed[id]) return;
-    float ra, sx, sy, sz;
-    memcpy(&ra, &rotAngle, sizeof(float));
-    memcpy(&sx, &scaleX, sizeof(float));
-    memcpy(&sy, &scaleY, sizeof(float));
-    memcpy(&sz, &scaleZ, sizeof(float));
-    DrawModelPointsEx(modelRegistry[id],
-        (Vector3){i2f(posX), i2f(posY), i2f(posZ)},
-        (Vector3){i2f(rotAxisX), i2f(rotAxisY), i2f(rotAxisZ)}, ra,
-        (Vector3){sx, sy, sz}, tint);
-}
-
 void DrawBoundingBoxW(int minX, int minY, int minZ, int maxX, int maxY, int maxZ, Color color) {
     BoundingBox bb = {
         {i2f(minX), i2f(minY), i2f(minZ)},

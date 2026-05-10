@@ -213,26 +213,25 @@ void LoadModelAnimationsW(int* outSlotStart, int* outAnimCount, const char* file
 void UpdateModelAnimationW(int modelId, int animId, int frame) {
     if (modelId < 0 || modelId >= MAX_MODELS || !modelUsed[modelId]) return;
     if (animId < 0 || animId >= MAX_ANIMATIONS || !animUsed[animId]) return;
-    UpdateModelAnimation(modelRegistry[modelId], animRegistry[animId], frame);
+    UpdateModelAnimation(modelRegistry[modelId], animRegistry[animId], i2f(frame));
 }
 
-void UpdateModelAnimationBonesW(int modelId, int animId, int frame) {
+void UpdateModelAnimationExW(int modelId, int animAId, int frameA, int animBId, int frameB, int blend) {
     if (modelId < 0 || modelId >= MAX_MODELS || !modelUsed[modelId]) return;
-    if (animId < 0 || animId >= MAX_ANIMATIONS || !animUsed[animId]) return;
-    UpdateModelAnimationBones(modelRegistry[modelId], animRegistry[animId], frame);
-}
-
-void UnloadModelAnimationW(int id) {
-    if (id < 0 || id >= MAX_ANIMATIONS || !animUsed[id]) return;
-    UnloadModelAnimation(animRegistry[id]);
-    animUsed[id] = false;
+    if (animAId < 0 || animAId >= MAX_ANIMATIONS || !animUsed[animAId]) return;
+    if (animBId < 0 || animBId >= MAX_ANIMATIONS || !animUsed[animBId]) return;
+    UpdateModelAnimationEx(
+        modelRegistry[modelId],
+        animRegistry[animAId], i2f(frameA),
+        animRegistry[animBId], i2f(frameB),
+        i2f(blend));
 }
 
 void UnloadModelAnimationsW(int startSlot, int count) {
     for (int i = 0; i < count; i++) {
         int id = startSlot + i;
         if (id < 0 || id >= MAX_ANIMATIONS || !animUsed[id]) continue;
-        UnloadModelAnimation(animRegistry[id]);
+        UnloadModelAnimations(&animRegistry[id], 1);
         animUsed[id] = false;
     }
 }

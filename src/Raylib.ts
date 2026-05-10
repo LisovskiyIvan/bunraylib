@@ -234,7 +234,7 @@ export class Raylib {
     inner: Color,
     outer: Color,
   ): void {
-    r.symbols.DrawCircleGradientW(centerX, centerY, radius, inner, outer);
+    r.symbols.DrawCircleGradientW(centerX, centerY, f2i(radius), inner, outer);
   }
 
   /** Draw circle outline */
@@ -2826,43 +2826,6 @@ export class Raylib {
     r.symbols.SetPixelColorW(dstPtr as any, color, format);
   }
 
-  // --- Model drawing extensions ---
-
-  static drawModelPoints(model: Model, position: Vec3, scale: number, tint: Color): void {
-    r.symbols.DrawModelPointsW(
-      model,
-      f2i(position.x),
-      f2i(position.y),
-      f2i(position.z),
-      f2i(scale),
-      tint,
-    );
-  }
-
-  static drawModelPointsEx(
-    model: Model,
-    position: Vec3,
-    rotationAxis: Vec3,
-    rotationAngle: number,
-    scale: Vec3,
-    tint: Color,
-  ): void {
-    r.symbols.DrawModelPointsExW(
-      model,
-      f2i(position.x),
-      f2i(position.y),
-      f2i(position.z),
-      f2i(rotationAxis.x),
-      f2i(rotationAxis.y),
-      f2i(rotationAxis.z),
-      f2i(rotationAngle),
-      f2i(scale.x),
-      f2i(scale.y),
-      f2i(scale.z),
-      tint,
-    );
-  }
-
   static drawBoundingBox(box: BoundingBox, color: Color): void {
     r.symbols.DrawBoundingBoxW(
       f2i(box.min.x),
@@ -3087,13 +3050,17 @@ export class Raylib {
   }
 
   static updateModelAnimation(model: Model, anim: ModelAnimation, frame: number): void {
-    r.symbols.UpdateModelAnimationW(model, anim, frame);
+    r.symbols.UpdateModelAnimationW(model, anim, f2i(frame));
   }
-  static updateModelAnimationBones(model: Model, anim: ModelAnimation, frame: number): void {
-    r.symbols.UpdateModelAnimationBonesW(model, anim, frame);
-  }
-  static unloadModelAnimation(anim: ModelAnimation): void {
-    r.symbols.UnloadModelAnimationW(anim);
+  static updateModelAnimationEx(
+    model: Model,
+    animA: ModelAnimation,
+    frameA: number,
+    animB: ModelAnimation,
+    frameB: number,
+    blend: number,
+  ): void {
+    r.symbols.UpdateModelAnimationExW(model, animA, f2i(frameA), animB, f2i(frameB), f2i(blend));
   }
   static unloadModelAnimations(startSlot: number, count: number): void {
     r.symbols.UnloadModelAnimationsW(startSlot, count);
