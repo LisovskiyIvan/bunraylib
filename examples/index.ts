@@ -1,5 +1,4 @@
-import { Raylib, COLORS, KEYS, MOUSE, BLEND, CAMERA } from "../src";
-import type { Camera3D } from "../src/types";
+import { Raylib, COLORS, KEYS, MOUSE } from "../src";
 
 Raylib.setConfigFlags(0x00000004);
 Raylib.initWindow(1200, 800, "Input & Window Demo");
@@ -11,6 +10,7 @@ const speed = 200;
 let fullscreen = false;
 let showFps = true;
 let blendMode = 0;
+let clipboardPreview = "";
 const blendModes = ["ALPHA", "ADDITIVE", "MULTIPLIED", "ADD_COLORS", "SUBTRACT"];
 
 while (!Raylib.windowShouldClose()) {
@@ -22,6 +22,7 @@ while (!Raylib.windowShouldClose()) {
   }
   if (Raylib.isKeyPressed(KEYS.TAB)) showFps = !showFps;
   if (Raylib.isKeyPressed(KEYS.B)) blendMode = (blendMode + 1) % blendModes.length;
+  if (Raylib.isKeyPressed(KEYS.C)) clipboardPreview = Raylib.getClipboardText().slice(0, 30);
 
   if (Raylib.isKeyDown(KEYS.RIGHT) || Raylib.isKeyDown(KEYS.D)) x += speed * dt;
   if (Raylib.isKeyDown(KEYS.LEFT) || Raylib.isKeyDown(KEYS.A)) x -= speed * dt;
@@ -58,7 +59,7 @@ while (!Raylib.windowShouldClose()) {
   const monitorName = Raylib.getMonitorName(0);
   Raylib.drawText(`Monitor: ${monitorName}`, 20, ty, 18, COLORS.GOLD); ty += 22;
   Raylib.drawText(`Resized: ${Raylib.isWindowResized()}`, 20, ty, 18, COLORS.BEIGE); ty += 22;
-  Raylib.drawText(`Clipboard: ${Raylib.getClipboardText().slice(0, 30)}`, 20, ty, 18, COLORS.VIOLET); ty += 22;
+  Raylib.drawText(`Clipboard: ${clipboardPreview}`, 20, ty, 18, COLORS.VIOLET); ty += 22;
 
   ty += 10;
   Raylib.drawText("[WASD/Arrows] Move player", 20, ty, 16, COLORS.LIGHTGRAY); ty += 20;
@@ -68,9 +69,15 @@ while (!Raylib.windowShouldClose()) {
   Raylib.drawText("[TAB] Toggle FPS counter", 20, ty, 16, COLORS.LIGHTGRAY); ty += 20;
   Raylib.drawText("[ESC] Quit", 20, ty, 16, COLORS.LIGHTGRAY); ty += 20;
 
-  if (Raylib.isKeyPressed(KEYS.ONE)) Raylib.setClipboardText("Hello from rraylib!");
-  if (Raylib.isKeyPressed(KEYS.TWO)) Raylib.setClipboardText("rraylib is awesome");
-  Raylib.drawText("[1/2] Set clipboard text", 20, ty, 16, COLORS.LIGHTGRAY);
+  if (Raylib.isKeyPressed(KEYS.ONE)) {
+    clipboardPreview = "Hello from rraylib!";
+    Raylib.setClipboardText(clipboardPreview);
+  }
+  if (Raylib.isKeyPressed(KEYS.TWO)) {
+    clipboardPreview = "rraylib is awesome";
+    Raylib.setClipboardText(clipboardPreview);
+  }
+  Raylib.drawText("[1/2] Set clipboard text, [C] Read clipboard", 20, ty, 16, COLORS.LIGHTGRAY);
 
   if (showFps) Raylib.drawFPS(Raylib.getScreenWidth() - 100, 10);
 

@@ -1,5 +1,6 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "fs";
 
+
 const RAYLIB_H = [process.env.RAYLIB_H, "/usr/include/raylib.h", "/usr/local/include/raylib.h"].find(
   (path): path is string => !!path && existsSync(path),
 );

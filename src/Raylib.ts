@@ -32,7 +32,24 @@ const _recBuf = new Float32Array(4);
 const _colPtBuf = new Float32Array(2);
 
 export class Raylib {
+
+  private static _rcHit = new Uint8Array(1);
+  private static _rcDist = new Float32Array(1);
+  private static _rcPt = new Float32Array(3);
+  private static _rcNorm = new Float32Array(3);
   private static initialized = false;
+  private static _texOutId = new Uint32Array(1);
+  private static _texOutTexId = new Uint32Array(1);
+  private static _texOutW = new Int32Array(1);
+  private static _texOutH = new Int32Array(1);
+  private static _shapesTexId = new Uint32Array(1);
+  private static _shapesTexW = new Int32Array(1);
+  private static _shapesTexH = new Int32Array(1);
+  private static _rayPosBuf2 = new Float32Array(3);
+  private static _rayDirBuf2 = new Float32Array(3);
+  private static _animSlotStart = new Int32Array(1);
+  private static _animCount = new Int32Array(1);
+
 
   /** Initialize window and OpenGL context */
   static initWindow(width: number, height: number, title: string): void {
@@ -1741,12 +1758,6 @@ export class Raylib {
   }
 
   // --- Texture ---
-
-  private static _texOutId = new Uint32Array(1);
-  private static _texOutTexId = new Uint32Array(1);
-  private static _texOutW = new Int32Array(1);
-  private static _texOutH = new Int32Array(1);
-
   static loadTexture(fileName: string): Texture2D {
     r.symbols.LoadTextureW(this._texOutId, this._texOutW, this._texOutH, cstr(fileName));
     return {
@@ -1977,10 +1988,6 @@ export class Raylib {
     );
   }
 
-  private static _shapesTexId = new Uint32Array(1);
-  private static _shapesTexW = new Int32Array(1);
-  private static _shapesTexH = new Int32Array(1);
-
   static getShapesTexture(): Texture2D {
     r.symbols.GetShapesTextureW(this._shapesTexId, this._shapesTexW, this._shapesTexH);
     return { id: this._shapesTexId[0]!, width: this._shapesTexW[0]!, height: this._shapesTexH[0]! };
@@ -2159,10 +2166,7 @@ export class Raylib {
   }
 
   // --- Screen-space extended ---
-
-  private static _rayPosBuf2 = new Float32Array(3);
-  private static _rayDirBuf2 = new Float32Array(3);
-
+  
   static getScreenToWorldRayEx(
     position: Vec2,
     camera: Camera3D,
@@ -2838,9 +2842,6 @@ export class Raylib {
     );
   }
 
-  private static _bbMinCam = new Float32Array(3);
-  private static _bbMaxCam = new Float32Array(3);
-
   static drawBillboard(
     camera: Camera3D,
     texture: Texture2D,
@@ -3040,10 +3041,7 @@ export class Raylib {
   }
 
   // --- Model animations ---
-
-  private static _animSlotStart = new Int32Array(1);
-  private static _animCount = new Int32Array(1);
-
+  
   static loadModelAnimations(fileName: string): { startSlot: number; count: number } {
     r.symbols.LoadModelAnimationsW(this._animSlotStart, this._animCount, cstr(fileName));
     return { startSlot: this._animSlotStart[0]!, count: this._animCount[0]! };
@@ -3120,12 +3118,6 @@ export class Raylib {
       f2i(radius),
     );
   }
-
-  private static _rcHit = new Uint8Array(1);
-  private static _rcDist = new Float32Array(1);
-  private static _rcPt = new Float32Array(3);
-  private static _rcNorm = new Float32Array(3);
-
   static getRayCollisionSphere(ray: Ray, center: Vec3, radius: number): RayCollision {
     r.symbols.GetRayCollisionSphereW(
       this._rcHit,
