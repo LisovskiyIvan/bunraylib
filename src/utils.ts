@@ -8,7 +8,7 @@ const _f2iU32 = new Uint32Array(_f2iBuf);
 
 export function f2i(val: number): number {
   _f2iF32[0] = val;
-  return _f2iU32[0]!;
+  return _f2iU32[0]! | 0;
 }
 
 const _i2fBuf = new ArrayBuffer(4);
