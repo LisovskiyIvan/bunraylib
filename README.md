@@ -23,9 +23,7 @@ No external dependencies required. Everything is compiled through `bun ffi cc`, 
 
 Full breakdown: [PROGRESS.md](./PROGRESS.md)
 
-## Usage
 
 ```bash
-bun install
-bun run index.ts
+bun install @dayme/bunraylib
 ```
