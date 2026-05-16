@@ -1,5 +1,5 @@
 {
-  "name": "bunraylib",
+  "name": "@dayme/bunraylib",
   "version": "0.1.0",
   "description": "TypeScript FFI bindings for raylib — zero dependencies, powered by Bun",
   "keywords": ["raylib", "ffi", "bun", "gamedev", "graphics"],
