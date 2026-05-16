@@ -2,8 +2,8 @@ import { FFIType } from "bun:ffi";
 const { i32, cstring, bool, ptr } = FFIType;
 
 export const shaderSymbols = {
-  LoadShaderW: { args: [cstring, cstring], returns: i32 },
-  LoadShaderFromMemoryW: { args: [cstring, cstring], returns: i32 },
+  LoadShaderW: { args: [ptr, ptr], returns: i32 },
+  LoadShaderFromMemoryW: { args: [ptr, ptr], returns: i32 },
   IsShaderValidW: { args: [i32], returns: bool },
   GetShaderLocationW: { args: [i32, cstring], returns: i32 },
   GetShaderLocationAttribW: { args: [i32, cstring], returns: i32 },

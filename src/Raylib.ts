@@ -23,7 +23,7 @@ import type {
   RayCollision,
   GlyphInfo,
 } from "./types";
-import { cstr, f2i } from "./utils";
+import { cstr, f2i, i2f } from "./utils";
 import { CString } from "bun:ffi";
 import type { Color } from "./types";
 
@@ -2346,12 +2346,12 @@ export class Raylib {
 
   // --- Shader ---
 
-  static loadShader(vsFileName: string | null, fsFileName: string): Shader {
-    return r.symbols.LoadShaderW(vsFileName ? cstr(vsFileName) : Buffer.alloc(0), cstr(fsFileName));
+  static loadShader(vsFileName: string | null, fsFileName: string | null): Shader {
+    return r.symbols.LoadShaderW(vsFileName ? cstr(vsFileName) : null, fsFileName ? cstr(fsFileName) : null);
   }
 
-  static loadShaderFromMemory(vsCode: string | null, fsCode: string): Shader {
-    return r.symbols.LoadShaderFromMemoryW(vsCode ? cstr(vsCode) : Buffer.alloc(0), cstr(fsCode));
+  static loadShaderFromMemory(vsCode: string | null, fsCode: string | null): Shader {
+    return r.symbols.LoadShaderFromMemoryW(vsCode ? cstr(vsCode) : null, fsCode ? cstr(fsCode) : null);
   }
 
   static isShaderValid(shader: Shader): boolean {
@@ -3245,10 +3245,10 @@ export class Raylib {
     return r.symbols.IsAudioDeviceReadyW();
   }
   static setMasterVolume(volume: number): void {
-    r.symbols.SetMasterVolumeW(volume);
+    r.symbols.SetMasterVolumeW(f2i(volume));
   }
   static getMasterVolume(): number {
-    return r.symbols.GetMasterVolumeW();
+    return i2f(r.symbols.GetMasterVolumeW());
   }
 
   // --- Wave ---
@@ -3317,13 +3317,13 @@ export class Raylib {
     return r.symbols.IsSoundPlayingW(sound);
   }
   static setSoundVolume(sound: Sound, volume: number): void {
-    r.symbols.SetSoundVolumeW(sound, volume);
+    r.symbols.SetSoundVolumeW(sound, f2i(volume));
   }
   static setSoundPitch(sound: Sound, pitch: number): void {
-    r.symbols.SetSoundPitchW(sound, pitch);
+    r.symbols.SetSoundPitchW(sound, f2i(pitch));
   }
   static setSoundPan(sound: Sound, pan: number): void {
-    r.symbols.SetSoundPanW(sound, pan);
+    r.symbols.SetSoundPanW(sound, f2i(pan));
   }
 
   // --- Music ---
@@ -3359,22 +3359,22 @@ export class Raylib {
     r.symbols.ResumeMusicStreamW(music);
   }
   static seekMusicStream(music: Music, position: number): void {
-    r.symbols.SeekMusicStreamW(music, position);
+    r.symbols.SeekMusicStreamW(music, f2i(position));
   }
   static setMusicVolume(music: Music, volume: number): void {
-    r.symbols.SetMusicVolumeW(music, volume);
+    r.symbols.SetMusicVolumeW(music, f2i(volume));
   }
   static setMusicPitch(music: Music, pitch: number): void {
-    r.symbols.SetMusicPitchW(music, pitch);
+    r.symbols.SetMusicPitchW(music, f2i(pitch));
   }
   static setMusicPan(music: Music, pan: number): void {
-    r.symbols.SetMusicPanW(music, pan);
+    r.symbols.SetMusicPanW(music, f2i(pan));
   }
   static getMusicTimeLength(music: Music): number {
-    return r.symbols.GetMusicTimeLengthW(music);
+    return i2f(r.symbols.GetMusicTimeLengthW(music));
   }
   static getMusicTimePlayed(music: Music): number {
-    return r.symbols.GetMusicTimePlayedW(music);
+    return i2f(r.symbols.GetMusicTimePlayedW(music));
   }
 
   // --- AudioStream ---
@@ -3407,13 +3407,13 @@ export class Raylib {
     r.symbols.StopAudioStreamW(stream);
   }
   static setAudioStreamVolume(stream: AudioStream, volume: number): void {
-    r.symbols.SetAudioStreamVolumeW(stream, volume);
+    r.symbols.SetAudioStreamVolumeW(stream, f2i(volume));
   }
   static setAudioStreamPitch(stream: AudioStream, pitch: number): void {
-    r.symbols.SetAudioStreamPitchW(stream, pitch);
+    r.symbols.SetAudioStreamPitchW(stream, f2i(pitch));
   }
   static setAudioStreamPan(stream: AudioStream, pan: number): void {
-    r.symbols.SetAudioStreamPanW(stream, pan);
+    r.symbols.SetAudioStreamPanW(stream, f2i(pan));
   }
   static setAudioStreamBufferSizeDefault(size: number): void {
     r.symbols.SetAudioStreamBufferSizeDefaultW(size);
