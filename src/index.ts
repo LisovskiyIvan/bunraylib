@@ -1,5 +1,6 @@
 export { Raylib } from "./Raylib";
-export { symbols } from "./symbols";
+export { configure, getSymbols } from "./symbols";
+export type { RaylibConfig } from "./symbols";
 export { cstr, color } from "./utils";
 export type {
   CameraProjection,

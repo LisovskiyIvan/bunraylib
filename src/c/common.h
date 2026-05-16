@@ -6,6 +6,7 @@
 
 static inline float i2f(int i) { float f; memcpy(&f, &i, sizeof(float)); return f; }
 
+#ifndef CONFIG_H
 #define MAX_MODELS 64
 #define MAX_FONTS 32
 #define MAX_IMAGES 128
@@ -17,6 +18,7 @@ static inline float i2f(int i) { float f; memcpy(&f, &i, sizeof(float)); return 
 #define MAX_SOUNDS 32
 #define MAX_MUSIC 16
 #define MAX_AUDIOSTREAMS 16
+#endif
 
 extern Model modelRegistry[MAX_MODELS];
 extern bool modelUsed[MAX_MODELS];
