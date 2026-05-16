@@ -36,7 +36,6 @@ const _recBuf = new Float32Array(4);
 const _colPtBuf = new Float32Array(2);
 
 export class Raylib {
-
   private static _rcHit = new Uint8Array(1);
   private static _rcDist = new Float32Array(1);
   private static _rcPt = new Float32Array(3);
@@ -53,7 +52,6 @@ export class Raylib {
   private static _rayDirBuf2 = new Float32Array(3);
   private static _animSlotStart = new Int32Array(1);
   private static _animCount = new Int32Array(1);
-
 
   /** Initialize window and OpenGL context */
   static initWindow(width: number, height: number, title: string): void {
@@ -436,7 +434,15 @@ export class Raylib {
     segments: number,
     col: Color,
   ): void {
-    r().symbols.DrawRectangleRoundedW(rec.x, rec.y, rec.width, rec.height, roundness, segments, col);
+    r().symbols.DrawRectangleRoundedW(
+      rec.x,
+      rec.y,
+      rec.width,
+      rec.height,
+      roundness,
+      segments,
+      col,
+    );
   }
 
   /** Draw rectangle with rounded edges outline */
@@ -529,11 +535,7 @@ export class Raylib {
    * Draw spline: Linear. Minimum 2 points.
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
-  static drawSplineLinear(
-    points: Float32Array,
-    thick: number,
-    col: Color,
-  ): void {
+  static drawSplineLinear(points: Float32Array, thick: number, col: Color): void {
     r().symbols.DrawSplineLinearW(points, points.length / 2, f2i(thick), col);
   }
 
@@ -541,11 +543,7 @@ export class Raylib {
    * Draw spline: B-Spline. Minimum 4 points.
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
-  static drawSplineBasis(
-    points: Float32Array,
-    thick: number,
-    col: Color,
-  ): void {
+  static drawSplineBasis(points: Float32Array, thick: number, col: Color): void {
     r().symbols.DrawSplineBasisW(points, points.length / 2, f2i(thick), col);
   }
 
@@ -553,11 +551,7 @@ export class Raylib {
    * Draw spline: Catmull-Rom. Minimum 4 points.
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
-  static drawSplineCatmullRom(
-    points: Float32Array,
-    thick: number,
-    col: Color,
-  ): void {
+  static drawSplineCatmullRom(points: Float32Array, thick: number, col: Color): void {
     r().symbols.DrawSplineCatmullRomW(points, points.length / 2, f2i(thick), col);
   }
 
@@ -565,11 +559,7 @@ export class Raylib {
    * Draw spline: Quadratic Bezier. Minimum 3 points (1 control point).
    * Points layout: [p1, c2, p3, c4, ...] packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
-  static drawSplineBezierQuadratic(
-    points: Float32Array,
-    thick: number,
-    col: Color,
-  ): void {
+  static drawSplineBezierQuadratic(points: Float32Array, thick: number, col: Color): void {
     r().symbols.DrawSplineBezierQuadraticW(points, points.length / 2, f2i(thick), col);
   }
 
@@ -577,11 +567,7 @@ export class Raylib {
    * Draw spline: Cubic Bezier. Minimum 4 points (2 control points).
    * Points layout: [p1, c2, c3, p4, c5, c6, ...] packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
-  static drawSplineBezierCubic(
-    points: Float32Array,
-    thick: number,
-    col: Color,
-  ): void {
+  static drawSplineBezierCubic(points: Float32Array, thick: number, col: Color): void {
     r().symbols.DrawSplineBezierCubicW(points, points.length / 2, f2i(thick), col);
   }
 
@@ -825,12 +811,27 @@ export class Raylib {
 
   /** Check if circle collides with a line created between two points [p1] and [p2] */
   static checkCollisionCircleLine(center: Vec2, radius: number, p1: Vec2, p2: Vec2): boolean {
-    return r().symbols.CheckCollisionCircleLineW(center.x, center.y, radius, p1.x, p1.y, p2.x, p2.y);
+    return r().symbols.CheckCollisionCircleLineW(
+      center.x,
+      center.y,
+      radius,
+      p1.x,
+      p1.y,
+      p2.x,
+      p2.y,
+    );
   }
 
   /** Check if point is inside rectangle */
   static checkCollisionPointRec(point: Vec2, rec: Rectangle): boolean {
-    return r().symbols.CheckCollisionPointRecW(point.x, point.y, rec.x, rec.y, rec.width, rec.height);
+    return r().symbols.CheckCollisionPointRecW(
+      point.x,
+      point.y,
+      rec.x,
+      rec.y,
+      rec.width,
+      rec.height,
+    );
   }
 
   /** Check if point is inside circle */
@@ -854,7 +855,15 @@ export class Raylib {
 
   /** Check if point belongs to line created between two points [p1] and [p2] with defined margin [threshold] */
   static checkCollisionPointLine(point: Vec2, p1: Vec2, p2: Vec2, threshold: number): boolean {
-    return r().symbols.CheckCollisionPointLineW(point.x, point.y, p1.x, p1.y, p2.x, p2.y, threshold);
+    return r().symbols.CheckCollisionPointLineW(
+      point.x,
+      point.y,
+      p1.x,
+      p1.y,
+      p2.x,
+      p2.y,
+      threshold,
+    );
   }
 
   /**
@@ -2170,7 +2179,7 @@ export class Raylib {
   }
 
   // --- Screen-space extended ---
-  
+
   static getScreenToWorldRayEx(
     position: Vec2,
     camera: Camera3D,
@@ -2351,11 +2360,17 @@ export class Raylib {
   // --- Shader ---
 
   static loadShader(vsFileName: string | null, fsFileName: string | null): Shader {
-    return r().symbols.LoadShaderW(vsFileName ? cstr(vsFileName) : null, fsFileName ? cstr(fsFileName) : null);
+    return r().symbols.LoadShaderW(
+      vsFileName ? cstr(vsFileName) : null,
+      fsFileName ? cstr(fsFileName) : null,
+    );
   }
 
   static loadShaderFromMemory(vsCode: string | null, fsCode: string | null): Shader {
-    return r().symbols.LoadShaderFromMemoryW(vsCode ? cstr(vsCode) : null, fsCode ? cstr(fsCode) : null);
+    return r().symbols.LoadShaderFromMemoryW(
+      vsCode ? cstr(vsCode) : null,
+      fsCode ? cstr(fsCode) : null,
+    );
   }
 
   static isShaderValid(shader: Shader): boolean {
@@ -2693,18 +2708,10 @@ export class Raylib {
   static imageDrawTriangleLines(dst: Image, v1: Vec2, v2: Vec2, v3: Vec2, color: Color): void {
     r().symbols.ImageDrawTriangleLinesW(dst, v1.x, v1.y, v2.x, v2.y, v3.x, v3.y, color);
   }
-  static imageDrawTriangleFan(
-    dst: Image,
-    points: Float32Array,
-    color: Color,
-  ): void {
+  static imageDrawTriangleFan(dst: Image, points: Float32Array, color: Color): void {
     r().symbols.ImageDrawTriangleFanW(dst, points, points.length / 2, color);
   }
-  static imageDrawTriangleStrip(
-    dst: Image,
-    points: Float32Array,
-    color: Color,
-  ): void {
+  static imageDrawTriangleStrip(dst: Image, points: Float32Array, color: Color): void {
     r().symbols.ImageDrawTriangleStripW(dst, points, points.length / 2, color);
   }
   static imageDraw(
@@ -3023,7 +3030,12 @@ export class Raylib {
     return r().symbols.GenMeshHeightmapW(heightmap, f2i(size.x), f2i(size.y), f2i(size.z));
   }
   static genMeshCubicmap(cubicmap: Image, cubeSize: Vec3): Mesh {
-    return r().symbols.GenMeshCubicmapW(cubicmap, f2i(cubeSize.x), f2i(cubeSize.y), f2i(cubeSize.z));
+    return r().symbols.GenMeshCubicmapW(
+      cubicmap,
+      f2i(cubeSize.x),
+      f2i(cubeSize.y),
+      f2i(cubeSize.z),
+    );
   }
 
   // --- Material management ---
@@ -3045,7 +3057,7 @@ export class Raylib {
   }
 
   // --- Model animations ---
-  
+
   static loadModelAnimations(fileName: string): { startSlot: number; count: number } {
     r().symbols.LoadModelAnimationsW(this._animSlotStart, this._animCount, cstr(fileName));
     return { startSlot: this._animSlotStart[0]!, count: this._animCount[0]! };
