@@ -1,10 +1,7 @@
 #include "common.h"
 
 void BeginMode2DW(int offX, int offY, int tarX, int tarY, int rotation, int zoom) {
-    float r, z;
-    memcpy(&r, &rotation, sizeof(float));
-    memcpy(&z, &zoom, sizeof(float));
-    Camera2D cam = { {offX, offY}, {tarX, tarY}, r, z };
+    Camera2D cam = { {i2f(offX), i2f(offY) }, {i2f(tarX), i2f(tarY) }, i2f(rotation), i2f(zoom) };
     BeginMode2D(cam);
 }
 

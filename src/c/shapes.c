@@ -1,5 +1,6 @@
 #include <raylib.h>
 #include <string.h>
+#include "common.h"
 
 void DrawRectangleW(int posX, int posY, int width, int height, Color color) {
     DrawRectangle(posX, posY, width, height, color);
@@ -30,7 +31,13 @@ void DrawLineBezierW(int startX, int startY, int endX, int endY, int thick, Colo
 }
 
 void DrawCircleW(int centerX, int centerY, int radius, Color color) {
-    DrawCircle(centerX, centerY, radius, color);
+    float r = i2f(radius);
+    DrawCircle(centerX, centerY, r, color);
+}
+
+void DrawCircleVW(int x, int y, int radius, Color color) {
+    float r = i2f(radius);
+    DrawCircleV((Vector2){x, y}, r, color);
 }
 
 void DrawCircleSectorW(int centerX, int centerY, int radius, int startAngle, int endAngle, int segments, Color color) {
@@ -242,11 +249,6 @@ void DrawLineVW(int startX, int startY, int endX, int endY, Color color) {
     DrawLineV((Vector2){startX, startY}, (Vector2){endX, endY}, color);
 }
 
-void DrawCircleVW(int x, int y, int radius, Color color) {
-    float r;
-    memcpy(&r, &radius, sizeof(float));
-    DrawCircleV((Vector2){x, y}, r, color);
-}
 
 void DrawCircleLinesVW(int x, int y, int radius, Color color) {
     float r;

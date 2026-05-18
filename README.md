@@ -1,4 +1,4 @@
-# rraylib
+# raylib from bun
 
 TypeScript FFI bindings for [raylib](https://www.raylib.com/) — built entirely with [Bun](https://bun.sh/).
 

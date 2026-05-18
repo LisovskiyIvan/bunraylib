@@ -40,7 +40,6 @@ export class Raylib {
   private static _rcDist = new Float32Array(1);
   private static _rcPt = new Float32Array(3);
   private static _rcNorm = new Float32Array(3);
-  private static initialized = false;
   private static _texOutId = new Uint32Array(1);
   private static _texOutTexId = new Uint32Array(1);
   private static _texOutW = new Int32Array(1);
@@ -55,14 +54,12 @@ export class Raylib {
 
   /** Initialize window and OpenGL context */
   static initWindow(width: number, height: number, title: string): void {
-    r().symbols.InitWindowW(width, height, cstr(title));
-    Raylib.initialized = true;
+    r().symbols.InitWindowW(width | 0, height | 0, cstr(title));
   }
 
   /** Close window and unload OpenGL context */
   static closeWindow(): void {
     r().symbols.CloseWindowW();
-    Raylib.initialized = false;
   }
 
   /** Check if application should close (KEY_ESCAPE pressed or window close button) */
@@ -83,10 +80,10 @@ export class Raylib {
   /** Begin 2D mode with custom camera */
   static beginMode2D(camera: Camera2D): void {
     r().symbols.BeginMode2DW(
-      camera.offset.x,
-      camera.offset.y,
-      camera.target.x,
-      camera.target.y,
+      f2i(camera.offset.x),
+      f2i(camera.offset.y),
+      f2i(camera.target.x),
+      f2i(camera.target.y),
       f2i(camera.rotation),
       f2i(camera.zoom),
     );
@@ -181,12 +178,12 @@ export class Raylib {
 
   /** Draw a color-filled circle */
   static drawCircle(centerX: number, centerY: number, radius: number, col: Color): void {
-    r().symbols.DrawCircleW(centerX, centerY, radius, col);
+    r().symbols.DrawCircleW(centerX | 0, centerY | 0, f2i(radius), col);
   }
 
   /** Draw a color-filled circle (using vector center) */
   static drawCircleV(center: Vec2, radius: number, col: Color): void {
-    r().symbols.DrawCircleVW(center.x, center.y, f2i(radius), col);
+    r().symbols.DrawCircleVW(center.x | 0, center.y | 0, f2i(radius), col);
   }
 
   /**

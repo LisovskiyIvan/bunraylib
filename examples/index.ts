@@ -82,7 +82,7 @@ while (!Raylib.windowShouldClose()) {
   if (showFps) Raylib.drawFPS(Raylib.getScreenWidth() - 100, 10);
 
   Raylib.beginBlendMode(blendMode);
-  Raylib.drawCircle(x | 0, y | 0, 20, COLORS.RED);
+  Raylib.drawCircle(x, y, 20, COLORS.RED);
   Raylib.drawCircle(mouse.x | 0, mouse.y | 0, 10, COLORS.SKYBLUE);
   Raylib.endBlendMode();
 
