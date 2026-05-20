@@ -14,12 +14,20 @@ void DrawPixelW(int posX, int posY, Color color) {
     DrawPixel(posX, posY, color);
 }
 
+void DrawPixelVW(int x, int y, Color color) {
+    DrawPixelV((Vector2){ i2f(x), i2f(y) }, color);
+}
+
 void DrawLineW(int startPosX, int startPosY, int endPosX, int endPosY, Color color) {
     DrawLine(startPosX, startPosY, endPosX, endPosY, color);
 }
 
+void DrawLineVW(int startX, int startY, int endX, int endY, Color color) {
+    DrawLineV((Vector2){ i2f(startX), i2f(startY)}, (Vector2){i2f(endX), i2f(endY)}, color);
+}
+
 void DrawLineExW(int startX, int startY, int endX, int endY, int thick, Color color) {
-    DrawLineEx((Vector2){startX, startY}, (Vector2){endX, endY}, thick, color);
+    DrawLineEx((Vector2){ i2f(startX), i2f(startY)}, (Vector2){i2f(endX), i2f(endY)}, i2f(thick), color);
 }
 
 void DrawLineStripW(const float* points, int pointCount, Color color) {
@@ -27,68 +35,64 @@ void DrawLineStripW(const float* points, int pointCount, Color color) {
 }
 
 void DrawLineBezierW(int startX, int startY, int endX, int endY, int thick, Color color) {
-    DrawLineBezier((Vector2){startX, startY}, (Vector2){endX, endY}, thick, color);
+    DrawLineBezier((Vector2){ i2f(startX), i2f(startY) }, (Vector2){i2f(endX), i2f(endY)}, i2f(thick), color);
 }
 
 void DrawCircleW(int centerX, int centerY, int radius, Color color) {
-    float r = i2f(radius);
-    DrawCircle(centerX, centerY, r, color);
+    DrawCircle(centerX, centerY, i2f(radius), color);
 }
 
 void DrawCircleVW(int x, int y, int radius, Color color) {
-    float r = i2f(radius);
-    DrawCircleV((Vector2){x, y}, r, color);
+    DrawCircleV((Vector2){x, y}, i2f(radius), color);
 }
 
 void DrawCircleSectorW(int centerX, int centerY, int radius, int startAngle, int endAngle, int segments, Color color) {
-    float sa, ea;
-    memcpy(&sa, &startAngle, sizeof(float));
-    memcpy(&ea, &endAngle, sizeof(float));
-    DrawCircleSector((Vector2){centerX, centerY}, radius, sa, ea, segments, color);
+    DrawCircleSector((Vector2){ i2f(centerX), i2f(centerY)}, i2f(radius), i2f(startAngle), i2f(endAngle), segments, color);
 }
 
 void DrawCircleSectorLinesW(int centerX, int centerY, int radius, int startAngle, int endAngle, int segments, Color color) {
-    float sa, ea;
-    memcpy(&sa, &startAngle, sizeof(float));
-    memcpy(&ea, &endAngle, sizeof(float));
-    DrawCircleSectorLines((Vector2){centerX, centerY}, radius, sa, ea, segments, color);
+    DrawCircleSectorLines((Vector2){ i2f(centerX), i2f(centerY)}, i2f(radius), i2f(startAngle), i2f(endAngle), segments, color);
 }
 
 void DrawCircleGradientW(int centerX, int centerY, int radius, Color inner, Color outer) {
-    float r;
-    memcpy(&r, &radius, sizeof(float));
-    DrawCircleGradient((Vector2){centerX, centerY}, r, inner, outer);
+    DrawCircleGradient((Vector2){ i2f(centerX), i2f(centerY)}, i2f(radius), inner, outer);
 }
 
 void DrawCircleLinesW(int centerX, int centerY, int radius, Color color) {
-    DrawCircleLines(centerX, centerY, radius, color);
+    DrawCircleLines(centerX, centerY, i2f(radius), color);
+}
+
+void DrawCircleLinesVW(int x, int y, int radius, Color color) {
+    DrawCircleLinesV((Vector2){ i2f(x), i2f(y) }, i2f(radius), color);
 }
 
 void DrawEllipseW(int centerX, int centerY, int radiusH, int radiusV, Color color) {
-    DrawEllipse(centerX, centerY, radiusH, radiusV, color);
+    DrawEllipse(centerX, centerY, i2f(radiusH), i2f(radiusV), color);
 }
 
 void DrawEllipseLinesW(int centerX, int centerY, int radiusH, int radiusV, Color color) {
-    DrawEllipseLines(centerX, centerY, radiusH, radiusV, color);
+    DrawEllipseLines(centerX, centerY, i2f(radiusH), i2f(radiusV), color);
 }
 
 void DrawRingW(int centerX, int centerY, int innerRadius, int outerRadius, int startAngle, int endAngle, int segments, Color color) {
-    float sa, ea;
-    memcpy(&sa, &startAngle, sizeof(float));
-    memcpy(&ea, &endAngle, sizeof(float));
-    DrawRing((Vector2){centerX, centerY}, innerRadius, outerRadius, sa, ea, segments, color);
+    DrawRing((Vector2){ i2f(centerX), i2f(centerY)}, i2f(innerRadius), i2f(outerRadius), i2f(startAngle), i2f(endAngle), segments, color);
 }
 
 void DrawRingLinesW(int centerX, int centerY, int innerRadius, int outerRadius, int startAngle, int endAngle, int segments, Color color) {
-    float sa, ea;
-    memcpy(&sa, &startAngle, sizeof(float));
-    memcpy(&ea, &endAngle, sizeof(float));
-    DrawRingLines((Vector2){centerX, centerY}, innerRadius, outerRadius, sa, ea, segments, color);
+    DrawRingLines((Vector2){i2f(centerX), i2f(centerY)}, i2f(innerRadius), i2f(outerRadius), i2f(startAngle), i2f(endAngle), segments, color);
+}
+
+void DrawRectangleVW(int posX, int posY, int sizeX, int sizeY, Color color) {
+    DrawRectangleV((Vector2){ i2f(posX), i2f(posY)}, (Vector2){ i2f(sizeX), i2f(sizeY)}, color);
+}
+
+void DrawRectangleRecW(int x, int y, int w, int h, Color color) {
+    DrawRectangleRec((Rectangle){i2f(x), i2f(y), i2f(w), i2f(h)}, color);
 }
 
 void DrawRectangleProW(int x, int y, int width, int height, int originX, int originY, int rotation, Color color) {
-    Rectangle rec = { x, y, width, height };
-    DrawRectanglePro(rec, (Vector2){originX, originY}, rotation, color);
+    Rectangle rec = { i2f(x), i2f(y), i2f(width), i2f(height) };
+    DrawRectanglePro(rec, (Vector2){ i2f(originX), i2f(originY)}, i2f(rotation), color);
 }
 
 void DrawRectangleGradientVW(int posX, int posY, int width, int height, Color top, Color bottom) {
@@ -100,7 +104,7 @@ void DrawRectangleGradientHW(int posX, int posY, int width, int height, Color le
 }
 
 void DrawRectangleGradientExW(int x, int y, int width, int height, Color topLeft, Color bottomLeft, Color topRight, Color bottomRight) {
-    Rectangle rec = { x, y, width, height };
+    Rectangle rec = { i2f(x), i2f(y), i2f(width), i2f(height) };
     DrawRectangleGradientEx(rec, topLeft, bottomLeft, topRight, bottomRight);
 }
 
@@ -109,23 +113,23 @@ void DrawRectangleLinesW(int posX, int posY, int width, int height, Color color)
 }
 
 void DrawRectangleLinesExW(int x, int y, int width, int height, int lineThick, Color color) {
-    Rectangle rec = { x, y, width, height };
-    DrawRectangleLinesEx(rec, lineThick, color);
+    Rectangle rec = { i2f(x), i2f(y), i2f(width), i2f(height) };
+    DrawRectangleLinesEx(rec, i2f(lineThick), color);
 }
 
 void DrawRectangleRoundedW(int x, int y, int width, int height, int roundness, int segments, Color color) {
-    Rectangle rec = { x, y, width, height };
-    DrawRectangleRounded(rec, roundness, segments, color);
+    Rectangle rec = { i2f(x), i2f(y), i2f(width), i2f(height) };
+    DrawRectangleRounded(rec, i2f(roundness), segments, color);
 }
 
 void DrawRectangleRoundedLinesW(int x, int y, int width, int height, int roundness, int segments, Color color) {
-    Rectangle rec = { x, y, width, height };
-    DrawRectangleRoundedLines(rec, roundness, segments, color);
+    Rectangle rec = { i2f(x), i2f(y), i2f(width), i2f(height) };
+    DrawRectangleRoundedLines(rec, i2f(roundness), segments, color);
 }
 
 void DrawRectangleRoundedLinesExW(int x, int y, int width, int height, int roundness, int segments, int lineThick, Color color) {
-    Rectangle rec = { x, y, width, height };
-    DrawRectangleRoundedLinesEx(rec, roundness, segments, lineThick, color);
+    Rectangle rec = { i2f(x), i2f(y), i2f(width), i2f(height) };
+    DrawRectangleRoundedLinesEx(rec, i2f(roundness), segments, i2f(lineThick), color);
 }
 
 void DrawTriangleW(int x1, int y1, int x2, int y2, int x3, int y3, Color color) {
@@ -241,28 +245,7 @@ void GetSplinePointBezierCubicW(float* out, int p1x, int p1y, int c2x, int c2y, 
     out[1] = result.y;
 }
 
-void DrawPixelVW(int x, int y, Color color) {
-    DrawPixelV((Vector2){x, y}, color);
-}
 
-void DrawLineVW(int startX, int startY, int endX, int endY, Color color) {
-    DrawLineV((Vector2){startX, startY}, (Vector2){endX, endY}, color);
-}
-
-
-void DrawCircleLinesVW(int x, int y, int radius, Color color) {
-    float r;
-    memcpy(&r, &radius, sizeof(float));
-    DrawCircleLinesV((Vector2){x, y}, r, color);
-}
-
-void DrawRectangleVW(int posX, int posY, int sizeX, int sizeY, Color color) {
-    DrawRectangleV((Vector2){posX, posY}, (Vector2){sizeX, sizeY}, color);
-}
-
-void DrawRectangleRecW(int x, int y, int w, int h, Color color) {
-    DrawRectangleRec((Rectangle){x, y, w, h}, color);
-}
 
 void SetShapesTextureW(unsigned int texId, int texW, int texH, int recX, int recY, int recW, int recH) {
     Texture2D tex = { texId, texW, texH, 1, 7 };

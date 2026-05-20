@@ -31,9 +31,6 @@ import { cstr, f2i, i2f } from "./utils";
 import { CString } from "bun:ffi";
 import type { Color } from "./types";
 
-const _vec2Buf = new Float32Array(2);
-const _recBuf = new Float32Array(4);
-const _colPtBuf = new Float32Array(2);
 
 export class Raylib {
   private static _rcHit = new Uint8Array(1);
@@ -51,6 +48,9 @@ export class Raylib {
   private static _rayDirBuf2 = new Float32Array(3);
   private static _animSlotStart = new Int32Array(1);
   private static _animCount = new Int32Array(1);
+  private static _colPtBuf = new Float32Array(2);
+  private static _recBuf = new Float32Array(4);
+  private static _vec2Buf = new Float32Array(2);
 
   /** Initialize window and OpenGL context */
   static initWindow(width: number, height: number, title: string): void {
@@ -123,7 +123,7 @@ export class Raylib {
 
   /** Set target FPS (frames per second) */
   static setTargetFPS(fps: number): void {
-    r().symbols.SetTargetFPSW(fps);
+    r().symbols.SetTargetFPSW(fps | 0);
   }
 
   /** Get time in seconds for last frame drawn (delta time) */
@@ -133,37 +133,37 @@ export class Raylib {
 
   /** Draw a color-filled rectangle */
   static drawRectangle(x: number, y: number, width: number, height: number, col: Color): void {
-    r().symbols.DrawRectangleW(x, y, width, height, col);
+    r().symbols.DrawRectangleW(x | 0, y | 0, width | 0, height | 0, col);
   }
 
   /** Draw text (using default font) */
   static drawText(text: string, x: number, y: number, fontSize: number, col: Color): void {
-    r().symbols.DrawTextW(cstr(text), x, y, fontSize, col);
+    r().symbols.DrawTextW(cstr(text), x | 0, y | 0, fontSize | 0, col);
   }
 
   /** Draw a pixel */
   static drawPixel(x: number, y: number, col: Color): void {
-    r().symbols.DrawPixelW(x, y, col);
+    r().symbols.DrawPixelW(x | 0, y | 0, col);
   }
 
   /** Draw a pixel (using vector position) */
   static drawPixelV(position: Vec2, col: Color): void {
-    r().symbols.DrawPixelVW(position.x, position.y, col);
+    r().symbols.DrawPixelVW(f2i(position.x), f2i(position.y), col);
   }
 
   /** Draw a line */
   static drawLine(startX: number, startY: number, endX: number, endY: number, col: Color): void {
-    r().symbols.DrawLineW(startX, startY, endX, endY, col);
+    r().symbols.DrawLineW(startX | 0, startY | 0, endX | 0, endY | 0, col);
   }
 
   /** Draw a line (using vector positions) */
   static drawLineV(startPos: Vec2, endPos: Vec2, col: Color): void {
-    r().symbols.DrawLineVW(startPos.x, startPos.y, endPos.x, endPos.y, col);
+    r().symbols.DrawLineVW(f2i(startPos.x), f2i(startPos.y), f2i(endPos.x), f2i(endPos.y), col);
   }
 
   /** Draw a line with defined thickness */
   static drawLineEx(startPos: Vec2, endPos: Vec2, thick: number, col: Color): void {
-    r().symbols.DrawLineExW(startPos.x, startPos.y, endPos.x, endPos.y, thick, col);
+    r().symbols.DrawLineExW(f2i(startPos.x), f2i(startPos.y), f2i(endPos.x), f2i(endPos.y), f2i(thick), col);
   }
 
   /** Draw lines sequence as a strip. Points are packed as [x0,y0, x1,y1, ...] in Float32Array */
@@ -173,7 +173,7 @@ export class Raylib {
 
   /** Draw line segment with Bezier easing */
   static drawLineBezier(startPos: Vec2, endPos: Vec2, thick: number, col: Color): void {
-    r().symbols.DrawLineBezierW(startPos.x, startPos.y, endPos.x, endPos.y, thick, col);
+    r().symbols.DrawLineBezierW(f2i(startPos.x), f2i(startPos.y), f2i(endPos.x), f2i(endPos.y), f2i(thick), col);
   }
 
   /** Draw a color-filled circle */
@@ -204,12 +204,12 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawCircleSectorW(
-      center.x,
-      center.y,
-      radius,
+      f2i(center.x),
+      f2i(center.y),
+      f2i(radius),
       f2i(startAngle),
       f2i(endAngle),
-      segments,
+      segments | 0,
       col,
     );
   }
@@ -232,12 +232,12 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawCircleSectorLinesW(
-      center.x,
-      center.y,
-      radius,
+      f2i(center.x),
+      f2i(center.y),
+      f2i(radius),
       f2i(startAngle),
       f2i(endAngle),
-      segments,
+      segments | 0,
       col,
     );
   }
@@ -250,17 +250,17 @@ export class Raylib {
     inner: Color,
     outer: Color,
   ): void {
-    r().symbols.DrawCircleGradientW(centerX, centerY, f2i(radius), inner, outer);
+    r().symbols.DrawCircleGradientW(f2i(centerX), f2i(centerY), f2i(radius), inner, outer);
   }
 
   /** Draw circle outline */
   static drawCircleLines(centerX: number, centerY: number, radius: number, col: Color): void {
-    r().symbols.DrawCircleLinesW(centerX, centerY, radius, col);
+    r().symbols.DrawCircleLinesW(centerX | 0, centerY | 0, f2i(radius), col);
   }
 
   /** Draw circle outline (using vector center) */
   static drawCircleLinesV(center: Vec2, radius: number, col: Color): void {
-    r().symbols.DrawCircleLinesVW(center.x, center.y, f2i(radius), col);
+    r().symbols.DrawCircleLinesVW(f2i(center.x), f2i(center.y), f2i(radius), col);
   }
 
   /** Draw a color-filled ellipse */
@@ -271,7 +271,7 @@ export class Raylib {
     radiusV: number,
     col: Color,
   ): void {
-    r().symbols.DrawEllipseW(centerX, centerY, radiusH, radiusV, col);
+    r().symbols.DrawEllipseW(centerX | 0, centerY | 0, f2i(radiusH), f2i(radiusV), col);
   }
 
   /** Draw ellipse outline */
@@ -282,7 +282,7 @@ export class Raylib {
     radiusV: number,
     col: Color,
   ): void {
-    r().symbols.DrawEllipseLinesW(centerX, centerY, radiusH, radiusV, col);
+    r().symbols.DrawEllipseLinesW(centerX | 0, centerY | 0, f2i(radiusH), f2i(radiusV), col);
   }
 
   /**
@@ -305,13 +305,13 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawRingW(
-      center.x,
-      center.y,
-      innerRadius,
-      outerRadius,
+      f2i(center.x),
+      f2i(center.y),
+      f2i(innerRadius),
+      f2i(outerRadius),
       f2i(startAngle),
       f2i(endAngle),
-      segments,
+      segments | 0,
       col,
     );
   }
@@ -336,36 +336,36 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawRingLinesW(
-      center.x,
-      center.y,
-      innerRadius,
-      outerRadius,
+      f2i(center.x),
+      f2i(center.y),
+      f2i(innerRadius),
+      f2i(outerRadius),
       f2i(startAngle),
       f2i(endAngle),
-      segments,
+      segments | 0,
       col,
     );
   }
 
   /** Draw a color-filled rectangle (using vector position and size) */
   static drawRectangleV(pos: Vec2, size: Vec2, col: Color): void {
-    r().symbols.DrawRectangleVW(pos.x, pos.y, size.x, size.y, col);
+    r().symbols.DrawRectangleVW(f2i(pos.x), f2i(pos.y), f2i(size.x), f2i(size.y), col);
   }
 
   static drawRectangleRec(rec: Rectangle, col: Color): void {
-    r().symbols.DrawRectangleRecW(rec.x, rec.y, rec.width, rec.height, col);
+    r().symbols.DrawRectangleRecW(f2i(rec.x), f2i(rec.y), f2i(rec.width), f2i(rec.height), col);
   }
 
   /** Draw a color-filled rectangle with pro parameters (rotation and origin) */
   static drawRectanglePro(rec: Rectangle, origin: Vec2, rotation: number, col: Color): void {
     r().symbols.DrawRectangleProW(
-      rec.x,
-      rec.y,
-      rec.width,
-      rec.height,
-      origin.x,
-      origin.y,
-      rotation,
+      f2i(rec.x),
+      f2i(rec.y),
+      f2i(rec.width),
+      f2i(rec.height),
+      f2i(origin.x),
+      f2i(origin.y),
+      f2i(rotation),
       col,
     );
   }
@@ -379,7 +379,7 @@ export class Raylib {
     top: Color,
     bottom: Color,
   ): void {
-    r().symbols.DrawRectangleGradientVW(x, y, width, height, top, bottom);
+    r().symbols.DrawRectangleGradientVW(x | 0, y | 0, width | 0, height | 0, top, bottom);
   }
 
   /** Draw a horizontal-gradient-filled rectangle */
@@ -391,7 +391,7 @@ export class Raylib {
     left: Color,
     right: Color,
   ): void {
-    r().symbols.DrawRectangleGradientHW(x, y, width, height, left, right);
+    r().symbols.DrawRectangleGradientHW(x | 0, y | 0, width | 0, height | 0, left, right);
   }
 
   /** Draw a gradient-filled rectangle with custom gradient colors for each corner */
@@ -403,10 +403,10 @@ export class Raylib {
     bottomRight: Color,
   ): void {
     r().symbols.DrawRectangleGradientExW(
-      rec.x,
-      rec.y,
-      rec.width,
-      rec.height,
+      f2i(rec.x),
+      f2i(rec.y),
+      f2i(rec.width),
+      f2i(rec.height),
       topLeft,
       bottomLeft,
       topRight,
@@ -416,12 +416,12 @@ export class Raylib {
 
   /** Draw rectangle outline */
   static drawRectangleLines(x: number, y: number, width: number, height: number, col: Color): void {
-    r().symbols.DrawRectangleLinesW(x, y, width, height, col);
+    r().symbols.DrawRectangleLinesW(x | 0, y | 0, width | 0, height | 0, col);
   }
 
   /** Draw rectangle outline with extended parameters (custom line thickness) */
   static drawRectangleLinesEx(rec: Rectangle, lineThick: number, col: Color): void {
-    r().symbols.DrawRectangleLinesExW(rec.x, rec.y, rec.width, rec.height, lineThick, col);
+    r().symbols.DrawRectangleLinesExW(f2i(rec.x), f2i(rec.y), f2i(rec.width), f2i(rec.height), f2i(lineThick), col);
   }
 
   /** Draw rectangle with rounded edges */
@@ -432,12 +432,12 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawRectangleRoundedW(
-      rec.x,
-      rec.y,
-      rec.width,
-      rec.height,
-      roundness,
-      segments,
+      f2i(rec.x),
+      f2i(rec.y),
+      f2i(rec.width),
+      f2i(rec.height),
+      f2i(roundness),
+      segments | 0,
       col,
     );
   }
@@ -450,12 +450,12 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawRectangleRoundedLinesW(
-      rec.x,
-      rec.y,
-      rec.width,
-      rec.height,
-      roundness,
-      segments,
+      f2i(rec.x),
+      f2i(rec.y),
+      f2i(rec.width),
+      f2i(rec.height),
+      f2i(roundness),
+      segments | 0,
       col,
     );
   }
@@ -469,13 +469,13 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawRectangleRoundedLinesExW(
-      rec.x,
-      rec.y,
-      rec.width,
-      rec.height,
-      roundness,
-      segments,
-      lineThick,
+      f2i(rec.x),
+      f2i(rec.y),
+      f2i(rec.width),
+      f2i(rec.height),
+      f2i(roundness),
+      segments | 0,
+      f2i(lineThick),
       col,
     );
   }
@@ -670,8 +670,8 @@ export class Raylib {
    * @returns Evaluated point as Vec2
    */
   static getSplinePointLinear(startPos: Vec2, endPos: Vec2, t: number): Vec2 {
-    r().symbols.GetSplinePointLinearW(_vec2Buf, startPos.x, startPos.y, endPos.x, endPos.y, f2i(t));
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    r().symbols.GetSplinePointLinearW(this._vec2Buf, startPos.x, startPos.y, endPos.x, endPos.y, f2i(t));
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   /**
@@ -685,7 +685,7 @@ export class Raylib {
    */
   static getSplinePointBasis(p1: Vec2, p2: Vec2, p3: Vec2, p4: Vec2, t: number): Vec2 {
     r().symbols.GetSplinePointBasisW(
-      _vec2Buf,
+      this._vec2Buf,
       p1.x,
       p1.y,
       p2.x,
@@ -696,7 +696,7 @@ export class Raylib {
       p4.y,
       f2i(t),
     );
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   /**
@@ -710,7 +710,7 @@ export class Raylib {
    */
   static getSplinePointCatmullRom(p1: Vec2, p2: Vec2, p3: Vec2, p4: Vec2, t: number): Vec2 {
     r().symbols.GetSplinePointCatmullRomW(
-      _vec2Buf,
+      this._vec2Buf,
       p1.x,
       p1.y,
       p2.x,
@@ -721,7 +721,7 @@ export class Raylib {
       p4.y,
       f2i(t),
     );
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   /**
@@ -733,8 +733,8 @@ export class Raylib {
    * @returns Evaluated point as Vec2
    */
   static getSplinePointBezierQuad(p1: Vec2, c2: Vec2, p3: Vec2, t: number): Vec2 {
-    r().symbols.GetSplinePointBezierQuadW(_vec2Buf, p1.x, p1.y, c2.x, c2.y, p3.x, p3.y, f2i(t));
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    r().symbols.GetSplinePointBezierQuadW(this._vec2Buf, p1.x, p1.y, c2.x, c2.y, p3.x, p3.y, f2i(t));
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   /**
@@ -748,7 +748,7 @@ export class Raylib {
    */
   static getSplinePointBezierCubic(p1: Vec2, c2: Vec2, c3: Vec2, p4: Vec2, t: number): Vec2 {
     r().symbols.GetSplinePointBezierCubicW(
-      _vec2Buf,
+      this._vec2Buf,
       p1.x,
       p1.y,
       c2.x,
@@ -759,7 +759,7 @@ export class Raylib {
       p4.y,
       f2i(t),
     );
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   /** Check collision between two rectangles */
@@ -882,7 +882,7 @@ export class Raylib {
     endPos2: Vec2,
   ): { collides: boolean; collisionPoint: Vec2 } {
     const collides = r().symbols.CheckCollisionLinesW(
-      _colPtBuf,
+      this._colPtBuf,
       startPos1.x,
       startPos1.y,
       endPos1.x,
@@ -892,13 +892,13 @@ export class Raylib {
       endPos2.x,
       endPos2.y,
     );
-    return { collides, collisionPoint: { x: _colPtBuf[0]!, y: _colPtBuf[1]! } };
+    return { collides, collisionPoint: { x: this._colPtBuf[0]!, y: this._colPtBuf[1]! } };
   }
 
   /** Get collision rectangle for two rectangles collision. Returns null if no overlap */
   static getCollisionRec(rec1: Rectangle, rec2: Rectangle): Rectangle {
     r().symbols.GetCollisionRecW(
-      _recBuf,
+      this._recBuf,
       rec1.x,
       rec1.y,
       rec1.width,
@@ -909,10 +909,10 @@ export class Raylib {
       rec2.height,
     );
     return {
-      x: _recBuf[0]!,
-      y: _recBuf[1]!,
-      width: _recBuf[2]!,
-      height: _recBuf[3]!,
+      x: this._recBuf[0]!,
+      y: this._recBuf[1]!,
+      width: this._recBuf[2]!,
+      height: this._recBuf[3]!,
     };
   }
 
@@ -1332,8 +1332,8 @@ export class Raylib {
   }
 
   static getMonitorPosition(monitor: number): Vec2 {
-    r().symbols.GetMonitorPositionW(_vec2Buf, monitor);
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    r().symbols.GetMonitorPositionW(this._vec2Buf, monitor);
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   static getMonitorWidth(monitor: number): number {
@@ -1353,13 +1353,13 @@ export class Raylib {
   }
 
   static getWindowPosition(): Vec2 {
-    r().symbols.GetWindowPositionW(_vec2Buf);
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    r().symbols.GetWindowPositionW(this._vec2Buf);
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   static getWindowScaleDPI(): Vec2 {
-    r().symbols.GetWindowScaleDPIW(_vec2Buf);
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    r().symbols.GetWindowScaleDPIW(this._vec2Buf);
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   static getMonitorName(monitor: number): string {
@@ -1550,13 +1550,13 @@ export class Raylib {
   }
 
   static getMousePosition(): Vec2 {
-    r().symbols.GetMousePositionW(_vec2Buf);
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    r().symbols.GetMousePositionW(this._vec2Buf);
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   static getMouseDelta(): Vec2 {
-    r().symbols.GetMouseDeltaW(_vec2Buf);
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    r().symbols.GetMouseDeltaW(this._vec2Buf);
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   static setMousePosition(x: number, y: number): void {
@@ -1573,8 +1573,8 @@ export class Raylib {
   }
 
   static getMouseWheelMoveV(): Vec2 {
-    r().symbols.GetMouseWheelMoveVW(_vec2Buf);
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    r().symbols.GetMouseWheelMoveVW(this._vec2Buf);
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   static setMouseCursor(cursor: number): void {
@@ -1591,8 +1591,8 @@ export class Raylib {
   }
 
   static getTouchPosition(index: number): Vec2 {
-    r().symbols.GetTouchPositionW(_vec2Buf, index);
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    r().symbols.GetTouchPositionW(this._vec2Buf, index);
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   static getTouchPointId(index: number): number {
@@ -1618,8 +1618,8 @@ export class Raylib {
   }
 
   static getGestureDragVector(): Vec2 {
-    r().symbols.GetGestureDragVectorW(_vec2Buf);
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    r().symbols.GetGestureDragVectorW(this._vec2Buf);
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   static getGestureDragAngle(): number {
@@ -1627,8 +1627,8 @@ export class Raylib {
   }
 
   static getGesturePinchVector(): Vec2 {
-    r().symbols.GetGesturePinchVectorW(_vec2Buf);
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    r().symbols.GetGesturePinchVectorW(this._vec2Buf);
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   static getGesturePinchAngle(): number {
@@ -1712,7 +1712,7 @@ export class Raylib {
 
   static getWorldToScreen(position: Vec3, camera: Camera3D): Vec2 {
     r().symbols.GetWorldToScreenW(
-      _vec2Buf,
+      this._vec2Buf,
       f2i(position.x),
       f2i(position.y),
       f2i(position.z),
@@ -1728,12 +1728,12 @@ export class Raylib {
       f2i(camera.fovy),
       camera.projection,
     );
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   static getWorldToScreen2D(position: Vec2, camera: Camera2D): Vec2 {
     r().symbols.GetWorldToScreen2DW(
-      _vec2Buf,
+      this._vec2Buf,
       position.x,
       position.y,
       camera.offset.x,
@@ -1743,12 +1743,12 @@ export class Raylib {
       f2i(camera.rotation),
       f2i(camera.zoom),
     );
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   static getScreenToWorld2D(position: Vec2, camera: Camera2D): Vec2 {
     r().symbols.GetScreenToWorld2DW(
-      _vec2Buf,
+      this._vec2Buf,
       position.x,
       position.y,
       camera.offset.x,
@@ -1758,7 +1758,7 @@ export class Raylib {
       f2i(camera.rotation),
       f2i(camera.zoom),
     );
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   // --- DrawFPS ---
@@ -2004,8 +2004,8 @@ export class Raylib {
   }
 
   static getShapesTextureRectangle(): Rectangle {
-    r().symbols.GetShapesTextureRectangleW(_recBuf);
-    return { x: _recBuf[0]!, y: _recBuf[1]!, width: _recBuf[2]!, height: _recBuf[3]! };
+    r().symbols.GetShapesTextureRectangleW(this._recBuf);
+    return { x: this._recBuf[0]!, y: _recBuf[1]!, width: _recBuf[2]!, height: _recBuf[3]! };
   }
 
   // --- Color utilities ---
@@ -2078,8 +2078,6 @@ export class Raylib {
 
   // --- Font ---
 
-  private static _vec2Buf2 = new Float32Array(2);
-
   static loadFont(fileName: string): Font {
     return r().symbols.LoadFontW(cstr(fileName));
   }
@@ -2105,8 +2103,8 @@ export class Raylib {
   }
 
   static measureTextEx(font: Font, text: string, fontSize: number, spacing: number): Vec2 {
-    r().symbols.MeasureTextExW(this._vec2Buf2, font, cstr(text), fontSize, f2i(spacing));
-    return { x: this._vec2Buf2[0]!, y: this._vec2Buf2[1]! };
+    r().symbols.MeasureTextExW(this._vec2Buf, font, cstr(text), fontSize, f2i(spacing));
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   static drawTextEx(
@@ -2210,7 +2208,7 @@ export class Raylib {
 
   static getWorldToScreenEx(position: Vec3, camera: Camera3D, width: number, height: number): Vec2 {
     r().symbols.GetWorldToScreenExW(
-      _vec2Buf,
+      this._vec2Buf,
       f2i(position.x),
       f2i(position.y),
       f2i(position.z),
@@ -2228,7 +2226,7 @@ export class Raylib {
       width,
       height,
     );
-    return { x: _vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
   }
 
   private static _matBuf = new Float32Array(16);
@@ -2610,8 +2608,8 @@ export class Raylib {
   // --- Image info ---
 
   static getImageAlphaBorder(image: Image, threshold: number): Rectangle {
-    r().symbols.GetImageAlphaBorderW(_recBuf, image, f2i(threshold));
-    return { x: _recBuf[0]!, y: _recBuf[1]!, width: _recBuf[2]!, height: _recBuf[3]! };
+    r().symbols.GetImageAlphaBorderW(this._recBuf, image, f2i(threshold));
+    return { x: this._recBuf[0]!, y: _recBuf[1]!, width: _recBuf[2]!, height: _recBuf[3]! };
   }
 
   static getImageColor(image: Image, x: number, y: number): Color {
@@ -3507,8 +3505,8 @@ export class Raylib {
   }
 
   static getGlyphAtlasRec(font: Font, codepoint: number): Rectangle {
-    r().symbols.GetGlyphAtlasRecW(_recBuf, font, codepoint);
-    return { x: _recBuf[0]!, y: _recBuf[1]!, width: _recBuf[2]!, height: _recBuf[3]! };
+    r().symbols.GetGlyphAtlasRecW(this._recBuf, font, codepoint);
+    return { x: this._recBuf[0]!, y: _recBuf[1]!, width: _recBuf[2]!, height: _recBuf[3]! };
   }
 
   private static _cpSize = new Int32Array(1);

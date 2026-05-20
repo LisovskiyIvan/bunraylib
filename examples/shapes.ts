@@ -1,10 +1,7 @@
-import { Raylib, COLORS } from "../src";
-import type { Vec2 } from "../src/types";
+import { Raylib, COLORS, type Rectangle } from "../src";
 
 Raylib.initWindow(1200, 800, "Shape Drawing Demo");
 Raylib.setTargetFPS(60);
-
-const center: Vec2 = { x: 400, y: 300 };
 
 while (!Raylib.windowShouldClose()) {
   Raylib.beginDrawing();
@@ -14,6 +11,7 @@ while (!Raylib.windowShouldClose()) {
   Raylib.drawPixelV({ x: 55, y: 50 }, COLORS.RED);
 
   Raylib.drawLine(70, 40, 120, 40, COLORS.WHITE);
+  Raylib.drawLineV({ x: 90, y: 50 }, { x: 100, y: 40 }, COLORS.GREEN);
   Raylib.drawLineEx({ x: 130, y: 10 }, { x: 260, y: 40 }, 1, COLORS.RED);
 
   const lineStripPoints = new Float32Array([
@@ -28,11 +26,12 @@ while (!Raylib.windowShouldClose()) {
   );
 
   Raylib.drawCircle(100, 150, 30, COLORS.RED);
-  Raylib.drawCircleV({ x: 160, y: 150 }, 30, COLORS.RED);
-  Raylib.drawCircleLines(260, 150, 30, COLORS.BLUE);
+  Raylib.drawCircleV({ x: 170, y: 150 }, 30, COLORS.GREEN);
+  Raylib.drawCircleSector({ x: 450, y: 150 }, 30, 0, 180, 5, COLORS.ORANGE);
+  Raylib.drawCircleLines(260, 150, 40, COLORS.BLUE);
   Raylib.drawCircleGradient(380, 150, 30, COLORS.CYAN, COLORS.MAGENTA);
-  Raylib.drawCircleSector({ x: 450, y: 150 }, 30, 0, 180, 3, COLORS.ORANGE);
   Raylib.drawCircleSectorLines({ x: 520, y: 150 }, 30, 0, 270, 5, COLORS.WHITE);
+  Raylib.drawCircleLinesV({ x: 600, y: 150 }, 30, COLORS.WHITE);
 
   Raylib.drawEllipse(100, 230, 40, 25, COLORS.RED);
   Raylib.drawEllipseLines(180, 230, 40, 25, COLORS.GREEN);
@@ -41,10 +40,13 @@ while (!Raylib.windowShouldClose()) {
   Raylib.drawRingLines({ x: 340, y: 230 }, 15, 30, 0, 270, 24, COLORS.YELLOW);
 
   Raylib.drawRectangle(100, 280, 150, 60, COLORS.RED);
+  Raylib.drawRectangleV({ x: 300, y: 280 }, { x: 150, y: 60 }, COLORS.GREEN);
+  const rec: Rectangle =  { x: 500, y: 280, width: 150, height: 60 }
+  Raylib.drawRectangleRec(rec, COLORS.MAGENTA);
   Raylib.drawRectanglePro(
-    { x: 610, y: 280, width: 150, height: 60 },
+    { x: 750, y: 280, width: 150, height: 60 },
     { x: 75, y: 30 },
-    Math.PI / 6,
+    90,
     COLORS.YELLOW,
   );
   Raylib.drawRectangleGradientV(100, 360, 150, 50, COLORS.RED, COLORS.BLUE);
@@ -68,6 +70,14 @@ while (!Raylib.windowShouldClose()) {
     16,
     COLORS.MAGENTA,
   );
+
+  Raylib.drawRectangleRoundedLines(
+    { x: 0, y: 500, width: 100, height: 50 },
+    5,
+    16,
+    COLORS.GREEN,
+  );
+
   Raylib.drawRectangleRoundedLinesEx(
     { x: 100, y: 500, width: 150, height: 50 },
     2,
