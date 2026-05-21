@@ -43,7 +43,7 @@ void UpdateCameraProW(float* pos, float* tar, float* up, float* fovy, int* proje
         fovy[0],
         projection[0]
     };
-    UpdateCameraPro(&cam, (Vector3){mx, my, mz}, (Vector3){rx, ry, rz}, zoom);
+    UpdateCameraPro(&cam, (Vector3){mx, my, mz}, (Vector3){rx, ry, rz}, i2f(zoom));
     pos[0] = cam.position.x; pos[1] = cam.position.y; pos[2] = cam.position.z;
     tar[0] = cam.target.x;   tar[1] = cam.target.y;   tar[2] = cam.target.z;
     up[0]  = cam.up.x;       up[1]  = cam.up.y;       up[2]  = cam.up.z;

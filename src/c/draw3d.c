@@ -8,8 +8,8 @@ void DrawPoint3DW(int px, int py, int pz, Color color) {
     DrawPoint3D((Vector3){i2f(px), i2f(py), i2f(pz)}, color);
 }
 
-void DrawCircle3DW(int cx, int cy, int cz, int radius, int rax, int ray_, int raz, int angle, Color color) {
-    DrawCircle3D((Vector3){i2f(cx), i2f(cy), i2f(cz)}, i2f(radius), (Vector3){i2f(rax), i2f(ray_), i2f(raz)}, i2f(angle), color);
+void DrawCircle3DW(int cx, int cy, int cz, int radius, int rax, int ray, int raz, int angle, Color color) {
+    DrawCircle3D((Vector3){i2f(cx), i2f(cy), i2f(cz)}, i2f(radius), (Vector3){i2f(rax), i2f(ray), i2f(raz)}, i2f(angle), color);
 }
 
 void DrawTriangle3DW(int v1x, int v1y, int v1z, int v2x, int v2y, int v2z, int v3x, int v3y, int v3z, Color color) {
@@ -87,14 +87,12 @@ void DrawRayW(int px, int py, int pz, int dx, int dy, int dz, Color color) {
 }
 
 void DrawGridW(int slices, int spacing) {
-    DrawGrid(slices, spacing);
+    DrawGrid(slices, i2f(spacing));
 }
 
 void DrawModelW(int id, int posX, int posY, int posZ, int scale, Color tint) {
     if (id < 0 || id >= MAX_MODELS || !modelUsed[id]) return;
-    float s;
-    memcpy(&s, &scale, sizeof(float));
-    DrawModel(modelRegistry[id], (Vector3){i2f(posX), i2f(posY), i2f(posZ)}, s, tint);
+    DrawModel(modelRegistry[id], (Vector3){i2f(posX), i2f(posY), i2f(posZ)}, i2f(scale), tint);
 }
 
 void DrawModelExW(int id,

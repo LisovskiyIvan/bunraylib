@@ -44,7 +44,7 @@ void GetMouseDeltaW(float* out) {
 void SetMousePositionW(int x, int y) { SetMousePosition(x, y); }
 void SetMouseOffsetW(int x, int y) { SetMouseOffset(x, y); }
 
-void SetMouseScaleW(float scaleX, float scaleY) { SetMouseScale(scaleX, scaleY); }
+void SetMouseScaleW(int scaleX, int scaleY) { SetMouseScale(i2f(scaleX), i2f(scaleY)); }
 float GetMouseWheelMoveW() { return GetMouseWheelMove(); }
 
 void GetMouseWheelMoveVW(float* out) {

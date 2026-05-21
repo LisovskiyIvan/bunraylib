@@ -55,7 +55,7 @@ void SetWindowMonitorW(int monitor) { SetWindowMonitor(monitor); }
 void SetWindowMinSizeW(int w, int h) { SetWindowMinSize(w, h); }
 void SetWindowMaxSizeW(int w, int h) { SetWindowMaxSize(w, h); }
 void SetWindowSizeW(int w, int h) { SetWindowSize(w, h); }
-void SetWindowOpacityW(float opacity) { SetWindowOpacity(opacity); }
+void SetWindowOpacityW(float opacity) { SetWindowOpacity(i2f(opacity)); }
 void SetWindowFocusedW() { SetWindowFocused(); }
 
 int GetScreenWidthW() { return GetScreenWidth(); }

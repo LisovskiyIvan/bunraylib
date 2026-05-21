@@ -1,54 +1,54 @@
 #include "common.h"
 
 bool CheckCollisionRecsW(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) {
-    Rectangle r1 = { x1, y1, w1, h1 };
-    Rectangle r2 = { x2, y2, w2, h2 };
+    Rectangle r1 = { i2f(x1), i2f(y1), i2f(w1), i2f(h1) };
+    Rectangle r2 = { i2f(x2), i2f(y2), i2f(w2), i2f(h2) };
     return CheckCollisionRecs(r1, r2);
 }
 
 bool CheckCollisionCirclesW(int cx1, int cy1, int r1, int cx2, int cy2, int r2) {
-    return CheckCollisionCircles((Vector2){cx1, cy1}, r1, (Vector2){cx2, cy2}, r2);
+    return CheckCollisionCircles((Vector2){i2f(cx1), i2f(cy1)}, i2f(r1), (Vector2){ i2f(cx2), i2f(cy2) }, i2f(r2));
 }
 
 bool CheckCollisionCircleRecW(int cx, int cy, int radius, int rx, int ry, int rw, int rh) {
-    return CheckCollisionCircleRec((Vector2){cx, cy}, radius, (Rectangle){rx, ry, rw, rh});
+    return CheckCollisionCircleRec((Vector2){ i2f(cx), i2f(cy)}, i2f(radius), (Rectangle){i2f(rx), i2f(ry), i2f(rw), i2f(rh)});
 }
 
 bool CheckCollisionCircleLineW(int cx, int cy, int radius, int p1x, int p1y, int p2x, int p2y) {
-    return CheckCollisionCircleLine((Vector2){cx, cy}, radius, (Vector2){p1x, p1y}, (Vector2){p2x, p2y});
+    return CheckCollisionCircleLine((Vector2){i2f(cx), i2f(cy)}, i2f(radius), (Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(p2x), i2f(p2y)});
 }
 
 bool CheckCollisionPointRecW(int px, int py, int rx, int ry, int rw, int rh) {
-    return CheckCollisionPointRec((Vector2){px, py}, (Rectangle){rx, ry, rw, rh});
+    return CheckCollisionPointRec((Vector2){ i2f(px), i2f(py)}, (Rectangle){ i2f(rx), i2f(ry), i2f(rw), i2f(rh)});
 }
 
 bool CheckCollisionPointCircleW(int px, int py, int cx, int cy, int radius) {
-    return CheckCollisionPointCircle((Vector2){px, py}, (Vector2){cx, cy}, radius);
+    return CheckCollisionPointCircle((Vector2){i2f(px), i2f(py)}, (Vector2){ i2f(cx), i2f(cy)}, i2f(radius));
 }
 
 bool CheckCollisionPointTriangleW(int px, int py, int p1x, int p1y, int p2x, int p2y, int p3x, int p3y) {
-    return CheckCollisionPointTriangle((Vector2){px, py}, (Vector2){p1x, p1y}, (Vector2){p2x, p2y}, (Vector2){p3x, p3y});
+    return CheckCollisionPointTriangle((Vector2){ i2f(px), i2f(py)}, (Vector2){ i2f(p1x), i2f(p1y)}, (Vector2){ i2f(p2x), i2f(p2y)}, (Vector2){ i2f(p3x), i2f(p3y)});
 }
 
 bool CheckCollisionPointLineW(int px, int py, int p1x, int p1y, int p2x, int p2y, int threshold) {
-    return CheckCollisionPointLine((Vector2){px, py}, (Vector2){p1x, p1y}, (Vector2){p2x, p2y}, threshold);
+    return CheckCollisionPointLine((Vector2){ i2f(px), i2f(py)}, (Vector2){ i2f(p1x), i2f(p1y)}, (Vector2){ i2f(p2x), i2f(p2y)}, threshold);
 }
 
 bool CheckCollisionPointPolyW(int px, int py, const float* points, int pointCount) {
-    return CheckCollisionPointPoly((Vector2){px, py}, (const Vector2*)points, pointCount);
+    return CheckCollisionPointPoly((Vector2){ i2f(px), i2f(py)}, (const Vector2*)points, pointCount);
 }
 
 bool CheckCollisionLinesW(float* out, int s1x, int s1y, int e1x, int e1y, int s2x, int s2y, int e2x, int e2y) {
     Vector2 cp;
-    bool result = CheckCollisionLines((Vector2){s1x, s1y}, (Vector2){e1x, e1y}, (Vector2){s2x, s2y}, (Vector2){e2x, e2y}, &cp);
+    bool result = CheckCollisionLines((Vector2){ i2f(s1x), i2f(s1y)}, (Vector2){ i2f(e1x), i2f(e1y)}, (Vector2){ i2f(s2x), i2f(s2y)}, (Vector2){ i2f(e2x), i2f(e2y)}, &cp);
     out[0] = cp.x;
     out[1] = cp.y;
     return result;
 }
 
 void GetCollisionRecW(float* out, int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) {
-    Rectangle r1 = { x1, y1, w1, h1 };
-    Rectangle r2 = { x2, y2, w2, h2 };
+    Rectangle r1 = { i2f(x1), i2f(y1), i2f(w1), i2f(h1) };
+    Rectangle r2 = { i2f(x2), i2f(y2), i2f(w2), i2f(h2) };
     Rectangle result = GetCollisionRec(r1, r2);
     out[0] = result.x;
     out[1] = result.y;

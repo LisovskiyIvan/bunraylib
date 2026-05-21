@@ -839,14 +839,14 @@ export class Raylib {
   /** Check collision between two rectangles */
   static checkCollisionRecs(rec1: Rectangle, rec2: Rectangle): boolean {
     return r().symbols.CheckCollisionRecsW(
-      rec1.x,
-      rec1.y,
-      rec1.width,
-      rec1.height,
-      rec2.x,
-      rec2.y,
-      rec2.width,
-      rec2.height,
+      f2i(rec1.x),
+      f2i(rec1.y),
+      f2i(rec1.width),
+      f2i(rec1.height),
+      f2i(rec2.x),
+      f2i(rec2.y),
+      f2i(rec2.width),
+      f2i(rec2.height),
     );
   }
 
@@ -858,82 +858,82 @@ export class Raylib {
     radius2: number,
   ): boolean {
     return r().symbols.CheckCollisionCirclesW(
-      center1.x,
-      center1.y,
-      radius1,
-      center2.x,
-      center2.y,
-      radius2,
+      f2i(center1.x),
+      f2i(center1.y),
+      f2i(radius1),
+      f2i(center2.x),
+      f2i(center2.y),
+      f2i(radius2),
     );
   }
 
   /** Check collision between circle and rectangle */
   static checkCollisionCircleRec(center: Vec2, radius: number, rec: Rectangle): boolean {
     return r().symbols.CheckCollisionCircleRecW(
-      center.x,
-      center.y,
-      radius,
-      rec.x,
-      rec.y,
-      rec.width,
-      rec.height,
+      f2i(center.x),
+      f2i(center.y),
+      f2i(radius),
+      f2i(rec.x),
+      f2i(rec.y),
+      f2i(rec.width),
+      f2i(rec.height),
     );
   }
 
   /** Check if circle collides with a line created between two points [p1] and [p2] */
   static checkCollisionCircleLine(center: Vec2, radius: number, p1: Vec2, p2: Vec2): boolean {
     return r().symbols.CheckCollisionCircleLineW(
-      center.x,
-      center.y,
-      radius,
-      p1.x,
-      p1.y,
-      p2.x,
-      p2.y,
+      f2i(center.x),
+      f2i(center.y),
+      f2i(radius),
+      f2i(p1.x),
+      f2i(p1.y),
+      f2i(p2.x),
+      f2i(p2.y),
     );
   }
 
   /** Check if point is inside rectangle */
   static checkCollisionPointRec(point: Vec2, rec: Rectangle): boolean {
     return r().symbols.CheckCollisionPointRecW(
-      point.x,
-      point.y,
-      rec.x,
-      rec.y,
-      rec.width,
-      rec.height,
+      f2i(point.x),
+      f2i(point.y),
+      f2i(rec.x),
+      f2i(rec.y),
+      f2i(rec.width),
+      f2i(rec.height),
     );
   }
 
   /** Check if point is inside circle */
   static checkCollisionPointCircle(point: Vec2, center: Vec2, radius: number): boolean {
-    return r().symbols.CheckCollisionPointCircleW(point.x, point.y, center.x, center.y, radius);
+    return r().symbols.CheckCollisionPointCircleW(f2i(point.x), f2i(point.y), f2i(center.x), f2i(center.y), f2i(radius));
   }
 
   /** Check if point is inside a triangle */
   static checkCollisionPointTriangle(point: Vec2, p1: Vec2, p2: Vec2, p3: Vec2): boolean {
     return r().symbols.CheckCollisionPointTriangleW(
-      point.x,
-      point.y,
-      p1.x,
-      p1.y,
-      p2.x,
-      p2.y,
-      p3.x,
-      p3.y,
+      f2i(point.x),
+      f2i(point.y),
+      f2i(p1.x),
+      f2i(p1.y),
+      f2i(p2.x),
+      f2i(p2.y),
+      f2i(p3.x),
+      f2i(p3.y),
     );
   }
 
   /** Check if point belongs to line created between two points [p1] and [p2] with defined margin [threshold] */
   static checkCollisionPointLine(point: Vec2, p1: Vec2, p2: Vec2, threshold: number): boolean {
     return r().symbols.CheckCollisionPointLineW(
-      point.x,
-      point.y,
-      p1.x,
-      p1.y,
-      p2.x,
-      p2.y,
-      threshold,
+      f2i(point.x),
+      f2i(point.y),
+      f2i(p1.x),
+      f2i(p1.y),
+      f2i(p2.x),
+      f2i(p2.y),
+      threshold | 0,
     );
   }
 
@@ -942,7 +942,7 @@ export class Raylib {
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
   static checkCollisionPointPoly(point: Vec2, points: Float32Array): boolean {
-    return r().symbols.CheckCollisionPointPolyW(point.x, point.y, points, points.length / 2);
+    return r().symbols.CheckCollisionPointPolyW(f2i(point.x), f2i(point.y), points, points.length / 2);
   }
 
   /**
@@ -957,14 +957,14 @@ export class Raylib {
   ): { collides: boolean; collisionPoint: Vec2 } {
     const collides = r().symbols.CheckCollisionLinesW(
       this._colPtBuf,
-      startPos1.x,
-      startPos1.y,
-      endPos1.x,
-      endPos1.y,
-      startPos2.x,
-      startPos2.y,
-      endPos2.x,
-      endPos2.y,
+      f2i(startPos1.x),
+      f2i(startPos1.y),
+      f2i(endPos1.x),
+      f2i(endPos1.y),
+      f2i(startPos2.x),
+      f2i(startPos2.y),
+      f2i(endPos2.x),
+      f2i(endPos2.y),
     );
     return { collides, collisionPoint: { x: this._colPtBuf[0]!, y: this._colPtBuf[1]! } };
   }
@@ -973,14 +973,14 @@ export class Raylib {
   static getCollisionRec(rec1: Rectangle, rec2: Rectangle): Rectangle {
     r().symbols.GetCollisionRecW(
       this._recBuf,
-      rec1.x,
-      rec1.y,
-      rec1.width,
-      rec1.height,
-      rec2.x,
-      rec2.y,
-      rec2.width,
-      rec2.height,
+      f2i(rec1.x),
+      f2i(rec1.y),
+      f2i(rec1.width),
+      f2i(rec1.height),
+      f2i(rec2.x),
+      f2i(rec2.y),
+      f2i(rec2.width),
+      f2i(rec2.height),
     );
     return {
       x: this._recBuf[0]!,
@@ -1126,8 +1126,8 @@ export class Raylib {
       f2i(centerPos.y),
       f2i(centerPos.z),
       f2i(radius),
-      rings,
-      slices,
+      rings | 0,
+      slices | 0,
       col,
     );
   }
@@ -1145,8 +1145,8 @@ export class Raylib {
       f2i(centerPos.y),
       f2i(centerPos.z),
       f2i(radius),
-      rings,
-      slices,
+      rings | 0,
+      slices | 0,
       col,
     );
   }
@@ -1167,7 +1167,7 @@ export class Raylib {
       f2i(radiusTop),
       f2i(radiusBottom),
       f2i(height),
-      slices,
+      slices | 0,
       col,
     );
   }
@@ -1190,7 +1190,7 @@ export class Raylib {
       f2i(endPos.z),
       f2i(startRadius),
       f2i(endRadius),
-      sides,
+      sides | 0,
       col,
     );
   }
@@ -1211,7 +1211,7 @@ export class Raylib {
       f2i(radiusTop),
       f2i(radiusBottom),
       f2i(height),
-      slices,
+      slices | 0,
       col,
     );
   }
@@ -1234,7 +1234,7 @@ export class Raylib {
       f2i(endPos.z),
       f2i(startRadius),
       f2i(endRadius),
-      sides,
+      sides | 0,
       col,
     );
   }
@@ -1256,8 +1256,8 @@ export class Raylib {
       f2i(endPos.y),
       f2i(endPos.z),
       f2i(radius),
-      slices,
-      rings,
+      slices | 0,
+      rings | 0,
       col,
     );
   }
@@ -1279,8 +1279,8 @@ export class Raylib {
       f2i(endPos.y),
       f2i(endPos.z),
       f2i(radius),
-      slices,
-      rings,
+      slices | 0,
+      rings | 0,
       col,
     );
   }
@@ -1312,7 +1312,7 @@ export class Raylib {
 
   /** Draw a grid */
   static drawGrid(slices: number, spacing: number): void {
-    r().symbols.DrawGridW(slices, spacing);
+    r().symbols.DrawGridW(slices | 0, f2i(spacing));
   }
 
   // --- Window state ---
@@ -1366,22 +1366,22 @@ export class Raylib {
     r().symbols.SetWindowTitleW(cstr(title));
   }
   static setWindowPosition(x: number, y: number): void {
-    r().symbols.SetWindowPositionW(x, y);
+    r().symbols.SetWindowPositionW(x | 0, y | 0);
   }
   static setWindowMonitor(monitor: number): void {
-    r().symbols.SetWindowMonitorW(monitor);
+    r().symbols.SetWindowMonitorW(monitor | 0);
   }
   static setWindowMinSize(w: number, h: number): void {
-    r().symbols.SetWindowMinSizeW(w, h);
+    r().symbols.SetWindowMinSizeW(w | 0, h | 0);
   }
   static setWindowMaxSize(w: number, h: number): void {
-    r().symbols.SetWindowMaxSizeW(w, h);
+    r().symbols.SetWindowMaxSizeW(w | 0, h | 0);
   }
   static setWindowSize(w: number, h: number): void {
-    r().symbols.SetWindowSizeW(w, h);
+    r().symbols.SetWindowSizeW(w | 0, h | 0);
   }
   static setWindowOpacity(opacity: number): void {
-    r().symbols.SetWindowOpacityW(opacity);
+    r().symbols.SetWindowOpacityW(f2i(opacity));
   }
   static setWindowFocused(): void {
     r().symbols.SetWindowFocusedW();
@@ -1406,7 +1406,7 @@ export class Raylib {
   }
 
   static getMonitorPosition(monitor: number): Vec2 {
-    r().symbols.GetMonitorPositionW(this._vec2Buf, monitor);
+    r().symbols.GetMonitorPositionW(this._vec2Buf, monitor | 0);
     return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
@@ -1417,13 +1417,13 @@ export class Raylib {
     return r().symbols.GetMonitorHeightW(monitor);
   }
   static getMonitorPhysicalWidth(monitor: number): number {
-    return r().symbols.GetMonitorPhysicalWidthW(monitor);
+    return r().symbols.GetMonitorPhysicalWidthW(monitor | 0);
   }
   static getMonitorPhysicalHeight(monitor: number): number {
-    return r().symbols.GetMonitorPhysicalHeightW(monitor);
+    return r().symbols.GetMonitorPhysicalHeightW(monitor | 0);
   }
   static getMonitorRefreshRate(monitor: number): number {
-    return r().symbols.GetMonitorRefreshRateW(monitor);
+    return r().symbols.GetMonitorRefreshRateW(monitor | 0);
   }
 
   static getWindowPosition(): Vec2 {
@@ -1437,7 +1437,7 @@ export class Raylib {
   }
 
   static getMonitorName(monitor: number): string {
-    const ptr = r().symbols.GetMonitorNameW(monitor);
+    const ptr = r().symbols.GetMonitorNameW(monitor | 0);
     if (!ptr) return "";
     return new CString(ptr).toString();
   }
@@ -1489,13 +1489,13 @@ export class Raylib {
     r().symbols.EndTextureModeW();
   }
   static beginBlendMode(mode: number): void {
-    r().symbols.BeginBlendModeW(mode);
+    r().symbols.BeginBlendModeW(mode | 0);
   }
   static endBlendMode(): void {
     r().symbols.EndBlendModeW();
   }
   static beginScissorMode(x: number, y: number, w: number, h: number): void {
-    r().symbols.BeginScissorModeW(x, y, w, h);
+    r().symbols.BeginScissorModeW(x | 0, y | 0, w | 0, h | 0);
   }
   static endScissorMode(): void {
     r().symbols.EndScissorModeW();
@@ -1522,10 +1522,10 @@ export class Raylib {
   // --- Random ---
 
   static setRandomSeed(seed: number): void {
-    r().symbols.SetRandomSeedW(seed);
+    r().symbols.SetRandomSeedW(seed | 0);
   }
   static getRandomValue(min: number, max: number): number {
-    return r().symbols.GetRandomValueW(min, max);
+    return r().symbols.GetRandomValueW(min | 0, max | 0);
   }
 
   // --- Misc ---
@@ -1534,7 +1534,7 @@ export class Raylib {
     r().symbols.TakeScreenshotW(cstr(fileName));
   }
   static setConfigFlags(flags: number): void {
-    r().symbols.SetConfigFlagsW(flags);
+    r().symbols.SetConfigFlagsW(flags | 0);
   }
   static openURL(url: string): void {
     r().symbols.OpenURLW(cstr(url));
@@ -1543,19 +1543,19 @@ export class Raylib {
   // --- Input: Keyboard ---
 
   static isKeyPressed(key: number): boolean {
-    return r().symbols.IsKeyPressedW(key);
+    return r().symbols.IsKeyPressedW(key | 0);
   }
   static isKeyPressedRepeat(key: number): boolean {
-    return r().symbols.IsKeyPressedRepeatW(key);
+    return r().symbols.IsKeyPressedRepeatW(key | 0);
   }
   static isKeyDown(key: number): boolean {
-    return r().symbols.IsKeyDownW(key);
+    return r().symbols.IsKeyDownW(key | 0);
   }
   static isKeyReleased(key: number): boolean {
-    return r().symbols.IsKeyReleasedW(key);
+    return r().symbols.IsKeyReleasedW(key | 0);
   }
   static isKeyUp(key: number): boolean {
-    return r().symbols.IsKeyUpW(key);
+    return r().symbols.IsKeyUpW(key | 0);
   }
   static getKeyPressed(): number {
     return r().symbols.GetKeyPressedW();
@@ -1564,7 +1564,7 @@ export class Raylib {
     return r().symbols.GetCharPressedW();
   }
   static setExitKey(key: number): void {
-    r().symbols.SetExitKeyW(key);
+    r().symbols.SetExitKeyW(key | 0);
   }
 
   // --- Input: Gamepad ---
@@ -1573,30 +1573,30 @@ export class Raylib {
     return r().symbols.IsGamepadAvailableW(gamepad);
   }
   static getGamepadName(gamepad: number): string {
-    const cstr = r().symbols.GetGamepadNameW(gamepad);
+    const cstr = r().symbols.GetGamepadNameW(gamepad | 0);
     if (!cstr) return "";
     return cstr.toString();
   }
   static isGamepadButtonPressed(gamepad: number, button: number): boolean {
-    return r().symbols.IsGamepadButtonPressedW(gamepad, button);
+    return r().symbols.IsGamepadButtonPressedW(gamepad | 0, button | 0);
   }
   static isGamepadButtonDown(gamepad: number, button: number): boolean {
-    return r().symbols.IsGamepadButtonDownW(gamepad, button);
+    return r().symbols.IsGamepadButtonDownW(gamepad | 0, button | 0);
   }
   static isGamepadButtonReleased(gamepad: number, button: number): boolean {
-    return r().symbols.IsGamepadButtonReleasedW(gamepad, button);
+    return r().symbols.IsGamepadButtonReleasedW(gamepad | 0, button | 0);
   }
   static isGamepadButtonUp(gamepad: number, button: number): boolean {
-    return r().symbols.IsGamepadButtonUpW(gamepad, button);
+    return r().symbols.IsGamepadButtonUpW(gamepad | 0, button | 0);
   }
   static getGamepadButtonPressed(): number {
     return r().symbols.GetGamepadButtonPressedW();
   }
   static getGamepadAxisCount(gamepad: number): number {
-    return r().symbols.GetGamepadAxisCountW(gamepad);
+    return r().symbols.GetGamepadAxisCountW(gamepad | 0);
   }
   static getGamepadAxisMovement(gamepad: number, axis: number): number {
-    return r().symbols.GetGamepadAxisMovementW(gamepad, axis);
+    return r().symbols.GetGamepadAxisMovementW(gamepad | 0, axis | 0);
   }
   static setGamepadMappings(mappings: string): number {
     return r().symbols.SetGamepadMappingsW(cstr(mappings));
@@ -1605,16 +1605,16 @@ export class Raylib {
   // --- Input: Mouse ---
 
   static isMouseButtonPressed(button: number): boolean {
-    return r().symbols.IsMouseButtonPressedW(button);
+    return r().symbols.IsMouseButtonPressedW(button | 0);
   }
   static isMouseButtonDown(button: number): boolean {
-    return r().symbols.IsMouseButtonDownW(button);
+    return r().symbols.IsMouseButtonDownW(button | 0);
   }
   static isMouseButtonReleased(button: number): boolean {
-    return r().symbols.IsMouseButtonReleasedW(button);
+    return r().symbols.IsMouseButtonReleasedW(button | 0);
   }
   static isMouseButtonUp(button: number): boolean {
-    return r().symbols.IsMouseButtonUpW(button);
+    return r().symbols.IsMouseButtonUpW(button | 0);
   }
   static getMouseX(): number {
     return r().symbols.GetMouseXW();
@@ -1634,13 +1634,13 @@ export class Raylib {
   }
 
   static setMousePosition(x: number, y: number): void {
-    r().symbols.SetMousePositionW(x, y);
+    r().symbols.SetMousePositionW(x | 0, y | 0);
   }
   static setMouseOffset(x: number, y: number): void {
-    r().symbols.SetMouseOffsetW(x, y);
+    r().symbols.SetMouseOffsetW(x | 0, y | 0);
   }
   static setMouseScale(scaleX: number, scaleY: number): void {
-    r().symbols.SetMouseScaleW(scaleX, scaleY);
+    r().symbols.SetMouseScaleW(f2i(scaleX), f2i(scaleY));
   }
   static getMouseWheelMove(): number {
     return r().symbols.GetMouseWheelMoveW();
@@ -1652,7 +1652,7 @@ export class Raylib {
   }
 
   static setMouseCursor(cursor: number): void {
-    r().symbols.SetMouseCursorW(cursor);
+    r().symbols.SetMouseCursorW(cursor | 0);
   }
 
   // --- Input: Touch ---
@@ -1665,12 +1665,12 @@ export class Raylib {
   }
 
   static getTouchPosition(index: number): Vec2 {
-    r().symbols.GetTouchPositionW(this._vec2Buf, index);
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    r().symbols.GetTouchPositionW(this._vec2Buf, index | 0);
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   static getTouchPointId(index: number): number {
-    return r().symbols.GetTouchPointIdW(index);
+    return r().symbols.GetTouchPointIdW(index | 0);
   }
   static getTouchPointCount(): number {
     return r().symbols.GetTouchPointCountW();
@@ -1679,10 +1679,10 @@ export class Raylib {
   // --- Gestures ---
 
   static setGesturesEnabled(flags: number): void {
-    r().symbols.SetGesturesEnabledW(flags);
+    r().symbols.SetGesturesEnabledW(flags | 0);
   }
   static isGestureDetected(gesture: number): boolean {
-    return r().symbols.IsGestureDetectedW(gesture);
+    return r().symbols.IsGestureDetectedW(gesture | 0);
   }
   static getGestureDetected(): number {
     return r().symbols.GetGestureDetectedW();
@@ -1693,7 +1693,7 @@ export class Raylib {
 
   static getGestureDragVector(): Vec2 {
     r().symbols.GetGestureDragVectorW(this._vec2Buf);
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   static getGestureDragAngle(): number {
@@ -1702,7 +1702,7 @@ export class Raylib {
 
   static getGesturePinchVector(): Vec2 {
     r().symbols.GetGesturePinchVectorW(this._vec2Buf);
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   static getGesturePinchAngle(): number {
@@ -1717,7 +1717,7 @@ export class Raylib {
     const up = new Float32Array([camera.up.x, camera.up.y, camera.up.z]);
     const fovy = new Float32Array([camera.fovy]);
     const proj = new Int32Array([camera.projection]);
-    r().symbols.UpdateCameraW(pos, tar, up, fovy, proj, mode);
+    r().symbols.UpdateCameraW(pos, tar, up, fovy, proj, mode | 0);
     return {
       position: { x: pos[0]!, y: pos[1]!, z: pos[2]! },
       target: { x: tar[0]!, y: tar[1]!, z: tar[2]! },
@@ -1745,7 +1745,7 @@ export class Raylib {
       rotation.x,
       rotation.y,
       rotation.z,
-      zoom,
+      f2i(zoom),
     );
     return {
       position: { x: pos[0]!, y: pos[1]!, z: pos[2]! },
