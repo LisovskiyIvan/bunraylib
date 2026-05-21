@@ -4,648 +4,652 @@
 
 ## Overall: 500/548 (91.2%)
 
+| Implemented | Examples | Tests |
+|-------------|----------|-------|
+| 500/548 | 144/548 | 274/548 |
+
 [███████████████████████████░░░]
 
-### 🔶 Window and Graphics Device Functions (Module: core) (114/147 — 78%)
+### 🔶 Window and Graphics Device Functions (Module: core) (114/147 — 78% | 📝20 🧪62)
 
 <details><summary><b>Missing (33)</b></summary>
 
-- [ ] `BeginVrStereoMode`
-- [ ] `EndVrStereoMode`
-- [ ] `LoadVrStereoConfig`
-- [ ] `UnloadVrStereoConfig`
-- [ ] `SetShaderValue`
-- [ ] `SetShaderValueV`
-- [ ] `SetTraceLogCallback`
-- [ ] `SetLoadFileDataCallback`
-- [ ] `SetSaveFileDataCallback`
-- [ ] `SetLoadFileTextCallback`
-- [ ] `SetSaveFileTextCallback`
-- [ ] `FileRename`
-- [ ] `FileRemove`
-- [ ] `FileCopy`
-- [ ] `FileMove`
-- [ ] `FileTextReplace`
-- [ ] `FileTextFindIndex`
-- [ ] `LoadDirectoryFiles`
-- [ ] `LoadDirectoryFilesEx`
-- [ ] `UnloadDirectoryFiles`
-- [ ] `IsFileDropped`
-- [ ] `LoadDroppedFiles`
-- [ ] `UnloadDroppedFiles`
-- [ ] `GetDirectoryFileCount`
-- [ ] `GetDirectoryFileCountEx`
-- [ ] `LoadAutomationEventList`
-- [ ] `UnloadAutomationEventList`
-- [ ] `ExportAutomationEventList`
-- [ ] `SetAutomationEventList`
-- [ ] `SetAutomationEventBaseFrame`
-- [ ] `StartAutomationEventRecording`
-- [ ] `StopAutomationEventRecording`
-- [ ] `PlayAutomationEvent`
+- [ ] `BeginVrStereoMode` 
+- [ ] `EndVrStereoMode` 
+- [ ] `LoadVrStereoConfig` 
+- [ ] `UnloadVrStereoConfig` 
+- [ ] `SetShaderValue` 
+- [ ] `SetShaderValueV` 
+- [ ] `SetTraceLogCallback` 
+- [ ] `SetLoadFileDataCallback` 
+- [ ] `SetSaveFileDataCallback` 
+- [ ] `SetLoadFileTextCallback` 
+- [ ] `SetSaveFileTextCallback` 
+- [ ] `FileRename` 
+- [ ] `FileRemove` 
+- [ ] `FileCopy` 
+- [ ] `FileMove` 
+- [ ] `FileTextReplace` 
+- [ ] `FileTextFindIndex` 
+- [ ] `LoadDirectoryFiles` 
+- [ ] `LoadDirectoryFilesEx` 
+- [ ] `UnloadDirectoryFiles` 
+- [ ] `IsFileDropped` 
+- [ ] `LoadDroppedFiles` 
+- [ ] `UnloadDroppedFiles` 
+- [ ] `GetDirectoryFileCount` 
+- [ ] `GetDirectoryFileCountEx` 
+- [ ] `LoadAutomationEventList` 
+- [ ] `UnloadAutomationEventList` 
+- [ ] `ExportAutomationEventList` 
+- [ ] `SetAutomationEventList` 
+- [ ] `SetAutomationEventBaseFrame` 
+- [ ] `StartAutomationEventRecording` 
+- [ ] `StopAutomationEventRecording` 
+- [ ] `PlayAutomationEvent` 
 
 </details>
 
 <details><summary>Done (114)</summary>
 
-- [x] `InitWindow`
-- [x] `CloseWindow`
-- [x] `WindowShouldClose`
-- [x] `IsWindowReady`
-- [x] `IsWindowFullscreen`
-- [x] `IsWindowHidden`
-- [x] `IsWindowMinimized`
-- [x] `IsWindowMaximized`
-- [x] `IsWindowFocused`
-- [x] `IsWindowResized`
-- [x] `IsWindowState`
-- [x] `SetWindowState`
-- [x] `ClearWindowState`
-- [x] `ToggleFullscreen`
-- [x] `ToggleBorderlessWindowed`
-- [x] `MaximizeWindow`
-- [x] `MinimizeWindow`
-- [x] `RestoreWindow`
-- [x] `SetWindowIcon`
-- [x] `SetWindowIcons`
-- [x] `SetWindowTitle`
-- [x] `SetWindowPosition`
-- [x] `SetWindowMonitor`
-- [x] `SetWindowMinSize`
-- [x] `SetWindowMaxSize`
-- [x] `SetWindowSize`
-- [x] `SetWindowOpacity`
-- [x] `SetWindowFocused`
-- [x] `GetScreenWidth`
-- [x] `GetScreenHeight`
-- [x] `GetRenderWidth`
-- [x] `GetRenderHeight`
-- [x] `GetMonitorCount`
-- [x] `GetCurrentMonitor`
-- [x] `GetMonitorPosition`
-- [x] `GetMonitorWidth`
-- [x] `GetMonitorHeight`
-- [x] `GetMonitorPhysicalWidth`
-- [x] `GetMonitorPhysicalHeight`
-- [x] `GetMonitorRefreshRate`
-- [x] `GetWindowPosition`
-- [x] `GetWindowScaleDPI`
-- [x] `SetClipboardText`
-- [x] `GetClipboardImage`
-- [x] `EnableEventWaiting`
-- [x] `DisableEventWaiting`
-- [x] `ShowCursor`
-- [x] `HideCursor`
-- [x] `IsCursorHidden`
-- [x] `EnableCursor`
-- [x] `DisableCursor`
-- [x] `IsCursorOnScreen`
-- [x] `ClearBackground`
-- [x] `BeginDrawing`
-- [x] `EndDrawing`
-- [x] `BeginMode2D`
-- [x] `EndMode2D`
-- [x] `BeginMode3D`
-- [x] `EndMode3D`
-- [x] `BeginTextureMode`
-- [x] `EndTextureMode`
-- [x] `BeginShaderMode`
-- [x] `EndShaderMode`
-- [x] `BeginBlendMode`
-- [x] `EndBlendMode`
-- [x] `BeginScissorMode`
-- [x] `EndScissorMode`
-- [x] `LoadShader`
-- [x] `LoadShaderFromMemory`
-- [x] `IsShaderValid`
-- [x] `GetShaderLocation`
-- [x] `GetShaderLocationAttrib`
-- [x] `SetShaderValueMatrix`
-- [x] `SetShaderValueTexture`
-- [x] `UnloadShader`
-- [x] `GetScreenToWorldRay`
-- [x] `GetScreenToWorldRayEx`
-- [x] `GetWorldToScreen`
-- [x] `GetWorldToScreenEx`
-- [x] `GetWorldToScreen2D`
-- [x] `GetScreenToWorld2D`
-- [x] `GetCameraMatrix`
-- [x] `GetCameraMatrix2D`
-- [x] `SetTargetFPS`
-- [x] `GetFrameTime`
-- [x] `GetTime`
-- [x] `GetFPS`
-- [x] `SwapScreenBuffer`
-- [x] `PollInputEvents`
-- [x] `WaitTime`
-- [x] `SetRandomSeed`
-- [x] `GetRandomValue`
-- [x] `UnloadRandomSequence`
-- [x] `TakeScreenshot`
-- [x] `SetConfigFlags`
-- [x] `OpenURL`
-- [x] `SetTraceLogLevel`
-- [x] `TraceLog`
-- [x] `MemFree`
-- [x] `UnloadFileData`
-- [x] `SaveFileData`
-- [x] `ExportDataAsCode`
-- [x] `UnloadFileText`
-- [x] `SaveFileText`
-- [x] `FileExists`
-- [x] `DirectoryExists`
-- [x] `IsFileExtension`
-- [x] `GetFileLength`
-- [x] `GetFileModTime`
-- [x] `MakeDirectory`
-- [x] `ChangeDirectory`
-- [x] `IsPathFile`
-- [x] `IsFileNameValid`
-- [x] `ComputeCRC32`
+- [x] `InitWindow` 📝🧪
+- [x] `CloseWindow` 📝🧪
+- [x] `WindowShouldClose` 📝
+- [x] `IsWindowReady` 🧪
+- [x] `IsWindowFullscreen` 🧪
+- [x] `IsWindowHidden` 🧪
+- [x] `IsWindowMinimized` 🧪
+- [x] `IsWindowMaximized` 🧪
+- [x] `IsWindowFocused` 🧪
+- [x] `IsWindowResized` 🧪
+- [x] `IsWindowState` 
+- [x] `SetWindowState` 
+- [x] `ClearWindowState` 
+- [x] `ToggleFullscreen` 
+- [x] `ToggleBorderlessWindowed` 
+- [x] `MaximizeWindow` 
+- [x] `MinimizeWindow` 
+- [x] `RestoreWindow` 
+- [x] `SetWindowIcon` 
+- [x] `SetWindowIcons` 
+- [x] `SetWindowTitle` 
+- [x] `SetWindowPosition` 
+- [x] `SetWindowMonitor` 
+- [x] `SetWindowMinSize` 
+- [x] `SetWindowMaxSize` 
+- [x] `SetWindowSize` 🧪
+- [x] `SetWindowOpacity` 
+- [x] `SetWindowFocused` 
+- [x] `GetScreenWidth` 📝🧪
+- [x] `GetScreenHeight` 🧪
+- [x] `GetRenderWidth` 
+- [x] `GetRenderHeight` 
+- [x] `GetMonitorCount` 🧪
+- [x] `GetCurrentMonitor` 🧪
+- [x] `GetMonitorPosition` 🧪
+- [x] `GetMonitorWidth` 🧪
+- [x] `GetMonitorHeight` 🧪
+- [x] `GetMonitorPhysicalWidth` 
+- [x] `GetMonitorPhysicalHeight` 
+- [x] `GetMonitorRefreshRate` 🧪
+- [x] `GetWindowPosition` 
+- [x] `GetWindowScaleDPI` 
+- [x] `SetClipboardText` 🧪
+- [x] `GetClipboardImage` 
+- [x] `EnableEventWaiting` 
+- [x] `DisableEventWaiting` 
+- [x] `ShowCursor` 🧪
+- [x] `HideCursor` 🧪
+- [x] `IsCursorHidden` 🧪
+- [x] `EnableCursor` 🧪
+- [x] `DisableCursor` 🧪
+- [x] `IsCursorOnScreen` 🧪
+- [x] `ClearBackground` 📝🧪
+- [x] `BeginDrawing` 📝🧪
+- [x] `EndDrawing` 📝🧪
+- [x] `BeginMode2D` 📝
+- [x] `EndMode2D` 📝
+- [x] `BeginMode3D` 📝🧪
+- [x] `EndMode3D` 📝🧪
+- [x] `BeginTextureMode` 📝🧪
+- [x] `EndTextureMode` 📝🧪
+- [x] `BeginShaderMode` 📝🧪
+- [x] `EndShaderMode` 📝🧪
+- [x] `BeginBlendMode` 🧪
+- [x] `EndBlendMode` 🧪
+- [x] `BeginScissorMode` 🧪
+- [x] `EndScissorMode` 🧪
+- [x] `LoadShader` 🧪
+- [x] `LoadShaderFromMemory` 📝
+- [x] `IsShaderValid` 🧪
+- [x] `GetShaderLocation` 🧪
+- [x] `GetShaderLocationAttrib` 
+- [x] `SetShaderValueMatrix` 🧪
+- [x] `SetShaderValueTexture` 
+- [x] `UnloadShader` 📝🧪
+- [x] `GetScreenToWorldRay` 
+- [x] `GetScreenToWorldRayEx` 
+- [x] `GetWorldToScreen` 
+- [x] `GetWorldToScreenEx` 
+- [x] `GetWorldToScreen2D` 🧪
+- [x] `GetScreenToWorld2D` 🧪
+- [x] `GetCameraMatrix` 
+- [x] `GetCameraMatrix2D` 
+- [x] `SetTargetFPS` 📝🧪
+- [x] `GetFrameTime` 📝
+- [x] `GetTime` 🧪
+- [x] `GetFPS` 📝🧪
+- [x] `SwapScreenBuffer` 
+- [x] `PollInputEvents` 
+- [x] `WaitTime` 
+- [x] `SetRandomSeed` 🧪
+- [x] `GetRandomValue` 🧪
+- [x] `UnloadRandomSequence` 
+- [x] `TakeScreenshot` 
+- [x] `SetConfigFlags` 
+- [x] `OpenURL` 
+- [x] `SetTraceLogLevel` 
+- [x] `TraceLog` 
+- [x] `MemFree` 
+- [x] `UnloadFileData` 
+- [x] `SaveFileData` 🧪
+- [x] `ExportDataAsCode` 🧪
+- [x] `UnloadFileText` 
+- [x] `SaveFileText` 🧪
+- [x] `FileExists` 🧪
+- [x] `DirectoryExists` 🧪
+- [x] `IsFileExtension` 🧪
+- [x] `GetFileLength` 🧪
+- [x] `GetFileModTime` 🧪
+- [x] `MakeDirectory` 🧪
+- [x] `ChangeDirectory` 
+- [x] `IsPathFile` 🧪
+- [x] `IsFileNameValid` 🧪
+- [x] `ComputeCRC32` 🧪
 
 </details>
 
-### ✅ Input Handling Functions (Module: core) (37/37 — 100%)
+### ✅ Input Handling Functions (Module: core) (37/37 — 100% | 📝2 🧪15)
 
 <details><summary>Done (37)</summary>
 
-- [x] `IsKeyPressed`
-- [x] `IsKeyPressedRepeat`
-- [x] `IsKeyDown`
-- [x] `IsKeyReleased`
-- [x] `IsKeyUp`
-- [x] `GetKeyPressed`
-- [x] `GetCharPressed`
-- [x] `SetExitKey`
-- [x] `IsGamepadAvailable`
-- [x] `IsGamepadButtonPressed`
-- [x] `IsGamepadButtonDown`
-- [x] `IsGamepadButtonReleased`
-- [x] `IsGamepadButtonUp`
-- [x] `GetGamepadButtonPressed`
-- [x] `GetGamepadAxisCount`
-- [x] `GetGamepadAxisMovement`
-- [x] `SetGamepadMappings`
-- [x] `SetGamepadVibration`
-- [x] `IsMouseButtonPressed`
-- [x] `IsMouseButtonDown`
-- [x] `IsMouseButtonReleased`
-- [x] `IsMouseButtonUp`
-- [x] `GetMouseX`
-- [x] `GetMouseY`
-- [x] `GetMousePosition`
-- [x] `GetMouseDelta`
-- [x] `SetMousePosition`
-- [x] `SetMouseOffset`
-- [x] `SetMouseScale`
-- [x] `GetMouseWheelMove`
-- [x] `GetMouseWheelMoveV`
-- [x] `SetMouseCursor`
-- [x] `GetTouchX`
-- [x] `GetTouchY`
-- [x] `GetTouchPosition`
-- [x] `GetTouchPointId`
-- [x] `GetTouchPointCount`
+- [x] `IsKeyPressed` 📝
+- [x] `IsKeyPressedRepeat` 
+- [x] `IsKeyDown` 📝🧪
+- [x] `IsKeyReleased` 
+- [x] `IsKeyUp` 🧪
+- [x] `GetKeyPressed` 🧪
+- [x] `GetCharPressed` 🧪
+- [x] `SetExitKey` 
+- [x] `IsGamepadAvailable` 🧪
+- [x] `IsGamepadButtonPressed` 
+- [x] `IsGamepadButtonDown` 
+- [x] `IsGamepadButtonReleased` 
+- [x] `IsGamepadButtonUp` 
+- [x] `GetGamepadButtonPressed` 
+- [x] `GetGamepadAxisCount` 🧪
+- [x] `GetGamepadAxisMovement` 
+- [x] `SetGamepadMappings` 
+- [x] `SetGamepadVibration` 
+- [x] `IsMouseButtonPressed` 🧪
+- [x] `IsMouseButtonDown` 🧪
+- [x] `IsMouseButtonReleased` 🧪
+- [x] `IsMouseButtonUp` 🧪
+- [x] `GetMouseX` 🧪
+- [x] `GetMouseY` 🧪
+- [x] `GetMousePosition` 🧪
+- [x] `GetMouseDelta` 🧪
+- [x] `SetMousePosition` 
+- [x] `SetMouseOffset` 
+- [x] `SetMouseScale` 
+- [x] `GetMouseWheelMove` 
+- [x] `GetMouseWheelMoveV` 
+- [x] `SetMouseCursor` 
+- [x] `GetTouchX` 
+- [x] `GetTouchY` 
+- [x] `GetTouchPosition` 
+- [x] `GetTouchPointId` 
+- [x] `GetTouchPointCount` 🧪
 
 </details>
 
-### ✅ Gestures and Touch Handling Functions (Module: rgestures) (8/8 — 100%)
+### ✅ Gestures and Touch Handling Functions (Module: rgestures) (8/8 — 100% | 📝0 🧪2)
 
 <details><summary>Done (8)</summary>
 
-- [x] `SetGesturesEnabled`
-- [x] `IsGestureDetected`
-- [x] `GetGestureDetected`
-- [x] `GetGestureHoldDuration`
-- [x] `GetGestureDragVector`
-- [x] `GetGestureDragAngle`
-- [x] `GetGesturePinchVector`
-- [x] `GetGesturePinchAngle`
+- [x] `SetGesturesEnabled` 
+- [x] `IsGestureDetected` 
+- [x] `GetGestureDetected` 🧪
+- [x] `GetGestureHoldDuration` 🧪
+- [x] `GetGestureDragVector` 
+- [x] `GetGestureDragAngle` 
+- [x] `GetGesturePinchVector` 
+- [x] `GetGesturePinchAngle` 
 
 </details>
 
-### ✅ Camera System Functions (Module: rcamera) (2/2 — 100%)
+### ✅ Camera System Functions (Module: rcamera) (2/2 — 100% | 📝0 🧪0)
 
 <details><summary>Done (2)</summary>
 
-- [x] `UpdateCamera`
-- [x] `UpdateCameraPro`
+- [x] `UpdateCamera` 
+- [x] `UpdateCameraPro` 
 
 </details>
 
-### 🔶 Set texture and rectangle to be used on shapes drawing (66/69 — 96%)
+### 🔶 Set texture and rectangle to be used on shapes drawing (66/69 — 96% | 📝47 🧪23)
 
 <details><summary><b>Missing (3)</b></summary>
 
-- [ ] `DrawLineDashed`
-- [ ] `DrawEllipseV`
-- [ ] `DrawEllipseLinesV`
+- [ ] `DrawLineDashed` 
+- [ ] `DrawEllipseV` 
+- [ ] `DrawEllipseLinesV` 
 
 </details>
 
 <details><summary>Done (66)</summary>
 
-- [x] `SetShapesTexture`
-- [x] `GetShapesTexture`
-- [x] `GetShapesTextureRectangle`
-- [x] `DrawPixel`
-- [x] `DrawPixelV`
-- [x] `DrawLine`
-- [x] `DrawLineV`
-- [x] `DrawLineEx`
-- [x] `DrawLineStrip`
-- [x] `DrawLineBezier`
-- [x] `DrawCircle`
-- [x] `DrawCircleV`
-- [x] `DrawCircleGradient`
-- [x] `DrawCircleSector`
-- [x] `DrawCircleSectorLines`
-- [x] `DrawCircleLines`
-- [x] `DrawCircleLinesV`
-- [x] `DrawEllipse`
-- [x] `DrawEllipseLines`
-- [x] `DrawRing`
-- [x] `DrawRingLines`
-- [x] `DrawRectangle`
-- [x] `DrawRectangleV`
-- [x] `DrawRectangleRec`
-- [x] `DrawRectanglePro`
-- [x] `DrawRectangleGradientV`
-- [x] `DrawRectangleGradientH`
-- [x] `DrawRectangleGradientEx`
-- [x] `DrawRectangleLines`
-- [x] `DrawRectangleLinesEx`
-- [x] `DrawRectangleRounded`
-- [x] `DrawRectangleRoundedLines`
-- [x] `DrawRectangleRoundedLinesEx`
-- [x] `DrawTriangle`
-- [x] `DrawTriangleLines`
-- [x] `DrawTriangleFan`
-- [x] `DrawTriangleStrip`
-- [x] `DrawPoly`
-- [x] `DrawPolyLines`
-- [x] `DrawPolyLinesEx`
-- [x] `DrawSplineLinear`
-- [x] `DrawSplineBasis`
-- [x] `DrawSplineCatmullRom`
-- [x] `DrawSplineBezierQuadratic`
-- [x] `DrawSplineBezierCubic`
-- [x] `DrawSplineSegmentLinear`
-- [x] `DrawSplineSegmentBasis`
-- [x] `DrawSplineSegmentCatmullRom`
-- [x] `DrawSplineSegmentBezierQuadratic`
-- [x] `DrawSplineSegmentBezierCubic`
-- [x] `GetSplinePointLinear`
-- [x] `GetSplinePointBasis`
-- [x] `GetSplinePointCatmullRom`
-- [x] `GetSplinePointBezierQuad`
-- [x] `GetSplinePointBezierCubic`
-- [x] `CheckCollisionRecs`
-- [x] `CheckCollisionCircles`
-- [x] `CheckCollisionCircleRec`
-- [x] `CheckCollisionCircleLine`
-- [x] `CheckCollisionPointRec`
-- [x] `CheckCollisionPointCircle`
-- [x] `CheckCollisionPointTriangle`
-- [x] `CheckCollisionPointLine`
-- [x] `CheckCollisionPointPoly`
-- [x] `CheckCollisionLines`
-- [x] `GetCollisionRec`
+- [x] `SetShapesTexture` 
+- [x] `GetShapesTexture` 
+- [x] `GetShapesTextureRectangle` 
+- [x] `DrawPixel` 📝
+- [x] `DrawPixelV` 📝🧪
+- [x] `DrawLine` 📝
+- [x] `DrawLineV` 📝🧪
+- [x] `DrawLineEx` 📝
+- [x] `DrawLineStrip` 📝
+- [x] `DrawLineBezier` 📝
+- [x] `DrawCircle` 📝
+- [x] `DrawCircleV` 📝🧪
+- [x] `DrawCircleGradient` 📝
+- [x] `DrawCircleSector` 📝
+- [x] `DrawCircleSectorLines` 📝
+- [x] `DrawCircleLines` 📝
+- [x] `DrawCircleLinesV` 📝🧪
+- [x] `DrawEllipse` 📝
+- [x] `DrawEllipseLines` 📝
+- [x] `DrawRing` 📝
+- [x] `DrawRingLines` 📝
+- [x] `DrawRectangle` 📝🧪
+- [x] `DrawRectangleV` 📝🧪
+- [x] `DrawRectangleRec` 📝🧪
+- [x] `DrawRectanglePro` 📝
+- [x] `DrawRectangleGradientV` 📝
+- [x] `DrawRectangleGradientH` 📝
+- [x] `DrawRectangleGradientEx` 📝
+- [x] `DrawRectangleLines` 📝
+- [x] `DrawRectangleLinesEx` 📝
+- [x] `DrawRectangleRounded` 📝
+- [x] `DrawRectangleRoundedLines` 📝
+- [x] `DrawRectangleRoundedLinesEx` 📝
+- [x] `DrawTriangle` 📝
+- [x] `DrawTriangleLines` 📝
+- [x] `DrawTriangleFan` 📝
+- [x] `DrawTriangleStrip` 📝
+- [x] `DrawPoly` 📝
+- [x] `DrawPolyLines` 📝
+- [x] `DrawPolyLinesEx` 📝
+- [x] `DrawSplineLinear` 📝
+- [x] `DrawSplineBasis` 📝
+- [x] `DrawSplineCatmullRom` 📝
+- [x] `DrawSplineBezierQuadratic` 📝
+- [x] `DrawSplineBezierCubic` 📝
+- [x] `DrawSplineSegmentLinear` 📝
+- [x] `DrawSplineSegmentBasis` 📝
+- [x] `DrawSplineSegmentCatmullRom` 📝
+- [x] `DrawSplineSegmentBezierQuadratic` 📝
+- [x] `DrawSplineSegmentBezierCubic` 📝
+- [x] `GetSplinePointLinear` 🧪
+- [x] `GetSplinePointBasis` 🧪
+- [x] `GetSplinePointCatmullRom` 🧪
+- [x] `GetSplinePointBezierQuad` 🧪
+- [x] `GetSplinePointBezierCubic` 🧪
+- [x] `CheckCollisionRecs` 🧪
+- [x] `CheckCollisionCircles` 🧪
+- [x] `CheckCollisionCircleRec` 🧪
+- [x] `CheckCollisionCircleLine` 🧪
+- [x] `CheckCollisionPointRec` 🧪
+- [x] `CheckCollisionPointCircle` 🧪
+- [x] `CheckCollisionPointTriangle` 🧪
+- [x] `CheckCollisionPointLine` 🧪
+- [x] `CheckCollisionPointPoly` 🧪
+- [x] `CheckCollisionLines` 🧪
+- [x] `GetCollisionRec` 🧪
 
 </details>
 
-### ✅ Texture Loading and Drawing Functions (Module: textures) (112/112 — 100%)
+### ✅ Texture Loading and Drawing Functions (Module: textures) (112/112 — 100% | 📝18 🧪66)
 
 <details><summary>Done (112)</summary>
 
-- [x] `LoadImage`
-- [x] `LoadImageRaw`
-- [x] `LoadImageAnim`
-- [x] `LoadImageAnimFromMemory`
-- [x] `LoadImageFromMemory`
-- [x] `LoadImageFromTexture`
-- [x] `LoadImageFromScreen`
-- [x] `IsImageValid`
-- [x] `UnloadImage`
-- [x] `ExportImage`
-- [x] `ExportImageAsCode`
-- [x] `GenImageColor`
-- [x] `GenImageGradientLinear`
-- [x] `GenImageGradientRadial`
-- [x] `GenImageGradientSquare`
-- [x] `GenImageChecked`
-- [x] `GenImageWhiteNoise`
-- [x] `GenImagePerlinNoise`
-- [x] `GenImageCellular`
-- [x] `GenImageText`
-- [x] `ImageCopy`
-- [x] `ImageFromImage`
-- [x] `ImageFromChannel`
-- [x] `ImageText`
-- [x] `ImageTextEx`
-- [x] `ImageFormat`
-- [x] `ImageToPOT`
-- [x] `ImageCrop`
-- [x] `ImageAlphaCrop`
-- [x] `ImageAlphaClear`
-- [x] `ImageAlphaMask`
-- [x] `ImageAlphaPremultiply`
-- [x] `ImageBlurGaussian`
-- [x] `ImageKernelConvolution`
-- [x] `ImageResize`
-- [x] `ImageResizeNN`
-- [x] `ImageResizeCanvas`
-- [x] `ImageMipmaps`
-- [x] `ImageDither`
-- [x] `ImageFlipVertical`
-- [x] `ImageFlipHorizontal`
-- [x] `ImageRotate`
-- [x] `ImageRotateCW`
-- [x] `ImageRotateCCW`
-- [x] `ImageColorTint`
-- [x] `ImageColorInvert`
-- [x] `ImageColorGrayscale`
-- [x] `ImageColorContrast`
-- [x] `ImageColorBrightness`
-- [x] `ImageColorReplace`
-- [x] `UnloadImageColors`
-- [x] `UnloadImagePalette`
-- [x] `GetImageAlphaBorder`
-- [x] `GetImageColor`
-- [x] `ImageClearBackground`
-- [x] `ImageDrawPixel`
-- [x] `ImageDrawPixelV`
-- [x] `ImageDrawLine`
-- [x] `ImageDrawLineV`
-- [x] `ImageDrawLineEx`
-- [x] `ImageDrawCircle`
-- [x] `ImageDrawCircleV`
-- [x] `ImageDrawCircleLines`
-- [x] `ImageDrawCircleLinesV`
-- [x] `ImageDrawRectangle`
-- [x] `ImageDrawRectangleV`
-- [x] `ImageDrawRectangleRec`
-- [x] `ImageDrawRectangleLines`
-- [x] `ImageDrawTriangle`
-- [x] `ImageDrawTriangleEx`
-- [x] `ImageDrawTriangleLines`
-- [x] `ImageDrawTriangleFan`
-- [x] `ImageDrawTriangleStrip`
-- [x] `ImageDraw`
-- [x] `ImageDrawText`
-- [x] `ImageDrawTextEx`
-- [x] `LoadTexture`
-- [x] `LoadTextureFromImage`
-- [x] `LoadTextureCubemap`
-- [x] `LoadRenderTexture`
-- [x] `IsTextureValid`
-- [x] `UnloadTexture`
-- [x] `IsRenderTextureValid`
-- [x] `UnloadRenderTexture`
-- [x] `UpdateTexture`
-- [x] `UpdateTextureRec`
-- [x] `GenTextureMipmaps`
-- [x] `SetTextureFilter`
-- [x] `SetTextureWrap`
-- [x] `DrawTexture`
-- [x] `DrawTextureV`
-- [x] `DrawTextureEx`
-- [x] `DrawTextureRec`
-- [x] `DrawTexturePro`
-- [x] `DrawTextureNPatch`
-- [x] `ColorIsEqual`
-- [x] `Fade`
-- [x] `ColorToInt`
-- [x] `ColorNormalize`
-- [x] `ColorFromNormalized`
-- [x] `ColorToHSV`
-- [x] `ColorFromHSV`
-- [x] `ColorTint`
-- [x] `ColorBrightness`
-- [x] `ColorContrast`
-- [x] `ColorAlpha`
-- [x] `ColorAlphaBlend`
-- [x] `ColorLerp`
-- [x] `GetColor`
-- [x] `GetPixelColor`
-- [x] `SetPixelColor`
-- [x] `GetPixelDataSize`
+- [x] `LoadImage` 
+- [x] `LoadImageRaw` 
+- [x] `LoadImageAnim` 
+- [x] `LoadImageAnimFromMemory` 
+- [x] `LoadImageFromMemory` 
+- [x] `LoadImageFromTexture` 
+- [x] `LoadImageFromScreen` 
+- [x] `IsImageValid` 📝
+- [x] `UnloadImage` 📝🧪
+- [x] `ExportImage` 🧪
+- [x] `ExportImageAsCode` 
+- [x] `GenImageColor` 📝🧪
+- [x] `GenImageGradientLinear` 🧪
+- [x] `GenImageGradientRadial` 🧪
+- [x] `GenImageGradientSquare` 
+- [x] `GenImageChecked` 🧪
+- [x] `GenImageWhiteNoise` 🧪
+- [x] `GenImagePerlinNoise` 🧪
+- [x] `GenImageCellular` 🧪
+- [x] `GenImageText` 🧪
+- [x] `ImageCopy` 🧪
+- [x] `ImageFromImage` 🧪
+- [x] `ImageFromChannel` 
+- [x] `ImageText` 
+- [x] `ImageTextEx` 
+- [x] `ImageFormat` 🧪
+- [x] `ImageToPOT` 
+- [x] `ImageCrop` 
+- [x] `ImageAlphaCrop` 
+- [x] `ImageAlphaClear` 
+- [x] `ImageAlphaMask` 
+- [x] `ImageAlphaPremultiply` 🧪
+- [x] `ImageBlurGaussian` 🧪
+- [x] `ImageKernelConvolution` 
+- [x] `ImageResize` 🧪
+- [x] `ImageResizeNN` 🧪
+- [x] `ImageResizeCanvas` 
+- [x] `ImageMipmaps` 🧪
+- [x] `ImageDither` 🧪
+- [x] `ImageFlipVertical` 🧪
+- [x] `ImageFlipHorizontal` 🧪
+- [x] `ImageRotate` 🧪
+- [x] `ImageRotateCW` 🧪
+- [x] `ImageRotateCCW` 🧪
+- [x] `ImageColorTint` 🧪
+- [x] `ImageColorInvert` 🧪
+- [x] `ImageColorGrayscale` 🧪
+- [x] `ImageColorContrast` 🧪
+- [x] `ImageColorBrightness` 🧪
+- [x] `ImageColorReplace` 
+- [x] `UnloadImageColors` 
+- [x] `UnloadImagePalette` 
+- [x] `GetImageAlphaBorder` 🧪
+- [x] `GetImageColor` 🧪
+- [x] `ImageClearBackground` 📝🧪
+- [x] `ImageDrawPixel` 🧪
+- [x] `ImageDrawPixelV` 
+- [x] `ImageDrawLine` 📝🧪
+- [x] `ImageDrawLineV` 
+- [x] `ImageDrawLineEx` 
+- [x] `ImageDrawCircle` 📝🧪
+- [x] `ImageDrawCircleV` 
+- [x] `ImageDrawCircleLines` 
+- [x] `ImageDrawCircleLinesV` 
+- [x] `ImageDrawRectangle` 📝🧪
+- [x] `ImageDrawRectangleV` 
+- [x] `ImageDrawRectangleRec` 
+- [x] `ImageDrawRectangleLines` 
+- [x] `ImageDrawTriangle` 🧪
+- [x] `ImageDrawTriangleEx` 
+- [x] `ImageDrawTriangleLines` 
+- [x] `ImageDrawTriangleFan` 
+- [x] `ImageDrawTriangleStrip` 
+- [x] `ImageDraw` 
+- [x] `ImageDrawText` 📝
+- [x] `ImageDrawTextEx` 
+- [x] `LoadTexture` 📝🧪
+- [x] `LoadTextureFromImage` 📝🧪
+- [x] `LoadTextureCubemap` 
+- [x] `LoadRenderTexture` 📝🧪
+- [x] `IsTextureValid` 🧪
+- [x] `UnloadTexture` 📝🧪
+- [x] `IsRenderTextureValid` 🧪
+- [x] `UnloadRenderTexture` 📝🧪
+- [x] `UpdateTexture` 
+- [x] `UpdateTextureRec` 
+- [x] `GenTextureMipmaps` 🧪
+- [x] `SetTextureFilter` 📝🧪
+- [x] `SetTextureWrap` 🧪
+- [x] `DrawTexture` 📝🧪
+- [x] `DrawTextureV` 
+- [x] `DrawTextureEx` 📝🧪
+- [x] `DrawTextureRec` 📝🧪
+- [x] `DrawTexturePro` 📝🧪
+- [x] `DrawTextureNPatch` 
+- [x] `ColorIsEqual` 🧪
+- [x] `Fade` 🧪
+- [x] `ColorToInt` 🧪
+- [x] `ColorNormalize` 🧪
+- [x] `ColorFromNormalized` 🧪
+- [x] `ColorToHSV` 🧪
+- [x] `ColorFromHSV` 🧪
+- [x] `ColorTint` 🧪
+- [x] `ColorBrightness` 🧪
+- [x] `ColorContrast` 🧪
+- [x] `ColorAlpha` 🧪
+- [x] `ColorAlphaBlend` 🧪
+- [x] `ColorLerp` 🧪
+- [x] `GetColor` 🧪
+- [x] `GetPixelColor` 
+- [x] `SetPixelColor` 
+- [x] `GetPixelDataSize` 🧪
 
 </details>
 
-### 🔶 Font Loading and Text Drawing Functions (Module: text) (34/37 — 92%)
+### 🔶 Font Loading and Text Drawing Functions (Module: text) (34/37 — 92% | 📝10 🧪23)
 
 <details><summary><b>Missing (3)</b></summary>
 
-- [ ] `GenImageFontAtlas`
-- [ ] `MeasureTextCodepoints`
-- [ ] `UnloadTextLines`
+- [ ] `GenImageFontAtlas` 
+- [ ] `MeasureTextCodepoints` 
+- [ ] `UnloadTextLines` 
 
 </details>
 
 <details><summary>Done (34)</summary>
 
-- [x] `GetFontDefault`
-- [x] `LoadFont`
-- [x] `LoadFontEx`
-- [x] `LoadFontFromImage`
-- [x] `LoadFontFromMemory`
-- [x] `IsFontValid`
-- [x] `UnloadFontData`
-- [x] `UnloadFont`
-- [x] `ExportFontAsCode`
-- [x] `DrawFPS`
-- [x] `DrawText`
-- [x] `DrawTextEx`
-- [x] `DrawTextPro`
-- [x] `DrawTextCodepoint`
-- [x] `DrawTextCodepoints`
-- [x] `SetTextLineSpacing`
-- [x] `MeasureText`
-- [x] `MeasureTextEx`
-- [x] `GetGlyphIndex`
-- [x] `GetGlyphInfo`
-- [x] `GetGlyphAtlasRec`
-- [x] `UnloadUTF8`
-- [x] `UnloadCodepoints`
-- [x] `GetCodepointCount`
-- [x] `GetCodepoint`
-- [x] `GetCodepointNext`
-- [x] `GetCodepointPrevious`
-- [x] `TextCopy`
-- [x] `TextIsEqual`
-- [x] `TextLength`
-- [x] `TextAppend`
-- [x] `TextFindIndex`
-- [x] `TextToInteger`
-- [x] `TextToFloat`
+- [x] `GetFontDefault` 📝🧪
+- [x] `LoadFont` 📝🧪
+- [x] `LoadFontEx` 📝🧪
+- [x] `LoadFontFromImage` 🧪
+- [x] `LoadFontFromMemory` 
+- [x] `IsFontValid` 🧪
+- [x] `UnloadFontData` 
+- [x] `UnloadFont` 📝🧪
+- [x] `ExportFontAsCode` 
+- [x] `DrawFPS` 📝
+- [x] `DrawText` 📝
+- [x] `DrawTextEx` 📝🧪
+- [x] `DrawTextPro` 📝🧪
+- [x] `DrawTextCodepoint` 🧪
+- [x] `DrawTextCodepoints` 🧪
+- [x] `SetTextLineSpacing` 📝🧪
+- [x] `MeasureText` 🧪
+- [x] `MeasureTextEx` 📝🧪
+- [x] `GetGlyphIndex` 🧪
+- [x] `GetGlyphInfo` 🧪
+- [x] `GetGlyphAtlasRec` 🧪
+- [x] `UnloadUTF8` 
+- [x] `UnloadCodepoints` 
+- [x] `GetCodepointCount` 🧪
+- [x] `GetCodepoint` 🧪
+- [x] `GetCodepointNext` 
+- [x] `GetCodepointPrevious` 
+- [x] `TextCopy` 
+- [x] `TextIsEqual` 🧪
+- [x] `TextLength` 🧪
+- [x] `TextAppend` 
+- [x] `TextFindIndex` 🧪
+- [x] `TextToInteger` 🧪
+- [x] `TextToFloat` 🧪
 
 </details>
 
-### ✅ Basic 3d Shapes Drawing Functions (Module: models) (21/21 — 100%)
+### ✅ Basic 3d Shapes Drawing Functions (Module: models) (21/21 — 100% | 📝21 🧪0)
 
 <details><summary>Done (21)</summary>
 
-- [x] `DrawLine3D`
-- [x] `DrawPoint3D`
-- [x] `DrawCircle3D`
-- [x] `DrawTriangle3D`
-- [x] `DrawTriangleStrip3D`
-- [x] `DrawCube`
-- [x] `DrawCubeV`
-- [x] `DrawCubeWires`
-- [x] `DrawCubeWiresV`
-- [x] `DrawSphere`
-- [x] `DrawSphereEx`
-- [x] `DrawSphereWires`
-- [x] `DrawCylinder`
-- [x] `DrawCylinderEx`
-- [x] `DrawCylinderWires`
-- [x] `DrawCylinderWiresEx`
-- [x] `DrawCapsule`
-- [x] `DrawCapsuleWires`
-- [x] `DrawPlane`
-- [x] `DrawRay`
-- [x] `DrawGrid`
+- [x] `DrawLine3D` 📝
+- [x] `DrawPoint3D` 📝
+- [x] `DrawCircle3D` 📝
+- [x] `DrawTriangle3D` 📝
+- [x] `DrawTriangleStrip3D` 📝
+- [x] `DrawCube` 📝
+- [x] `DrawCubeV` 📝
+- [x] `DrawCubeWires` 📝
+- [x] `DrawCubeWiresV` 📝
+- [x] `DrawSphere` 📝
+- [x] `DrawSphereEx` 📝
+- [x] `DrawSphereWires` 📝
+- [x] `DrawCylinder` 📝
+- [x] `DrawCylinderEx` 📝
+- [x] `DrawCylinderWires` 📝
+- [x] `DrawCylinderWiresEx` 📝
+- [x] `DrawCapsule` 📝
+- [x] `DrawCapsuleWires` 📝
+- [x] `DrawPlane` 📝
+- [x] `DrawRay` 📝
+- [x] `DrawGrid` 📝
 
 </details>
 
-### 🔶 Model 3d Loading and Drawing Functions (Module: models) (48/50 — 96%)
+### 🔶 Model 3d Loading and Drawing Functions (Module: models) (48/50 — 96% | 📝5 🧪32)
 
 <details><summary><b>Missing (2)</b></summary>
 
-- [ ] `DrawMesh`
-- [ ] `DrawMeshInstanced`
+- [ ] `DrawMesh` 
+- [ ] `DrawMeshInstanced` 
 
 </details>
 
 <details><summary>Done (48)</summary>
 
-- [x] `LoadModel`
-- [x] `LoadModelFromMesh`
-- [x] `IsModelValid`
-- [x] `UnloadModel`
-- [x] `GetModelBoundingBox`
-- [x] `DrawModel`
-- [x] `DrawModelEx`
-- [x] `DrawModelWires`
-- [x] `DrawModelWiresEx`
-- [x] `DrawBoundingBox`
-- [x] `DrawBillboard`
-- [x] `DrawBillboardRec`
-- [x] `DrawBillboardPro`
-- [x] `UploadMesh`
-- [x] `UpdateMeshBuffer`
-- [x] `UnloadMesh`
-- [x] `GetMeshBoundingBox`
-- [x] `GenMeshTangents`
-- [x] `ExportMesh`
-- [x] `ExportMeshAsCode`
-- [x] `GenMeshPoly`
-- [x] `GenMeshPlane`
-- [x] `GenMeshCube`
-- [x] `GenMeshSphere`
-- [x] `GenMeshHemiSphere`
-- [x] `GenMeshCylinder`
-- [x] `GenMeshCone`
-- [x] `GenMeshTorus`
-- [x] `GenMeshKnot`
-- [x] `GenMeshHeightmap`
-- [x] `GenMeshCubicmap`
-- [x] `LoadMaterialDefault`
-- [x] `IsMaterialValid`
-- [x] `UnloadMaterial`
-- [x] `SetMaterialTexture`
-- [x] `SetModelMeshMaterial`
-- [x] `UpdateModelAnimation`
-- [x] `UpdateModelAnimationEx`
-- [x] `UnloadModelAnimations`
-- [x] `IsModelAnimationValid`
-- [x] `CheckCollisionSpheres`
-- [x] `CheckCollisionBoxes`
-- [x] `CheckCollisionBoxSphere`
-- [x] `GetRayCollisionSphere`
-- [x] `GetRayCollisionBox`
-- [x] `GetRayCollisionMesh`
-- [x] `GetRayCollisionTriangle`
-- [x] `GetRayCollisionQuad`
+- [x] `LoadModel` 📝🧪
+- [x] `LoadModelFromMesh` 🧪
+- [x] `IsModelValid` 🧪
+- [x] `UnloadModel` 📝🧪
+- [x] `GetModelBoundingBox` 📝🧪
+- [x] `DrawModel` 🧪
+- [x] `DrawModelEx` 📝🧪
+- [x] `DrawModelWires` 🧪
+- [x] `DrawModelWiresEx` 📝
+- [x] `DrawBoundingBox` 
+- [x] `DrawBillboard` 
+- [x] `DrawBillboardRec` 
+- [x] `DrawBillboardPro` 
+- [x] `UploadMesh` 🧪
+- [x] `UpdateMeshBuffer` 
+- [x] `UnloadMesh` 🧪
+- [x] `GetMeshBoundingBox` 🧪
+- [x] `GenMeshTangents` 🧪
+- [x] `ExportMesh` 
+- [x] `ExportMeshAsCode` 
+- [x] `GenMeshPoly` 🧪
+- [x] `GenMeshPlane` 🧪
+- [x] `GenMeshCube` 🧪
+- [x] `GenMeshSphere` 🧪
+- [x] `GenMeshHemiSphere` 🧪
+- [x] `GenMeshCylinder` 🧪
+- [x] `GenMeshCone` 🧪
+- [x] `GenMeshTorus` 🧪
+- [x] `GenMeshKnot` 🧪
+- [x] `GenMeshHeightmap` 
+- [x] `GenMeshCubicmap` 
+- [x] `LoadMaterialDefault` 🧪
+- [x] `IsMaterialValid` 🧪
+- [x] `UnloadMaterial` 🧪
+- [x] `SetMaterialTexture` 
+- [x] `SetModelMeshMaterial` 🧪
+- [x] `UpdateModelAnimation` 
+- [x] `UpdateModelAnimationEx` 
+- [x] `UnloadModelAnimations` 
+- [x] `IsModelAnimationValid` 
+- [x] `CheckCollisionSpheres` 🧪
+- [x] `CheckCollisionBoxes` 🧪
+- [x] `CheckCollisionBoxSphere` 🧪
+- [x] `GetRayCollisionSphere` 🧪
+- [x] `GetRayCollisionBox` 🧪
+- [x] `GetRayCollisionMesh` 
+- [x] `GetRayCollisionTriangle` 🧪
+- [x] `GetRayCollisionQuad` 🧪
 
 </details>
 
-### 🔶 Audio Loading and Playing Functions (Module: audio) (58/65 — 89%)
+### 🔶 Audio Loading and Playing Functions (Module: audio) (58/65 — 89% | 📝21 🧪51)
 
 <details><summary><b>Missing (7)</b></summary>
 
-- [ ] `UpdateSound`
-- [ ] `UpdateAudioStream`
-- [ ] `SetAudioStreamCallback`
-- [ ] `AttachAudioStreamProcessor`
-- [ ] `DetachAudioStreamProcessor`
-- [ ] `AttachAudioMixedProcessor`
-- [ ] `DetachAudioMixedProcessor`
+- [ ] `UpdateSound` 
+- [ ] `UpdateAudioStream` 
+- [ ] `SetAudioStreamCallback` 
+- [ ] `AttachAudioStreamProcessor` 
+- [ ] `DetachAudioStreamProcessor` 
+- [ ] `AttachAudioMixedProcessor` 
+- [ ] `DetachAudioMixedProcessor` 
 
 </details>
 
 <details><summary>Done (58)</summary>
 
-- [x] `InitAudioDevice`
-- [x] `CloseAudioDevice`
-- [x] `IsAudioDeviceReady`
-- [x] `SetMasterVolume`
-- [x] `GetMasterVolume`
-- [x] `LoadWave`
-- [x] `LoadWaveFromMemory`
-- [x] `IsWaveValid`
-- [x] `LoadSound`
-- [x] `LoadSoundFromWave`
-- [x] `LoadSoundAlias`
-- [x] `IsSoundValid`
-- [x] `UnloadWave`
-- [x] `UnloadSound`
-- [x] `UnloadSoundAlias`
-- [x] `ExportWave`
-- [x] `ExportWaveAsCode`
-- [x] `PlaySound`
-- [x] `StopSound`
-- [x] `PauseSound`
-- [x] `ResumeSound`
-- [x] `IsSoundPlaying`
-- [x] `SetSoundVolume`
-- [x] `SetSoundPitch`
-- [x] `SetSoundPan`
-- [x] `WaveCopy`
-- [x] `WaveCrop`
-- [x] `WaveFormat`
-- [x] `UnloadWaveSamples`
-- [x] `LoadMusicStream`
-- [x] `LoadMusicStreamFromMemory`
-- [x] `IsMusicValid`
-- [x] `UnloadMusicStream`
-- [x] `PlayMusicStream`
-- [x] `IsMusicStreamPlaying`
-- [x] `UpdateMusicStream`
-- [x] `StopMusicStream`
-- [x] `PauseMusicStream`
-- [x] `ResumeMusicStream`
-- [x] `SeekMusicStream`
-- [x] `SetMusicVolume`
-- [x] `SetMusicPitch`
-- [x] `SetMusicPan`
-- [x] `GetMusicTimeLength`
-- [x] `GetMusicTimePlayed`
-- [x] `LoadAudioStream`
-- [x] `IsAudioStreamValid`
-- [x] `UnloadAudioStream`
-- [x] `IsAudioStreamProcessed`
-- [x] `PlayAudioStream`
-- [x] `PauseAudioStream`
-- [x] `ResumeAudioStream`
-- [x] `IsAudioStreamPlaying`
-- [x] `StopAudioStream`
-- [x] `SetAudioStreamVolume`
-- [x] `SetAudioStreamPitch`
-- [x] `SetAudioStreamPan`
-- [x] `SetAudioStreamBufferSizeDefault`
+- [x] `InitAudioDevice` 📝🧪
+- [x] `CloseAudioDevice` 📝🧪
+- [x] `IsAudioDeviceReady` 🧪
+- [x] `SetMasterVolume` 🧪
+- [x] `GetMasterVolume` 🧪
+- [x] `LoadWave` 🧪
+- [x] `LoadWaveFromMemory` 
+- [x] `IsWaveValid` 🧪
+- [x] `LoadSound` 📝🧪
+- [x] `LoadSoundFromWave` 🧪
+- [x] `LoadSoundAlias` 🧪
+- [x] `IsSoundValid` 🧪
+- [x] `UnloadWave` 🧪
+- [x] `UnloadSound` 📝🧪
+- [x] `UnloadSoundAlias` 🧪
+- [x] `ExportWave` 🧪
+- [x] `ExportWaveAsCode` 
+- [x] `PlaySound` 📝🧪
+- [x] `StopSound` 📝🧪
+- [x] `PauseSound` 🧪
+- [x] `ResumeSound` 🧪
+- [x] `IsSoundPlaying` 📝🧪
+- [x] `SetSoundVolume` 📝🧪
+- [x] `SetSoundPitch` 📝🧪
+- [x] `SetSoundPan` 📝🧪
+- [x] `WaveCopy` 🧪
+- [x] `WaveCrop` 
+- [x] `WaveFormat` 
+- [x] `UnloadWaveSamples` 
+- [x] `LoadMusicStream` 📝🧪
+- [x] `LoadMusicStreamFromMemory` 
+- [x] `IsMusicValid` 🧪
+- [x] `UnloadMusicStream` 📝🧪
+- [x] `PlayMusicStream` 📝🧪
+- [x] `IsMusicStreamPlaying` 📝🧪
+- [x] `UpdateMusicStream` 📝🧪
+- [x] `StopMusicStream` 📝🧪
+- [x] `PauseMusicStream` 🧪
+- [x] `ResumeMusicStream` 🧪
+- [x] `SeekMusicStream` 🧪
+- [x] `SetMusicVolume` 📝🧪
+- [x] `SetMusicPitch` 📝🧪
+- [x] `SetMusicPan` 📝🧪
+- [x] `GetMusicTimeLength` 📝🧪
+- [x] `GetMusicTimePlayed` 📝🧪
+- [x] `LoadAudioStream` 🧪
+- [x] `IsAudioStreamValid` 🧪
+- [x] `UnloadAudioStream` 🧪
+- [x] `IsAudioStreamProcessed` 
+- [x] `PlayAudioStream` 🧪
+- [x] `PauseAudioStream` 🧪
+- [x] `ResumeAudioStream` 🧪
+- [x] `IsAudioStreamPlaying` 🧪
+- [x] `StopAudioStream` 🧪
+- [x] `SetAudioStreamVolume` 🧪
+- [x] `SetAudioStreamPitch` 🧪
+- [x] `SetAudioStreamPan` 🧪
+- [x] `SetAudioStreamBufferSizeDefault` 🧪
 
 </details>
 
