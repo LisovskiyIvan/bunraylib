@@ -133,11 +133,11 @@ void DrawRectangleRoundedLinesExW(int x, int y, int width, int height, int round
 }
 
 void DrawTriangleW(int x1, int y1, int x2, int y2, int x3, int y3, Color color) {
-    DrawTriangle((Vector2){x1, y1}, (Vector2){x2, y2}, (Vector2){x3, y3}, color);
+    DrawTriangle((Vector2){i2f(x1), i2f(y1)}, (Vector2){i2f(x2), i2f(y2)}, (Vector2){i2f(x3), i2f(y3)}, color);
 }
 
 void DrawTriangleLinesW(int x1, int y1, int x2, int y2, int x3, int y3, Color color) {
-    DrawTriangleLines((Vector2){x1, y1}, (Vector2){x2, y2}, (Vector2){x3, y3}, color);
+    DrawTriangleLines((Vector2){i2f(x1), i2f(y1)}, (Vector2){i2f(x2), i2f(y2)}, (Vector2){i2f(x3), i2f(y3)}, color);
 }
 
 void DrawTriangleFanW(const float* points, int pointCount, Color color) {
@@ -149,98 +149,83 @@ void DrawTriangleStripW(const float* points, int pointCount, Color color) {
 }
 
 void DrawPolyW(int centerX, int centerY, int sides, int radius, int rotation, Color color) {
-    DrawPoly((Vector2){centerX, centerY}, sides, radius, rotation, color);
+    DrawPoly((Vector2){i2f(centerX), i2f(centerY)}, sides, i2f(radius), i2f(rotation), color);
 }
 
 void DrawPolyLinesW(int centerX, int centerY, int sides, int radius, int rotation, Color color) {
-    DrawPolyLines((Vector2){centerX, centerY}, sides, radius, rotation, color);
+    DrawPolyLines((Vector2){i2f(centerX), i2f(centerY)}, sides, i2f(radius), i2f(rotation), color);
 }
 
 void DrawPolyLinesExW(int centerX, int centerY, int sides, int radius, int rotation, int lineThick, Color color) {
-    DrawPolyLinesEx((Vector2){centerX, centerY}, sides, radius, rotation, lineThick, color);
+    DrawPolyLinesEx((Vector2){i2f(centerX), i2f(centerY)}, sides, i2f(radius), i2f(rotation), i2f(lineThick), color);
 }
 
 void DrawSplineLinearW(const float* points, int pointCount, int thick, Color color) {
-    float t; memcpy(&t, &thick, sizeof(float));
-    DrawSplineLinear((const Vector2*)points, pointCount, t, color);
+    DrawSplineLinear((const Vector2*)points, pointCount, i2f(thick), color);
 }
 
 void DrawSplineBasisW(const float* points, int pointCount, int thick, Color color) {
-    float t; memcpy(&t, &thick, sizeof(float));
-    DrawSplineBasis((const Vector2*)points, pointCount, t, color);
+    DrawSplineBasis((const Vector2*)points, pointCount, i2f(thick), color);
 }
 
 void DrawSplineCatmullRomW(const float* points, int pointCount, int thick, Color color) {
-    float t; memcpy(&t, &thick, sizeof(float));
-    DrawSplineCatmullRom((const Vector2*)points, pointCount, t, color);
+    DrawSplineCatmullRom((const Vector2*)points, pointCount, i2f(thick), color);
 }
 
 void DrawSplineBezierQuadraticW(const float* points, int pointCount, int thick, Color color) {
-    float t; memcpy(&t, &thick, sizeof(float));
-    DrawSplineBezierQuadratic((const Vector2*)points, pointCount, t, color);
+    DrawSplineBezierQuadratic((const Vector2*)points, pointCount, i2f(thick), color);
 }
 
 void DrawSplineBezierCubicW(const float* points, int pointCount, int thick, Color color) {
-    float t; memcpy(&t, &thick, sizeof(float));
-    DrawSplineBezierCubic((const Vector2*)points, pointCount, t, color);
+    DrawSplineBezierCubic((const Vector2*)points, pointCount, i2f(thick), color);
 }
 
 void DrawSplineSegmentLinearW(int p1x, int p1y, int p2x, int p2y, int thick, Color color) {
-    float t; memcpy(&t, &thick, sizeof(float));
-    DrawSplineSegmentLinear((Vector2){p1x, p1y}, (Vector2){p2x, p2y}, t, color);
+    DrawSplineSegmentLinear((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(p2x), i2f(p2y)}, i2f(thick), color);
 }
 
 void DrawSplineSegmentBasisW(int p1x, int p1y, int p2x, int p2y, int p3x, int p3y, int p4x, int p4y, int thick, Color color) {
-    float t; memcpy(&t, &thick, sizeof(float));
-    DrawSplineSegmentBasis((Vector2){p1x, p1y}, (Vector2){p2x, p2y}, (Vector2){p3x, p3y}, (Vector2){p4x, p4y}, t, color);
+    DrawSplineSegmentBasis((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(p2x), i2f(p2y)}, (Vector2){i2f(p3x), i2f(p3y)}, (Vector2){i2f(p4x), i2f(p4y)}, i2f(thick), color);
 }
 
 void DrawSplineSegmentCatmullRomW(int p1x, int p1y, int p2x, int p2y, int p3x, int p3y, int p4x, int p4y, int thick, Color color) {
-    float t; memcpy(&t, &thick, sizeof(float));
-    DrawSplineSegmentCatmullRom((Vector2){p1x, p1y}, (Vector2){p2x, p2y}, (Vector2){p3x, p3y}, (Vector2){p4x, p4y}, t, color);
+    DrawSplineSegmentCatmullRom((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(p2x), i2f(p2y)}, (Vector2){i2f(p3x), i2f(p3y)}, (Vector2){i2f(p4x), i2f(p4y)}, i2f(thick), color);
 }
 
 void DrawSplineSegmentBezierQuadraticW(int p1x, int p1y, int c2x, int c2y, int p3x, int p3y, int thick, Color color) {
-    float t; memcpy(&t, &thick, sizeof(float));
-    DrawSplineSegmentBezierQuadratic((Vector2){p1x, p1y}, (Vector2){c2x, c2y}, (Vector2){p3x, p3y}, t, color);
+    DrawSplineSegmentBezierQuadratic((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(c2x), i2f(c2y)}, (Vector2){i2f(p3x), i2f(p3y)}, i2f(thick), color);
 }
 
 void DrawSplineSegmentBezierCubicW(int p1x, int p1y, int c2x, int c2y, int c3x, int c3y, int p4x, int p4y, int thick, Color color) {
-    float t; memcpy(&t, &thick, sizeof(float));
-    DrawSplineSegmentBezierCubic((Vector2){p1x, p1y}, (Vector2){c2x, c2y}, (Vector2){c3x, c3y}, (Vector2){p4x, p4y}, t, color);
+    DrawSplineSegmentBezierCubic((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(c2x), i2f(c2y)}, (Vector2){i2f(c3x), i2f(c3y)}, (Vector2){i2f(p4x), i2f(p4y)}, i2f(thick), color);
 }
 
 void GetSplinePointLinearW(float* out, int startPx, int startPy, int endPx, int endPy, int t) {
-    float tf; memcpy(&tf, &t, sizeof(float));
-    Vector2 result = GetSplinePointLinear((Vector2){startPx, startPy}, (Vector2){endPx, endPy}, tf);
+    Vector2 result = GetSplinePointLinear((Vector2){i2f(startPx), i2f(startPy)}, (Vector2){i2f(endPx), i2f(endPy)}, i2f(t));
     out[0] = result.x;
     out[1] = result.y;
 }
 
 void GetSplinePointBasisW(float* out, int p1x, int p1y, int p2x, int p2y, int p3x, int p3y, int p4x, int p4y, int t) {
-    float tf; memcpy(&tf, &t, sizeof(float));
-    Vector2 result = GetSplinePointBasis((Vector2){p1x, p1y}, (Vector2){p2x, p2y}, (Vector2){p3x, p3y}, (Vector2){p4x, p4y}, tf);
+    Vector2 result = GetSplinePointBasis((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(p2x), i2f(p2y)}, (Vector2){i2f(p3x), i2f(p3y)}, (Vector2){i2f(p4x), i2f(p4y)}, i2f(t));
     out[0] = result.x;
     out[1] = result.y;
 }
 
 void GetSplinePointCatmullRomW(float* out, int p1x, int p1y, int p2x, int p2y, int p3x, int p3y, int p4x, int p4y, int t) {
-    float tf; memcpy(&tf, &t, sizeof(float));
-    Vector2 result = GetSplinePointCatmullRom((Vector2){p1x, p1y}, (Vector2){p2x, p2y}, (Vector2){p3x, p3y}, (Vector2){p4x, p4y}, tf);
+    Vector2 result = GetSplinePointCatmullRom((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(p2x), i2f(p2y)}, (Vector2){i2f(p3x), i2f(p3y)}, (Vector2){i2f(p4x), i2f(p4y)}, i2f(t));
     out[0] = result.x;
     out[1] = result.y;
 }
 
 void GetSplinePointBezierQuadW(float* out, int p1x, int p1y, int c2x, int c2y, int p3x, int p3y, int t) {
-    float tf; memcpy(&tf, &t, sizeof(float));
-    Vector2 result = GetSplinePointBezierQuad((Vector2){p1x, p1y}, (Vector2){c2x, c2y}, (Vector2){p3x, p3y}, tf);
+    Vector2 result = GetSplinePointBezierQuad((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(c2x), i2f(c2y)}, (Vector2){i2f(p3x), i2f(p3y)}, i2f(t));
     out[0] = result.x;
     out[1] = result.y;
 }
 
 void GetSplinePointBezierCubicW(float* out, int p1x, int p1y, int c2x, int c2y, int c3x, int c3y, int p4x, int p4y, int t) {
-    float tf; memcpy(&tf, &t, sizeof(float));
-    Vector2 result = GetSplinePointBezierCubic((Vector2){p1x, p1y}, (Vector2){c2x, c2y}, (Vector2){c3x, c3y}, (Vector2){p4x, p4y}, tf);
+    Vector2 result = GetSplinePointBezierCubic((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(c2x), i2f(c2y)}, (Vector2){i2f(c3x), i2f(c3y)}, (Vector2){i2f(p4x), i2f(p4y)},i2f(t));
     out[0] = result.x;
     out[1] = result.y;
 }

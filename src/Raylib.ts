@@ -31,7 +31,6 @@ import { cstr, f2i, i2f } from "./utils";
 import { CString } from "bun:ffi";
 import type { Color } from "./types";
 
-
 export class Raylib {
   private static _rcHit = new Uint8Array(1);
   private static _rcDist = new Float32Array(1);
@@ -163,7 +162,14 @@ export class Raylib {
 
   /** Draw a line with defined thickness */
   static drawLineEx(startPos: Vec2, endPos: Vec2, thick: number, col: Color): void {
-    r().symbols.DrawLineExW(f2i(startPos.x), f2i(startPos.y), f2i(endPos.x), f2i(endPos.y), f2i(thick), col);
+    r().symbols.DrawLineExW(
+      f2i(startPos.x),
+      f2i(startPos.y),
+      f2i(endPos.x),
+      f2i(endPos.y),
+      f2i(thick),
+      col,
+    );
   }
 
   /** Draw lines sequence as a strip. Points are packed as [x0,y0, x1,y1, ...] in Float32Array */
@@ -173,7 +179,14 @@ export class Raylib {
 
   /** Draw line segment with Bezier easing */
   static drawLineBezier(startPos: Vec2, endPos: Vec2, thick: number, col: Color): void {
-    r().symbols.DrawLineBezierW(f2i(startPos.x), f2i(startPos.y), f2i(endPos.x), f2i(endPos.y), f2i(thick), col);
+    r().symbols.DrawLineBezierW(
+      f2i(startPos.x),
+      f2i(startPos.y),
+      f2i(endPos.x),
+      f2i(endPos.y),
+      f2i(thick),
+      col,
+    );
   }
 
   /** Draw a color-filled circle */
@@ -421,7 +434,14 @@ export class Raylib {
 
   /** Draw rectangle outline with extended parameters (custom line thickness) */
   static drawRectangleLinesEx(rec: Rectangle, lineThick: number, col: Color): void {
-    r().symbols.DrawRectangleLinesExW(f2i(rec.x), f2i(rec.y), f2i(rec.width), f2i(rec.height), f2i(lineThick), col);
+    r().symbols.DrawRectangleLinesExW(
+      f2i(rec.x),
+      f2i(rec.y),
+      f2i(rec.width),
+      f2i(rec.height),
+      f2i(lineThick),
+      col,
+    );
   }
 
   /** Draw rectangle with rounded edges */
@@ -482,12 +502,28 @@ export class Raylib {
 
   /** Draw a color-filled triangle */
   static drawTriangle(v1: Vec2, v2: Vec2, v3: Vec2, col: Color): void {
-    r().symbols.DrawTriangleW(v1.x, v1.y, v2.x, v2.y, v3.x, v3.y, col);
+    r().symbols.DrawTriangleW(
+      f2i(v1.x),
+      f2i(v1.y),
+      f2i(v2.x),
+      f2i(v2.y),
+      f2i(v3.x),
+      f2i(v3.y),
+      col,
+    );
   }
 
   /** Draw triangle outline */
   static drawTriangleLines(v1: Vec2, v2: Vec2, v3: Vec2, col: Color): void {
-    r().symbols.DrawTriangleLinesW(v1.x, v1.y, v2.x, v2.y, v3.x, v3.y, col);
+    r().symbols.DrawTriangleLinesW(
+      f2i(v1.x),
+      f2i(v1.y),
+      f2i(v2.x),
+      f2i(v2.y),
+      f2i(v3.x),
+      f2i(v3.y),
+      col,
+    );
   }
 
   /** Draw a triangle fan. Points are packed as [x0,y0, x1,y1, ...] in Float32Array */
@@ -502,7 +538,7 @@ export class Raylib {
 
   /** Draw a regular polygon (color-filled) */
   static drawPoly(center: Vec2, sides: number, radius: number, rotation: number, col: Color): void {
-    r().symbols.DrawPolyW(center.x, center.y, sides, radius, rotation, col);
+    r().symbols.DrawPolyW(f2i(center.x), f2i(center.y), sides | 0, f2i(radius), f2i(rotation), col);
   }
 
   /** Draw a regular polygon outline */
@@ -513,7 +549,14 @@ export class Raylib {
     rotation: number,
     col: Color,
   ): void {
-    r().symbols.DrawPolyLinesW(center.x, center.y, sides, radius, rotation, col);
+    r().symbols.DrawPolyLinesW(
+      f2i(center.x),
+      f2i(center.y),
+      sides | 0,
+      f2i(radius),
+      f2i(rotation),
+      col,
+    );
   }
 
   /** Draw a regular polygon outline with custom line thickness */
@@ -525,7 +568,15 @@ export class Raylib {
     lineThick: number,
     col: Color,
   ): void {
-    r().symbols.DrawPolyLinesExW(center.x, center.y, sides, radius, rotation, lineThick, col);
+    r().symbols.DrawPolyLinesExW(
+      f2i(center.x),
+      f2i(center.y),
+      sides | 0,
+      f2i(radius),
+      f2i(rotation),
+      f2i(lineThick),
+      col,
+    );
   }
 
   /**
@@ -570,7 +621,14 @@ export class Raylib {
 
   /** Draw spline segment: Linear, 2 points */
   static drawSplineSegmentLinear(p1: Vec2, p2: Vec2, thick: number, col: Color): void {
-    r().symbols.DrawSplineSegmentLinearW(p1.x, p1.y, p2.x, p2.y, f2i(thick), col);
+    r().symbols.DrawSplineSegmentLinearW(
+      f2i(p1.x),
+      f2i(p1.y),
+      f2i(p2.x),
+      f2i(p2.y),
+      f2i(thick),
+      col,
+    );
   }
 
   /** Draw spline segment: B-Spline, 4 points */
@@ -583,14 +641,14 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawSplineSegmentBasisW(
-      p1.x,
-      p1.y,
-      p2.x,
-      p2.y,
-      p3.x,
-      p3.y,
-      p4.x,
-      p4.y,
+      f2i(p1.x),
+      f2i(p1.y),
+      f2i(p2.x),
+      f2i(p2.y),
+      f2i(p3.x),
+      f2i(p3.y),
+      f2i(p4.x),
+      f2i(p4.y),
       f2i(thick),
       col,
     );
@@ -606,14 +664,14 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawSplineSegmentCatmullRomW(
-      p1.x,
-      p1.y,
-      p2.x,
-      p2.y,
-      p3.x,
-      p3.y,
-      p4.x,
-      p4.y,
+      f2i(p1.x),
+      f2i(p1.y),
+      f2i(p2.x),
+      f2i(p2.y),
+      f2i(p3.x),
+      f2i(p3.y),
+      f2i(p4.x),
+      f2i(p4.y),
       f2i(thick),
       col,
     );
@@ -628,12 +686,12 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawSplineSegmentBezierQuadraticW(
-      p1.x,
-      p1.y,
-      c2.x,
-      c2.y,
-      p3.x,
-      p3.y,
+      f2i(p1.x),
+      f2i(p1.y),
+      f2i(c2.x),
+      f2i(c2.y),
+      f2i(p3.x),
+      f2i(p3.y),
       f2i(thick),
       col,
     );
@@ -649,14 +707,14 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawSplineSegmentBezierCubicW(
-      p1.x,
-      p1.y,
-      c2.x,
-      c2.y,
-      c3.x,
-      c3.y,
-      p4.x,
-      p4.y,
+      f2i(p1.x),
+      f2i(p1.y),
+      f2i(c2.x),
+      f2i(c2.y),
+      f2i(c3.x),
+      f2i(c3.y),
+      f2i(p4.x),
+      f2i(p4.y),
       f2i(thick),
       col,
     );
@@ -670,8 +728,15 @@ export class Raylib {
    * @returns Evaluated point as Vec2
    */
   static getSplinePointLinear(startPos: Vec2, endPos: Vec2, t: number): Vec2 {
-    r().symbols.GetSplinePointLinearW(this._vec2Buf, startPos.x, startPos.y, endPos.x, endPos.y, f2i(t));
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    r().symbols.GetSplinePointLinearW(
+      this._vec2Buf,
+      f2i(startPos.x),
+      f2i(startPos.y),
+      f2i(endPos.x),
+      f2i(endPos.y),
+      f2i(t),
+    );
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   /**
@@ -686,17 +751,17 @@ export class Raylib {
   static getSplinePointBasis(p1: Vec2, p2: Vec2, p3: Vec2, p4: Vec2, t: number): Vec2 {
     r().symbols.GetSplinePointBasisW(
       this._vec2Buf,
-      p1.x,
-      p1.y,
-      p2.x,
-      p2.y,
-      p3.x,
-      p3.y,
-      p4.x,
-      p4.y,
+      f2i(p1.x),
+      f2i(p1.y),
+      f2i(p2.x),
+      f2i(p2.y),
+      f2i(p3.x),
+      f2i(p3.y),
+      f2i(p4.x),
+      f2i(p4.y),
       f2i(t),
     );
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   /**
@@ -711,17 +776,17 @@ export class Raylib {
   static getSplinePointCatmullRom(p1: Vec2, p2: Vec2, p3: Vec2, p4: Vec2, t: number): Vec2 {
     r().symbols.GetSplinePointCatmullRomW(
       this._vec2Buf,
-      p1.x,
-      p1.y,
-      p2.x,
-      p2.y,
-      p3.x,
-      p3.y,
-      p4.x,
-      p4.y,
+      f2i(p1.x),
+      f2i(p1.y),
+      f2i(p2.x),
+      f2i(p2.y),
+      f2i(p3.x),
+      f2i(p3.y),
+      f2i(p4.x),
+      f2i(p4.y),
       f2i(t),
     );
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   /**
@@ -733,8 +798,17 @@ export class Raylib {
    * @returns Evaluated point as Vec2
    */
   static getSplinePointBezierQuad(p1: Vec2, c2: Vec2, p3: Vec2, t: number): Vec2 {
-    r().symbols.GetSplinePointBezierQuadW(this._vec2Buf, p1.x, p1.y, c2.x, c2.y, p3.x, p3.y, f2i(t));
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    r().symbols.GetSplinePointBezierQuadW(
+      this._vec2Buf,
+      f2i(p1.x),
+      f2i(p1.y),
+      f2i(c2.x),
+      f2i(c2.y),
+      f2i(p3.x),
+      f2i(p3.y),
+      f2i(t),
+    );
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   /**
@@ -749,17 +823,17 @@ export class Raylib {
   static getSplinePointBezierCubic(p1: Vec2, c2: Vec2, c3: Vec2, p4: Vec2, t: number): Vec2 {
     r().symbols.GetSplinePointBezierCubicW(
       this._vec2Buf,
-      p1.x,
-      p1.y,
-      c2.x,
-      c2.y,
-      c3.x,
-      c3.y,
-      p4.x,
-      p4.y,
+      f2i(p1.x),
+      f2i(p1.y),
+      f2i(c2.x),
+      f2i(c2.y),
+      f2i(c3.x),
+      f2i(c3.y),
+      f2i(p4.x),
+      f2i(p4.y),
       f2i(t),
     );
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   /** Check collision between two rectangles */
@@ -1333,7 +1407,7 @@ export class Raylib {
 
   static getMonitorPosition(monitor: number): Vec2 {
     r().symbols.GetMonitorPositionW(this._vec2Buf, monitor);
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   static getMonitorWidth(monitor: number): number {
@@ -1354,12 +1428,12 @@ export class Raylib {
 
   static getWindowPosition(): Vec2 {
     r().symbols.GetWindowPositionW(this._vec2Buf);
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   static getWindowScaleDPI(): Vec2 {
     r().symbols.GetWindowScaleDPIW(this._vec2Buf);
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   static getMonitorName(monitor: number): string {
@@ -1551,12 +1625,12 @@ export class Raylib {
 
   static getMousePosition(): Vec2 {
     r().symbols.GetMousePositionW(this._vec2Buf);
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   static getMouseDelta(): Vec2 {
     r().symbols.GetMouseDeltaW(this._vec2Buf);
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   static setMousePosition(x: number, y: number): void {
@@ -1574,7 +1648,7 @@ export class Raylib {
 
   static getMouseWheelMoveV(): Vec2 {
     r().symbols.GetMouseWheelMoveVW(this._vec2Buf);
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   static setMouseCursor(cursor: number): void {
@@ -1728,7 +1802,7 @@ export class Raylib {
       f2i(camera.fovy),
       camera.projection,
     );
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   static getWorldToScreen2D(position: Vec2, camera: Camera2D): Vec2 {
@@ -1743,7 +1817,7 @@ export class Raylib {
       f2i(camera.rotation),
       f2i(camera.zoom),
     );
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   static getScreenToWorld2D(position: Vec2, camera: Camera2D): Vec2 {
@@ -1758,7 +1832,7 @@ export class Raylib {
       f2i(camera.rotation),
       f2i(camera.zoom),
     );
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   // --- DrawFPS ---
@@ -2609,7 +2683,12 @@ export class Raylib {
 
   static getImageAlphaBorder(image: Image, threshold: number): Rectangle {
     r().symbols.GetImageAlphaBorderW(this._recBuf, image, f2i(threshold));
-    return { x: this._recBuf[0]!, y: _recBuf[1]!, width: _recBuf[2]!, height: _recBuf[3]! };
+    return {
+      x: this._recBuf[0]!,
+      y: this._recBuf[1]!,
+      width: this._recBuf[2]!,
+      height: this._recBuf[3]!,
+    };
   }
 
   static getImageColor(image: Image, x: number, y: number): Color {
@@ -3506,7 +3585,12 @@ export class Raylib {
 
   static getGlyphAtlasRec(font: Font, codepoint: number): Rectangle {
     r().symbols.GetGlyphAtlasRecW(this._recBuf, font, codepoint);
-    return { x: this._recBuf[0]!, y: _recBuf[1]!, width: _recBuf[2]!, height: _recBuf[3]! };
+    return {
+      x: this._recBuf[0]!,
+      y: this._recBuf[1]!,
+      width: this._recBuf[2]!,
+      height: this._recBuf[3]!,
+    };
   }
 
   private static _cpSize = new Int32Array(1);

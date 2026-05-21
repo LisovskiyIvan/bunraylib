@@ -1,6 +1,6 @@
 import { Raylib, COLORS, type Rectangle } from "../src";
 
-Raylib.initWindow(1200, 800, "Shape Drawing Demo");
+Raylib.initWindow(1600, 1000, "Shape Drawing Demo");
 Raylib.setTargetFPS(60);
 
 while (!Raylib.windowShouldClose()) {
@@ -115,8 +115,16 @@ while (!Raylib.windowShouldClose()) {
     50, 700, 200, 650, 350, 750, 500, 680, 650, 720, 800, 660, 950, 700,
   ]);
   Raylib.drawSplineLinear(sp, 2, COLORS.WHITE);
-  Raylib.drawSplineCatmullRom(sp, 2, COLORS.CYAN);
-  Raylib.drawSplineBezierQuadratic(sp, 3, COLORS.MAGENTA);
+  Raylib.drawSplineBasis(sp.map(v => v += 15), 2, COLORS.RED);
+  Raylib.drawSplineCatmullRom(sp.map(v => v += 25), 2, COLORS.CYAN);
+  Raylib.drawSplineBezierQuadratic(sp.map(v => v += 50), 3, COLORS.MAGENTA);
+  Raylib.drawSplineBezierCubic(sp.map(v => v += 65), 3, COLORS.WHITE);
+  
+  Raylib.drawSplineSegmentLinear({ x: 50, y: 750 }, { x: 100, y: 760 }, 3, COLORS.SKYBLUE)
+  Raylib.drawSplineSegmentBasis({ x: 50, y: 750 }, { x: 100, y: 760 }, { x: 150, y: 700 }, { x: 200, y: 800 }, 3, COLORS.RED)
+  Raylib.drawSplineSegmentCatmullRom({ x: 50, y: 800 }, { x: 100, y: 820 }, { x: 150, y: 750 }, { x: 200, y: 850 }, 3, COLORS.GREEN)
+  Raylib.drawSplineSegmentBezierQuadratic({ x: 50, y: 800 }, { x: 100, y: 820 }, { x: 150, y: 750 }, 3, COLORS.BLUE)
+  Raylib.drawSplineSegmentBezierCubic({ x: 50, y: 850 }, { x: 100, y: 880 }, { x: 150, y: 800 }, { x: 200, y: 850 }, 3, COLORS.MAGENTA)
 
   Raylib.drawFPS(Raylib.getScreenWidth() - 100, 10);
 
