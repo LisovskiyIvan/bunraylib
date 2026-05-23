@@ -90,11 +90,8 @@ void GetWorldToScreen2DW(float* out, int posX, int posY,
 
 void GetScreenToWorld2DW(float* out, int posX, int posY,
     int offX, int offY, int tarX, int tarY, int rotation, int zoom) {
-    float r, z;
-    memcpy(&r, &rotation, sizeof(float));
-    memcpy(&z, &zoom, sizeof(float));
-    Camera2D cam = { {offX, offY}, {tarX, tarY}, r, z };
-    Vector2 v = GetScreenToWorld2D((Vector2){posX, posY}, cam);
+    Camera2D cam = { { i2f(offX), i2f(offY) }, { i2f(tarX), i2f(tarY) }, i2f(rotation), i2f(zoom) };
+    Vector2 v = GetScreenToWorld2D((Vector2){i2f(posX), i2f(posY)}, cam);
     out[0] = v.x; out[1] = v.y;
 }
 

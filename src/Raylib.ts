@@ -1834,12 +1834,12 @@ export class Raylib {
   static getScreenToWorld2D(position: Vec2, camera: Camera2D): Vec2 {
     r().symbols.GetScreenToWorld2DW(
       this._vec2Buf,
-      position.x,
-      position.y,
-      camera.offset.x,
-      camera.offset.y,
-      camera.target.x,
-      camera.target.y,
+      f2i(position.x),
+      f2i(position.y),
+      f2i(camera.offset.x),
+      f2i(camera.offset.y),
+      f2i(camera.target.x),
+      f2i(camera.target.y),
       f2i(camera.rotation),
       f2i(camera.zoom),
     );
@@ -1849,7 +1849,7 @@ export class Raylib {
   // --- DrawFPS ---
 
   static drawFPS(posX: number, posY: number): void {
-    r().symbols.DrawFPSW(posX, posY);
+    r().symbols.DrawFPSW(posX | 0, posY | 0);
   }
 
   // --- Texture ---
@@ -2316,7 +2316,7 @@ export class Raylib {
       width,
       height,
     );
-    return { x: this._vec2Buf[0]!, y: _vec2Buf[1]! };
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   private static _matBuf = new Float32Array(16);

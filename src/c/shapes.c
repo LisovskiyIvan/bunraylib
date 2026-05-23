@@ -1,5 +1,3 @@
-#include <raylib.h>
-#include <string.h>
 #include "common.h"
 
 void DrawRectangleW(int posX, int posY, int width, int height, Color color) {
