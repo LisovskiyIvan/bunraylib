@@ -78,21 +78,17 @@ int GenImageGradientLinearW(int width, int height, int direction, Color start, C
     return slot;
 }
 
-int GenImageGradientRadialW(int width, int height, int density, Color inner, Color outer) {
-    float d;
-    memcpy(&d, &density, sizeof(float));
+int GenImageGradientRadialW(int width, int height, float density, Color inner, Color outer) {
     int slot = imageAlloc();
     if (slot < 0) return -1;
-    imageRegistry[slot] = GenImageGradientRadial(width, height, d, inner, outer);
+    imageRegistry[slot] = GenImageGradientRadial(width, height, density, inner, outer);
     return slot;
 }
 
-int GenImageGradientSquareW(int width, int height, int density, Color inner, Color outer) {
-    float d;
-    memcpy(&d, &density, sizeof(float));
+int GenImageGradientSquareW(int width, int height, float density, Color inner, Color outer) {
     int slot = imageAlloc();
     if (slot < 0) return -1;
-    imageRegistry[slot] = GenImageGradientSquare(width, height, d, inner, outer);
+    imageRegistry[slot] = GenImageGradientSquare(width, height, density, inner, outer);
     return slot;
 }
 
@@ -103,21 +99,17 @@ int GenImageCheckedW(int width, int height, int checksX, int checksY, Color col1
     return slot;
 }
 
-int GenImageWhiteNoiseW(int width, int height, int factor) {
-    float f;
-    memcpy(&f, &factor, sizeof(float));
+int GenImageWhiteNoiseW(int width, int height, float factor) {
     int slot = imageAlloc();
     if (slot < 0) return -1;
-    imageRegistry[slot] = GenImageWhiteNoise(width, height, f);
+    imageRegistry[slot] = GenImageWhiteNoise(width, height, factor);
     return slot;
 }
 
-int GenImagePerlinNoiseW(int width, int height, int offsetX, int offsetY, int scale) {
-    float s;
-    memcpy(&s, &scale, sizeof(float));
+int GenImagePerlinNoiseW(int width, int height, int offsetX, int offsetY, float scale) {
     int slot = imageAlloc();
     if (slot < 0) return -1;
-    imageRegistry[slot] = GenImagePerlinNoise(width, height, offsetX, offsetY, s);
+    imageRegistry[slot] = GenImagePerlinNoise(width, height, offsetX, offsetY, scale);
     return slot;
 }
 
@@ -167,12 +159,10 @@ int ImageTextW(const char* text, int fontSize, Color color) {
     return slot;
 }
 
-int ImageTextExW(int fontId, const char* text, int fontSize, int spacing, Color tint) {
-    float sp;
-    memcpy(&sp, &spacing, sizeof(float));
+int ImageTextExW(int fontId, const char* text, int fontSize, float spacing, Color tint) {
     int slot = imageAlloc();
     if (slot < 0) return -1;
-    imageRegistry[slot] = ImageTextEx(fontRegistry[fontId], text, fontSize, sp, tint);
+    imageRegistry[slot] = ImageTextEx(fontRegistry[fontId], text, fontSize, spacing, tint);
     return slot;
 }
 
@@ -187,18 +177,14 @@ void ImageCropW(int id, int rx, int ry, int rw, int rh) {
     ImageCrop(&imageRegistry[id], rec);
 }
 
-void ImageAlphaCropW(int id, int threshold) {
+void ImageAlphaCropW(int id, float threshold) {
     if (id < 0 || id >= MAX_IMAGES || !imageUsed[id]) return;
-    float t;
-    memcpy(&t, &threshold, sizeof(float));
-    ImageAlphaCrop(&imageRegistry[id], t);
+    ImageAlphaCrop(&imageRegistry[id], threshold);
 }
 
-void ImageAlphaClearW(int id, Color color, int threshold) {
+void ImageAlphaClearW(int id, Color color, float threshold) {
     if (id < 0 || id >= MAX_IMAGES || !imageUsed[id]) return;
-    float t;
-    memcpy(&t, &threshold, sizeof(float));
-    ImageAlphaClear(&imageRegistry[id], color, t);
+    ImageAlphaClear(&imageRegistry[id], color, threshold);
 }
 
 void ImageAlphaMaskW(int id, int alphaMaskId) {
@@ -252,11 +238,9 @@ void ImageFlipHorizontalW(int id) {
     ImageFlipHorizontal(&imageRegistry[id]);
 }
 
-void ImageRotateW(int id, int degrees) {
+void ImageRotateW(int id, float degrees) {
     if (id < 0 || id >= MAX_IMAGES || !imageUsed[id]) return;
-    float d;
-    memcpy(&d, &degrees, sizeof(float));
-    ImageRotate(&imageRegistry[id], d);
+    ImageRotate(&imageRegistry[id], degrees);
 }
 
 void ImageRotateCWW(int id) {
@@ -284,11 +268,9 @@ void ImageColorGrayscaleW(int id) {
     ImageColorGrayscale(&imageRegistry[id]);
 }
 
-void ImageColorContrastW(int id, int contrast) {
+void ImageColorContrastW(int id, float contrast) {
     if (id < 0 || id >= MAX_IMAGES || !imageUsed[id]) return;
-    float c;
-    memcpy(&c, &contrast, sizeof(float));
-    ImageColorContrast(&imageRegistry[id], c);
+    ImageColorContrast(&imageRegistry[id], contrast);
 }
 
 void ImageColorBrightnessW(int id, int brightness) {
@@ -301,12 +283,10 @@ void ImageColorReplaceW(int id, Color color, Color replace) {
     ImageColorReplace(&imageRegistry[id], color, replace);
 }
 
-void GetImageAlphaBorderW(float* out, int id, int threshold) {
+void GetImageAlphaBorderW(float* out, int id, float threshold) {
     Rectangle rec = {0};
     if (id >= 0 && id < MAX_IMAGES && imageUsed[id]) {
-        float t;
-        memcpy(&t, &threshold, sizeof(float));
-        rec = GetImageAlphaBorder(imageRegistry[id], t);
+        rec = GetImageAlphaBorder(imageRegistry[id], threshold);
     }
     out[0] = rec.x; out[1] = rec.y; out[2] = rec.width; out[3] = rec.height;
 }
@@ -427,11 +407,9 @@ void ImageDrawTextW(int dstId, const char* text, int posX, int posY, int fontSiz
     ImageDrawText(&imageRegistry[dstId], text, posX, posY, fontSize, color);
 }
 
-void ImageDrawTextExW(int dstId, int fontId, const char* text, int posX, int posY, int fontSize, int spacing, Color tint) {
+void ImageDrawTextExW(int dstId, int fontId, const char* text, int posX, int posY, int fontSize, float spacing, Color tint) {
     if (dstId < 0 || dstId >= MAX_IMAGES || !imageUsed[dstId]) return;
-    float sp;
-    memcpy(&sp, &spacing, sizeof(float));
-    ImageDrawTextEx(&imageRegistry[dstId], fontRegistry[fontId], text, (Vector2){posX, posY}, fontSize, sp, tint);
+    ImageDrawTextEx(&imageRegistry[dstId], fontRegistry[fontId], text, (Vector2){posX, posY}, fontSize, spacing, tint);
 }
 
 void ImageToPOTW(int id, int fill) {

@@ -31,7 +31,7 @@ export const inputSymbols = {
   GetMouseDeltaW: { args: [ptr], returns: FFIType.void },
   SetMousePositionW: { args: [i32, i32], returns: FFIType.void },
   SetMouseOffsetW: { args: [i32, i32], returns: FFIType.void },
-  SetMouseScaleW: { args: [i32, i32], returns: FFIType.void },
+  SetMouseScaleW: { args: [f32, f32], returns: FFIType.void },
   GetMouseWheelMoveW: { args: [], returns: f32 },
   GetMouseWheelMoveVW: { args: [ptr], returns: FFIType.void },
   SetMouseCursorW: { args: [i32], returns: FFIType.void },

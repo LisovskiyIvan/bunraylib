@@ -36,24 +36,17 @@ int MeasureTextW(const char* text, int fontSize) {
     return MeasureText(text, fontSize);
 }
 
-void MeasureTextExW(float* out, int fontId, const char* text, int fontSize, int spacing) {
-    float sp;
-    memcpy(&sp, &spacing, sizeof(float));
-    Vector2 v = MeasureTextEx(fontRegistry[fontId], text, fontSize, sp);
+void MeasureTextExW(float* out, int fontId, const char* text, float fontSize, float spacing) {
+    Vector2 v = MeasureTextEx(fontRegistry[fontId], text, fontSize, spacing);
     out[0] = v.x; out[1] = v.y;
 }
 
-void DrawTextExW(int fontId, const char* text, int posX, int posY, int fontSize, int spacing, Color tint) {
-    float sp;
-    memcpy(&sp, &spacing, sizeof(float));
-    DrawTextEx(fontRegistry[fontId], text, (Vector2){posX, posY}, fontSize, sp, tint);
+void DrawTextExW(int fontId, const char* text, float posX, float posY, float fontSize, float spacing, Color tint) {
+    DrawTextEx(fontRegistry[fontId], text, (Vector2){posX, posY}, fontSize, spacing, tint);
 }
 
-void DrawTextProW(int fontId, const char* text, int posX, int posY, int originX, int originY, int rotation, int fontSize, int spacing, Color tint) {
-    float rot, sp;
-    memcpy(&rot, &rotation, sizeof(float));
-    memcpy(&sp, &spacing, sizeof(float));
-    DrawTextPro(fontRegistry[fontId], text, (Vector2){posX, posY}, (Vector2){originX, originY}, rot, fontSize, sp, tint);
+void DrawTextProW(int fontId, const char* text, float posX, float posY, float originX, float originY, float rotation, float fontSize, float spacing, Color tint) {
+    DrawTextPro(fontRegistry[fontId], text, (Vector2){posX, posY}, (Vector2){originX, originY}, rotation, fontSize, spacing, tint);
 }
 
 void SetTextLineSpacingW(int spacing) { SetTextLineSpacing(spacing); }
@@ -78,17 +71,12 @@ bool ExportFontAsCodeW(int fontId, const char* fileName) {
     return ExportFontAsCode(fontRegistry[fontId], fileName);
 }
 
-void DrawTextCodepointW(int fontId, int codepoint, int posX, int posY, int fontSize, Color tint) {
-    float fs;
-    memcpy(&fs, &fontSize, sizeof(float));
-    DrawTextCodepoint(fontRegistry[fontId], codepoint, (Vector2){posX, posY}, fs, tint);
+void DrawTextCodepointW(int fontId, int codepoint, float posX, float posY, float fontSize, Color tint) {
+    DrawTextCodepoint(fontRegistry[fontId], codepoint, (Vector2){posX, posY}, fontSize, tint);
 }
 
-void DrawTextCodepointsW(int fontId, const int* codepoints, int count, int posX, int posY, int fontSize, int spacing, Color tint) {
-    float fs, sp;
-    memcpy(&fs, &fontSize, sizeof(float));
-    memcpy(&sp, &spacing, sizeof(float));
-    DrawTextCodepoints(fontRegistry[fontId], codepoints, count, (Vector2){posX, posY}, fs, sp, tint);
+void DrawTextCodepointsW(int fontId, const int* codepoints, int count, float posX, float posY, float fontSize, float spacing, Color tint) {
+    DrawTextCodepoints(fontRegistry[fontId], codepoints, count, (Vector2){posX, posY}, fontSize, spacing, tint);
 }
 
 int GetGlyphIndexW(int fontId, int codepoint) {

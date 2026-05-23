@@ -12,85 +12,85 @@ void DrawPixelW(int posX, int posY, Color color) {
     DrawPixel(posX, posY, color);
 }
 
-void DrawPixelVW(int x, int y, Color color) {
-    DrawPixelV((Vector2){ i2f(x), i2f(y) }, color);
+void DrawPixelVW(float x, float y, Color color) {
+    DrawPixelV((Vector2){x, y}, color);
 }
 
 void DrawLineW(int startPosX, int startPosY, int endPosX, int endPosY, Color color) {
     DrawLine(startPosX, startPosY, endPosX, endPosY, color);
 }
 
-void DrawLineVW(int startX, int startY, int endX, int endY, Color color) {
-    DrawLineV((Vector2){ i2f(startX), i2f(startY)}, (Vector2){i2f(endX), i2f(endY)}, color);
+void DrawLineVW(float startX, float startY, float endX, float endY, Color color) {
+    DrawLineV((Vector2){startX, startY}, (Vector2){endX, endY}, color);
 }
 
-void DrawLineExW(int startX, int startY, int endX, int endY, int thick, Color color) {
-    DrawLineEx((Vector2){ i2f(startX), i2f(startY)}, (Vector2){i2f(endX), i2f(endY)}, i2f(thick), color);
+void DrawLineExW(float startX, float startY, float endX, float endY, float thick, Color color) {
+    DrawLineEx((Vector2){startX, startY}, (Vector2){endX, endY}, thick, color);
 }
 
 void DrawLineStripW(const float* points, int pointCount, Color color) {
     DrawLineStrip((const Vector2*)points, pointCount, color);
 }
 
-void DrawLineBezierW(int startX, int startY, int endX, int endY, int thick, Color color) {
-    DrawLineBezier((Vector2){ i2f(startX), i2f(startY) }, (Vector2){i2f(endX), i2f(endY)}, i2f(thick), color);
+void DrawLineBezierW(float startX, float startY, float endX, float endY, float thick, Color color) {
+    DrawLineBezier((Vector2){startX, startY}, (Vector2){endX, endY}, thick, color);
 }
 
-void DrawCircleW(int centerX, int centerY, int radius, Color color) {
-    DrawCircle(centerX, centerY, i2f(radius), color);
+void DrawCircleW(int centerX, int centerY, float radius, Color color) {
+    DrawCircle(centerX, centerY, radius, color);
 }
 
-void DrawCircleVW(int x, int y, int radius, Color color) {
-    DrawCircleV((Vector2){x, y}, i2f(radius), color);
+void DrawCircleVW(int x, int y, float radius, Color color) {
+    DrawCircleV((Vector2){x, y}, radius, color);
 }
 
-void DrawCircleSectorW(int centerX, int centerY, int radius, int startAngle, int endAngle, int segments, Color color) {
-    DrawCircleSector((Vector2){ i2f(centerX), i2f(centerY)}, i2f(radius), i2f(startAngle), i2f(endAngle), segments, color);
+void DrawCircleSectorW(float centerX, float centerY, float radius, float startAngle, float endAngle, int segments, Color color) {
+    DrawCircleSector((Vector2){centerX, centerY}, radius, startAngle, endAngle, segments, color);
 }
 
-void DrawCircleSectorLinesW(int centerX, int centerY, int radius, int startAngle, int endAngle, int segments, Color color) {
-    DrawCircleSectorLines((Vector2){ i2f(centerX), i2f(centerY)}, i2f(radius), i2f(startAngle), i2f(endAngle), segments, color);
+void DrawCircleSectorLinesW(float centerX, float centerY, float radius, float startAngle, float endAngle, int segments, Color color) {
+    DrawCircleSectorLines((Vector2){centerX, centerY}, radius, startAngle, endAngle, segments, color);
 }
 
-void DrawCircleGradientW(int centerX, int centerY, int radius, Color inner, Color outer) {
-    DrawCircleGradient((Vector2){ i2f(centerX), i2f(centerY)}, i2f(radius), inner, outer);
+void DrawCircleGradientW(float centerX, float centerY, float radius, Color inner, Color outer) {
+    DrawCircleGradient((Vector2){centerX, centerY}, radius, inner, outer);
 }
 
-void DrawCircleLinesW(int centerX, int centerY, int radius, Color color) {
-    DrawCircleLines(centerX, centerY, i2f(radius), color);
+void DrawCircleLinesW(int centerX, int centerY, float radius, Color color) {
+    DrawCircleLines(centerX, centerY, radius, color);
 }
 
-void DrawCircleLinesVW(int x, int y, int radius, Color color) {
-    DrawCircleLinesV((Vector2){ i2f(x), i2f(y) }, i2f(radius), color);
+void DrawCircleLinesVW(float x, float y, float radius, Color color) {
+    DrawCircleLinesV((Vector2){x, y}, radius, color);
 }
 
-void DrawEllipseW(int centerX, int centerY, int radiusH, int radiusV, Color color) {
-    DrawEllipse(centerX, centerY, i2f(radiusH), i2f(radiusV), color);
+void DrawEllipseW(int centerX, int centerY, float radiusH, float radiusV, Color color) {
+    DrawEllipse(centerX, centerY, radiusH, radiusV, color);
 }
 
-void DrawEllipseLinesW(int centerX, int centerY, int radiusH, int radiusV, Color color) {
-    DrawEllipseLines(centerX, centerY, i2f(radiusH), i2f(radiusV), color);
+void DrawEllipseLinesW(int centerX, int centerY, float radiusH, float radiusV, Color color) {
+    DrawEllipseLines(centerX, centerY, radiusH, radiusV, color);
 }
 
-void DrawRingW(int centerX, int centerY, int innerRadius, int outerRadius, int startAngle, int endAngle, int segments, Color color) {
-    DrawRing((Vector2){ i2f(centerX), i2f(centerY)}, i2f(innerRadius), i2f(outerRadius), i2f(startAngle), i2f(endAngle), segments, color);
+void DrawRingW(float centerX, float centerY, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, Color color) {
+    DrawRing((Vector2){centerX, centerY}, innerRadius, outerRadius, startAngle, endAngle, segments, color);
 }
 
-void DrawRingLinesW(int centerX, int centerY, int innerRadius, int outerRadius, int startAngle, int endAngle, int segments, Color color) {
-    DrawRingLines((Vector2){i2f(centerX), i2f(centerY)}, i2f(innerRadius), i2f(outerRadius), i2f(startAngle), i2f(endAngle), segments, color);
+void DrawRingLinesW(float centerX, float centerY, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, Color color) {
+    DrawRingLines((Vector2){centerX, centerY}, innerRadius, outerRadius, startAngle, endAngle, segments, color);
 }
 
-void DrawRectangleVW(int posX, int posY, int sizeX, int sizeY, Color color) {
-    DrawRectangleV((Vector2){ i2f(posX), i2f(posY)}, (Vector2){ i2f(sizeX), i2f(sizeY)}, color);
+void DrawRectangleVW(float posX, float posY, float sizeX, float sizeY, Color color) {
+    DrawRectangleV((Vector2){posX, posY}, (Vector2){sizeX, sizeY}, color);
 }
 
-void DrawRectangleRecW(int x, int y, int w, int h, Color color) {
-    DrawRectangleRec((Rectangle){i2f(x), i2f(y), i2f(w), i2f(h)}, color);
+void DrawRectangleRecW(float x, float y, float w, float h, Color color) {
+    DrawRectangleRec((Rectangle){x, y, w, h}, color);
 }
 
-void DrawRectangleProW(int x, int y, int width, int height, int originX, int originY, int rotation, Color color) {
-    Rectangle rec = { i2f(x), i2f(y), i2f(width), i2f(height) };
-    DrawRectanglePro(rec, (Vector2){ i2f(originX), i2f(originY)}, i2f(rotation), color);
+void DrawRectangleProW(float x, float y, float width, float height, float originX, float originY, float rotation, Color color) {
+    Rectangle rec = {x, y, width, height};
+    DrawRectanglePro(rec, (Vector2){originX, originY}, rotation, color);
 }
 
 void DrawRectangleGradientVW(int posX, int posY, int width, int height, Color top, Color bottom) {
@@ -101,8 +101,8 @@ void DrawRectangleGradientHW(int posX, int posY, int width, int height, Color le
     DrawRectangleGradientH(posX, posY, width, height, left, right);
 }
 
-void DrawRectangleGradientExW(int x, int y, int width, int height, Color topLeft, Color bottomLeft, Color topRight, Color bottomRight) {
-    Rectangle rec = { i2f(x), i2f(y), i2f(width), i2f(height) };
+void DrawRectangleGradientExW(float x, float y, float width, float height, Color topLeft, Color bottomLeft, Color topRight, Color bottomRight) {
+    Rectangle rec = {x, y, width, height};
     DrawRectangleGradientEx(rec, topLeft, bottomLeft, topRight, bottomRight);
 }
 
@@ -110,32 +110,32 @@ void DrawRectangleLinesW(int posX, int posY, int width, int height, Color color)
     DrawRectangleLines(posX, posY, width, height, color);
 }
 
-void DrawRectangleLinesExW(int x, int y, int width, int height, int lineThick, Color color) {
-    Rectangle rec = { i2f(x), i2f(y), i2f(width), i2f(height) };
-    DrawRectangleLinesEx(rec, i2f(lineThick), color);
+void DrawRectangleLinesExW(float x, float y, float width, float height, float lineThick, Color color) {
+    Rectangle rec = {x, y, width, height};
+    DrawRectangleLinesEx(rec, lineThick, color);
 }
 
-void DrawRectangleRoundedW(int x, int y, int width, int height, int roundness, int segments, Color color) {
-    Rectangle rec = { i2f(x), i2f(y), i2f(width), i2f(height) };
-    DrawRectangleRounded(rec, i2f(roundness), segments, color);
+void DrawRectangleRoundedW(float x, float y, float width, float height, float roundness, int segments, Color color) {
+    Rectangle rec = {x, y, width, height};
+    DrawRectangleRounded(rec, roundness, segments, color);
 }
 
-void DrawRectangleRoundedLinesW(int x, int y, int width, int height, int roundness, int segments, Color color) {
-    Rectangle rec = { i2f(x), i2f(y), i2f(width), i2f(height) };
-    DrawRectangleRoundedLines(rec, i2f(roundness), segments, color);
+void DrawRectangleRoundedLinesW(float x, float y, float width, float height, float roundness, int segments, Color color) {
+    Rectangle rec = {x, y, width, height};
+    DrawRectangleRoundedLines(rec, roundness, segments, color);
 }
 
-void DrawRectangleRoundedLinesExW(int x, int y, int width, int height, int roundness, int segments, int lineThick, Color color) {
-    Rectangle rec = { i2f(x), i2f(y), i2f(width), i2f(height) };
-    DrawRectangleRoundedLinesEx(rec, i2f(roundness), segments, i2f(lineThick), color);
+void DrawRectangleRoundedLinesExW(float x, float y, float width, float height, float roundness, int segments, float lineThick, Color color) {
+    Rectangle rec = {x, y, width, height};
+    DrawRectangleRoundedLinesEx(rec, roundness, segments, lineThick, color);
 }
 
-void DrawTriangleW(int x1, int y1, int x2, int y2, int x3, int y3, Color color) {
-    DrawTriangle((Vector2){i2f(x1), i2f(y1)}, (Vector2){i2f(x2), i2f(y2)}, (Vector2){i2f(x3), i2f(y3)}, color);
+void DrawTriangleW(float x1, float y1, float x2, float y2, float x3, float y3, Color color) {
+    DrawTriangle((Vector2){x1, y1}, (Vector2){x2, y2}, (Vector2){x3, y3}, color);
 }
 
-void DrawTriangleLinesW(int x1, int y1, int x2, int y2, int x3, int y3, Color color) {
-    DrawTriangleLines((Vector2){i2f(x1), i2f(y1)}, (Vector2){i2f(x2), i2f(y2)}, (Vector2){i2f(x3), i2f(y3)}, color);
+void DrawTriangleLinesW(float x1, float y1, float x2, float y2, float x3, float y3, Color color) {
+    DrawTriangleLines((Vector2){x1, y1}, (Vector2){x2, y2}, (Vector2){x3, y3}, color);
 }
 
 void DrawTriangleFanW(const float* points, int pointCount, Color color) {
@@ -146,84 +146,84 @@ void DrawTriangleStripW(const float* points, int pointCount, Color color) {
     DrawTriangleStrip((const Vector2*)points, pointCount, color);
 }
 
-void DrawPolyW(int centerX, int centerY, int sides, int radius, int rotation, Color color) {
-    DrawPoly((Vector2){i2f(centerX), i2f(centerY)}, sides, i2f(radius), i2f(rotation), color);
+void DrawPolyW(float centerX, float centerY, int sides, float radius, float rotation, Color color) {
+    DrawPoly((Vector2){centerX, centerY}, sides, radius, rotation, color);
 }
 
-void DrawPolyLinesW(int centerX, int centerY, int sides, int radius, int rotation, Color color) {
-    DrawPolyLines((Vector2){i2f(centerX), i2f(centerY)}, sides, i2f(radius), i2f(rotation), color);
+void DrawPolyLinesW(float centerX, float centerY, int sides, float radius, float rotation, Color color) {
+    DrawPolyLines((Vector2){centerX, centerY}, sides, radius, rotation, color);
 }
 
-void DrawPolyLinesExW(int centerX, int centerY, int sides, int radius, int rotation, int lineThick, Color color) {
-    DrawPolyLinesEx((Vector2){i2f(centerX), i2f(centerY)}, sides, i2f(radius), i2f(rotation), i2f(lineThick), color);
+void DrawPolyLinesExW(float centerX, float centerY, int sides, float radius, float rotation, float lineThick, Color color) {
+    DrawPolyLinesEx((Vector2){centerX, centerY}, sides, radius, rotation, lineThick, color);
 }
 
-void DrawSplineLinearW(const float* points, int pointCount, int thick, Color color) {
-    DrawSplineLinear((const Vector2*)points, pointCount, i2f(thick), color);
+void DrawSplineLinearW(const float* points, int pointCount, float thick, Color color) {
+    DrawSplineLinear((const Vector2*)points, pointCount, thick, color);
 }
 
-void DrawSplineBasisW(const float* points, int pointCount, int thick, Color color) {
-    DrawSplineBasis((const Vector2*)points, pointCount, i2f(thick), color);
+void DrawSplineBasisW(const float* points, int pointCount, float thick, Color color) {
+    DrawSplineBasis((const Vector2*)points, pointCount, thick, color);
 }
 
-void DrawSplineCatmullRomW(const float* points, int pointCount, int thick, Color color) {
-    DrawSplineCatmullRom((const Vector2*)points, pointCount, i2f(thick), color);
+void DrawSplineCatmullRomW(const float* points, int pointCount, float thick, Color color) {
+    DrawSplineCatmullRom((const Vector2*)points, pointCount, thick, color);
 }
 
-void DrawSplineBezierQuadraticW(const float* points, int pointCount, int thick, Color color) {
-    DrawSplineBezierQuadratic((const Vector2*)points, pointCount, i2f(thick), color);
+void DrawSplineBezierQuadraticW(const float* points, int pointCount, float thick, Color color) {
+    DrawSplineBezierQuadratic((const Vector2*)points, pointCount, thick, color);
 }
 
-void DrawSplineBezierCubicW(const float* points, int pointCount, int thick, Color color) {
-    DrawSplineBezierCubic((const Vector2*)points, pointCount, i2f(thick), color);
+void DrawSplineBezierCubicW(const float* points, int pointCount, float thick, Color color) {
+    DrawSplineBezierCubic((const Vector2*)points, pointCount, thick, color);
 }
 
-void DrawSplineSegmentLinearW(int p1x, int p1y, int p2x, int p2y, int thick, Color color) {
-    DrawSplineSegmentLinear((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(p2x), i2f(p2y)}, i2f(thick), color);
+void DrawSplineSegmentLinearW(float p1x, float p1y, float p2x, float p2y, float thick, Color color) {
+    DrawSplineSegmentLinear((Vector2){p1x, p1y}, (Vector2){p2x, p2y}, thick, color);
 }
 
-void DrawSplineSegmentBasisW(int p1x, int p1y, int p2x, int p2y, int p3x, int p3y, int p4x, int p4y, int thick, Color color) {
-    DrawSplineSegmentBasis((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(p2x), i2f(p2y)}, (Vector2){i2f(p3x), i2f(p3y)}, (Vector2){i2f(p4x), i2f(p4y)}, i2f(thick), color);
+void DrawSplineSegmentBasisW(float p1x, float p1y, float p2x, float p2y, float p3x, float p3y, float p4x, float p4y, float thick, Color color) {
+    DrawSplineSegmentBasis((Vector2){p1x, p1y}, (Vector2){p2x, p2y}, (Vector2){p3x, p3y}, (Vector2){p4x, p4y}, thick, color);
 }
 
-void DrawSplineSegmentCatmullRomW(int p1x, int p1y, int p2x, int p2y, int p3x, int p3y, int p4x, int p4y, int thick, Color color) {
-    DrawSplineSegmentCatmullRom((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(p2x), i2f(p2y)}, (Vector2){i2f(p3x), i2f(p3y)}, (Vector2){i2f(p4x), i2f(p4y)}, i2f(thick), color);
+void DrawSplineSegmentCatmullRomW(float p1x, float p1y, float p2x, float p2y, float p3x, float p3y, float p4x, float p4y, float thick, Color color) {
+    DrawSplineSegmentCatmullRom((Vector2){p1x, p1y}, (Vector2){p2x, p2y}, (Vector2){p3x, p3y}, (Vector2){p4x, p4y}, thick, color);
 }
 
-void DrawSplineSegmentBezierQuadraticW(int p1x, int p1y, int c2x, int c2y, int p3x, int p3y, int thick, Color color) {
-    DrawSplineSegmentBezierQuadratic((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(c2x), i2f(c2y)}, (Vector2){i2f(p3x), i2f(p3y)}, i2f(thick), color);
+void DrawSplineSegmentBezierQuadraticW(float p1x, float p1y, float c2x, float c2y, float p3x, float p3y, float thick, Color color) {
+    DrawSplineSegmentBezierQuadratic((Vector2){p1x, p1y}, (Vector2){c2x, c2y}, (Vector2){p3x, p3y}, thick, color);
 }
 
-void DrawSplineSegmentBezierCubicW(int p1x, int p1y, int c2x, int c2y, int c3x, int c3y, int p4x, int p4y, int thick, Color color) {
-    DrawSplineSegmentBezierCubic((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(c2x), i2f(c2y)}, (Vector2){i2f(c3x), i2f(c3y)}, (Vector2){i2f(p4x), i2f(p4y)}, i2f(thick), color);
+void DrawSplineSegmentBezierCubicW(float p1x, float p1y, float c2x, float c2y, float c3x, float c3y, float p4x, float p4y, float thick, Color color) {
+    DrawSplineSegmentBezierCubic((Vector2){p1x, p1y}, (Vector2){c2x, c2y}, (Vector2){c3x, c3y}, (Vector2){p4x, p4y}, thick, color);
 }
 
-void GetSplinePointLinearW(float* out, int startPx, int startPy, int endPx, int endPy, int t) {
-    Vector2 result = GetSplinePointLinear((Vector2){i2f(startPx), i2f(startPy)}, (Vector2){i2f(endPx), i2f(endPy)}, i2f(t));
+void GetSplinePointLinearW(float* out, float startPx, float startPy, float endPx, float endPy, float t) {
+    Vector2 result = GetSplinePointLinear((Vector2){startPx, startPy}, (Vector2){endPx, endPy}, t);
     out[0] = result.x;
     out[1] = result.y;
 }
 
-void GetSplinePointBasisW(float* out, int p1x, int p1y, int p2x, int p2y, int p3x, int p3y, int p4x, int p4y, int t) {
-    Vector2 result = GetSplinePointBasis((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(p2x), i2f(p2y)}, (Vector2){i2f(p3x), i2f(p3y)}, (Vector2){i2f(p4x), i2f(p4y)}, i2f(t));
+void GetSplinePointBasisW(float* out, float p1x, float p1y, float p2x, float p2y, float p3x, float p3y, float p4x, float p4y, float t) {
+    Vector2 result = GetSplinePointBasis((Vector2){p1x, p1y}, (Vector2){p2x, p2y}, (Vector2){p3x, p3y}, (Vector2){p4x, p4y}, t);
     out[0] = result.x;
     out[1] = result.y;
 }
 
-void GetSplinePointCatmullRomW(float* out, int p1x, int p1y, int p2x, int p2y, int p3x, int p3y, int p4x, int p4y, int t) {
-    Vector2 result = GetSplinePointCatmullRom((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(p2x), i2f(p2y)}, (Vector2){i2f(p3x), i2f(p3y)}, (Vector2){i2f(p4x), i2f(p4y)}, i2f(t));
+void GetSplinePointCatmullRomW(float* out, float p1x, float p1y, float p2x, float p2y, float p3x, float p3y, float p4x, float p4y, float t) {
+    Vector2 result = GetSplinePointCatmullRom((Vector2){p1x, p1y}, (Vector2){p2x, p2y}, (Vector2){p3x, p3y}, (Vector2){p4x, p4y}, t);
     out[0] = result.x;
     out[1] = result.y;
 }
 
-void GetSplinePointBezierQuadW(float* out, int p1x, int p1y, int c2x, int c2y, int p3x, int p3y, int t) {
-    Vector2 result = GetSplinePointBezierQuad((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(c2x), i2f(c2y)}, (Vector2){i2f(p3x), i2f(p3y)}, i2f(t));
+void GetSplinePointBezierQuadW(float* out, float p1x, float p1y, float c2x, float c2y, float p3x, float p3y, float t) {
+    Vector2 result = GetSplinePointBezierQuad((Vector2){p1x, p1y}, (Vector2){c2x, c2y}, (Vector2){p3x, p3y}, t);
     out[0] = result.x;
     out[1] = result.y;
 }
 
-void GetSplinePointBezierCubicW(float* out, int p1x, int p1y, int c2x, int c2y, int c3x, int c3y, int p4x, int p4y, int t) {
-    Vector2 result = GetSplinePointBezierCubic((Vector2){i2f(p1x), i2f(p1y)}, (Vector2){i2f(c2x), i2f(c2y)}, (Vector2){i2f(c3x), i2f(c3y)}, (Vector2){i2f(p4x), i2f(p4y)},i2f(t));
+void GetSplinePointBezierCubicW(float* out, float p1x, float p1y, float c2x, float c2y, float c3x, float c3y, float p4x, float p4y, float t) {
+    Vector2 result = GetSplinePointBezierCubic((Vector2){p1x, p1y}, (Vector2){c2x, c2y}, (Vector2){c3x, c3y}, (Vector2){p4x, p4y}, t);
     out[0] = result.x;
     out[1] = result.y;
 }

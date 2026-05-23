@@ -70,84 +70,84 @@ bool ExportMeshAsCodeW(int id, const char* fileName) {
     return ExportMeshAsCode(meshRegistry[id], fileName);
 }
 
-int GenMeshPolyW(int sides, int radius) {
+int GenMeshPolyW(int sides, float radius) {
     int slot = meshAlloc();
     if (slot < 0) return -1;
-    meshRegistry[slot] = GenMeshPoly(sides, i2f(radius));
+    meshRegistry[slot] = GenMeshPoly(sides, radius);
     return slot;
 }
 
-int GenMeshPlaneW(int width, int length, int resX, int resZ) {
+int GenMeshPlaneW(float width, float length, int resX, int resZ) {
     int slot = meshAlloc();
     if (slot < 0) return -1;
-    meshRegistry[slot] = GenMeshPlane(i2f(width), i2f(length), resX, resZ);
+    meshRegistry[slot] = GenMeshPlane(width, length, resX, resZ);
     return slot;
 }
 
-int GenMeshCubeW(int width, int height, int length) {
+int GenMeshCubeW(float width, float height, float length) {
     int slot = meshAlloc();
     if (slot < 0) return -1;
-    meshRegistry[slot] = GenMeshCube(i2f(width), i2f(height), i2f(length));
+    meshRegistry[slot] = GenMeshCube(width, height, length);
     return slot;
 }
 
-int GenMeshSphereW(int radius, int rings, int slices) {
+int GenMeshSphereW(float radius, int rings, int slices) {
     int slot = meshAlloc();
     if (slot < 0) return -1;
-    meshRegistry[slot] = GenMeshSphere(i2f(radius), rings, slices);
+    meshRegistry[slot] = GenMeshSphere(radius, rings, slices);
     return slot;
 }
 
-int GenMeshHemiSphereW(int radius, int rings, int slices) {
+int GenMeshHemiSphereW(float radius, int rings, int slices) {
     int slot = meshAlloc();
     if (slot < 0) return -1;
-    meshRegistry[slot] = GenMeshHemiSphere(i2f(radius), rings, slices);
+    meshRegistry[slot] = GenMeshHemiSphere(radius, rings, slices);
     return slot;
 }
 
-int GenMeshCylinderW(int radius, int height, int slices) {
+int GenMeshCylinderW(float radius, float height, int slices) {
     int slot = meshAlloc();
     if (slot < 0) return -1;
-    meshRegistry[slot] = GenMeshCylinder(i2f(radius), i2f(height), slices);
+    meshRegistry[slot] = GenMeshCylinder(radius, height, slices);
     return slot;
 }
 
-int GenMeshConeW(int radius, int height, int slices) {
+int GenMeshConeW(float radius, float height, int slices) {
     int slot = meshAlloc();
     if (slot < 0) return -1;
-    meshRegistry[slot] = GenMeshCone(i2f(radius), i2f(height), slices);
+    meshRegistry[slot] = GenMeshCone(radius, height, slices);
     return slot;
 }
 
-int GenMeshTorusW(int radius, int size, int radSeg, int sides) {
+int GenMeshTorusW(float radius, float size, int radSeg, int sides) {
     int slot = meshAlloc();
     if (slot < 0) return -1;
-    meshRegistry[slot] = GenMeshTorus(i2f(radius), i2f(size), radSeg, sides);
+    meshRegistry[slot] = GenMeshTorus(radius, size, radSeg, sides);
     return slot;
 }
 
-int GenMeshKnotW(int radius, int size, int radSeg, int sides) {
+int GenMeshKnotW(float radius, float size, int radSeg, int sides) {
     int slot = meshAlloc();
     if (slot < 0) return -1;
-    meshRegistry[slot] = GenMeshKnot(i2f(radius), i2f(size), radSeg, sides);
+    meshRegistry[slot] = GenMeshKnot(radius, size, radSeg, sides);
     return slot;
 }
 
-int GenMeshHeightmapW(int imageId, int sizeX, int sizeY, int sizeZ) {
+int GenMeshHeightmapW(int imageId, float sizeX, float sizeY, float sizeZ) {
     if (imageId < 0 || imageId >= MAX_IMAGES || !imageUsed[imageId]) return -1;
     int slot = meshAlloc();
     if (slot < 0) return -1;
     meshRegistry[slot] = GenMeshHeightmap(imageRegistry[imageId],
-        (Vector3){i2f(sizeX), i2f(sizeY), i2f(sizeZ)});
+        (Vector3){sizeX, sizeY, sizeZ});
     return slot;
 }
 
-int GenMeshCubicmapW(int imageId, int sizeX, int sizeY, int sizeZ) {
+int GenMeshCubicmapW(int imageId, float sizeX, float sizeY, float sizeZ) {
     if (imageId < 0 || imageId >= MAX_IMAGES || !imageUsed[imageId]) return -1;
     int slot = meshAlloc();
     if (slot < 0) return -1;
     meshRegistry[slot] = GenMeshCubicmap(imageRegistry[imageId],
-        (Vector3){i2f(sizeX), i2f(sizeY), i2f(sizeZ)});
+        (Vector3){sizeX, sizeY, sizeZ});
     return slot;
 }
 
@@ -176,7 +176,7 @@ void UnloadMaterialW(int id) {
 
 void SetMaterialTextureW(int id, int mapType, unsigned int texId, int texW, int texH) {
     if (id < 0 || id >= MAX_MATERIALS || !materialUsed[id]) return;
-    Texture2D tex = { texId, texW, texH, 1, 7 };
+    Texture2D tex = {texId, texW, texH, 1, 7};
     SetMaterialTexture(&materialRegistry[id], mapType, tex);
 }
 
@@ -210,21 +210,21 @@ void LoadModelAnimationsW(int* outSlotStart, int* outAnimCount, const char* file
     if (anims && count > 0) UnloadModelAnimations(anims, count);
 }
 
-void UpdateModelAnimationW(int modelId, int animId, int frame) {
+void UpdateModelAnimationW(int modelId, int animId, float frame) {
     if (modelId < 0 || modelId >= MAX_MODELS || !modelUsed[modelId]) return;
     if (animId < 0 || animId >= MAX_ANIMATIONS || !animUsed[animId]) return;
-    UpdateModelAnimation(modelRegistry[modelId], animRegistry[animId], i2f(frame));
+    UpdateModelAnimation(modelRegistry[modelId], animRegistry[animId], frame);
 }
 
-void UpdateModelAnimationExW(int modelId, int animAId, int frameA, int animBId, int frameB, int blend) {
+void UpdateModelAnimationExW(int modelId, int animAId, float frameA, int animBId, float frameB, float blend) {
     if (modelId < 0 || modelId >= MAX_MODELS || !modelUsed[modelId]) return;
     if (animAId < 0 || animAId >= MAX_ANIMATIONS || !animUsed[animAId]) return;
     if (animBId < 0 || animBId >= MAX_ANIMATIONS || !animUsed[animBId]) return;
     UpdateModelAnimationEx(
         modelRegistry[modelId],
-        animRegistry[animAId], i2f(frameA),
-        animRegistry[animBId], i2f(frameB),
-        i2f(blend));
+        animRegistry[animAId], frameA,
+        animRegistry[animBId], frameB,
+        blend);
 }
 
 void UnloadModelAnimationsW(int startSlot, int count) {

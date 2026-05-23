@@ -60,12 +60,9 @@ void DrawTextureVW(unsigned int id, int w, int h, int posX, int posY, Color tint
     DrawTextureV(tex, (Vector2){posX, posY}, tint);
 }
 
-void DrawTextureExW(unsigned int id, int w, int h, int posX, int posY, int rotation, int scale, Color tint) {
-    float r, s;
-    memcpy(&r, &rotation, sizeof(float));
-    memcpy(&s, &scale, sizeof(float));
+void DrawTextureExW(unsigned int id, int w, int h, int posX, int posY, float rotation, float scale, Color tint) {
     Texture2D tex = { id, w, h, 1, 7 };
-    DrawTextureEx(tex, (Vector2){posX, posY}, r, s, tint);
+    DrawTextureEx(tex, (Vector2){posX, posY}, rotation, scale, tint);
 }
 
 void DrawTextureRecW(unsigned int id, int w, int h, int srcX, int srcY, int srcW, int srcH, int posX, int posY, Color tint) {
@@ -77,13 +74,11 @@ void DrawTextureRecW(unsigned int id, int w, int h, int srcX, int srcY, int srcW
 void DrawTextureProW(unsigned int id, int w, int h,
     int srcX, int srcY, int srcW, int srcH,
     int dstX, int dstY, int dstW, int dstH,
-    int originX, int originY, int rotation, Color tint) {
-    float r;
-    memcpy(&r, &rotation, sizeof(float));
+    int originX, int originY, float rotation, Color tint) {
     Texture2D tex = { id, w, h, 1, 7 };
     Rectangle src = { srcX, srcY, srcW, srcH };
     Rectangle dst = { dstX, dstY, dstW, dstH };
-    DrawTexturePro(tex, src, dst, (Vector2){originX, originY}, r, tint);
+    DrawTexturePro(tex, src, dst, (Vector2){originX, originY}, rotation, tint);
 }
 
 void LoadTextureFromImageW(unsigned int* outId, int* outW, int* outH, int imageId) {
@@ -119,14 +114,12 @@ void DrawTextureNPatchW(unsigned int id, int w, int h,
     int srcX, int srcY, int srcW, int srcH,
     int left, int top, int right, int bottom, int layout,
     int dstX, int dstY, int dstW, int dstH,
-    int originX, int originY, int rotation, Color tint) {
-    float r;
-    memcpy(&r, &rotation, sizeof(float));
+    int originX, int originY, float rotation, Color tint) {
     Texture2D tex = { id, w, h, 1, 7 };
     Rectangle src = { srcX, srcY, srcW, srcH };
     NPatchInfo npi = { src, left, top, right, bottom, layout };
     Rectangle dst = { dstX, dstY, dstW, dstH };
-    DrawTextureNPatch(tex, npi, dst, (Vector2){originX, originY}, r, tint);
+    DrawTextureNPatch(tex, npi, dst, (Vector2){originX, originY}, rotation, tint);
 }
 
 int GetPixelColorW(const void* srcPtr, int format) {

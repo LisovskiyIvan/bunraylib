@@ -12,17 +12,12 @@ bool IsAudioDeviceReadyW() {
     return IsAudioDeviceReady();
 }
 
-void SetMasterVolumeW(int volume) {
-    float f;
-    memcpy(&f, &volume, sizeof(float));
-    SetMasterVolume(f);
+void SetMasterVolumeW(float volume) {
+    SetMasterVolume(volume);
 }
 
-int GetMasterVolumeW() {
-    float f = GetMasterVolume();
-    int i;
-    memcpy(&i, &f, sizeof(float));
-    return i;
+float GetMasterVolumeW() {
+    return GetMasterVolume();
 }
 
 int LoadWaveW(const char* fileName) {
@@ -143,25 +138,19 @@ bool IsSoundPlayingW(int id) {
     return IsSoundPlaying(soundRegistry[id]);
 }
 
-void SetSoundVolumeW(int id, int volume) {
+void SetSoundVolumeW(int id, float volume) {
     if (id < 0 || id >= MAX_SOUNDS || !soundUsed[id]) return;
-    float f;
-    memcpy(&f, &volume, sizeof(float));
-    SetSoundVolume(soundRegistry[id], f);
+    SetSoundVolume(soundRegistry[id], volume);
 }
 
-void SetSoundPitchW(int id, int pitch) {
+void SetSoundPitchW(int id, float pitch) {
     if (id < 0 || id >= MAX_SOUNDS || !soundUsed[id]) return;
-    float f;
-    memcpy(&f, &pitch, sizeof(float));
-    SetSoundPitch(soundRegistry[id], f);
+    SetSoundPitch(soundRegistry[id], pitch);
 }
 
-void SetSoundPanW(int id, int pan) {
+void SetSoundPanW(int id, float pan) {
     if (id < 0 || id >= MAX_SOUNDS || !soundUsed[id]) return;
-    float f;
-    memcpy(&f, &pan, sizeof(float));
-    SetSoundPan(soundRegistry[id], f);
+    SetSoundPan(soundRegistry[id], pan);
 }
 
 int LoadMusicStreamW(const char* fileName) {
@@ -219,48 +208,34 @@ void ResumeMusicStreamW(int id) {
     ResumeMusicStream(musicRegistry[id]);
 }
 
-void SeekMusicStreamW(int id, int position) {
+void SeekMusicStreamW(int id, float position) {
     if (id < 0 || id >= MAX_MUSIC || !musicUsed[id]) return;
-    float f;
-    memcpy(&f, &position, sizeof(float));
-    SeekMusicStream(musicRegistry[id], f);
+    SeekMusicStream(musicRegistry[id], position);
 }
 
-void SetMusicVolumeW(int id, int volume) {
+void SetMusicVolumeW(int id, float volume) {
     if (id < 0 || id >= MAX_MUSIC || !musicUsed[id]) return;
-    float f;
-    memcpy(&f, &volume, sizeof(float));
-    SetMusicVolume(musicRegistry[id], f);
+    SetMusicVolume(musicRegistry[id], volume);
 }
 
-void SetMusicPitchW(int id, int pitch) {
+void SetMusicPitchW(int id, float pitch) {
     if (id < 0 || id >= MAX_MUSIC || !musicUsed[id]) return;
-    float f;
-    memcpy(&f, &pitch, sizeof(float));
-    SetMusicPitch(musicRegistry[id], f);
+    SetMusicPitch(musicRegistry[id], pitch);
 }
 
-void SetMusicPanW(int id, int pan) {
+void SetMusicPanW(int id, float pan) {
     if (id < 0 || id >= MAX_MUSIC || !musicUsed[id]) return;
-    float f;
-    memcpy(&f, &pan, sizeof(float));
-    SetMusicPan(musicRegistry[id], f);
+    SetMusicPan(musicRegistry[id], pan);
 }
 
-int GetMusicTimeLengthW(int id) {
+float GetMusicTimeLengthW(int id) {
     if (id < 0 || id >= MAX_MUSIC || !musicUsed[id]) return 0;
-    float f = GetMusicTimeLength(musicRegistry[id]);
-    int i;
-    memcpy(&i, &f, sizeof(float));
-    return i;
+    return GetMusicTimeLength(musicRegistry[id]);
 }
 
-int GetMusicTimePlayedW(int id) {
+float GetMusicTimePlayedW(int id) {
     if (id < 0 || id >= MAX_MUSIC || !musicUsed[id]) return 0;
-    float f = GetMusicTimePlayed(musicRegistry[id]);
-    int i;
-    memcpy(&i, &f, sizeof(float));
-    return i;
+    return GetMusicTimePlayed(musicRegistry[id]);
 }
 
 int LoadAudioStreamW(unsigned int sampleRate, unsigned int sampleSize, unsigned int channels) {
@@ -311,25 +286,19 @@ void StopAudioStreamW(int id) {
     StopAudioStream(audioStreamRegistry[id]);
 }
 
-void SetAudioStreamVolumeW(int id, int volume) {
+void SetAudioStreamVolumeW(int id, float volume) {
     if (id < 0 || id >= MAX_AUDIOSTREAMS || !audioStreamUsed[id]) return;
-    float f;
-    memcpy(&f, &volume, sizeof(float));
-    SetAudioStreamVolume(audioStreamRegistry[id], f);
+    SetAudioStreamVolume(audioStreamRegistry[id], volume);
 }
 
-void SetAudioStreamPitchW(int id, int pitch) {
+void SetAudioStreamPitchW(int id, float pitch) {
     if (id < 0 || id >= MAX_AUDIOSTREAMS || !audioStreamUsed[id]) return;
-    float f;
-    memcpy(&f, &pitch, sizeof(float));
-    SetAudioStreamPitch(audioStreamRegistry[id], f);
+    SetAudioStreamPitch(audioStreamRegistry[id], pitch);
 }
 
-void SetAudioStreamPanW(int id, int pan) {
+void SetAudioStreamPanW(int id, float pan) {
     if (id < 0 || id >= MAX_AUDIOSTREAMS || !audioStreamUsed[id]) return;
-    float f;
-    memcpy(&f, &pan, sizeof(float));
-    SetAudioStreamPan(audioStreamRegistry[id], f);
+    SetAudioStreamPan(audioStreamRegistry[id], pan);
 }
 
 void SetAudioStreamBufferSizeDefaultW(int size) {

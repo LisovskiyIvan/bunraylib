@@ -4,8 +4,6 @@
 #include <string.h>
 #include <raylib.h>
 
-static inline float i2f(int i) { float f; memcpy(&f, &i, sizeof(float)); return f; }
-
 #ifndef CONFIG_H
 #define MAX_MODELS 64
 #define MAX_FONTS 32
