@@ -81,7 +81,10 @@ export const imageSymbols = {
     returns: FFIType.void,
   },
   ImageDrawTextW: { args: [i32, cstring, i32, i32, i32, i32], returns: FFIType.void },
-  ImageDrawTextExW: { args: [i32, i32, cstring, i32, i32, i32, FFIType.f32, i32], returns: FFIType.void },
+  ImageDrawTextExW: {
+    args: [i32, i32, cstring, i32, i32, i32, FFIType.f32, i32],
+    returns: FFIType.void,
+  },
   ImageToPOTW: { args: [i32, i32], returns: FFIType.void },
   ImageKernelConvolutionW: { args: [i32, ptr, i32], returns: FFIType.void },
   UnloadImageColorsW: { args: [ptr], returns: FFIType.void },

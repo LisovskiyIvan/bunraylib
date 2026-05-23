@@ -27,7 +27,7 @@ import type {
   RayCollision,
   GlyphInfo,
 } from './types';
-import { cstr, F } from './utils';
+import { cstr, f, i } from './utils';
 import { CString } from 'bun:ffi';
 import type { Color } from './types';
 
@@ -53,7 +53,7 @@ export class Raylib {
 
   /** Initialize window and OpenGL context */
   static initWindow(width: number, height: number, title: string): void {
-    r().symbols.InitWindowW(width | 0, height | 0, cstr(title));
+    r().symbols.InitWindowW(i(width), i(height), cstr(title));
   }
 
   /** Close window and unload OpenGL context */
@@ -79,12 +79,12 @@ export class Raylib {
   /** Begin 2D mode with custom camera */
   static beginMode2D(camera: Camera2D): void {
     r().symbols.BeginMode2DW(
-      F(camera.offset.x),
-      F(camera.offset.y),
-      F(camera.target.x),
-      F(camera.target.y),
-      F(camera.rotation),
-      F(camera.zoom),
+      f(camera.offset.x),
+      f(camera.offset.y),
+      f(camera.target.x),
+      f(camera.target.y),
+      f(camera.rotation),
+      f(camera.zoom),
     );
   }
 
@@ -96,16 +96,16 @@ export class Raylib {
   /** Begin 3D mode with custom camera */
   static beginMode3D(camera: Camera3D): void {
     r().symbols.BeginMode3DW(
-      F(camera.position.x),
-      F(camera.position.y),
-      F(camera.position.z),
-      F(camera.target.x),
-      F(camera.target.y),
-      F(camera.target.z),
-      F(camera.up.x),
-      F(camera.up.y),
-      F(camera.up.z),
-      F(camera.fovy),
+      f(camera.position.x),
+      f(camera.position.y),
+      f(camera.position.z),
+      f(camera.target.x),
+      f(camera.target.y),
+      f(camera.target.z),
+      f(camera.up.x),
+      f(camera.up.y),
+      f(camera.up.z),
+      f(camera.fovy),
       camera.projection,
     );
   }
@@ -122,7 +122,7 @@ export class Raylib {
 
   /** Set target FPS (frames per second) */
   static setTargetFPS(fps: number): void {
-    r().symbols.SetTargetFPSW(fps | 0);
+    r().symbols.SetTargetFPSW(i(fps));
   }
 
   /** Get time in seconds for last frame drawn (delta time) */
@@ -132,44 +132,37 @@ export class Raylib {
 
   /** Draw a color-filled rectangle */
   static drawRectangle(x: number, y: number, width: number, height: number, col: Color): void {
-    r().symbols.DrawRectangleW(x | 0, y | 0, width | 0, height | 0, col);
+    r().symbols.DrawRectangleW(i(x), i(y), i(width), i(height), col);
   }
 
   /** Draw text (using default font) */
   static drawText(text: string, x: number, y: number, fontSize: number, col: Color): void {
-    r().symbols.DrawTextW(cstr(text), x | 0, y | 0, fontSize | 0, col);
+    r().symbols.DrawTextW(cstr(text), i(x), i(y), i(fontSize), col);
   }
 
   /** Draw a pixel */
   static drawPixel(x: number, y: number, col: Color): void {
-    r().symbols.DrawPixelW(x | 0, y | 0, col);
+    r().symbols.DrawPixelW(i(x), i(y), col);
   }
 
   /** Draw a pixel (using vector position) */
   static drawPixelV(position: Vec2, col: Color): void {
-    r().symbols.DrawPixelVW(F(position.x), F(position.y), col);
+    r().symbols.DrawPixelVW(f(position.x), f(position.y), col);
   }
 
   /** Draw a line */
   static drawLine(startX: number, startY: number, endX: number, endY: number, col: Color): void {
-    r().symbols.DrawLineW(startX | 0, startY | 0, endX | 0, endY | 0, col);
+    r().symbols.DrawLineW(i(startX), i(startY), i(endX), i(endY), col);
   }
 
   /** Draw a line (using vector positions) */
   static drawLineV(startPos: Vec2, endPos: Vec2, col: Color): void {
-    r().symbols.DrawLineVW(F(startPos.x), F(startPos.y), F(endPos.x), F(endPos.y), col);
+    r().symbols.DrawLineVW(f(startPos.x), f(startPos.y), f(endPos.x), f(endPos.y), col);
   }
 
   /** Draw a line with defined thickness */
   static drawLineEx(startPos: Vec2, endPos: Vec2, thick: number, col: Color): void {
-    r().symbols.DrawLineExW(
-      F(startPos.x),
-      F(startPos.y),
-      F(endPos.x),
-      F(endPos.y),
-      F(thick),
-      col,
-    );
+    r().symbols.DrawLineExW(f(startPos.x), f(startPos.y), f(endPos.x), f(endPos.y), f(thick), col);
   }
 
   /** Draw lines sequence as a strip. Points are packed as [x0,y0, x1,y1, ...] in Float32Array */
@@ -180,23 +173,23 @@ export class Raylib {
   /** Draw line segment with Bezier easing */
   static drawLineBezier(startPos: Vec2, endPos: Vec2, thick: number, col: Color): void {
     r().symbols.DrawLineBezierW(
-      F(startPos.x),
-      F(startPos.y),
-      F(endPos.x),
-      F(endPos.y),
-      F(thick),
+      f(startPos.x),
+      f(startPos.y),
+      f(endPos.x),
+      f(endPos.y),
+      f(thick),
       col,
     );
   }
 
   /** Draw a color-filled circle */
   static drawCircle(centerX: number, centerY: number, radius: number, col: Color): void {
-    r().symbols.DrawCircleW(centerX | 0, centerY | 0, F(radius), col);
+    r().symbols.DrawCircleW(i(centerX), i(centerY), f(radius), col);
   }
 
   /** Draw a color-filled circle (using vector center) */
   static drawCircleV(center: Vec2, radius: number, col: Color): void {
-    r().symbols.DrawCircleVW(center.x | 0, center.y | 0, F(radius), col);
+    r().symbols.DrawCircleVW(i(center.x), i(center.y), f(radius), col);
   }
 
   /**
@@ -217,12 +210,12 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawCircleSectorW(
-      F(center.x),
-      F(center.y),
-      F(radius),
-      F(startAngle),
-      F(endAngle),
-      segments | 0,
+      f(center.x),
+      f(center.y),
+      f(radius),
+      f(startAngle),
+      f(endAngle),
+      i(segments),
       col,
     );
   }
@@ -245,12 +238,12 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawCircleSectorLinesW(
-      F(center.x),
-      F(center.y),
-      F(radius),
-      F(startAngle),
-      F(endAngle),
-      segments | 0,
+      f(center.x),
+      f(center.y),
+      f(radius),
+      f(startAngle),
+      f(endAngle),
+      i(segments),
       col,
     );
   }
@@ -263,17 +256,17 @@ export class Raylib {
     inner: Color,
     outer: Color,
   ): void {
-    r().symbols.DrawCircleGradientW(F(centerX), F(centerY), F(radius), inner, outer);
+    r().symbols.DrawCircleGradientW(f(centerX), f(centerY), f(radius), inner, outer);
   }
 
   /** Draw circle outline */
   static drawCircleLines(centerX: number, centerY: number, radius: number, col: Color): void {
-    r().symbols.DrawCircleLinesW(centerX | 0, centerY | 0, F(radius), col);
+    r().symbols.DrawCircleLinesW(i(centerX), i(centerY), f(radius), col);
   }
 
   /** Draw circle outline (using vector center) */
   static drawCircleLinesV(center: Vec2, radius: number, col: Color): void {
-    r().symbols.DrawCircleLinesVW(F(center.x), F(center.y), F(radius), col);
+    r().symbols.DrawCircleLinesVW(f(center.x), f(center.y), f(radius), col);
   }
 
   /** Draw a color-filled ellipse */
@@ -284,7 +277,7 @@ export class Raylib {
     radiusV: number,
     col: Color,
   ): void {
-    r().symbols.DrawEllipseW(centerX | 0, centerY | 0, F(radiusH), F(radiusV), col);
+    r().symbols.DrawEllipseW(i(centerX), i(centerY), f(radiusH), f(radiusV), col);
   }
 
   /** Draw ellipse outline */
@@ -295,7 +288,7 @@ export class Raylib {
     radiusV: number,
     col: Color,
   ): void {
-    r().symbols.DrawEllipseLinesW(centerX | 0, centerY | 0, F(radiusH), F(radiusV), col);
+    r().symbols.DrawEllipseLinesW(i(centerX), i(centerY), f(radiusH), f(radiusV), col);
   }
 
   /**
@@ -318,13 +311,13 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawRingW(
-      F(center.x),
-      F(center.y),
-      F(innerRadius),
-      F(outerRadius),
-      F(startAngle),
-      F(endAngle),
-      segments | 0,
+      f(center.x),
+      f(center.y),
+      f(innerRadius),
+      f(outerRadius),
+      f(startAngle),
+      f(endAngle),
+      i(segments),
       col,
     );
   }
@@ -349,36 +342,36 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawRingLinesW(
-      F(center.x),
-      F(center.y),
-      F(innerRadius),
-      F(outerRadius),
-      F(startAngle),
-      F(endAngle),
-      segments | 0,
+      f(center.x),
+      f(center.y),
+      f(innerRadius),
+      f(outerRadius),
+      f(startAngle),
+      f(endAngle),
+      i(segments),
       col,
     );
   }
 
   /** Draw a color-filled rectangle (using vector position and size) */
   static drawRectangleV(pos: Vec2, size: Vec2, col: Color): void {
-    r().symbols.DrawRectangleVW(F(pos.x), F(pos.y), F(size.x), F(size.y), col);
+    r().symbols.DrawRectangleVW(f(pos.x), f(pos.y), f(size.x), f(size.y), col);
   }
 
   static drawRectangleRec(rec: Rectangle, col: Color): void {
-    r().symbols.DrawRectangleRecW(F(rec.x), F(rec.y), F(rec.width), F(rec.height), col);
+    r().symbols.DrawRectangleRecW(f(rec.x), f(rec.y), f(rec.width), f(rec.height), col);
   }
 
   /** Draw a color-filled rectangle with pro parameters (rotation and origin) */
   static drawRectanglePro(rec: Rectangle, origin: Vec2, rotation: number, col: Color): void {
     r().symbols.DrawRectangleProW(
-      F(rec.x),
-      F(rec.y),
-      F(rec.width),
-      F(rec.height),
-      F(origin.x),
-      F(origin.y),
-      F(rotation),
+      f(rec.x),
+      f(rec.y),
+      f(rec.width),
+      f(rec.height),
+      f(origin.x),
+      f(origin.y),
+      f(rotation),
       col,
     );
   }
@@ -392,7 +385,7 @@ export class Raylib {
     top: Color,
     bottom: Color,
   ): void {
-    r().symbols.DrawRectangleGradientVW(x | 0, y | 0, width | 0, height | 0, top, bottom);
+    r().symbols.DrawRectangleGradientVW(i(x), i(y), i(width), i(height), top, bottom);
   }
 
   /** Draw a horizontal-gradient-filled rectangle */
@@ -404,7 +397,7 @@ export class Raylib {
     left: Color,
     right: Color,
   ): void {
-    r().symbols.DrawRectangleGradientHW(x | 0, y | 0, width | 0, height | 0, left, right);
+    r().symbols.DrawRectangleGradientHW(i(x), i(y), i(width), i(height), left, right);
   }
 
   /** Draw a gradient-filled rectangle with custom gradient colors for each corner */
@@ -416,10 +409,10 @@ export class Raylib {
     bottomRight: Color,
   ): void {
     r().symbols.DrawRectangleGradientExW(
-      F(rec.x),
-      F(rec.y),
-      F(rec.width),
-      F(rec.height),
+      f(rec.x),
+      f(rec.y),
+      f(rec.width),
+      f(rec.height),
       topLeft,
       bottomLeft,
       topRight,
@@ -429,17 +422,17 @@ export class Raylib {
 
   /** Draw rectangle outline */
   static drawRectangleLines(x: number, y: number, width: number, height: number, col: Color): void {
-    r().symbols.DrawRectangleLinesW(x | 0, y | 0, width | 0, height | 0, col);
+    r().symbols.DrawRectangleLinesW(i(x), i(y), i(width), i(height), col);
   }
 
   /** Draw rectangle outline with extended parameters (custom line thickness) */
   static drawRectangleLinesEx(rec: Rectangle, lineThick: number, col: Color): void {
     r().symbols.DrawRectangleLinesExW(
-      F(rec.x),
-      F(rec.y),
-      F(rec.width),
-      F(rec.height),
-      F(lineThick),
+      f(rec.x),
+      f(rec.y),
+      f(rec.width),
+      f(rec.height),
+      f(lineThick),
       col,
     );
   }
@@ -452,12 +445,12 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawRectangleRoundedW(
-      F(rec.x),
-      F(rec.y),
-      F(rec.width),
-      F(rec.height),
-      F(roundness),
-      segments | 0,
+      f(rec.x),
+      f(rec.y),
+      f(rec.width),
+      f(rec.height),
+      f(roundness),
+      i(segments),
       col,
     );
   }
@@ -470,12 +463,12 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawRectangleRoundedLinesW(
-      F(rec.x),
-      F(rec.y),
-      F(rec.width),
-      F(rec.height),
-      F(roundness),
-      segments | 0,
+      f(rec.x),
+      f(rec.y),
+      f(rec.width),
+      f(rec.height),
+      f(roundness),
+      i(segments),
       col,
     );
   }
@@ -489,41 +482,25 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawRectangleRoundedLinesExW(
-      F(rec.x),
-      F(rec.y),
-      F(rec.width),
-      F(rec.height),
-      F(roundness),
-      segments | 0,
-      F(lineThick),
+      f(rec.x),
+      f(rec.y),
+      f(rec.width),
+      f(rec.height),
+      f(roundness),
+      i(segments),
+      f(lineThick),
       col,
     );
   }
 
   /** Draw a color-filled triangle */
   static drawTriangle(v1: Vec2, v2: Vec2, v3: Vec2, col: Color): void {
-    r().symbols.DrawTriangleW(
-      F(v1.x),
-      F(v1.y),
-      F(v2.x),
-      F(v2.y),
-      F(v3.x),
-      F(v3.y),
-      col,
-    );
+    r().symbols.DrawTriangleW(f(v1.x), f(v1.y), f(v2.x), f(v2.y), f(v3.x), f(v3.y), col);
   }
 
   /** Draw triangle outline */
   static drawTriangleLines(v1: Vec2, v2: Vec2, v3: Vec2, col: Color): void {
-    r().symbols.DrawTriangleLinesW(
-      F(v1.x),
-      F(v1.y),
-      F(v2.x),
-      F(v2.y),
-      F(v3.x),
-      F(v3.y),
-      col,
-    );
+    r().symbols.DrawTriangleLinesW(f(v1.x), f(v1.y), f(v2.x), f(v2.y), f(v3.x), f(v3.y), col);
   }
 
   /** Draw a triangle fan. Points are packed as [x0,y0, x1,y1, ...] in Float32Array */
@@ -538,7 +515,7 @@ export class Raylib {
 
   /** Draw a regular polygon (color-filled) */
   static drawPoly(center: Vec2, sides: number, radius: number, rotation: number, col: Color): void {
-    r().symbols.DrawPolyW(F(center.x), F(center.y), sides | 0, F(radius), F(rotation), col);
+    r().symbols.DrawPolyW(f(center.x), f(center.y), i(sides), f(radius), f(rotation), col);
   }
 
   /** Draw a regular polygon outline */
@@ -549,14 +526,7 @@ export class Raylib {
     rotation: number,
     col: Color,
   ): void {
-    r().symbols.DrawPolyLinesW(
-      F(center.x),
-      F(center.y),
-      sides | 0,
-      F(radius),
-      F(rotation),
-      col,
-    );
+    r().symbols.DrawPolyLinesW(f(center.x), f(center.y), i(sides), f(radius), f(rotation), col);
   }
 
   /** Draw a regular polygon outline with custom line thickness */
@@ -569,12 +539,12 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawPolyLinesExW(
-      F(center.x),
-      F(center.y),
-      sides | 0,
-      F(radius),
-      F(rotation),
-      F(lineThick),
+      f(center.x),
+      f(center.y),
+      i(sides),
+      f(radius),
+      f(rotation),
+      f(lineThick),
       col,
     );
   }
@@ -584,7 +554,7 @@ export class Raylib {
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
   static drawSplineLinear(points: Float32Array, thick: number, col: Color): void {
-    r().symbols.DrawSplineLinearW(points, points.length / 2, F(thick), col);
+    r().symbols.DrawSplineLinearW(points, points.length / 2, f(thick), col);
   }
 
   /**
@@ -592,7 +562,7 @@ export class Raylib {
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
   static drawSplineBasis(points: Float32Array, thick: number, col: Color): void {
-    r().symbols.DrawSplineBasisW(points, points.length / 2, F(thick), col);
+    r().symbols.DrawSplineBasisW(points, points.length / 2, f(thick), col);
   }
 
   /**
@@ -600,7 +570,7 @@ export class Raylib {
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
   static drawSplineCatmullRom(points: Float32Array, thick: number, col: Color): void {
-    r().symbols.DrawSplineCatmullRomW(points, points.length / 2, F(thick), col);
+    r().symbols.DrawSplineCatmullRomW(points, points.length / 2, f(thick), col);
   }
 
   /**
@@ -608,7 +578,7 @@ export class Raylib {
    * Points layout: [p1, c2, p3, c4, ...] packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
   static drawSplineBezierQuadratic(points: Float32Array, thick: number, col: Color): void {
-    r().symbols.DrawSplineBezierQuadraticW(points, points.length / 2, F(thick), col);
+    r().symbols.DrawSplineBezierQuadraticW(points, points.length / 2, f(thick), col);
   }
 
   /**
@@ -616,19 +586,12 @@ export class Raylib {
    * Points layout: [p1, c2, c3, p4, c5, c6, ...] packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
   static drawSplineBezierCubic(points: Float32Array, thick: number, col: Color): void {
-    r().symbols.DrawSplineBezierCubicW(points, points.length / 2, F(thick), col);
+    r().symbols.DrawSplineBezierCubicW(points, points.length / 2, f(thick), col);
   }
 
   /** Draw spline segment: Linear, 2 points */
   static drawSplineSegmentLinear(p1: Vec2, p2: Vec2, thick: number, col: Color): void {
-    r().symbols.DrawSplineSegmentLinearW(
-      F(p1.x),
-      F(p1.y),
-      F(p2.x),
-      F(p2.y),
-      F(thick),
-      col,
-    );
+    r().symbols.DrawSplineSegmentLinearW(f(p1.x), f(p1.y), f(p2.x), f(p2.y), f(thick), col);
   }
 
   /** Draw spline segment: B-Spline, 4 points */
@@ -641,15 +604,15 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawSplineSegmentBasisW(
-      F(p1.x),
-      F(p1.y),
-      F(p2.x),
-      F(p2.y),
-      F(p3.x),
-      F(p3.y),
-      F(p4.x),
-      F(p4.y),
-      F(thick),
+      f(p1.x),
+      f(p1.y),
+      f(p2.x),
+      f(p2.y),
+      f(p3.x),
+      f(p3.y),
+      f(p4.x),
+      f(p4.y),
+      f(thick),
       col,
     );
   }
@@ -664,15 +627,15 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawSplineSegmentCatmullRomW(
-      F(p1.x),
-      F(p1.y),
-      F(p2.x),
-      F(p2.y),
-      F(p3.x),
-      F(p3.y),
-      F(p4.x),
-      F(p4.y),
-      F(thick),
+      f(p1.x),
+      f(p1.y),
+      f(p2.x),
+      f(p2.y),
+      f(p3.x),
+      f(p3.y),
+      f(p4.x),
+      f(p4.y),
+      f(thick),
       col,
     );
   }
@@ -686,13 +649,13 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawSplineSegmentBezierQuadraticW(
-      F(p1.x),
-      F(p1.y),
-      F(c2.x),
-      F(c2.y),
-      F(p3.x),
-      F(p3.y),
-      F(thick),
+      f(p1.x),
+      f(p1.y),
+      f(c2.x),
+      f(c2.y),
+      f(p3.x),
+      f(p3.y),
+      f(thick),
       col,
     );
   }
@@ -707,15 +670,15 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawSplineSegmentBezierCubicW(
-      F(p1.x),
-      F(p1.y),
-      F(c2.x),
-      F(c2.y),
-      F(c3.x),
-      F(c3.y),
-      F(p4.x),
-      F(p4.y),
-      F(thick),
+      f(p1.x),
+      f(p1.y),
+      f(c2.x),
+      f(c2.y),
+      f(c3.x),
+      f(c3.y),
+      f(p4.x),
+      f(p4.y),
+      f(thick),
       col,
     );
   }
@@ -730,11 +693,11 @@ export class Raylib {
   static getSplinePointLinear(startPos: Vec2, endPos: Vec2, t: number): Vec2 {
     r().symbols.GetSplinePointLinearW(
       this._vec2Buf,
-      F(startPos.x),
-      F(startPos.y),
-      F(endPos.x),
-      F(endPos.y),
-      F(t),
+      f(startPos.x),
+      f(startPos.y),
+      f(endPos.x),
+      f(endPos.y),
+      f(t),
     );
     return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
@@ -751,15 +714,15 @@ export class Raylib {
   static getSplinePointBasis(p1: Vec2, p2: Vec2, p3: Vec2, p4: Vec2, t: number): Vec2 {
     r().symbols.GetSplinePointBasisW(
       this._vec2Buf,
-      F(p1.x),
-      F(p1.y),
-      F(p2.x),
-      F(p2.y),
-      F(p3.x),
-      F(p3.y),
-      F(p4.x),
-      F(p4.y),
-      F(t),
+      f(p1.x),
+      f(p1.y),
+      f(p2.x),
+      f(p2.y),
+      f(p3.x),
+      f(p3.y),
+      f(p4.x),
+      f(p4.y),
+      f(t),
     );
     return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
@@ -776,15 +739,15 @@ export class Raylib {
   static getSplinePointCatmullRom(p1: Vec2, p2: Vec2, p3: Vec2, p4: Vec2, t: number): Vec2 {
     r().symbols.GetSplinePointCatmullRomW(
       this._vec2Buf,
-      F(p1.x),
-      F(p1.y),
-      F(p2.x),
-      F(p2.y),
-      F(p3.x),
-      F(p3.y),
-      F(p4.x),
-      F(p4.y),
-      F(t),
+      f(p1.x),
+      f(p1.y),
+      f(p2.x),
+      f(p2.y),
+      f(p3.x),
+      f(p3.y),
+      f(p4.x),
+      f(p4.y),
+      f(t),
     );
     return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
@@ -800,13 +763,13 @@ export class Raylib {
   static getSplinePointBezierQuad(p1: Vec2, c2: Vec2, p3: Vec2, t: number): Vec2 {
     r().symbols.GetSplinePointBezierQuadW(
       this._vec2Buf,
-      F(p1.x),
-      F(p1.y),
-      F(c2.x),
-      F(c2.y),
-      F(p3.x),
-      F(p3.y),
-      F(t),
+      f(p1.x),
+      f(p1.y),
+      f(c2.x),
+      f(c2.y),
+      f(p3.x),
+      f(p3.y),
+      f(t),
     );
     return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
@@ -823,15 +786,15 @@ export class Raylib {
   static getSplinePointBezierCubic(p1: Vec2, c2: Vec2, c3: Vec2, p4: Vec2, t: number): Vec2 {
     r().symbols.GetSplinePointBezierCubicW(
       this._vec2Buf,
-      F(p1.x),
-      F(p1.y),
-      F(c2.x),
-      F(c2.y),
-      F(c3.x),
-      F(c3.y),
-      F(p4.x),
-      F(p4.y),
-      F(t),
+      f(p1.x),
+      f(p1.y),
+      f(c2.x),
+      f(c2.y),
+      f(c3.x),
+      f(c3.y),
+      f(p4.x),
+      f(p4.y),
+      f(t),
     );
     return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
@@ -839,14 +802,14 @@ export class Raylib {
   /** Check collision between two rectangles */
   static checkCollisionRecs(rec1: Rectangle, rec2: Rectangle): boolean {
     return r().symbols.CheckCollisionRecsW(
-      F(rec1.x),
-      F(rec1.y),
-      F(rec1.width),
-      F(rec1.height),
-      F(rec2.x),
-      F(rec2.y),
-      F(rec2.width),
-      F(rec2.height),
+      f(rec1.x),
+      f(rec1.y),
+      f(rec1.width),
+      f(rec1.height),
+      f(rec2.x),
+      f(rec2.y),
+      f(rec2.width),
+      f(rec2.height),
     );
   }
 
@@ -858,88 +821,88 @@ export class Raylib {
     radius2: number,
   ): boolean {
     return r().symbols.CheckCollisionCirclesW(
-      F(center1.x),
-      F(center1.y),
-      F(radius1),
-      F(center2.x),
-      F(center2.y),
-      F(radius2),
+      f(center1.x),
+      f(center1.y),
+      f(radius1),
+      f(center2.x),
+      f(center2.y),
+      f(radius2),
     );
   }
 
   /** Check collision between circle and rectangle */
   static checkCollisionCircleRec(center: Vec2, radius: number, rec: Rectangle): boolean {
     return r().symbols.CheckCollisionCircleRecW(
-      F(center.x),
-      F(center.y),
-      F(radius),
-      F(rec.x),
-      F(rec.y),
-      F(rec.width),
-      F(rec.height),
+      f(center.x),
+      f(center.y),
+      f(radius),
+      f(rec.x),
+      f(rec.y),
+      f(rec.width),
+      f(rec.height),
     );
   }
 
   /** Check if circle collides with a line created between two points [p1] and [p2] */
   static checkCollisionCircleLine(center: Vec2, radius: number, p1: Vec2, p2: Vec2): boolean {
     return r().symbols.CheckCollisionCircleLineW(
-      F(center.x),
-      F(center.y),
-      F(radius),
-      F(p1.x),
-      F(p1.y),
-      F(p2.x),
-      F(p2.y),
+      f(center.x),
+      f(center.y),
+      f(radius),
+      f(p1.x),
+      f(p1.y),
+      f(p2.x),
+      f(p2.y),
     );
   }
 
   /** Check if point is inside rectangle */
   static checkCollisionPointRec(point: Vec2, rec: Rectangle): boolean {
     return r().symbols.CheckCollisionPointRecW(
-      F(point.x),
-      F(point.y),
-      F(rec.x),
-      F(rec.y),
-      F(rec.width),
-      F(rec.height),
+      f(point.x),
+      f(point.y),
+      f(rec.x),
+      f(rec.y),
+      f(rec.width),
+      f(rec.height),
     );
   }
 
   /** Check if point is inside circle */
   static checkCollisionPointCircle(point: Vec2, center: Vec2, radius: number): boolean {
     return r().symbols.CheckCollisionPointCircleW(
-      F(point.x),
-      F(point.y),
-      F(center.x),
-      F(center.y),
-      F(radius),
+      f(point.x),
+      f(point.y),
+      f(center.x),
+      f(center.y),
+      f(radius),
     );
   }
 
   /** Check if point is inside a triangle */
   static checkCollisionPointTriangle(point: Vec2, p1: Vec2, p2: Vec2, p3: Vec2): boolean {
     return r().symbols.CheckCollisionPointTriangleW(
-      F(point.x),
-      F(point.y),
-      F(p1.x),
-      F(p1.y),
-      F(p2.x),
-      F(p2.y),
-      F(p3.x),
-      F(p3.y),
+      f(point.x),
+      f(point.y),
+      f(p1.x),
+      f(p1.y),
+      f(p2.x),
+      f(p2.y),
+      f(p3.x),
+      f(p3.y),
     );
   }
 
   /** Check if point belongs to line created between two points [p1] and [p2] with defined margin [threshold] */
   static checkCollisionPointLine(point: Vec2, p1: Vec2, p2: Vec2, threshold: number): boolean {
     return r().symbols.CheckCollisionPointLineW(
-      F(point.x),
-      F(point.y),
-      F(p1.x),
-      F(p1.y),
-      F(p2.x),
-      F(p2.y),
-      threshold | 0,
+      f(point.x),
+      f(point.y),
+      f(p1.x),
+      f(p1.y),
+      f(p2.x),
+      f(p2.y),
+      i(threshold),
     );
   }
 
@@ -948,12 +911,7 @@ export class Raylib {
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
   static checkCollisionPointPoly(point: Vec2, points: Float32Array): boolean {
-    return r().symbols.CheckCollisionPointPolyW(
-      F(point.x),
-      F(point.y),
-      points,
-      points.length / 2,
-    );
+    return r().symbols.CheckCollisionPointPolyW(f(point.x), f(point.y), points, points.length / 2);
   }
 
   /**
@@ -968,14 +926,14 @@ export class Raylib {
   ): { collides: boolean; collisionPoint: Vec2 } {
     const collides = r().symbols.CheckCollisionLinesW(
       this._colPtBuf,
-      F(startPos1.x),
-      F(startPos1.y),
-      F(endPos1.x),
-      F(endPos1.y),
-      F(startPos2.x),
-      F(startPos2.y),
-      F(endPos2.x),
-      F(endPos2.y),
+      f(startPos1.x),
+      f(startPos1.y),
+      f(endPos1.x),
+      f(endPos1.y),
+      f(startPos2.x),
+      f(startPos2.y),
+      f(endPos2.x),
+      f(endPos2.y),
     );
     return { collides, collisionPoint: { x: this._colPtBuf[0]!, y: this._colPtBuf[1]! } };
   }
@@ -984,14 +942,14 @@ export class Raylib {
   static getCollisionRec(rec1: Rectangle, rec2: Rectangle): Rectangle {
     r().symbols.GetCollisionRecW(
       this._recBuf,
-      F(rec1.x),
-      F(rec1.y),
-      F(rec1.width),
-      F(rec1.height),
-      F(rec2.x),
-      F(rec2.y),
-      F(rec2.width),
-      F(rec2.height),
+      f(rec1.x),
+      f(rec1.y),
+      f(rec1.width),
+      f(rec1.height),
+      f(rec2.x),
+      f(rec2.y),
+      f(rec2.width),
+      f(rec2.height),
     );
     return {
       x: this._recBuf[0]!,
@@ -1004,19 +962,19 @@ export class Raylib {
   /** Draw a line in 3D world space */
   static drawLine3D(startPos: Vec3, endPos: Vec3, col: Color): void {
     r().symbols.DrawLine3DW(
-      F(startPos.x),
-      F(startPos.y),
-      F(startPos.z),
-      F(endPos.x),
-      F(endPos.y),
-      F(endPos.z),
+      f(startPos.x),
+      f(startPos.y),
+      f(startPos.z),
+      f(endPos.x),
+      f(endPos.y),
+      f(endPos.z),
       col,
     );
   }
 
   /** Draw a point in 3D space */
   static drawPoint3D(position: Vec3, col: Color): void {
-    r().symbols.DrawPoint3DW(F(position.x), F(position.y), F(position.z), col);
+    r().symbols.DrawPoint3DW(f(position.x), f(position.y), f(position.z), col);
   }
 
   /** Draw a circle in 3D world space */
@@ -1028,14 +986,14 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawCircle3DW(
-      F(center.x),
-      F(center.y),
-      F(center.z),
-      F(radius),
-      F(rotationAxis.x),
-      F(rotationAxis.y),
-      F(rotationAxis.z),
-      F(rotationAngle),
+      f(center.x),
+      f(center.y),
+      f(center.z),
+      f(radius),
+      f(rotationAxis.x),
+      f(rotationAxis.y),
+      f(rotationAxis.z),
+      f(rotationAngle),
       col,
     );
   }
@@ -1043,15 +1001,15 @@ export class Raylib {
   /** Draw a color-filled triangle (vertex in counter-clockwise order!) */
   static drawTriangle3D(v1: Vec3, v2: Vec3, v3: Vec3, col: Color): void {
     r().symbols.DrawTriangle3DW(
-      F(v1.x),
-      F(v1.y),
-      F(v1.z),
-      F(v2.x),
-      F(v2.y),
-      F(v2.z),
-      F(v3.x),
-      F(v3.y),
-      F(v3.z),
+      f(v1.x),
+      f(v1.y),
+      f(v1.z),
+      f(v2.x),
+      f(v2.y),
+      f(v2.z),
+      f(v3.x),
+      f(v3.y),
+      f(v3.z),
       col,
     );
   }
@@ -1064,12 +1022,12 @@ export class Raylib {
   /** Draw cube */
   static drawCube(position: Vec3, width: number, height: number, length: number, col: Color): void {
     r().symbols.DrawCubeW(
-      F(position.x),
-      F(position.y),
-      F(position.z),
-      F(width),
-      F(height),
-      F(length),
+      f(position.x),
+      f(position.y),
+      f(position.z),
+      f(width),
+      f(height),
+      f(length),
       col,
     );
   }
@@ -1077,12 +1035,12 @@ export class Raylib {
   /** Draw cube (Vector version) */
   static drawCubeV(position: Vec3, size: Vec3, col: Color): void {
     r().symbols.DrawCubeVW(
-      F(position.x),
-      F(position.y),
-      F(position.z),
-      F(size.x),
-      F(size.y),
-      F(size.z),
+      f(position.x),
+      f(position.y),
+      f(position.z),
+      f(size.x),
+      f(size.y),
+      f(size.z),
       col,
     );
   }
@@ -1096,12 +1054,12 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawCubeWiresW(
-      F(position.x),
-      F(position.y),
-      F(position.z),
-      F(width),
-      F(height),
-      F(length),
+      f(position.x),
+      f(position.y),
+      f(position.z),
+      f(width),
+      f(height),
+      f(length),
       col,
     );
   }
@@ -1109,19 +1067,19 @@ export class Raylib {
   /** Draw cube wires (Vector version) */
   static drawCubeWiresV(position: Vec3, size: Vec3, col: Color): void {
     r().symbols.DrawCubeWiresVW(
-      F(position.x),
-      F(position.y),
-      F(position.z),
-      F(size.x),
-      F(size.y),
-      F(size.z),
+      f(position.x),
+      f(position.y),
+      f(position.z),
+      f(size.x),
+      f(size.y),
+      f(size.z),
       col,
     );
   }
 
   /** Draw sphere */
   static drawSphere(centerPos: Vec3, radius: number, col: Color): void {
-    r().symbols.DrawSphereW(F(centerPos.x), F(centerPos.y), F(centerPos.z), F(radius), col);
+    r().symbols.DrawSphereW(f(centerPos.x), f(centerPos.y), f(centerPos.z), f(radius), col);
   }
 
   /** Draw sphere with extended parameters */
@@ -1133,12 +1091,12 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawSphereExW(
-      F(centerPos.x),
-      F(centerPos.y),
-      F(centerPos.z),
-      F(radius),
-      rings | 0,
-      slices | 0,
+      f(centerPos.x),
+      f(centerPos.y),
+      f(centerPos.z),
+      f(radius),
+      i(rings),
+      i(slices),
       col,
     );
   }
@@ -1152,12 +1110,12 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawSphereWiresW(
-      F(centerPos.x),
-      F(centerPos.y),
-      F(centerPos.z),
-      F(radius),
-      rings | 0,
-      slices | 0,
+      f(centerPos.x),
+      f(centerPos.y),
+      f(centerPos.z),
+      f(radius),
+      i(rings),
+      i(slices),
       col,
     );
   }
@@ -1172,13 +1130,13 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawCylinderW(
-      F(position.x),
-      F(position.y),
-      F(position.z),
-      F(radiusTop),
-      F(radiusBottom),
-      F(height),
-      slices | 0,
+      f(position.x),
+      f(position.y),
+      f(position.z),
+      f(radiusTop),
+      f(radiusBottom),
+      f(height),
+      i(slices),
       col,
     );
   }
@@ -1193,15 +1151,15 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawCylinderExW(
-      F(startPos.x),
-      F(startPos.y),
-      F(startPos.z),
-      F(endPos.x),
-      F(endPos.y),
-      F(endPos.z),
-      F(startRadius),
-      F(endRadius),
-      sides | 0,
+      f(startPos.x),
+      f(startPos.y),
+      f(startPos.z),
+      f(endPos.x),
+      f(endPos.y),
+      f(endPos.z),
+      f(startRadius),
+      f(endRadius),
+      i(sides),
       col,
     );
   }
@@ -1216,13 +1174,13 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawCylinderWiresW(
-      F(position.x),
-      F(position.y),
-      F(position.z),
-      F(radiusTop),
-      F(radiusBottom),
-      F(height),
-      slices | 0,
+      f(position.x),
+      f(position.y),
+      f(position.z),
+      f(radiusTop),
+      f(radiusBottom),
+      f(height),
+      i(slices),
       col,
     );
   }
@@ -1237,15 +1195,15 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawCylinderWiresExW(
-      F(startPos.x),
-      F(startPos.y),
-      F(startPos.z),
-      F(endPos.x),
-      F(endPos.y),
-      F(endPos.z),
-      F(startRadius),
-      F(endRadius),
-      sides | 0,
+      f(startPos.x),
+      f(startPos.y),
+      f(startPos.z),
+      f(endPos.x),
+      f(endPos.y),
+      f(endPos.z),
+      f(startRadius),
+      f(endRadius),
+      i(sides),
       col,
     );
   }
@@ -1260,15 +1218,15 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawCapsuleW(
-      F(startPos.x),
-      F(startPos.y),
-      F(startPos.z),
-      F(endPos.x),
-      F(endPos.y),
-      F(endPos.z),
-      F(radius),
-      slices | 0,
-      rings | 0,
+      f(startPos.x),
+      f(startPos.y),
+      f(startPos.z),
+      f(endPos.x),
+      f(endPos.y),
+      f(endPos.z),
+      f(radius),
+      i(slices),
+      i(rings),
       col,
     );
   }
@@ -1283,15 +1241,15 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawCapsuleWiresW(
-      F(startPos.x),
-      F(startPos.y),
-      F(startPos.z),
-      F(endPos.x),
-      F(endPos.y),
-      F(endPos.z),
-      F(radius),
-      slices | 0,
-      rings | 0,
+      f(startPos.x),
+      f(startPos.y),
+      f(startPos.z),
+      f(endPos.x),
+      f(endPos.y),
+      f(endPos.z),
+      f(radius),
+      i(slices),
+      i(rings),
       col,
     );
   }
@@ -1299,11 +1257,11 @@ export class Raylib {
   /** Draw a plane XZ */
   static drawPlane(centerPos: Vec3, size: Vec2, col: Color): void {
     r().symbols.DrawPlaneW(
-      F(centerPos.x),
-      F(centerPos.y),
-      F(centerPos.z),
-      F(size.x),
-      F(size.y),
+      f(centerPos.x),
+      f(centerPos.y),
+      f(centerPos.z),
+      f(size.x),
+      f(size.y),
       col,
     );
   }
@@ -1311,19 +1269,19 @@ export class Raylib {
   /** Draw a ray line */
   static drawRay(ray: Ray, col: Color): void {
     r().symbols.DrawRayW(
-      F(ray.position.x),
-      F(ray.position.y),
-      F(ray.position.z),
-      F(ray.direction.x),
-      F(ray.direction.y),
-      F(ray.direction.z),
+      f(ray.position.x),
+      f(ray.position.y),
+      f(ray.position.z),
+      f(ray.direction.x),
+      f(ray.direction.y),
+      f(ray.direction.z),
       col,
     );
   }
 
   /** Draw a grid */
   static drawGrid(slices: number, spacing: number): void {
-    r().symbols.DrawGridW(slices | 0, F(spacing));
+    r().symbols.DrawGridW(i(slices), f(spacing));
   }
 
   // --- Window state ---
@@ -1377,22 +1335,22 @@ export class Raylib {
     r().symbols.SetWindowTitleW(cstr(title));
   }
   static setWindowPosition(x: number, y: number): void {
-    r().symbols.SetWindowPositionW(x | 0, y | 0);
+    r().symbols.SetWindowPositionW(i(x), i(y));
   }
   static setWindowMonitor(monitor: number): void {
-    r().symbols.SetWindowMonitorW(monitor | 0);
+    r().symbols.SetWindowMonitorW(i(monitor));
   }
   static setWindowMinSize(w: number, h: number): void {
-    r().symbols.SetWindowMinSizeW(w | 0, h | 0);
+    r().symbols.SetWindowMinSizeW(i(w), i(h));
   }
   static setWindowMaxSize(w: number, h: number): void {
-    r().symbols.SetWindowMaxSizeW(w | 0, h | 0);
+    r().symbols.SetWindowMaxSizeW(i(w), i(h));
   }
   static setWindowSize(w: number, h: number): void {
-    r().symbols.SetWindowSizeW(w | 0, h | 0);
+    r().symbols.SetWindowSizeW(i(w), i(h));
   }
   static setWindowOpacity(opacity: number): void {
-    r().symbols.SetWindowOpacityW(F(opacity));
+    r().symbols.SetWindowOpacityW(f(opacity));
   }
   static setWindowFocused(): void {
     r().symbols.SetWindowFocusedW();
@@ -1417,7 +1375,7 @@ export class Raylib {
   }
 
   static getMonitorPosition(monitor: number): Vec2 {
-    r().symbols.GetMonitorPositionW(this._vec2Buf, monitor | 0);
+    r().symbols.GetMonitorPositionW(this._vec2Buf, i(monitor));
     return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
@@ -1428,13 +1386,13 @@ export class Raylib {
     return r().symbols.GetMonitorHeightW(monitor);
   }
   static getMonitorPhysicalWidth(monitor: number): number {
-    return r().symbols.GetMonitorPhysicalWidthW(monitor | 0);
+    return r().symbols.GetMonitorPhysicalWidthW(i(monitor));
   }
   static getMonitorPhysicalHeight(monitor: number): number {
-    return r().symbols.GetMonitorPhysicalHeightW(monitor | 0);
+    return r().symbols.GetMonitorPhysicalHeightW(i(monitor));
   }
   static getMonitorRefreshRate(monitor: number): number {
-    return r().symbols.GetMonitorRefreshRateW(monitor | 0);
+    return r().symbols.GetMonitorRefreshRateW(i(monitor));
   }
 
   static getWindowPosition(): Vec2 {
@@ -1448,7 +1406,7 @@ export class Raylib {
   }
 
   static getMonitorName(monitor: number): string {
-    const ptr = r().symbols.GetMonitorNameW(monitor | 0);
+    const ptr = r().symbols.GetMonitorNameW(i(monitor));
     if (!ptr) return '';
     return new CString(ptr).toString();
   }
@@ -1500,13 +1458,13 @@ export class Raylib {
     r().symbols.EndTextureModeW();
   }
   static beginBlendMode(mode: number): void {
-    r().symbols.BeginBlendModeW(mode | 0);
+    r().symbols.BeginBlendModeW(i(mode));
   }
   static endBlendMode(): void {
     r().symbols.EndBlendModeW();
   }
   static beginScissorMode(x: number, y: number, w: number, h: number): void {
-    r().symbols.BeginScissorModeW(x | 0, y | 0, w | 0, h | 0);
+    r().symbols.BeginScissorModeW(i(x), i(y), i(w), i(h));
   }
   static endScissorMode(): void {
     r().symbols.EndScissorModeW();
@@ -1533,10 +1491,10 @@ export class Raylib {
   // --- Random ---
 
   static setRandomSeed(seed: number): void {
-    r().symbols.SetRandomSeedW(seed | 0);
+    r().symbols.SetRandomSeedW(i(seed));
   }
   static getRandomValue(min: number, max: number): number {
-    return r().symbols.GetRandomValueW(min | 0, max | 0);
+    return r().symbols.GetRandomValueW(i(min), i(max));
   }
 
   // --- Misc ---
@@ -1545,7 +1503,7 @@ export class Raylib {
     r().symbols.TakeScreenshotW(cstr(fileName));
   }
   static setConfigFlags(flags: number): void {
-    r().symbols.SetConfigFlagsW(flags | 0);
+    r().symbols.SetConfigFlagsW(i(flags));
   }
   static openURL(url: string): void {
     r().symbols.OpenURLW(cstr(url));
@@ -1554,19 +1512,19 @@ export class Raylib {
   // --- Input: Keyboard ---
 
   static isKeyPressed(key: number): boolean {
-    return r().symbols.IsKeyPressedW(key | 0);
+    return r().symbols.IsKeyPressedW(i(key));
   }
   static isKeyPressedRepeat(key: number): boolean {
-    return r().symbols.IsKeyPressedRepeatW(key | 0);
+    return r().symbols.IsKeyPressedRepeatW(i(key));
   }
   static isKeyDown(key: number): boolean {
-    return r().symbols.IsKeyDownW(key | 0);
+    return r().symbols.IsKeyDownW(i(key));
   }
   static isKeyReleased(key: number): boolean {
-    return r().symbols.IsKeyReleasedW(key | 0);
+    return r().symbols.IsKeyReleasedW(i(key));
   }
   static isKeyUp(key: number): boolean {
-    return r().symbols.IsKeyUpW(key | 0);
+    return r().symbols.IsKeyUpW(i(key));
   }
   static getKeyPressed(): number {
     return r().symbols.GetKeyPressedW();
@@ -1575,7 +1533,7 @@ export class Raylib {
     return r().symbols.GetCharPressedW();
   }
   static setExitKey(key: number): void {
-    r().symbols.SetExitKeyW(key | 0);
+    r().symbols.SetExitKeyW(i(key));
   }
 
   // --- Input: Gamepad ---
@@ -1584,30 +1542,30 @@ export class Raylib {
     return r().symbols.IsGamepadAvailableW(gamepad);
   }
   static getGamepadName(gamepad: number): string {
-    const cstr = r().symbols.GetGamepadNameW(gamepad | 0);
+    const cstr = r().symbols.GetGamepadNameW(i(gamepad));
     if (!cstr) return '';
     return cstr.toString();
   }
   static isGamepadButtonPressed(gamepad: number, button: number): boolean {
-    return r().symbols.IsGamepadButtonPressedW(gamepad | 0, button | 0);
+    return r().symbols.IsGamepadButtonPressedW(i(gamepad), i(button));
   }
   static isGamepadButtonDown(gamepad: number, button: number): boolean {
-    return r().symbols.IsGamepadButtonDownW(gamepad | 0, button | 0);
+    return r().symbols.IsGamepadButtonDownW(i(gamepad), i(button));
   }
   static isGamepadButtonReleased(gamepad: number, button: number): boolean {
-    return r().symbols.IsGamepadButtonReleasedW(gamepad | 0, button | 0);
+    return r().symbols.IsGamepadButtonReleasedW(i(gamepad), i(button));
   }
   static isGamepadButtonUp(gamepad: number, button: number): boolean {
-    return r().symbols.IsGamepadButtonUpW(gamepad | 0, button | 0);
+    return r().symbols.IsGamepadButtonUpW(i(gamepad), i(button));
   }
   static getGamepadButtonPressed(): number {
     return r().symbols.GetGamepadButtonPressedW();
   }
   static getGamepadAxisCount(gamepad: number): number {
-    return r().symbols.GetGamepadAxisCountW(gamepad | 0);
+    return r().symbols.GetGamepadAxisCountW(i(gamepad));
   }
   static getGamepadAxisMovement(gamepad: number, axis: number): number {
-    return r().symbols.GetGamepadAxisMovementW(gamepad | 0, axis | 0);
+    return r().symbols.GetGamepadAxisMovementW(i(gamepad), i(axis));
   }
   static setGamepadMappings(mappings: string): number {
     return r().symbols.SetGamepadMappingsW(cstr(mappings));
@@ -1616,16 +1574,16 @@ export class Raylib {
   // --- Input: Mouse ---
 
   static isMouseButtonPressed(button: number): boolean {
-    return r().symbols.IsMouseButtonPressedW(button | 0);
+    return r().symbols.IsMouseButtonPressedW(i(button));
   }
   static isMouseButtonDown(button: number): boolean {
-    return r().symbols.IsMouseButtonDownW(button | 0);
+    return r().symbols.IsMouseButtonDownW(i(button));
   }
   static isMouseButtonReleased(button: number): boolean {
-    return r().symbols.IsMouseButtonReleasedW(button | 0);
+    return r().symbols.IsMouseButtonReleasedW(i(button));
   }
   static isMouseButtonUp(button: number): boolean {
-    return r().symbols.IsMouseButtonUpW(button | 0);
+    return r().symbols.IsMouseButtonUpW(i(button));
   }
   static getMouseX(): number {
     return r().symbols.GetMouseXW();
@@ -1645,13 +1603,13 @@ export class Raylib {
   }
 
   static setMousePosition(x: number, y: number): void {
-    r().symbols.SetMousePositionW(x | 0, y | 0);
+    r().symbols.SetMousePositionW(i(x), i(y));
   }
   static setMouseOffset(x: number, y: number): void {
-    r().symbols.SetMouseOffsetW(x | 0, y | 0);
+    r().symbols.SetMouseOffsetW(i(x), i(y));
   }
   static setMouseScale(scaleX: number, scaleY: number): void {
-    r().symbols.SetMouseScaleW(F(scaleX), F(scaleY));
+    r().symbols.SetMouseScaleW(f(scaleX), f(scaleY));
   }
   static getMouseWheelMove(): number {
     return r().symbols.GetMouseWheelMoveW();
@@ -1663,7 +1621,7 @@ export class Raylib {
   }
 
   static setMouseCursor(cursor: number): void {
-    r().symbols.SetMouseCursorW(cursor | 0);
+    r().symbols.SetMouseCursorW(i(cursor));
   }
 
   // --- Input: Touch ---
@@ -1676,12 +1634,12 @@ export class Raylib {
   }
 
   static getTouchPosition(index: number): Vec2 {
-    r().symbols.GetTouchPositionW(this._vec2Buf, index | 0);
+    r().symbols.GetTouchPositionW(this._vec2Buf, i(index));
     return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   static getTouchPointId(index: number): number {
-    return r().symbols.GetTouchPointIdW(index | 0);
+    return r().symbols.GetTouchPointIdW(i(index));
   }
   static getTouchPointCount(): number {
     return r().symbols.GetTouchPointCountW();
@@ -1690,10 +1648,10 @@ export class Raylib {
   // --- Gestures ---
 
   static setGesturesEnabled(flags: number): void {
-    r().symbols.SetGesturesEnabledW(flags | 0);
+    r().symbols.SetGesturesEnabledW(i(flags));
   }
   static isGestureDetected(gesture: number): boolean {
-    return r().symbols.IsGestureDetectedW(gesture | 0);
+    return r().symbols.IsGestureDetectedW(i(gesture));
   }
   static getGestureDetected(): number {
     return r().symbols.GetGestureDetectedW();
@@ -1728,7 +1686,7 @@ export class Raylib {
     const up = new Float32Array([camera.up.x, camera.up.y, camera.up.z]);
     const fovy = new Float32Array([camera.fovy]);
     const proj = new Int32Array([camera.projection]);
-    r().symbols.UpdateCameraW(pos, tar, up, fovy, proj, mode | 0);
+    r().symbols.UpdateCameraW(pos, tar, up, fovy, proj, i(mode));
     return {
       position: { x: pos[0]!, y: pos[1]!, z: pos[2]! },
       target: { x: tar[0]!, y: tar[1]!, z: tar[2]! },
@@ -1750,13 +1708,13 @@ export class Raylib {
       up,
       fovy,
       proj,
-      F(movement.x),
-      F(movement.y),
-      F(movement.z),
-      F(rotation.x),
-      F(rotation.y),
-      F(rotation.z),
-      F(zoom),
+      f(movement.x),
+      f(movement.y),
+      f(movement.z),
+      f(rotation.x),
+      f(rotation.y),
+      f(rotation.z),
+      f(zoom),
     );
     return {
       position: { x: pos[0]!, y: pos[1]!, z: pos[2]! },
@@ -1777,16 +1735,16 @@ export class Raylib {
       outDir,
       position.x,
       position.y,
-      F(camera.position.x),
-      F(camera.position.y),
-      F(camera.position.z),
-      F(camera.target.x),
-      F(camera.target.y),
-      F(camera.target.z),
-      F(camera.up.x),
-      F(camera.up.y),
-      F(camera.up.z),
-      F(camera.fovy),
+      f(camera.position.x),
+      f(camera.position.y),
+      f(camera.position.z),
+      f(camera.target.x),
+      f(camera.target.y),
+      f(camera.target.z),
+      f(camera.up.x),
+      f(camera.up.y),
+      f(camera.up.z),
+      f(camera.fovy),
       camera.projection,
     );
     return {
@@ -1798,19 +1756,19 @@ export class Raylib {
   static getWorldToScreen(position: Vec3, camera: Camera3D): Vec2 {
     r().symbols.GetWorldToScreenW(
       this._vec2Buf,
-      F(position.x),
-      F(position.y),
-      F(position.z),
-      F(camera.position.x),
-      F(camera.position.y),
-      F(camera.position.z),
-      F(camera.target.x),
-      F(camera.target.y),
-      F(camera.target.z),
-      F(camera.up.x),
-      F(camera.up.y),
-      F(camera.up.z),
-      F(camera.fovy),
+      f(position.x),
+      f(position.y),
+      f(position.z),
+      f(camera.position.x),
+      f(camera.position.y),
+      f(camera.position.z),
+      f(camera.target.x),
+      f(camera.target.y),
+      f(camera.target.z),
+      f(camera.up.x),
+      f(camera.up.y),
+      f(camera.up.z),
+      f(camera.fovy),
       camera.projection,
     );
     return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
@@ -1819,14 +1777,14 @@ export class Raylib {
   static getWorldToScreen2D(position: Vec2, camera: Camera2D): Vec2 {
     r().symbols.GetWorldToScreen2DW(
       this._vec2Buf,
-      F(position.x),
-      F(position.y),
-      F(camera.offset.x),
-      F(camera.offset.y),
-      F(camera.target.x),
-      F(camera.target.y),
-      F(camera.rotation),
-      F(camera.zoom),
+      f(position.x),
+      f(position.y),
+      f(camera.offset.x),
+      f(camera.offset.y),
+      f(camera.target.x),
+      f(camera.target.y),
+      f(camera.rotation),
+      f(camera.zoom),
     );
     return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
@@ -1834,14 +1792,14 @@ export class Raylib {
   static getScreenToWorld2D(position: Vec2, camera: Camera2D): Vec2 {
     r().symbols.GetScreenToWorld2DW(
       this._vec2Buf,
-      F(position.x),
-      F(position.y),
-      F(camera.offset.x),
-      F(camera.offset.y),
-      F(camera.target.x),
-      F(camera.target.y),
-      F(camera.rotation),
-      F(camera.zoom),
+      f(position.x),
+      f(position.y),
+      f(camera.offset.x),
+      f(camera.offset.y),
+      f(camera.target.x),
+      f(camera.target.y),
+      f(camera.rotation),
+      f(camera.zoom),
     );
     return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
@@ -1849,7 +1807,7 @@ export class Raylib {
   // --- DrawFPS ---
 
   static drawFPS(posX: number, posY: number): void {
-    r().symbols.DrawFPSW(posX | 0, posY | 0);
+    r().symbols.DrawFPSW(i(posX), i(posY));
   }
 
   // --- Texture ---
@@ -1926,8 +1884,8 @@ export class Raylib {
       texture.height,
       position.x,
       position.y,
-      F(rotation),
-      F(scale),
+      f(rotation),
+      f(scale),
       tint,
     );
   }
@@ -1969,7 +1927,7 @@ export class Raylib {
       dest.height,
       origin.x,
       origin.y,
-      F(rotation),
+      f(rotation),
       tint,
     );
   }
@@ -2000,14 +1958,7 @@ export class Raylib {
   }
 
   static drawModel(model: Model, position: Vec3, scale: number, tint: Color): void {
-    r().symbols.DrawModelW(
-      model,
-      F(position.x),
-      F(position.y),
-      F(position.z),
-      F(scale),
-      tint,
-    );
+    r().symbols.DrawModelW(model, f(position.x), f(position.y), f(position.z), f(scale), tint);
   }
 
   static drawModelEx(
@@ -2020,29 +1971,22 @@ export class Raylib {
   ): void {
     r().symbols.DrawModelExW(
       model,
-      F(position.x),
-      F(position.y),
-      F(position.z),
-      F(rotationAxis.x),
-      F(rotationAxis.y),
-      F(rotationAxis.z),
-      F(rotationAngle),
-      F(scale.x),
-      F(scale.y),
-      F(scale.z),
+      f(position.x),
+      f(position.y),
+      f(position.z),
+      f(rotationAxis.x),
+      f(rotationAxis.y),
+      f(rotationAxis.z),
+      f(rotationAngle),
+      f(scale.x),
+      f(scale.y),
+      f(scale.z),
       tint,
     );
   }
 
   static drawModelWires(model: Model, position: Vec3, scale: number, tint: Color): void {
-    r().symbols.DrawModelWiresW(
-      model,
-      F(position.x),
-      F(position.y),
-      F(position.z),
-      F(scale),
-      tint,
-    );
+    r().symbols.DrawModelWiresW(model, f(position.x), f(position.y), f(position.z), f(scale), tint);
   }
 
   static drawModelWiresEx(
@@ -2055,16 +1999,16 @@ export class Raylib {
   ): void {
     r().symbols.DrawModelWiresExW(
       model,
-      F(position.x),
-      F(position.y),
-      F(position.z),
-      F(rotationAxis.x),
-      F(rotationAxis.y),
-      F(rotationAxis.z),
-      F(rotationAngle),
-      F(scale.x),
-      F(scale.y),
-      F(scale.z),
+      f(position.x),
+      f(position.y),
+      f(position.z),
+      f(rotationAxis.x),
+      f(rotationAxis.y),
+      f(rotationAxis.z),
+      f(rotationAngle),
+      f(scale.x),
+      f(scale.y),
+      f(scale.z),
       tint,
     );
   }
@@ -2119,10 +2063,10 @@ export class Raylib {
 
   static colorFromNormalized(normalized: { x: number; y: number; z: number; w: number }): Color {
     return r().symbols.ColorFromNormalizedW(
-      F(normalized.x),
-      F(normalized.y),
-      F(normalized.z),
-      F(normalized.w),
+      f(normalized.x),
+      f(normalized.y),
+      f(normalized.z),
+      f(normalized.w),
     );
   }
 
@@ -2132,32 +2076,32 @@ export class Raylib {
   }
 
   static colorFromHSV(hue: number, saturation: number, value: number): Color {
-    return r().symbols.ColorFromHSVW(F(hue), F(saturation), F(value));
+    return r().symbols.ColorFromHSVW(f(hue), f(saturation), f(value));
   }
 
   static colorTint(color: Color, tint: Color): Color {
     return r().symbols.ColorTintW(color, tint);
   }
   static colorBrightness(color: Color, factor: number): Color {
-    return r().symbols.ColorBrightnessW(color, F(factor));
+    return r().symbols.ColorBrightnessW(color, f(factor));
   }
   static colorContrast(color: Color, contrast: number): Color {
-    return r().symbols.ColorContrastW(color, F(contrast));
+    return r().symbols.ColorContrastW(color, f(contrast));
   }
   static colorAlpha(color: Color, alpha: number): Color {
-    return r().symbols.ColorAlphaW(color, F(alpha));
+    return r().symbols.ColorAlphaW(color, f(alpha));
   }
   static colorAlphaBlend(dst: Color, src: Color, tint: Color): Color {
     return r().symbols.ColorAlphaBlendW(dst, src, tint);
   }
   static colorLerp(color1: Color, color2: Color, factor: number): Color {
-    return r().symbols.ColorLerpW(color1, color2, F(factor));
+    return r().symbols.ColorLerpW(color1, color2, f(factor));
   }
   static getColor(hexValue: number): Color {
     return r().symbols.GetColorW(hexValue);
   }
   static fade(color: Color, alpha: number): Color {
-    return r().symbols.FadeW(color, F(alpha));
+    return r().symbols.FadeW(color, f(alpha));
   }
   static colorIsEqual(col1: Color, col2: Color): boolean {
     return r().symbols.ColorIsEqualW(col1, col2);
@@ -2193,7 +2137,7 @@ export class Raylib {
   }
 
   static measureTextEx(font: Font, text: string, fontSize: number, spacing: number): Vec2 {
-    r().symbols.MeasureTextExW(this._vec2Buf, font, cstr(text), F(fontSize), F(spacing));
+    r().symbols.MeasureTextExW(this._vec2Buf, font, cstr(text), f(fontSize), f(spacing));
     return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
@@ -2205,7 +2149,15 @@ export class Raylib {
     spacing: number,
     tint: Color,
   ): void {
-    r().symbols.DrawTextExW(font, cstr(text), F(position.x), F(position.y), F(fontSize), F(spacing), tint);
+    r().symbols.DrawTextExW(
+      font,
+      cstr(text),
+      f(position.x),
+      f(position.y),
+      f(fontSize),
+      f(spacing),
+      tint,
+    );
   }
 
   static drawTextPro(
@@ -2221,13 +2173,13 @@ export class Raylib {
     r().symbols.DrawTextProW(
       font,
       cstr(text),
-      F(position.x),
-      F(position.y),
-      F(origin.x),
-      F(origin.y),
-      F(rotation),
-      F(fontSize),
-      F(spacing),
+      f(position.x),
+      f(position.y),
+      f(origin.x),
+      f(origin.y),
+      f(rotation),
+      f(fontSize),
+      f(spacing),
       tint,
     );
   }
@@ -2244,7 +2196,7 @@ export class Raylib {
     rightMotor: number,
     duration: number,
   ): void {
-    r().symbols.SetGamepadVibrationW(gamepad, F(leftMotor), F(rightMotor), F(duration));
+    r().symbols.SetGamepadVibrationW(gamepad, f(leftMotor), f(rightMotor), f(duration));
   }
 
   static traceLog(logLevel: number, text: string): void {
@@ -2278,16 +2230,16 @@ export class Raylib {
       position.y,
       width,
       height,
-      F(camera.position.x),
-      F(camera.position.y),
-      F(camera.position.z),
-      F(camera.target.x),
-      F(camera.target.y),
-      F(camera.target.z),
-      F(camera.up.x),
-      F(camera.up.y),
-      F(camera.up.z),
-      F(camera.fovy),
+      f(camera.position.x),
+      f(camera.position.y),
+      f(camera.position.z),
+      f(camera.target.x),
+      f(camera.target.y),
+      f(camera.target.z),
+      f(camera.up.x),
+      f(camera.up.y),
+      f(camera.up.z),
+      f(camera.fovy),
       camera.projection,
     );
     return {
@@ -2299,19 +2251,19 @@ export class Raylib {
   static getWorldToScreenEx(position: Vec3, camera: Camera3D, width: number, height: number): Vec2 {
     r().symbols.GetWorldToScreenExW(
       this._vec2Buf,
-      F(position.x),
-      F(position.y),
-      F(position.z),
-      F(camera.position.x),
-      F(camera.position.y),
-      F(camera.position.z),
-      F(camera.target.x),
-      F(camera.target.y),
-      F(camera.target.z),
-      F(camera.up.x),
-      F(camera.up.y),
-      F(camera.up.z),
-      F(camera.fovy),
+      f(position.x),
+      f(position.y),
+      f(position.z),
+      f(camera.position.x),
+      f(camera.position.y),
+      f(camera.position.z),
+      f(camera.target.x),
+      f(camera.target.y),
+      f(camera.target.z),
+      f(camera.up.x),
+      f(camera.up.y),
+      f(camera.up.z),
+      f(camera.fovy),
       camera.projection,
       width,
       height,
@@ -2324,16 +2276,16 @@ export class Raylib {
   static getCameraMatrix(camera: Camera3D): Float32Array {
     r().symbols.GetCameraMatrixW(
       this._matBuf,
-      F(camera.position.x),
-      F(camera.position.y),
-      F(camera.position.z),
-      F(camera.target.x),
-      F(camera.target.y),
-      F(camera.target.z),
-      F(camera.up.x),
-      F(camera.up.y),
-      F(camera.up.z),
-      F(camera.fovy),
+      f(camera.position.x),
+      f(camera.position.y),
+      f(camera.position.z),
+      f(camera.target.x),
+      f(camera.target.y),
+      f(camera.target.z),
+      f(camera.up.x),
+      f(camera.up.y),
+      f(camera.up.z),
+      f(camera.fovy),
       camera.projection,
     );
     return new Float32Array(this._matBuf);
@@ -2346,8 +2298,8 @@ export class Raylib {
       camera.offset.y,
       camera.target.x,
       camera.target.y,
-      F(camera.rotation),
-      F(camera.zoom),
+      f(camera.rotation),
+      f(camera.zoom),
     );
     return new Float32Array(this._matBuf);
   }
@@ -2554,7 +2506,7 @@ export class Raylib {
     inner: Color,
     outer: Color,
   ): Image {
-    return r().symbols.GenImageGradientRadialW(width, height, F(density), inner, outer);
+    return r().symbols.GenImageGradientRadialW(width, height, f(density), inner, outer);
   }
   static genImageGradientSquare(
     width: number,
@@ -2563,7 +2515,7 @@ export class Raylib {
     inner: Color,
     outer: Color,
   ): Image {
-    return r().symbols.GenImageGradientSquareW(width, height, F(density), inner, outer);
+    return r().symbols.GenImageGradientSquareW(width, height, f(density), inner, outer);
   }
   static genImageChecked(
     width: number,
@@ -2576,7 +2528,7 @@ export class Raylib {
     return r().symbols.GenImageCheckedW(width, height, checksX, checksY, col1, col2);
   }
   static genImageWhiteNoise(width: number, height: number, factor: number): Image {
-    return r().symbols.GenImageWhiteNoiseW(width, height, F(factor));
+    return r().symbols.GenImageWhiteNoiseW(width, height, f(factor));
   }
   static genImagePerlinNoise(
     width: number,
@@ -2585,7 +2537,7 @@ export class Raylib {
     offsetY: number,
     scale: number,
   ): Image {
-    return r().symbols.GenImagePerlinNoiseW(width, height, offsetX, offsetY, F(scale));
+    return r().symbols.GenImagePerlinNoiseW(width, height, offsetX, offsetY, f(scale));
   }
   static genImageCellular(width: number, height: number, tileSize: number): Image {
     return r().symbols.GenImageCellularW(width, height, tileSize);
@@ -2615,7 +2567,7 @@ export class Raylib {
     spacing: number,
     tint: Color,
   ): Image {
-    return r().symbols.ImageTextExW(font, cstr(text), fontSize, F(spacing), tint);
+    return r().symbols.ImageTextExW(font, cstr(text), fontSize, f(spacing), tint);
   }
 
   static imageFormat(image: Image, newFormat: number): void {
@@ -2625,10 +2577,10 @@ export class Raylib {
     r().symbols.ImageCropW(image, rec.x, rec.y, rec.width, rec.height);
   }
   static imageAlphaCrop(image: Image, threshold: number): void {
-    r().symbols.ImageAlphaCropW(image, F(threshold));
+    r().symbols.ImageAlphaCropW(image, f(threshold));
   }
   static imageAlphaClear(image: Image, color: Color, threshold: number): void {
-    r().symbols.ImageAlphaClearW(image, color, F(threshold));
+    r().symbols.ImageAlphaClearW(image, color, f(threshold));
   }
   static imageAlphaMask(image: Image, alphaMask: Image): void {
     r().symbols.ImageAlphaMaskW(image, alphaMask);
@@ -2668,7 +2620,7 @@ export class Raylib {
     r().symbols.ImageFlipHorizontalW(image);
   }
   static imageRotate(image: Image, degrees: number): void {
-    r().symbols.ImageRotateW(image, F(degrees));
+    r().symbols.ImageRotateW(image, f(degrees));
   }
   static imageRotateCW(image: Image): void {
     r().symbols.ImageRotateCWW(image);
@@ -2686,7 +2638,7 @@ export class Raylib {
     r().symbols.ImageColorGrayscaleW(image);
   }
   static imageColorContrast(image: Image, contrast: number): void {
-    r().symbols.ImageColorContrastW(image, F(contrast));
+    r().symbols.ImageColorContrastW(image, f(contrast));
   }
   static imageColorBrightness(image: Image, brightness: number): void {
     r().symbols.ImageColorBrightnessW(image, brightness);
@@ -2698,7 +2650,7 @@ export class Raylib {
   // --- Image info ---
 
   static getImageAlphaBorder(image: Image, threshold: number): Rectangle {
-    r().symbols.GetImageAlphaBorderW(this._recBuf, image, F(threshold));
+    r().symbols.GetImageAlphaBorderW(this._recBuf, image, f(threshold));
     return {
       x: this._recBuf[0]!,
       y: this._recBuf[1]!,
@@ -2851,7 +2803,7 @@ export class Raylib {
       position.x,
       position.y,
       fontSize,
-      F(spacing),
+      f(spacing),
       tint,
     );
   }
@@ -2919,7 +2871,7 @@ export class Raylib {
       dest.height,
       origin.x,
       origin.y,
-      F(rotation),
+      f(rotation),
       tint,
     );
   }
@@ -2933,12 +2885,12 @@ export class Raylib {
 
   static drawBoundingBox(box: BoundingBox, color: Color): void {
     r().symbols.DrawBoundingBoxW(
-      F(box.min.x),
-      F(box.min.y),
-      F(box.min.z),
-      F(box.max.x),
-      F(box.max.y),
-      F(box.max.z),
+      f(box.min.x),
+      f(box.min.y),
+      f(box.min.z),
+      f(box.max.x),
+      f(box.max.y),
+      f(box.max.z),
       color,
     );
   }
@@ -2951,24 +2903,24 @@ export class Raylib {
     tint: Color,
   ): void {
     r().symbols.DrawBillboardW(
-      F(camera.position.x),
-      F(camera.position.y),
-      F(camera.position.z),
-      F(camera.target.x),
-      F(camera.target.y),
-      F(camera.target.z),
-      F(camera.up.x),
-      F(camera.up.y),
-      F(camera.up.z),
-      F(camera.fovy),
+      f(camera.position.x),
+      f(camera.position.y),
+      f(camera.position.z),
+      f(camera.target.x),
+      f(camera.target.y),
+      f(camera.target.z),
+      f(camera.up.x),
+      f(camera.up.y),
+      f(camera.up.z),
+      f(camera.fovy),
       camera.projection,
       texture.id,
       texture.width,
       texture.height,
-      F(position.x),
-      F(position.y),
-      F(position.z),
-      F(scale),
+      f(position.x),
+      f(position.y),
+      f(position.z),
+      f(scale),
       tint,
     );
   }
@@ -2982,16 +2934,16 @@ export class Raylib {
     tint: Color,
   ): void {
     r().symbols.DrawBillboardRecW(
-      F(camera.position.x),
-      F(camera.position.y),
-      F(camera.position.z),
-      F(camera.target.x),
-      F(camera.target.y),
-      F(camera.target.z),
-      F(camera.up.x),
-      F(camera.up.y),
-      F(camera.up.z),
-      F(camera.fovy),
+      f(camera.position.x),
+      f(camera.position.y),
+      f(camera.position.z),
+      f(camera.target.x),
+      f(camera.target.y),
+      f(camera.target.z),
+      f(camera.up.x),
+      f(camera.up.y),
+      f(camera.up.z),
+      f(camera.fovy),
       camera.projection,
       texture.id,
       texture.width,
@@ -3000,11 +2952,11 @@ export class Raylib {
       source.y,
       source.width,
       source.height,
-      F(position.x),
-      F(position.y),
-      F(position.z),
-      F(size.x),
-      F(size.y),
+      f(position.x),
+      f(position.y),
+      f(position.z),
+      f(size.x),
+      f(size.y),
       tint,
     );
   }
@@ -3021,16 +2973,16 @@ export class Raylib {
     tint: Color,
   ): void {
     r().symbols.DrawBillboardProW(
-      F(camera.position.x),
-      F(camera.position.y),
-      F(camera.position.z),
-      F(camera.target.x),
-      F(camera.target.y),
-      F(camera.target.z),
-      F(camera.up.x),
-      F(camera.up.y),
-      F(camera.up.z),
-      F(camera.fovy),
+      f(camera.position.x),
+      f(camera.position.y),
+      f(camera.position.z),
+      f(camera.target.x),
+      f(camera.target.y),
+      f(camera.target.z),
+      f(camera.up.x),
+      f(camera.up.y),
+      f(camera.up.z),
+      f(camera.fovy),
       camera.projection,
       texture.id,
       texture.width,
@@ -3039,17 +2991,17 @@ export class Raylib {
       source.y,
       source.width,
       source.height,
-      F(position.x),
-      F(position.y),
-      F(position.z),
-      F(up.x),
-      F(up.y),
-      F(up.z),
-      F(size.x),
-      F(size.y),
-      F(origin.x),
-      F(origin.y),
-      F(rotation),
+      f(position.x),
+      f(position.y),
+      f(position.z),
+      f(up.x),
+      f(up.y),
+      f(up.z),
+      f(size.x),
+      f(size.y),
+      f(origin.x),
+      f(origin.y),
+      f(rotation),
       tint,
     );
   }
@@ -3090,42 +3042,37 @@ export class Raylib {
   // --- Mesh generation ---
 
   static genMeshPoly(sides: number, radius: number): Mesh {
-    return r().symbols.GenMeshPolyW(sides, F(radius));
+    return r().symbols.GenMeshPolyW(sides, f(radius));
   }
   static genMeshPlane(width: number, length: number, resX: number, resZ: number): Mesh {
-    return r().symbols.GenMeshPlaneW(F(width), F(length), resX, resZ);
+    return r().symbols.GenMeshPlaneW(f(width), f(length), resX, resZ);
   }
   static genMeshCube(width: number, height: number, length: number): Mesh {
-    return r().symbols.GenMeshCubeW(F(width), F(height), F(length));
+    return r().symbols.GenMeshCubeW(f(width), f(height), f(length));
   }
   static genMeshSphere(radius: number, rings: number, slices: number): Mesh {
-    return r().symbols.GenMeshSphereW(F(radius), rings, slices);
+    return r().symbols.GenMeshSphereW(f(radius), rings, slices);
   }
   static genMeshHemiSphere(radius: number, rings: number, slices: number): Mesh {
-    return r().symbols.GenMeshHemiSphereW(F(radius), rings, slices);
+    return r().symbols.GenMeshHemiSphereW(f(radius), rings, slices);
   }
   static genMeshCylinder(radius: number, height: number, slices: number): Mesh {
-    return r().symbols.GenMeshCylinderW(F(radius), F(height), slices);
+    return r().symbols.GenMeshCylinderW(f(radius), f(height), slices);
   }
   static genMeshCone(radius: number, height: number, slices: number): Mesh {
-    return r().symbols.GenMeshConeW(F(radius), F(height), slices);
+    return r().symbols.GenMeshConeW(f(radius), f(height), slices);
   }
   static genMeshTorus(radius: number, size: number, radSeg: number, sides: number): Mesh {
-    return r().symbols.GenMeshTorusW(F(radius), F(size), radSeg, sides);
+    return r().symbols.GenMeshTorusW(f(radius), f(size), radSeg, sides);
   }
   static genMeshKnot(radius: number, size: number, radSeg: number, sides: number): Mesh {
-    return r().symbols.GenMeshKnotW(F(radius), F(size), radSeg, sides);
+    return r().symbols.GenMeshKnotW(f(radius), f(size), radSeg, sides);
   }
   static genMeshHeightmap(heightmap: Image, size: Vec3): Mesh {
-    return r().symbols.GenMeshHeightmapW(heightmap, F(size.x), F(size.y), F(size.z));
+    return r().symbols.GenMeshHeightmapW(heightmap, f(size.x), f(size.y), f(size.z));
   }
   static genMeshCubicmap(cubicmap: Image, cubeSize: Vec3): Mesh {
-    return r().symbols.GenMeshCubicmapW(
-      cubicmap,
-      F(cubeSize.x),
-      F(cubeSize.y),
-      F(cubeSize.z),
-    );
+    return r().symbols.GenMeshCubicmapW(cubicmap, f(cubeSize.x), f(cubeSize.y), f(cubeSize.z));
   }
 
   // --- Material management ---
@@ -3154,7 +3101,7 @@ export class Raylib {
   }
 
   static updateModelAnimation(model: Model, anim: ModelAnimation, frame: number): void {
-    r().symbols.UpdateModelAnimationW(model, anim, F(frame));
+    r().symbols.UpdateModelAnimationW(model, anim, f(frame));
   }
   static updateModelAnimationEx(
     model: Model,
@@ -3164,7 +3111,7 @@ export class Raylib {
     frameB: number,
     blend: number,
   ): void {
-    r().symbols.UpdateModelAnimationExW(model, animA, F(frameA), animB, F(frameB), F(blend));
+    r().symbols.UpdateModelAnimationExW(model, animA, f(frameA), animB, f(frameB), f(blend));
   }
   static unloadModelAnimations(startSlot: number, count: number): void {
     r().symbols.UnloadModelAnimationsW(startSlot, count);
@@ -3182,46 +3129,46 @@ export class Raylib {
     radius2: number,
   ): boolean {
     return r().symbols.CheckCollisionSpheresW(
-      F(center1.x),
-      F(center1.y),
-      F(center1.z),
-      F(radius1),
-      F(center2.x),
-      F(center2.y),
-      F(center2.z),
-      F(radius2),
+      f(center1.x),
+      f(center1.y),
+      f(center1.z),
+      f(radius1),
+      f(center2.x),
+      f(center2.y),
+      f(center2.z),
+      f(radius2),
     );
   }
 
   static checkCollisionBoxes(box1: BoundingBox, box2: BoundingBox): boolean {
     return r().symbols.CheckCollisionBoxesW(
-      F(box1.min.x),
-      F(box1.min.y),
-      F(box1.min.z),
-      F(box1.max.x),
-      F(box1.max.y),
-      F(box1.max.z),
-      F(box2.min.x),
-      F(box2.min.y),
-      F(box2.min.z),
-      F(box2.max.x),
-      F(box2.max.y),
-      F(box2.max.z),
+      f(box1.min.x),
+      f(box1.min.y),
+      f(box1.min.z),
+      f(box1.max.x),
+      f(box1.max.y),
+      f(box1.max.z),
+      f(box2.min.x),
+      f(box2.min.y),
+      f(box2.min.z),
+      f(box2.max.x),
+      f(box2.max.y),
+      f(box2.max.z),
     );
   }
 
   static checkCollisionBoxSphere(box: BoundingBox, center: Vec3, radius: number): boolean {
     return r().symbols.CheckCollisionBoxSphereW(
-      F(box.min.x),
-      F(box.min.y),
-      F(box.min.z),
-      F(box.max.x),
-      F(box.max.y),
-      F(box.max.z),
-      F(center.x),
-      F(center.y),
-      F(center.z),
-      F(radius),
+      f(box.min.x),
+      f(box.min.y),
+      f(box.min.z),
+      f(box.max.x),
+      f(box.max.y),
+      f(box.max.z),
+      f(center.x),
+      f(center.y),
+      f(center.z),
+      f(radius),
     );
   }
   static getRayCollisionSphere(ray: Ray, center: Vec3, radius: number): RayCollision {
@@ -3230,16 +3177,16 @@ export class Raylib {
       this._rcDist,
       this._rcPt,
       this._rcNorm,
-      F(ray.position.x),
-      F(ray.position.y),
-      F(ray.position.z),
-      F(ray.direction.x),
-      F(ray.direction.y),
-      F(ray.direction.z),
-      F(center.x),
-      F(center.y),
-      F(center.z),
-      F(radius),
+      f(ray.position.x),
+      f(ray.position.y),
+      f(ray.position.z),
+      f(ray.direction.x),
+      f(ray.direction.y),
+      f(ray.direction.z),
+      f(center.x),
+      f(center.y),
+      f(center.z),
+      f(radius),
     );
     return {
       hit: this._rcHit[0]! !== 0,
@@ -3255,18 +3202,18 @@ export class Raylib {
       this._rcDist,
       this._rcPt,
       this._rcNorm,
-      F(ray.position.x),
-      F(ray.position.y),
-      F(ray.position.z),
-      F(ray.direction.x),
-      F(ray.direction.y),
-      F(ray.direction.z),
-      F(box.min.x),
-      F(box.min.y),
-      F(box.min.z),
-      F(box.max.x),
-      F(box.max.y),
-      F(box.max.z),
+      f(ray.position.x),
+      f(ray.position.y),
+      f(ray.position.z),
+      f(ray.direction.x),
+      f(ray.direction.y),
+      f(ray.direction.z),
+      f(box.min.x),
+      f(box.min.y),
+      f(box.min.z),
+      f(box.max.x),
+      f(box.max.y),
+      f(box.max.z),
     );
     return {
       hit: this._rcHit[0]! !== 0,
@@ -3282,21 +3229,21 @@ export class Raylib {
       this._rcDist,
       this._rcPt,
       this._rcNorm,
-      F(ray.position.x),
-      F(ray.position.y),
-      F(ray.position.z),
-      F(ray.direction.x),
-      F(ray.direction.y),
-      F(ray.direction.z),
-      F(p1.x),
-      F(p1.y),
-      F(p1.z),
-      F(p2.x),
-      F(p2.y),
-      F(p2.z),
-      F(p3.x),
-      F(p3.y),
-      F(p3.z),
+      f(ray.position.x),
+      f(ray.position.y),
+      f(ray.position.z),
+      f(ray.direction.x),
+      f(ray.direction.y),
+      f(ray.direction.z),
+      f(p1.x),
+      f(p1.y),
+      f(p1.z),
+      f(p2.x),
+      f(p2.y),
+      f(p2.z),
+      f(p3.x),
+      f(p3.y),
+      f(p3.z),
     );
     return {
       hit: this._rcHit[0]! !== 0,
@@ -3312,24 +3259,24 @@ export class Raylib {
       this._rcDist,
       this._rcPt,
       this._rcNorm,
-      F(ray.position.x),
-      F(ray.position.y),
-      F(ray.position.z),
-      F(ray.direction.x),
-      F(ray.direction.y),
-      F(ray.direction.z),
-      F(p1.x),
-      F(p1.y),
-      F(p1.z),
-      F(p2.x),
-      F(p2.y),
-      F(p2.z),
-      F(p3.x),
-      F(p3.y),
-      F(p3.z),
-      F(p4.x),
-      F(p4.y),
-      F(p4.z),
+      f(ray.position.x),
+      f(ray.position.y),
+      f(ray.position.z),
+      f(ray.direction.x),
+      f(ray.direction.y),
+      f(ray.direction.z),
+      f(p1.x),
+      f(p1.y),
+      f(p1.z),
+      f(p2.x),
+      f(p2.y),
+      f(p2.z),
+      f(p3.x),
+      f(p3.y),
+      f(p3.z),
+      f(p4.x),
+      f(p4.y),
+      f(p4.z),
     );
     return {
       hit: this._rcHit[0]! !== 0,
@@ -3351,7 +3298,7 @@ export class Raylib {
     return r().symbols.IsAudioDeviceReadyW();
   }
   static setMasterVolume(volume: number): void {
-    r().symbols.SetMasterVolumeW(F(volume));
+    r().symbols.SetMasterVolumeW(f(volume));
   }
   static getMasterVolume(): number {
     return r().symbols.GetMasterVolumeW();
@@ -3423,13 +3370,13 @@ export class Raylib {
     return r().symbols.IsSoundPlayingW(sound);
   }
   static setSoundVolume(sound: Sound, volume: number): void {
-    r().symbols.SetSoundVolumeW(sound, F(volume));
+    r().symbols.SetSoundVolumeW(sound, f(volume));
   }
   static setSoundPitch(sound: Sound, pitch: number): void {
-    r().symbols.SetSoundPitchW(sound, F(pitch));
+    r().symbols.SetSoundPitchW(sound, f(pitch));
   }
   static setSoundPan(sound: Sound, pan: number): void {
-    r().symbols.SetSoundPanW(sound, F(pan));
+    r().symbols.SetSoundPanW(sound, f(pan));
   }
 
   // --- Music ---
@@ -3465,16 +3412,16 @@ export class Raylib {
     r().symbols.ResumeMusicStreamW(music);
   }
   static seekMusicStream(music: Music, position: number): void {
-    r().symbols.SeekMusicStreamW(music, F(position));
+    r().symbols.SeekMusicStreamW(music, f(position));
   }
   static setMusicVolume(music: Music, volume: number): void {
-    r().symbols.SetMusicVolumeW(music, F(volume));
+    r().symbols.SetMusicVolumeW(music, f(volume));
   }
   static setMusicPitch(music: Music, pitch: number): void {
-    r().symbols.SetMusicPitchW(music, F(pitch));
+    r().symbols.SetMusicPitchW(music, f(pitch));
   }
   static setMusicPan(music: Music, pan: number): void {
-    r().symbols.SetMusicPanW(music, F(pan));
+    r().symbols.SetMusicPanW(music, f(pan));
   }
   static getMusicTimeLength(music: Music): number {
     return r().symbols.GetMusicTimeLengthW(music);
@@ -3513,13 +3460,13 @@ export class Raylib {
     r().symbols.StopAudioStreamW(stream);
   }
   static setAudioStreamVolume(stream: AudioStream, volume: number): void {
-    r().symbols.SetAudioStreamVolumeW(stream, F(volume));
+    r().symbols.SetAudioStreamVolumeW(stream, f(volume));
   }
   static setAudioStreamPitch(stream: AudioStream, pitch: number): void {
-    r().symbols.SetAudioStreamPitchW(stream, F(pitch));
+    r().symbols.SetAudioStreamPitchW(stream, f(pitch));
   }
   static setAudioStreamPan(stream: AudioStream, pan: number): void {
-    r().symbols.SetAudioStreamPanW(stream, F(pan));
+    r().symbols.SetAudioStreamPanW(stream, f(pan));
   }
   static setAudioStreamBufferSizeDefault(size: number): void {
     r().symbols.SetAudioStreamBufferSizeDefaultW(size);
@@ -3548,7 +3495,14 @@ export class Raylib {
     fontSize: number,
     tint: Color,
   ): void {
-    r().symbols.DrawTextCodepointW(font, codepoint, F(position.x), F(position.y), F(fontSize), tint);
+    r().symbols.DrawTextCodepointW(
+      font,
+      codepoint,
+      f(position.x),
+      f(position.y),
+      f(fontSize),
+      tint,
+    );
   }
   static drawTextCodepoints(
     font: Font,
@@ -3563,10 +3517,10 @@ export class Raylib {
       font,
       codepoints,
       count,
-      F(position.x),
-      F(position.y),
-      F(fontSize),
-      F(spacing),
+      f(position.x),
+      f(position.y),
+      f(fontSize),
+      f(spacing),
       tint,
     );
   }
@@ -3715,29 +3669,29 @@ export class Raylib {
       this._rcDist,
       this._rcPt,
       this._rcNorm,
-      F(ray.position.x),
-      F(ray.position.y),
-      F(ray.position.z),
-      F(ray.direction.x),
-      F(ray.direction.y),
-      F(ray.direction.z),
+      f(ray.position.x),
+      f(ray.position.y),
+      f(ray.position.z),
+      f(ray.direction.x),
+      f(ray.direction.y),
+      f(ray.direction.z),
       mesh,
-      F(m[0]!),
-      F(m[4]!),
-      F(m[8]!),
-      F(m[12]!),
-      F(m[1]!),
-      F(m[5]!),
-      F(m[9]!),
-      F(m[13]!),
-      F(m[2]!),
-      F(m[6]!),
-      F(m[10]!),
-      F(m[14]!),
-      F(m[3]!),
-      F(m[7]!),
-      F(m[11]!),
-      F(m[15]!),
+      f(m[0]!),
+      f(m[4]!),
+      f(m[8]!),
+      f(m[12]!),
+      f(m[1]!),
+      f(m[5]!),
+      f(m[9]!),
+      f(m[13]!),
+      f(m[2]!),
+      f(m[6]!),
+      f(m[10]!),
+      f(m[14]!),
+      f(m[3]!),
+      f(m[7]!),
+      f(m[11]!),
+      f(m[15]!),
     );
     return {
       hit: this._rcHit[0]! !== 0,

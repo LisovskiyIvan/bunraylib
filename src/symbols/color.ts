@@ -4,7 +4,10 @@ const { i32, bool, ptr } = FFIType;
 export const colorSymbols = {
   ColorToIntW: { args: [i32], returns: i32 },
   ColorNormalizeW: { args: [ptr, i32], returns: FFIType.void },
-  ColorFromNormalizedW: { args: [FFIType.f32, FFIType.f32, FFIType.f32, FFIType.f32], returns: i32 },
+  ColorFromNormalizedW: {
+    args: [FFIType.f32, FFIType.f32, FFIType.f32, FFIType.f32],
+    returns: i32,
+  },
   ColorToHSWW: { args: [ptr, i32], returns: FFIType.void },
   ColorFromHSWW: { args: [FFIType.f32, FFIType.f32, FFIType.f32], returns: i32 },
   ColorTintW: { args: [i32, i32], returns: i32 },

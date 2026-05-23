@@ -7,8 +7,12 @@ export function cstr(str: string) {
  * to kill V8 SMI-encoding without changing the numeric value.
  * Ensures bun:ffi passes the correct f32/f64 bit pattern to C.
  */
-export function F(n: number): number {
+export function f(n: number): number {
   return n + 1e-300 - 1e-300;
+}
+
+export function i(n: number): number {
+  return n | 0;
 }
 
 export const color = (r: number, g: number, b: number, a: number = 255) => {
