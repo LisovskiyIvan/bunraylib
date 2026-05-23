@@ -1,4 +1,4 @@
-import { color } from "./utils";
+import { color } from './utils';
 
 export const PI = 3.141592653589793;
 export const DEG2RAD = PI / 180;

@@ -1,6 +1,6 @@
-import { getSymbols } from "./symbols";
-export { configure } from "./symbols";
-export type { RaylibConfig } from "./symbols";
+import { getSymbols } from './symbols';
+export { configure } from './symbols';
+export type { RaylibConfig } from './symbols';
 
 const r = () => getSymbols();
 import type {
@@ -26,10 +26,10 @@ import type {
   ModelAnimation,
   RayCollision,
   GlyphInfo,
-} from "./types";
-import { cstr, f2i, i2f } from "./utils";
-import { CString } from "bun:ffi";
-import type { Color } from "./types";
+} from './types';
+import { cstr, f2i, i2f } from './utils';
+import { CString } from 'bun:ffi';
+import type { Color } from './types';
 
 export class Raylib {
   private static _rcHit = new Uint8Array(1);
@@ -907,7 +907,13 @@ export class Raylib {
 
   /** Check if point is inside circle */
   static checkCollisionPointCircle(point: Vec2, center: Vec2, radius: number): boolean {
-    return r().symbols.CheckCollisionPointCircleW(f2i(point.x), f2i(point.y), f2i(center.x), f2i(center.y), f2i(radius));
+    return r().symbols.CheckCollisionPointCircleW(
+      f2i(point.x),
+      f2i(point.y),
+      f2i(center.x),
+      f2i(center.y),
+      f2i(radius),
+    );
   }
 
   /** Check if point is inside a triangle */
@@ -942,7 +948,12 @@ export class Raylib {
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
   static checkCollisionPointPoly(point: Vec2, points: Float32Array): boolean {
-    return r().symbols.CheckCollisionPointPolyW(f2i(point.x), f2i(point.y), points, points.length / 2);
+    return r().symbols.CheckCollisionPointPolyW(
+      f2i(point.x),
+      f2i(point.y),
+      points,
+      points.length / 2,
+    );
   }
 
   /**
@@ -1438,7 +1449,7 @@ export class Raylib {
 
   static getMonitorName(monitor: number): string {
     const ptr = r().symbols.GetMonitorNameW(monitor | 0);
-    if (!ptr) return "";
+    if (!ptr) return '';
     return new CString(ptr).toString();
   }
 
@@ -1448,7 +1459,7 @@ export class Raylib {
 
   static getClipboardText(): string {
     const ptr = r().symbols.GetClipboardTextW();
-    if (!ptr) return "";
+    if (!ptr) return '';
     return new CString(ptr).toString();
   }
 
@@ -1574,7 +1585,7 @@ export class Raylib {
   }
   static getGamepadName(gamepad: number): string {
     const cstr = r().symbols.GetGamepadNameW(gamepad | 0);
-    if (!cstr) return "";
+    if (!cstr) return '';
     return cstr.toString();
   }
   static isGamepadButtonPressed(gamepad: number, button: number): boolean {
@@ -1723,7 +1734,7 @@ export class Raylib {
       target: { x: tar[0]!, y: tar[1]!, z: tar[2]! },
       up: { x: up[0]!, y: up[1]!, z: up[2]! },
       fovy: fovy[0]!,
-      projection: proj[0]! as Camera3D["projection"],
+      projection: proj[0]! as Camera3D['projection'],
     };
   }
 
@@ -1752,7 +1763,7 @@ export class Raylib {
       target: { x: tar[0]!, y: tar[1]!, z: tar[2]! },
       up: { x: up[0]!, y: up[1]!, z: up[2]! },
       fovy: fovy[0]!,
-      projection: proj[0]! as Camera3D["projection"],
+      projection: proj[0]! as Camera3D['projection'],
     };
   }
 
@@ -2079,7 +2090,12 @@ export class Raylib {
 
   static getShapesTextureRectangle(): Rectangle {
     r().symbols.GetShapesTextureRectangleW(this._recBuf);
-    return { x: this._recBuf[0]!, y: _recBuf[1]!, width: _recBuf[2]!, height: _recBuf[3]! };
+    return {
+      x: this._recBuf[0]!,
+      y: this._recBuf[1]!,
+      width: this._recBuf[2]!,
+      height: this._recBuf[3]!,
+    };
   }
 
   // --- Color utilities ---
@@ -2353,43 +2369,43 @@ export class Raylib {
 
   static getFileExtension(fileName: string): string {
     const ptr = r().symbols.GetFileExtensionW(cstr(fileName));
-    if (!ptr) return "";
+    if (!ptr) return '';
     return new CString(ptr).toString();
   }
 
   static getFileName(filePath: string): string {
     const ptr = r().symbols.GetFileNameW(cstr(filePath));
-    if (!ptr) return "";
+    if (!ptr) return '';
     return new CString(ptr).toString();
   }
 
   static getFileNameWithoutExt(filePath: string): string {
     const ptr = r().symbols.GetFileNameWithoutExtW(cstr(filePath));
-    if (!ptr) return "";
+    if (!ptr) return '';
     return new CString(ptr).toString();
   }
 
   static getDirectoryPath(filePath: string): string {
     const ptr = r().symbols.GetDirectoryPathW(cstr(filePath));
-    if (!ptr) return "";
+    if (!ptr) return '';
     return new CString(ptr).toString();
   }
 
   static getPrevDirectoryPath(dirPath: string): string {
     const ptr = r().symbols.GetPrevDirectoryPathW(cstr(dirPath));
-    if (!ptr) return "";
+    if (!ptr) return '';
     return new CString(ptr).toString();
   }
 
   static getWorkingDirectory(): string {
     const ptr = r().symbols.GetWorkingDirectoryW();
-    if (!ptr) return "";
+    if (!ptr) return '';
     return new CString(ptr).toString();
   }
 
   static getApplicationDirectory(): string {
     const ptr = r().symbols.GetApplicationDirectoryW();
-    if (!ptr) return "";
+    if (!ptr) return '';
     return new CString(ptr).toString();
   }
 
@@ -2411,7 +2427,7 @@ export class Raylib {
 
   static loadFileText(fileName: string): string {
     const ptr = r().symbols.LoadFileTextW(cstr(fileName));
-    if (!ptr) return "";
+    if (!ptr) return '';
     return new CString(ptr).toString();
   }
 

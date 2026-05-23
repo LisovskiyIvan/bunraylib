@@ -1,5 +1,5 @@
 export function cstr(str: string) {
-  return Buffer.from(str + "\0", "utf8");
+  return Buffer.from(str + '\0', 'utf8');
 }
 
 const _f2iBuf = new ArrayBuffer(4);

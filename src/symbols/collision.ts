@@ -1,4 +1,4 @@
-import { FFIType } from "bun:ffi";
+import { FFIType } from 'bun:ffi';
 const { i32, bool, ptr } = FFIType;
 
 export const collisionSymbols = {

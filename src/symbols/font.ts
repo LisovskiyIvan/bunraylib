@@ -1,4 +1,4 @@
-import { FFIType } from "bun:ffi";
+import { FFIType } from 'bun:ffi';
 const { i32, cstring, bool, f32, ptr } = FFIType;
 
 export const fontSymbols = {

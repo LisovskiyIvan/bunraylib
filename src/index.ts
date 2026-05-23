@@ -1,7 +1,7 @@
-export { Raylib } from "./Raylib";
-export { configure, getSymbols } from "./symbols";
-export type { RaylibConfig } from "./symbols";
-export { cstr, color } from "./utils";
+export { Raylib } from './Raylib';
+export { configure, getSymbols } from './symbols';
+export type { RaylibConfig } from './symbols';
+export { cstr, color } from './utils';
 export type {
   CameraProjection,
   Vec2,
@@ -25,5 +25,5 @@ export type {
   ModelAnimation,
   RayCollision,
   GlyphInfo,
-} from "./types";
-export * from "./constants";
+} from './types';
+export * from './constants';

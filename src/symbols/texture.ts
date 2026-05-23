@@ -1,4 +1,4 @@
-import { FFIType } from "bun:ffi";
+import { FFIType } from 'bun:ffi';
 const { i32, ptr, bool } = FFIType;
 
 export const textureSymbols = {
