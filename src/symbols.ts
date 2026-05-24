@@ -109,7 +109,7 @@ function buildCC(config: RaylibConfig): SymbolsType {
   const srcDir = dirname(new URL(import.meta.url).pathname);
   const cDir = join(srcDir, 'c');
 
-  const wrapperSrc = `#include "${headerPath}"\n#include "${cDir}/registries.c"\n#include "${cDir}/window.c"\n#include "${cDir}/shapes.c"\n#include "${cDir}/collision.c"\n#include "${cDir}/camera.c"\n#include "${cDir}/draw3d.c"\n#include "${cDir}/texture.c"\n#include "${cDir}/model.c"\n#include "${cDir}/image.c"\n#include "${cDir}/color.c"\n#include "${cDir}/font.c"\n#include "${cDir}/input.c"\n#include "${cDir}/audio.c"\n#include "${cDir}/shader.c"\n#include "${cDir}/filesystem.c"\n`;
+  const wrapperSrc = `#include "${headerPath}"\n#include "${cDir}/registries.c"\n#include "${cDir}/window.c"\n#include "${cDir}/shapes.c"\n#include "${cDir}/collision.c"\n#include "${cDir}/camera.c"\n#include "${cDir}/draw3d.c"\n#include "${cDir}/texture.c"\n#include "${cDir}/model.c"\n#include "${cDir}/image.c"\n#include "${cDir}/color.c"\n#include "${cDir}/font.c"\n#include "${cDir}/input.c"\n#include "${cDir}/audio.c"\n#include "${cDir}/shader.c"\n`;
 
   const wrapperPath = join(cacheDir, `main_${configHash}.c`);
   writeFileSync(wrapperPath, wrapperSrc);

@@ -195,3 +195,16 @@ void DrawBillboardProW(
         (Vector2){originX, originY},
         rotation, tint);
 }
+
+void DrawMeshW(int meshId, int materialId, const float* transform) {
+    if (meshId < 0 || meshId >= MAX_MESHES || !meshUsed[meshId]) return;
+    if (materialId < 0 || materialId >= MAX_MATERIALS || !materialUsed[materialId]) return;
+    DrawMesh(meshRegistry[meshId], materialRegistry[materialId], *(Matrix*)transform);
+}
+
+void DrawMeshInstancedW(int meshId, int materialId, const float* transforms, int instances) {
+    if (meshId < 0 || meshId >= MAX_MESHES || !meshUsed[meshId]) return;
+    if (materialId < 0 || materialId >= MAX_MATERIALS || !materialUsed[materialId]) return;
+    DrawMeshInstanced(meshRegistry[meshId], materialRegistry[materialId],
+        (const Matrix*)transforms, instances);
+}

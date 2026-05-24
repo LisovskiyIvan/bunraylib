@@ -276,4 +276,12 @@ export const draw3dSymbols = {
     ],
     returns: FFIType.void,
   },
+  DrawMeshW: {
+    args: [i32, i32, FFIType.ptr],
+    returns: FFIType.void,
+  },
+  DrawMeshInstancedW: {
+    args: [i32, i32, FFIType.ptr, i32],
+    returns: FFIType.void,
+  },
 } as const;

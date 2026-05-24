@@ -305,15 +305,15 @@ export class Raylib {
   ): void {
     r().symbols.DrawEllipseW(i(centerX), i(centerY), f(radiusH), f(radiusV), i(col));
   }
-  
+
   /** Draw a color-filled ellipse */
   static drawEllipseV(center: Vec2, radiusH: number, radiusV: number, col: Color): void {
-    r().symbols.DrawEllipseVW(f(center.x), f(center.y), i(radiusH), i(radiusV), i(col))
+    r().symbols.DrawEllipseVW(f(center.x), f(center.y), i(radiusH), i(radiusV), i(col));
   }
 
   /** Draw a color-filled ellipse lines */
   static drawEllipseLinesV(center: Vec2, radiusH: number, radiusV: number, col: Color): void {
-    r().symbols.DrawEllipseLinesVW(f(center.x), f(center.y), i(radiusH), i(radiusV), i(col))
+    r().symbols.DrawEllipseLinesVW(f(center.x), f(center.y), i(radiusH), i(radiusV), i(col));
   }
 
   /** Draw ellipse outline */
@@ -2075,6 +2075,19 @@ export class Raylib {
     );
   }
 
+  static drawMesh(mesh: Mesh, material: Material, transform: Float32Array): void {
+    r().symbols.DrawMeshW(i(mesh), i(material), transform);
+  }
+
+  static drawMeshInstanced(
+    mesh: Mesh,
+    material: Material,
+    transforms: Float32Array,
+    instances: number,
+  ): void {
+    r().symbols.DrawMeshInstancedW(i(mesh), i(material), transforms, i(instances));
+  }
+
   // --- Shapes texture ---
 
   static setShapesTexture(texture: Texture2D, source: Rectangle): void {
@@ -3768,7 +3781,7 @@ export class Raylib {
       normal: { x: this._rcNorm[0]!, y: this._rcNorm[1]!, z: this._rcNorm[2]! },
     };
   }
- 
+
   static loadWaveSamples(wave: Wave): number {
     return r().symbols.LoadWaveSamplesW(wave) as number;
   }
