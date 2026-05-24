@@ -8,7 +8,7 @@ const runBun = (code: string): Promise<{ exitCode: number; stdout: string; stder
     let stderr = "";
     proc.stdout.on("data", (d: Buffer) => { stdout += d.toString(); });
     proc.stderr.on("data", (d: Buffer) => { stderr += d.toString(); });
-    proc.on("close", (code) => resolve({ exitCode: code ?? 1, stdout, stderr }));
+    proc.on("close", (c) => resolve({ exitCode: c ?? 1, stdout, stderr }));
   });
 };
 

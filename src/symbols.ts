@@ -16,7 +16,6 @@ import { fontSymbols } from './symbols/font';
 import { inputSymbols } from './symbols/input';
 import { audioSymbols } from './symbols/audio';
 import { shaderSymbols } from './symbols/shader';
-import { filesystemSymbols } from './symbols/filesystem';
 
 const allSymbols = {
   ...windowSymbols,
@@ -32,7 +31,6 @@ const allSymbols = {
   ...inputSymbols,
   ...audioSymbols,
   ...shaderSymbols,
-  ...filesystemSymbols,
 };
 
 type SymbolsType = ReturnType<typeof cc<typeof allSymbols>>;

@@ -1,4 +1,5 @@
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
+import fc from "fast-check";
 import { Raylib } from "../src";
 import type { Vec2 } from "../src/types";
 
@@ -103,5 +104,93 @@ describe("GetSplinePointBasis", () => {
     );
     expect(isNaN(basis.x)).toBe(false);
     expect(isNaN(basis.y)).toBe(false);
+  });
+});
+
+// ── Fast-check fuzz ────────────────────────────────────────────
+
+const fuzzVec2 = fc.record({
+  x: fc.double({ min: -10000, max: 10000, noNaN: true }),
+  y: fc.double({ min: -10000, max: 10000, noNaN: true }),
+});
+
+describe("Fuzz: spline endpoints", () => {
+  test("GetSplinePointLinear: t=0 → p1, t=1 → p2", () => {
+    fc.assert(
+      fc.property(fuzzVec2, fuzzVec2, (p1, p2) => {
+        const at0 = Raylib.getSplinePointLinear(p1, p2, 0);
+        const at1 = Raylib.getSplinePointLinear(p1, p2, 1);
+        return (
+          Math.abs(at0.x - p1.x) < 0.01 &&
+          Math.abs(at0.y - p1.y) < 0.01 &&
+          Math.abs(at1.x - p2.x) < 0.01 &&
+          Math.abs(at1.y - p2.y) < 0.01
+        );
+      }),
+      { numRuns: 300 },
+    );
+  });
+
+  test("GetSplinePointBezierQuad: t=0 → p1, t=1 → p3", () => {
+    fc.assert(
+      fc.property(fuzzVec2, fuzzVec2, fuzzVec2, (p1, p2, p3) => {
+        const at0 = Raylib.getSplinePointBezierQuad(p1, p2, p3, 0);
+        const at1 = Raylib.getSplinePointBezierQuad(p1, p2, p3, 1);
+        return (
+          Math.abs(at0.x - p1.x) < 0.01 &&
+          Math.abs(at0.y - p1.y) < 0.01 &&
+          Math.abs(at1.x - p3.x) < 0.01 &&
+          Math.abs(at1.y - p3.y) < 0.01
+        );
+      }),
+      { numRuns: 300 },
+    );
+  });
+
+  test("GetSplinePointBezierCubic: t=0 → p1, t=1 → p4", () => {
+    fc.assert(
+      fc.property(fuzzVec2, fuzzVec2, fuzzVec2, fuzzVec2, (p1, p2, p3, p4) => {
+        const at0 = Raylib.getSplinePointBezierCubic(p1, p2, p3, p4, 0);
+        const at1 = Raylib.getSplinePointBezierCubic(p1, p2, p3, p4, 1);
+        return (
+          Math.abs(at0.x - p1.x) < 0.01 &&
+          Math.abs(at0.y - p1.y) < 0.01 &&
+          Math.abs(at1.x - p4.x) < 0.01 &&
+          Math.abs(at1.y - p4.y) < 0.01
+        );
+      }),
+      { numRuns: 300 },
+    );
+  });
+
+  test("GetSplinePointCatmullRom: t=0 → p2, t=1 → p3", () => {
+    fc.assert(
+      fc.property(fuzzVec2, fuzzVec2, fuzzVec2, fuzzVec2, (p1, p2, p3, p4) => {
+        const at0 = Raylib.getSplinePointCatmullRom(p1, p2, p3, p4, 0);
+        const at1 = Raylib.getSplinePointCatmullRom(p1, p2, p3, p4, 1);
+        return (
+          Math.abs(at0.x - p2.x) < 0.01 &&
+          Math.abs(at0.y - p2.y) < 0.01 &&
+          Math.abs(at1.x - p3.x) < 0.01 &&
+          Math.abs(at1.y - p3.y) < 0.01
+        );
+      }),
+      { numRuns: 300 },
+    );
+  });
+});
+
+describe("Fuzz: spline linear interpolation", () => {
+  test("midpoint at t=0.5 is average of endpoints", () => {
+    fc.assert(
+      fc.property(fuzzVec2, fuzzVec2, (p1, p2) => {
+        const mid = Raylib.getSplinePointLinear(p1, p2, 0.5);
+        return (
+          Math.abs(mid.x - (p1.x + p2.x) / 2) < 0.02 &&
+          Math.abs(mid.y - (p1.y + p2.y) / 2) < 0.02
+        );
+      }),
+      { numRuns: 300 },
+    );
   });
 });

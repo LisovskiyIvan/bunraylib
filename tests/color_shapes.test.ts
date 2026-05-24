@@ -1,4 +1,5 @@
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
+import fc from "fast-check";
 import { Raylib, color } from "../src";
 
 beforeAll(() => {
@@ -142,5 +143,93 @@ describe("Shapes Vec variants", () => {
     Raylib.clearBackground(0);
     Raylib.drawRectangleRec({ x: 10, y: 10, width: 50, height: 30 }, color(255, 0, 255, 255));
     Raylib.endDrawing();
+  });
+});
+
+// ── Fast-check fuzz ────────────────────────────────────────────
+
+const byteArb = fc.integer({ min: 0, max: 255 });
+const colorArb = fc.record({ r: byteArb, g: byteArb, b: byteArb, a: byteArb });
+
+describe("Fuzz: color roundtrips", () => {
+  test("colorToInt → getColor roundtrip", () => {
+    fc.assert(
+      fc.property(colorArb, (c) => {
+        const col = color(c.r, c.g, c.b, c.a);
+        const intVal = Raylib.colorToInt(col);
+        const restored = Raylib.getColor(intVal);
+        return Raylib.colorIsEqual(col, restored);
+      }),
+      { numRuns: 500 },
+    );
+  });
+
+  test("colorNormalize → colorFromNormalized roundtrip", () => {
+    fc.assert(
+      fc.property(colorArb, (c) => {
+        const col = color(c.r, c.g, c.b, c.a);
+        const n = Raylib.colorNormalize(col);
+        const restored = Raylib.colorFromNormalized(n);
+        // Normalized components are within [0,1]; roundtrip should be ~equal
+        return Raylib.colorIsEqual(col, restored);
+      }),
+      { numRuns: 300 },
+    );
+  });
+
+  test("colorToHSV → colorFromHSV roundtrip", () => {
+    fc.assert(
+      fc.property(colorArb, (c) => {
+        const col = color(c.r, c.g, c.b, c.a);
+        const hsv = Raylib.colorToHSV(col);
+        const restored = Raylib.colorFromHSV(hsv.h, hsv.s, hsv.v);
+        // Alpha preserved via original
+        const withAlpha = Raylib.colorAlpha(restored, c.a / 255);
+        const origN = Raylib.colorNormalize(col);
+        const restN = Raylib.colorNormalize(withAlpha);
+        return (
+          Math.abs(origN.x - restN.x) < 0.02 &&
+          Math.abs(origN.y - restN.y) < 0.02 &&
+          Math.abs(origN.z - restN.z) < 0.02
+        );
+      }),
+      { numRuns: 200 },
+    );
+  });
+});
+
+describe("Fuzz: color operations", () => {
+  test("fade(color, alpha) preserves RGB hue, changes alpha", () => {
+    fc.assert(
+      fc.property(colorArb, fc.double({ min: 0, max: 1, noNaN: true }), (c, alpha) => {
+        const col = color(c.r, c.g, c.b, c.a);
+        const faded = Raylib.fade(col, alpha);
+        const n = Raylib.colorNormalize(faded);
+        return Math.abs(n.w - alpha) < 0.02;
+      }),
+      { numRuns: 200 },
+    );
+  });
+
+  test("colorAlpha sets alpha weight without changing RGB", () => {
+    fc.assert(
+      fc.property(colorArb, fc.double({ min: 0, max: 1, noNaN: true }), (c, alphaWeight) => {
+        const col = color(c.r, c.g, c.b, c.a);
+        const result = Raylib.colorAlpha(col, alphaWeight);
+        const n = Raylib.colorNormalize(result);
+        return Math.abs(n.w - alphaWeight) < 0.02;
+      }),
+      { numRuns: 200 },
+    );
+  });
+
+  test("colorIsEqual is reflexive", () => {
+    fc.assert(
+      fc.property(colorArb, (c) => {
+        const col = color(c.r, c.g, c.b, c.a);
+        return Raylib.colorIsEqual(col, col) === true;
+      }),
+      { numRuns: 200 },
+    );
   });
 });

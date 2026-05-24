@@ -1,4 +1,5 @@
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
+import fc from "fast-check";
 import { Raylib, color } from "../src";
 import type { Shader, Font, GlyphInfo, Image } from "../src/types";
 import { join } from "path";
@@ -140,5 +141,86 @@ describe("Font text utilities", () => {
     Raylib.drawTextCodepoints(font, codepoints, codepoints.length, { x: 10, y: 10 }, 24, 1, color(255, 255, 255, 255));
     Raylib.endDrawing();
     Raylib.unloadFont(font);
+  });
+});
+
+// ── Fast-check fuzz ────────────────────────────────────────────
+
+describe("Fuzz: text utilities", () => {
+  test("textLength(s1+s2) === textLength(s1) + textLength(s2)", () => {
+    fc.assert(
+      fc.property(
+        fc.string({ minLength: 0, maxLength: 50 }),
+        fc.string({ minLength: 0, maxLength: 50 }),
+        (a, b) => {
+          return Raylib.textLength(a + b) === Raylib.textLength(a) + Raylib.textLength(b);
+        },
+      ),
+      { numRuns: 500 },
+    );
+  });
+
+  test("textLength matches string .length for ASCII", () => {
+    fc.assert(
+      fc.property(fc.string({ minLength: 0, maxLength: 100 }), (s) => {
+        return Raylib.textLength(s) === s.length;
+      }),
+      { numRuns: 300 },
+    );
+  });
+
+  test("textIsEqual is reflexive", () => {
+    fc.assert(
+      fc.property(fc.string({ maxLength: 50 }), (s) => {
+        return Raylib.textIsEqual(s, s) === true;
+      }),
+      { numRuns: 300 },
+    );
+  });
+
+  test("textIsEqual is symmetric", () => {
+    fc.assert(
+      fc.property(
+        fc.string({ maxLength: 30 }),
+        fc.string({ maxLength: 30 }),
+        (a, b) => {
+          return Raylib.textIsEqual(a, b) === Raylib.textIsEqual(b, a);
+        },
+      ),
+      { numRuns: 300 },
+    );
+  });
+
+  test("textFindIndex finds known substrings", () => {
+    fc.assert(
+      fc.property(
+        fc.string({ minLength: 1, maxLength: 20 }),
+        fc.string({ minLength: 1, maxLength: 20 }),
+        (a, b) => {
+          const combined = a + b;
+          const idx = Raylib.textFindIndex(combined, b);
+          return idx >= 0 && idx <= Raylib.textLength(a);
+        },
+      ),
+      { numRuns: 300 },
+    );
+  });
+
+  test("textToInteger → toString roundtrip", () => {
+    fc.assert(
+      fc.property(fc.integer({ min: -999999, max: 999999 }), (n) => {
+        return Raylib.textToInteger(String(n)) === n;
+      }),
+      { numRuns: 500 },
+    );
+  });
+
+  test("getCodepointCount matches textLength for ASCII", () => {
+    fc.assert(
+      fc.property(fc.string({ minLength: 0, maxLength: 50 }), (s) => {
+        return Raylib.getCodepointCount(s) === Raylib.textLength(s);
+      }),
+      { numRuns: 300 },
+    );
   });
 });

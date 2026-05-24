@@ -163,7 +163,14 @@ export class Raylib {
 
   /** Draw a line with defined thickness */
   static drawLineEx(startPos: Vec2, endPos: Vec2, thick: number, col: Color): void {
-    r().symbols.DrawLineExW(f(startPos.x), f(startPos.y), f(endPos.x), f(endPos.y), f(thick), i(col));
+    r().symbols.DrawLineExW(
+      f(startPos.x),
+      f(startPos.y),
+      f(endPos.x),
+      f(endPos.y),
+      f(thick),
+      i(col),
+    );
   }
 
   /** Draw lines sequence as a strip. Points are packed as [x0,y0, x1,y1, ...] in Float32Array */
@@ -179,6 +186,24 @@ export class Raylib {
       f(endPos.x),
       f(endPos.y),
       f(thick),
+      i(col),
+    );
+  }
+
+  static drawLineDashed(
+    startPos: Vec2,
+    endPos: Vec2,
+    dashSize: number,
+    spaceSize: number,
+    col: Color,
+  ): void {
+    r().symbols.DrawLineDashedW(
+      f(startPos.x),
+      f(startPos.y),
+      f(endPos.x),
+      f(endPos.y),
+      i(dashSize),
+      i(spaceSize),
       i(col),
     );
   }
@@ -279,6 +304,16 @@ export class Raylib {
     col: Color,
   ): void {
     r().symbols.DrawEllipseW(i(centerX), i(centerY), f(radiusH), f(radiusV), i(col));
+  }
+  
+  /** Draw a color-filled ellipse */
+  static drawEllipseV(center: Vec2, radiusH: number, radiusV: number, col: Color): void {
+    r().symbols.DrawEllipseVW(f(center.x), f(center.y), i(radiusH), i(radiusV), i(col))
+  }
+
+  /** Draw a color-filled ellipse lines */
+  static drawEllipseLinesV(center: Vec2, radiusH: number, radiusV: number, col: Color): void {
+    r().symbols.DrawEllipseLinesVW(f(center.x), f(center.y), i(radiusH), i(radiusV), i(col))
   }
 
   /** Draw ellipse outline */
@@ -912,7 +947,12 @@ export class Raylib {
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
   static checkCollisionPointPoly(point: Vec2, points: Float32Array): boolean {
-    return r().symbols.CheckCollisionPointPolyW(f(point.x), f(point.y), points, i(points.length / 2));
+    return r().symbols.CheckCollisionPointPolyW(
+      f(point.x),
+      f(point.y),
+      points,
+      i(points.length / 2),
+    );
   }
 
   /**
@@ -1869,7 +1909,14 @@ export class Raylib {
   }
 
   static drawTexture(texture: Texture2D, posX: number, posY: number, tint: Color): void {
-    r().symbols.DrawTextureW(i(texture.id), i(texture.width), i(texture.height), i(posX), i(posY), i(tint));
+    r().symbols.DrawTextureW(
+      i(texture.id),
+      i(texture.width),
+      i(texture.height),
+      i(posX),
+      i(posY),
+      i(tint),
+    );
   }
 
   static drawTextureEx(
@@ -1959,7 +2006,14 @@ export class Raylib {
   }
 
   static drawModel(model: Model, position: Vec3, scale: number, tint: Color): void {
-    r().symbols.DrawModelW(i(model), f(position.x), f(position.y), f(position.z), f(scale), i(tint));
+    r().symbols.DrawModelW(
+      i(model),
+      f(position.x),
+      f(position.y),
+      f(position.z),
+      f(scale),
+      i(tint),
+    );
   }
 
   static drawModelEx(
@@ -1987,7 +2041,14 @@ export class Raylib {
   }
 
   static drawModelWires(model: Model, position: Vec3, scale: number, tint: Color): void {
-    r().symbols.DrawModelWiresW(i(model), f(position.x), f(position.y), f(position.z), f(scale), i(tint));
+    r().symbols.DrawModelWiresW(
+      i(model),
+      f(position.x),
+      f(position.y),
+      f(position.z),
+      f(scale),
+      i(tint),
+    );
   }
 
   static drawModelWiresEx(
@@ -2272,7 +2333,6 @@ export class Raylib {
     return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
-
   static getCameraMatrix(camera: Camera3D): Float32Array {
     r().symbols.GetCameraMatrixW(
       this._matBuf,
@@ -2302,96 +2362,6 @@ export class Raylib {
       f(camera.zoom),
     );
     return new Float32Array(this._matBuf);
-  }
-
-  // --- File system ---
-
-  static fileExists(fileName: string): boolean {
-    return r().symbols.FileExistsW(cstr(fileName));
-  }
-  static directoryExists(dirPath: string): boolean {
-    return r().symbols.DirectoryExistsW(cstr(dirPath));
-  }
-  static isFileExtension(fileName: string, ext: string): boolean {
-    return r().symbols.IsFileExtensionW(cstr(fileName), cstr(ext));
-  }
-  static getFileLength(fileName: string): number {
-    return r().symbols.GetFileLengthW(cstr(fileName));
-  }
-
-  static getFileExtension(fileName: string): string {
-    const ptr = r().symbols.GetFileExtensionW(cstr(fileName));
-    if (!ptr) return '';
-    return new CString(ptr).toString();
-  }
-
-  static getFileName(filePath: string): string {
-    const ptr = r().symbols.GetFileNameW(cstr(filePath));
-    if (!ptr) return '';
-    return new CString(ptr).toString();
-  }
-
-  static getFileNameWithoutExt(filePath: string): string {
-    const ptr = r().symbols.GetFileNameWithoutExtW(cstr(filePath));
-    if (!ptr) return '';
-    return new CString(ptr).toString();
-  }
-
-  static getDirectoryPath(filePath: string): string {
-    const ptr = r().symbols.GetDirectoryPathW(cstr(filePath));
-    if (!ptr) return '';
-    return new CString(ptr).toString();
-  }
-
-  static getPrevDirectoryPath(dirPath: string): string {
-    const ptr = r().symbols.GetPrevDirectoryPathW(cstr(dirPath));
-    if (!ptr) return '';
-    return new CString(ptr).toString();
-  }
-
-  static getWorkingDirectory(): string {
-    const ptr = r().symbols.GetWorkingDirectoryW();
-    if (!ptr) return '';
-    return new CString(ptr).toString();
-  }
-
-  static getApplicationDirectory(): string {
-    const ptr = r().symbols.GetApplicationDirectoryW();
-    if (!ptr) return '';
-    return new CString(ptr).toString();
-  }
-
-  static makeDirectory(dirPath: string): number {
-    return r().symbols.MakeDirectoryW(cstr(dirPath));
-  }
-  static changeDirectory(dir: string): boolean {
-    return r().symbols.ChangeDirectoryW(cstr(dir));
-  }
-  static isPathFile(path: string): boolean {
-    return r().symbols.IsPathFileW(cstr(path));
-  }
-  static isFileNameValid(fileName: string): boolean {
-    return r().symbols.IsFileNameValidW(cstr(fileName));
-  }
-  static getFileModTime(fileName: string): number {
-    return Number(r().symbols.GetFileModTimeW(cstr(fileName)));
-  }
-
-  static loadFileText(fileName: string): string {
-    const ptr = r().symbols.LoadFileTextW(cstr(fileName));
-    if (!ptr) return '';
-    return new CString(ptr).toString();
-  }
-
-  static unloadFileText(text: string): void {
-    r().symbols.UnloadFileTextW(Buffer.from(text));
-  }
-  static saveFileText(fileName: string, text: string): boolean {
-    return r().symbols.SaveFileTextW(cstr(fileName), cstr(text));
-  }
-
-  static computeCRC32(data: Uint8Array, dataSize: number): number {
-    return r().symbols.ComputeCRC32W(data, i(dataSize));
   }
 
   // --- Shader ---
@@ -2425,7 +2395,13 @@ export class Raylib {
   }
 
   static setShaderValueTexture(shader: Shader, locIndex: number, texture: Texture2D): void {
-    r().symbols.SetShaderValueTextureW(i(shader), i(locIndex), i(texture.id), i(texture.width), i(texture.height));
+    r().symbols.SetShaderValueTextureW(
+      i(shader),
+      i(locIndex),
+      i(texture.id),
+      i(texture.width),
+      i(texture.height),
+    );
   }
 
   static unloadShader(shader: Shader): void {
@@ -2525,7 +2501,14 @@ export class Raylib {
     col1: Color,
     col2: Color,
   ): Image {
-    return r().symbols.GenImageCheckedW(i(width), i(height), i(checksX), i(checksY), i(col1), i(col2));
+    return r().symbols.GenImageCheckedW(
+      i(width),
+      i(height),
+      i(checksX),
+      i(checksY),
+      i(col1),
+      i(col2),
+    );
   }
   static genImageWhiteNoise(width: number, height: number, factor: number): Image {
     return r().symbols.GenImageWhiteNoiseW(i(width), i(height), f(factor));
@@ -2605,7 +2588,14 @@ export class Raylib {
     offsetY: number,
     fill: Color,
   ): void {
-    r().symbols.ImageResizeCanvasW(i(image), i(newWidth), i(newHeight), i(offsetX), i(offsetY), i(fill));
+    r().symbols.ImageResizeCanvasW(
+      i(image),
+      i(newWidth),
+      i(newHeight),
+      i(offsetX),
+      i(offsetY),
+      i(fill),
+    );
   }
   static imageMipmaps(image: Image): void {
     r().symbols.ImageMipmapsW(i(image));
@@ -2688,7 +2678,15 @@ export class Raylib {
     r().symbols.ImageDrawLineVW(i(dst), i(start.x), i(start.y), i(end.x), i(end.y), i(color));
   }
   static imageDrawLineEx(dst: Image, start: Vec2, end: Vec2, thick: number, color: Color): void {
-    r().symbols.ImageDrawLineExW(i(dst), i(start.x), i(start.y), i(end.x), i(end.y), i(thick), i(color));
+    r().symbols.ImageDrawLineExW(
+      i(dst),
+      i(start.x),
+      i(start.y),
+      i(end.x),
+      i(end.y),
+      i(thick),
+      i(color),
+    );
   }
   static imageDrawCircle(
     dst: Image,
@@ -2725,16 +2723,47 @@ export class Raylib {
     r().symbols.ImageDrawRectangleW(i(dst), i(posX), i(posY), i(w), i(h), i(color));
   }
   static imageDrawRectangleV(dst: Image, position: Vec2, size: Vec2, color: Color): void {
-    r().symbols.ImageDrawRectangleVW(i(dst), i(position.x), i(position.y), i(size.x), i(size.y), i(color));
+    r().symbols.ImageDrawRectangleVW(
+      i(dst),
+      i(position.x),
+      i(position.y),
+      i(size.x),
+      i(size.y),
+      i(color),
+    );
   }
   static imageDrawRectangleRec(dst: Image, rec: Rectangle, color: Color): void {
-    r().symbols.ImageDrawRectangleRecW(i(dst), i(rec.x), i(rec.y), i(rec.width), i(rec.height), i(color));
+    r().symbols.ImageDrawRectangleRecW(
+      i(dst),
+      i(rec.x),
+      i(rec.y),
+      i(rec.width),
+      i(rec.height),
+      i(color),
+    );
   }
   static imageDrawRectangleLines(dst: Image, rec: Rectangle, thick: number, color: Color): void {
-    r().symbols.ImageDrawRectangleLinesW(i(dst), i(rec.x), i(rec.y), i(rec.width), i(rec.height), i(thick), i(color));
+    r().symbols.ImageDrawRectangleLinesW(
+      i(dst),
+      i(rec.x),
+      i(rec.y),
+      i(rec.width),
+      i(rec.height),
+      i(thick),
+      i(color),
+    );
   }
   static imageDrawTriangle(dst: Image, v1: Vec2, v2: Vec2, v3: Vec2, color: Color): void {
-    r().symbols.ImageDrawTriangleW(i(dst), i(v1.x), i(v1.y), i(v2.x), i(v2.y), i(v3.x), i(v3.y), i(color));
+    r().symbols.ImageDrawTriangleW(
+      i(dst),
+      i(v1.x),
+      i(v1.y),
+      i(v2.x),
+      i(v2.y),
+      i(v3.x),
+      i(v3.y),
+      i(color),
+    );
   }
   static imageDrawTriangleEx(
     dst: Image,
@@ -2745,10 +2774,30 @@ export class Raylib {
     c2: Color,
     c3: Color,
   ): void {
-    r().symbols.ImageDrawTriangleExW(i(dst), i(v1.x), i(v1.y), i(v2.x), i(v2.y), i(v3.x), i(v3.y), i(c1), i(c2), i(c3));
+    r().symbols.ImageDrawTriangleExW(
+      i(dst),
+      i(v1.x),
+      i(v1.y),
+      i(v2.x),
+      i(v2.y),
+      i(v3.x),
+      i(v3.y),
+      i(c1),
+      i(c2),
+      i(c3),
+    );
   }
   static imageDrawTriangleLines(dst: Image, v1: Vec2, v2: Vec2, v3: Vec2, color: Color): void {
-    r().symbols.ImageDrawTriangleLinesW(i(dst), i(v1.x), i(v1.y), i(v2.x), i(v2.y), i(v3.x), i(v3.y), i(color));
+    r().symbols.ImageDrawTriangleLinesW(
+      i(dst),
+      i(v1.x),
+      i(v1.y),
+      i(v2.x),
+      i(v2.y),
+      i(v3.x),
+      i(v3.y),
+      i(color),
+    );
   }
   static imageDrawTriangleFan(dst: Image, points: Float32Array, color: Color): void {
     r().symbols.ImageDrawTriangleFanW(i(dst), points, i(points.length / 2), i(color));
@@ -2816,7 +2865,13 @@ export class Raylib {
   }
 
   static loadTextureCubemap(image: Image, layout: number): Texture2D {
-    r().symbols.LoadTextureCubemapW(this._texOutId, this._texOutW, this._texOutH, i(image), i(layout));
+    r().symbols.LoadTextureCubemapW(
+      this._texOutId,
+      this._texOutW,
+      this._texOutH,
+      i(image),
+      i(layout),
+    );
     return { id: this._texOutId[0]!, width: this._texOutW[0]!, height: this._texOutH[0]! };
   }
 
@@ -3087,7 +3142,13 @@ export class Raylib {
     r().symbols.UnloadMaterialW(i(material));
   }
   static setMaterialTexture(material: Material, mapType: number, texture: Texture2D): void {
-    r().symbols.SetMaterialTextureW(i(material), i(mapType), i(texture.id), i(texture.width), i(texture.height));
+    r().symbols.SetMaterialTextureW(
+      i(material),
+      i(mapType),
+      i(texture.id),
+      i(texture.width),
+      i(texture.height),
+    );
   }
   static setModelMeshMaterial(model: Model, meshId: number, materialId: number): void {
     r().symbols.SetModelMeshMaterialW(i(model), i(meshId), i(materialId));
@@ -3111,7 +3172,14 @@ export class Raylib {
     frameB: number,
     blend: number,
   ): void {
-    r().symbols.UpdateModelAnimationExW(i(model), i(animA), f(frameA), i(animB), f(frameB), f(blend));
+    r().symbols.UpdateModelAnimationExW(
+      i(model),
+      i(animA),
+      f(frameA),
+      i(animB),
+      f(frameB),
+      f(blend),
+    );
   }
   static unloadModelAnimations(startSlot: number, count: number): void {
     r().symbols.UnloadModelAnimationsW(i(startSlot), i(count));
@@ -3700,22 +3768,7 @@ export class Raylib {
       normal: { x: this._rcNorm[0]!, y: this._rcNorm[1]!, z: this._rcNorm[2]! },
     };
   }
-
-  static unloadRandomSequence(ptr: number): void {
-    r().symbols.UnloadRandomSequenceW(ptr as any);
-  }
-  static memFree(ptr: number): void {
-    r().symbols.MemFreeW(ptr as any);
-  }
-  static unloadFileData(ptr: number): void {
-    r().symbols.UnloadFileDataW(ptr as any);
-  }
-  static saveFileData(fileName: string, data: Uint8Array | Buffer): boolean {
-    return r().symbols.SaveFileDataW(cstr(fileName), data, i(data.length));
-  }
-  static exportDataAsCode(data: Uint8Array | Buffer, fileName: string): boolean {
-    return r().symbols.ExportDataAsCodeW(data, i(data.length), cstr(fileName));
-  }
+ 
   static loadWaveSamples(wave: Wave): number {
     return r().symbols.LoadWaveSamplesW(wave) as number;
   }

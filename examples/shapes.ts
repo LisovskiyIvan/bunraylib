@@ -24,6 +24,7 @@ while (!Raylib.windowShouldClose()) {
     2,
     COLORS.MAGENTA,
   );
+  Raylib.drawLineDashed({ x: 400, y: 100}, { x: 450, y: 100}, 5, 5, COLORS.ORANGE)
 
   Raylib.drawCircle(100, 150, 30, COLORS.RED);
   Raylib.drawCircleV({ x: 170, y: 150 }, 30, COLORS.GREEN);

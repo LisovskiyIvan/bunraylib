@@ -36,6 +36,10 @@ void DrawLineBezierW(float startX, float startY, float endX, float endY, float t
     DrawLineBezier((Vector2){startX, startY}, (Vector2){endX, endY}, thick, color);
 }
 
+void DrawLineDashedW(float startX, float startY, float endX, float endY, int dashSize, int spaceSize, Color color) {
+  DrawLineDashed((Vector2){startX, startY}, (Vector2){endX, endY}, dashSize, spaceSize, color);
+}
+
 void DrawCircleW(int centerX, int centerY, float radius, Color color) {
     DrawCircle(centerX, centerY, radius, color);
 }
@@ -66,6 +70,14 @@ void DrawCircleLinesVW(float x, float y, float radius, Color color) {
 
 void DrawEllipseW(int centerX, int centerY, float radiusH, float radiusV, Color color) {
     DrawEllipse(centerX, centerY, radiusH, radiusV, color);
+}
+
+void DrawEllipseVW(float centerX, float centerY, float radiusH, float radiusV, Color color) {
+  DrawEllipseV((Vector2){ centerX, centerY }, radiusH, radiusV, color);
+}
+
+void DrawEllipseLinesVW(float centerX, float centerY, float radiusH, float radiusV, Color color) {
+  DrawEllipseLinesV((Vector2){ centerX, centerY }, radiusH, radiusV, color);
 }
 
 void DrawEllipseLinesW(int centerX, int centerY, float radiusH, float radiusV, Color color) {

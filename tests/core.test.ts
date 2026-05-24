@@ -1,4 +1,5 @@
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
+import fc from "fast-check";
 import { Raylib } from "../src";
 
 beforeAll(() => {
@@ -259,5 +260,45 @@ describe("Clipboard", () => {
     Raylib.setClipboardText("hello rraylib");
     const text = Raylib.getClipboardText();
     expect(text).toBe("hello rraylib");
+  });
+});
+
+// ── Fast-check fuzz ────────────────────────────────────────────
+
+describe("Fuzz: random values", () => {
+  test("getRandomValue(min, max) always in [min, max]", () => {
+    fc.assert(
+      fc.property(
+        fc.integer({ min: -10000, max: 10000 }),
+        fc.integer({ min: -10000, max: 10000 }),
+        (a, b) => {
+          const min = Math.min(a, b);
+          const max = Math.max(a, b);
+          Raylib.setRandomSeed(Date.now() & 0xffffffff);
+          if (min === max) return true; // skip degenerate
+          const val = Raylib.getRandomValue(min, max);
+          return val >= min && val <= max;
+        },
+      ),
+      { numRuns: 500 },
+    );
+  });
+
+  test("setRandomSeed + getRandomValue determinism", () => {
+    fc.assert(
+      fc.property(
+        fc.integer({ min: 0, max: 0x7fffffff }),
+        fc.integer({ min: 0, max: 100 }),
+        fc.integer({ min: 200, max: 1000 }),
+        (seed, lo, hi) => {
+          Raylib.setRandomSeed(seed);
+          const first = Raylib.getRandomValue(lo, hi);
+          Raylib.setRandomSeed(seed);
+          const second = Raylib.getRandomValue(lo, hi);
+          return first === second;
+        },
+      ),
+      { numRuns: 300 },
+    );
   });
 });
