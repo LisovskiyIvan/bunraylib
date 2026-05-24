@@ -1,5 +1,5 @@
 import { FFIType } from 'bun:ffi';
-const { i32, cstring, bool, f32, ptr } = FFIType;
+const { i32, cstring, bool, f32, ptr, } = FFIType;
 
 export const inputSymbols = {
   IsKeyPressedW: { args: [i32], returns: bool },
@@ -11,7 +11,7 @@ export const inputSymbols = {
   GetCharPressedW: { args: [], returns: i32 },
   SetExitKeyW: { args: [i32], returns: FFIType.void },
   IsGamepadAvailableW: { args: [i32], returns: bool },
-  GetGamepadNameW: { args: [i32], returns: cstring },
+  GetGamepadNameW: { args: [i32], returns: ptr },
   IsGamepadButtonPressedW: { args: [i32, i32], returns: bool },
   IsGamepadButtonDownW: { args: [i32, i32], returns: bool },
   IsGamepadButtonReleasedW: { args: [i32, i32], returns: bool },

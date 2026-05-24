@@ -50,6 +50,7 @@ export class Raylib {
   private static _colPtBuf = new Float32Array(2);
   private static _recBuf = new Float32Array(4);
   private static _vec2Buf = new Float32Array(2);
+  private static _matBuf = new Float32Array(16);
 
   /** Initialize window and OpenGL context */
   static initWindow(width: number, height: number, title: string): void {
@@ -1542,9 +1543,9 @@ export class Raylib {
     return r().symbols.IsGamepadAvailableW(i(gamepad));
   }
   static getGamepadName(gamepad: number): string {
-    const cstr = r().symbols.GetGamepadNameW(i(gamepad));
-    if (!cstr) return '';
-    return cstr.toString();
+    const ptr = r().symbols.GetGamepadNameW(i(gamepad));
+    if (!ptr) return '';
+    return new CString(ptr).toString();
   }
   static isGamepadButtonPressed(gamepad: number, button: number): boolean {
     return r().symbols.IsGamepadButtonPressedW(i(gamepad), i(button));
@@ -2271,7 +2272,6 @@ export class Raylib {
     return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
-  private static _matBuf = new Float32Array(16);
 
   static getCameraMatrix(camera: Camera3D): Float32Array {
     r().symbols.GetCameraMatrixW(

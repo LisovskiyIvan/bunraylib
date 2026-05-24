@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["typescript"],
+  "plugins": ["typescript", "oxc", "unicorn"],
   "options": {
     "typeAware": true
   },
@@ -19,6 +19,7 @@
     "eqeqeq": "error",
     "no-var": "error",
     "prefer-const": "error",
-    "unicorn/no-static-only-class": "off"
+    "unicorn/no-static-only-class": "off",
+    "typescript/no-extraneous-class": "off"
   }
 }

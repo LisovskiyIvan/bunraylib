@@ -46,7 +46,7 @@ while (!Raylib.windowShouldClose()) {
   Raylib.drawRectanglePro(
     { x: 750, y: 280, width: 150, height: 60 },
     { x: 75, y: 30 },
-    90,
+    120,
     COLORS.YELLOW,
   );
   Raylib.drawRectangleGradientV(100, 360, 150, 50, COLORS.RED, COLORS.BLUE);
