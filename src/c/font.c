@@ -1,4 +1,5 @@
 #include "common.h"
+#include <stdlib.h>
 
 int LoadFontW(const char* fileName) {
     int slot = fontAlloc();
@@ -148,4 +149,54 @@ int TextCopyW(char* dst, const char* src) { return TextCopy(dst, src); }
 
 void TextAppendW(char* text, const char* append, int* position) {
     TextAppend(text, append, position);
+}
+
+int GenImageFontAtlasW(float* outRecs, int* glyphData, int glyphCount, int fontSize, int padding, int packMethod) {
+    GlyphInfo* glyphs = (GlyphInfo*)RL_MALLOC(glyphCount * sizeof(GlyphInfo));
+    for (int i = 0; i < glyphCount; i++) {
+        glyphs[i].value = glyphData[i * 5];
+        glyphs[i].offsetX = glyphData[i * 5 + 1];
+        glyphs[i].offsetY = glyphData[i * 5 + 2];
+        glyphs[i].advanceX = glyphData[i * 5 + 3];
+        int imgSlot = glyphData[i * 5 + 4];
+        if (imgSlot >= 0 && imgSlot < MAX_IMAGES && imageUsed[imgSlot]) {
+            glyphs[i].image = imageRegistry[imgSlot];
+        } else {
+            glyphs[i].image = (Image){NULL, 0, 0, 1, 0};
+        }
+    }
+
+    Rectangle* recs = NULL;
+    Image atlas = GenImageFontAtlas(glyphs, &recs, glyphCount, fontSize, padding, packMethod);
+
+    RL_FREE(glyphs);
+
+    if (recs && outRecs) {
+        for (int i = 0; i < glyphCount; i++) {
+            outRecs[i * 4] = recs[i].x;
+            outRecs[i * 4 + 1] = recs[i].y;
+            outRecs[i * 4 + 2] = recs[i].width;
+            outRecs[i * 4 + 3] = recs[i].height;
+        }
+        RL_FREE(recs);
+    }
+
+    int imgSlot = imageAlloc();
+    if (imgSlot >= 0) {
+        imageRegistry[imgSlot] = atlas;
+    }
+    return imgSlot;
+}
+
+void MeasureTextCodepointsW(float* out, int fontId, const int* codepoints, int length, float fontSize, float spacing) {
+    if (fontId < 0 || fontId >= MAX_FONTS || !fontUsed[fontId]) {
+        out[0] = 0; out[1] = 0;
+        return;
+    }
+    Vector2 v = MeasureTextCodepoints(fontRegistry[fontId], codepoints, length, fontSize, spacing);
+    out[0] = v.x; out[1] = v.y;
+}
+
+void UnloadTextLinesW(char** text, int lineCount) {
+    UnloadTextLines(text, lineCount);
 }

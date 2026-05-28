@@ -35,7 +35,9 @@ while (!Raylib.windowShouldClose()) {
   Raylib.drawCircleLinesV({ x: 600, y: 150 }, 30, COLORS.WHITE);
 
   Raylib.drawEllipse(100, 230, 40, 25, COLORS.RED);
+  Raylib.drawEllipseV({ x: 450, y: 230 }, 40, 15, COLORS.MAGENTA);
   Raylib.drawEllipseLines(180, 230, 40, 25, COLORS.GREEN);
+  Raylib.drawEllipseLinesV({ x: 500, y: 230}, 40, 25, COLORS.BLUE);
 
   Raylib.drawRing({ x: 260, y: 230 }, 15, 30, 0, 360, 32, COLORS.RED);
   Raylib.drawRingLines({ x: 340, y: 230 }, 15, 30, 0, 270, 24, COLORS.YELLOW);

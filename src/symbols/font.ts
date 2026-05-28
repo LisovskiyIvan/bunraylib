@@ -37,4 +37,13 @@ export const fontSymbols = {
   UnloadCodepointsW: { args: [ptr], returns: FFIType.void },
   TextCopyW: { args: [ptr, cstring], returns: i32 },
   TextAppendW: { args: [ptr, cstring, ptr], returns: FFIType.void },
+  GenImageFontAtlasW: {
+    args: [ptr, ptr, i32, i32, i32, i32],
+    returns: i32,
+  },
+  MeasureTextCodepointsW: {
+    args: [ptr, i32, ptr, i32, f32, f32],
+    returns: FFIType.void,
+  },
+  UnloadTextLinesW: { args: [ptr, i32], returns: FFIType.void },
 } as const;

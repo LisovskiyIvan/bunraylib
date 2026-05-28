@@ -29,6 +29,16 @@ int GetShaderLocationAttribW(int id, const char* attribName) {
     return GetShaderLocationAttrib(shaderRegistry[id], attribName);
 }
 
+void SetShaderValueW(int id, int locIndex, const void* value, int uniformType) {
+    if (id < 0 || id >= MAX_SHADERS || !shaderUsed[id]) return;
+    SetShaderValue(shaderRegistry[id], locIndex, value, uniformType);
+}
+
+void SetShaderValueVW(int id, int locIndex, const void* value, int uniformType, int count) {
+    if (id < 0 || id >= MAX_SHADERS || !shaderUsed[id]) return;
+    SetShaderValueV(shaderRegistry[id], locIndex, value, uniformType, count);
+}
+
 void SetShaderValueMatrixW(int id, int locIndex, const float* mat) {
     if (id < 0 || id >= MAX_SHADERS || !shaderUsed[id]) return;
     Matrix m;

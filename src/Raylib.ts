@@ -308,12 +308,12 @@ export class Raylib {
 
   /** Draw a color-filled ellipse */
   static drawEllipseV(center: Vec2, radiusH: number, radiusV: number, col: Color): void {
-    r().symbols.DrawEllipseVW(f(center.x), f(center.y), i(radiusH), i(radiusV), i(col));
+    r().symbols.DrawEllipseVW(f(center.x), f(center.y), f(radiusH), f(radiusV), i(col));
   }
 
   /** Draw a color-filled ellipse lines */
   static drawEllipseLinesV(center: Vec2, radiusH: number, radiusV: number, col: Color): void {
-    r().symbols.DrawEllipseLinesVW(f(center.x), f(center.y), i(radiusH), i(radiusV), i(col));
+    r().symbols.DrawEllipseLinesVW(f(center.x), f(center.y), f(radiusH), f(radiusV), i(col));
   }
 
   /** Draw ellipse outline */
@@ -2403,6 +2403,14 @@ export class Raylib {
     return r().symbols.GetShaderLocationAttribW(i(shader), cstr(attribName));
   }
 
+  static setShaderValue(shader: Shader, locIndex: number, value: Buffer | Uint8Array | ArrayBufferView, uniformType: number): void {
+    r().symbols.SetShaderValueW(i(shader), i(locIndex), value, i(uniformType));
+  }
+
+  static setShaderValueV(shader: Shader, locIndex: number, value: Buffer | Uint8Array | ArrayBufferView, uniformType: number, count: number): void {
+    r().symbols.SetShaderValueVW(i(shader), i(locIndex), value, i(uniformType), i(count));
+  }
+
   static setShaderValueMatrix(shader: Shader, locIndex: number, mat: Float32Array): void {
     r().symbols.SetShaderValueMatrixW(i(shader), i(locIndex), mat);
   }
@@ -3730,6 +3738,41 @@ export class Raylib {
     return this._textAppendPos[0]!;
   }
 
+  static genImageFontAtlas(
+    glyphs: GlyphInfo[],
+    fontSize: number,
+    padding: number,
+    packMethod: number,
+  ): { image: Image; glyphRecs: Float32Array } {
+    const glyphCount = glyphs.length;
+    const glyphData = new Int32Array(glyphCount * 5);
+    for (let idx = 0; idx < glyphCount; idx++) {
+      glyphData[idx * 5] = glyphs[idx]!.value;
+      glyphData[idx * 5 + 1] = glyphs[idx]!.offsetX;
+      glyphData[idx * 5 + 2] = glyphs[idx]!.offsetY;
+      glyphData[idx * 5 + 3] = glyphs[idx]!.advanceX;
+      glyphData[idx * 5 + 4] = glyphs[idx]!.image;
+    }
+    const recs = new Float32Array(glyphCount * 4);
+    const img = r().symbols.GenImageFontAtlasW(recs, glyphData, i(glyphCount), i(fontSize), i(padding), i(packMethod));
+    return { image: img, glyphRecs: recs };
+  }
+
+  static measureTextCodepoints(
+    font: Font,
+    codepoints: Int32Array,
+    length: number,
+    fontSize: number,
+    spacing: number,
+  ): Vec2 {
+    r().symbols.MeasureTextCodepointsW(this._vec2Buf, i(font), codepoints, i(length), f(fontSize), f(spacing));
+    return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
+  }
+
+  static unloadTextLines(text: number, lineCount: number): void {
+    r().symbols.UnloadTextLinesW(text as any, i(lineCount));
+  }
+
   static updateMeshBuffer(
     mesh: Mesh,
     index: number,
@@ -3790,5 +3833,17 @@ export class Raylib {
   }
   static setWindowIcons(images: number, count: number): void {
     r().symbols.SetWindowIconsW(images as any, i(count));
+  }
+
+  static updateSound(sound: Sound, data: Buffer | Uint8Array, frameCount: number): void {
+    r().symbols.UpdateSoundW(i(sound), data, i(frameCount));
+  }
+
+  static updateAudioStream(stream: AudioStream, data: Buffer | Uint8Array, frameCount: number): void {
+    r().symbols.UpdateAudioStreamW(i(stream), data, i(frameCount));
+  }
+
+  static setAudioStreamCallback(stream: AudioStream, callback: number): void {
+    r().symbols.SetAudioStreamCallbackW(i(stream), callback);
   }
 }

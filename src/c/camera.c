@@ -1,4 +1,4 @@
-#include "common.h"
+#include "raylib.h"
 
 void BeginMode2DW(float offX, float offY, float tarX, float tarY, float rotation, float zoom) {
     Camera2D cam = { {offX, offY}, {tarX, tarY}, rotation, zoom };

@@ -311,3 +311,18 @@ float* LoadWaveSamplesW(int waveId) {
 }
 
 void UnloadWaveSamplesW(float* samples) { UnloadWaveSamples(samples); }
+
+void UpdateSoundW(int soundId, const void* data, int frameCount) {
+    if (soundId < 0 || soundId >= MAX_SOUNDS || !soundUsed[soundId]) return;
+    UpdateSound(soundRegistry[soundId], data, frameCount);
+}
+
+void UpdateAudioStreamW(int streamId, const void* data, int frameCount) {
+    if (streamId < 0 || streamId >= MAX_AUDIOSTREAMS || !audioStreamUsed[streamId]) return;
+    UpdateAudioStream(audioStreamRegistry[streamId], data, frameCount);
+}
+
+void SetAudioStreamCallbackW(int streamId, void* callback) {
+    if (streamId < 0 || streamId >= MAX_AUDIOSTREAMS || !audioStreamUsed[streamId]) return;
+    SetAudioStreamCallback(audioStreamRegistry[streamId], (AudioCallback)callback);
+}

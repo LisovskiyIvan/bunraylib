@@ -61,4 +61,7 @@ export const audioSymbols = {
   SetAudioStreamBufferSizeDefaultW: { args: [i32], returns: FFIType.void },
   LoadWaveSamplesW: { args: [i32], returns: ptr },
   UnloadWaveSamplesW: { args: [ptr], returns: FFIType.void },
+  UpdateSoundW: { args: [i32, ptr, i32], returns: FFIType.void },
+  UpdateAudioStreamW: { args: [i32, ptr, i32], returns: FFIType.void },
+  SetAudioStreamCallbackW: { args: [i32, ptr], returns: FFIType.void },
 } as const;
