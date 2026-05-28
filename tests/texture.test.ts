@@ -1,6 +1,6 @@
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
 import { Raylib } from "../src";
-import type { Texture2D, RenderTexture2D } from "../src/types";
+import type { Texture2D } from "../src/types";
 import { join } from "path";
 
 beforeAll(() => {

@@ -1,7 +1,7 @@
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
 import fc from "fast-check";
 import { Raylib } from "../src";
-import type { Camera3D, Vec2, Vec3 } from "../src/types";
+import type { Camera3D } from "../src/types";
 
 beforeAll(() => {
   Raylib.initWindow(100, 100, "Camera Test");

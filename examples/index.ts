@@ -1,4 +1,4 @@
-import { Raylib, COLORS, KEYS, MOUSE, CURSOR, FLAGS } from "../src";
+import { Raylib, COLORS, KEYS, MOUSE, FLAGS } from "../src";
 
 Raylib.setConfigFlags(0x00000004);
 Raylib.initWindow(1200, 800, "Input & Window Demo");

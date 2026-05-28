@@ -1,7 +1,6 @@
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
-import { Raylib, color } from "../src";
+import { Raylib } from "../src";
 import type { Mesh, Material, BoundingBox, RayCollision } from "../src/types";
-import { join } from "path";
 
 beforeAll(() => {
   Raylib.initWindow(100, 100, "Mesh Material Test");
@@ -13,7 +12,7 @@ afterAll(() => {
 });
 
 describe("Mesh generation", () => {
-  let meshes: Mesh[] = [];
+  const meshes: Mesh[] = [];
 
   afterAll(() => {
     for (const m of meshes) Raylib.unloadMesh(m);

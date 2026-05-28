@@ -227,7 +227,7 @@ describe("Fuzz: color operations", () => {
     fc.assert(
       fc.property(colorArb, (c) => {
         const col = color(c.r, c.g, c.b, c.a);
-        return Raylib.colorIsEqual(col, col) === true;
+        return Raylib.colorIsEqual(col, col);
       }),
       { numRuns: 200 },
     );

@@ -1,7 +1,7 @@
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
 import fc from "fast-check";
 import { Raylib, color } from "../src";
-import type { Shader, Font, GlyphInfo, Image } from "../src/types";
+import type { Shader, GlyphInfo, Image } from "../src/types";
 import { join } from "path";
 
 beforeAll(() => {
@@ -172,7 +172,7 @@ describe("Fuzz: text utilities", () => {
   test("textIsEqual is reflexive", () => {
     fc.assert(
       fc.property(fc.string({ maxLength: 50 }), (s) => {
-        return Raylib.textIsEqual(s, s) === true;
+        return Raylib.textIsEqual(s, s);
       }),
       { numRuns: 300 },
     );

@@ -2403,11 +2403,22 @@ export class Raylib {
     return r().symbols.GetShaderLocationAttribW(i(shader), cstr(attribName));
   }
 
-  static setShaderValue(shader: Shader, locIndex: number, value: Buffer | Uint8Array | ArrayBufferView, uniformType: number): void {
+  static setShaderValue(
+    shader: Shader,
+    locIndex: number,
+    value: Buffer | Uint8Array | ArrayBufferView,
+    uniformType: number,
+  ): void {
     r().symbols.SetShaderValueW(i(shader), i(locIndex), value, i(uniformType));
   }
 
-  static setShaderValueV(shader: Shader, locIndex: number, value: Buffer | Uint8Array | ArrayBufferView, uniformType: number, count: number): void {
+  static setShaderValueV(
+    shader: Shader,
+    locIndex: number,
+    value: Buffer | Uint8Array | ArrayBufferView,
+    uniformType: number,
+    count: number,
+  ): void {
     r().symbols.SetShaderValueVW(i(shader), i(locIndex), value, i(uniformType), i(count));
   }
 
@@ -2953,10 +2964,10 @@ export class Raylib {
   }
 
   static getPixelColor(srcPtr: number, format: number): Color {
-    return r().symbols.GetPixelColorW(srcPtr as any, i(format));
+    return r().symbols.GetPixelColorW(srcPtr as unknown as Buffer, i(format));
   }
   static setPixelColor(dstPtr: number, color: Color, format: number): void {
-    r().symbols.SetPixelColorW(dstPtr as any, i(color), i(format));
+    r().symbols.SetPixelColorW(dstPtr as unknown as Buffer, i(color), i(format));
   }
 
   static drawBoundingBox(box: BoundingBox, color: Color): void {
@@ -3697,10 +3708,10 @@ export class Raylib {
   }
 
   static unloadImageColors(ptr: number): void {
-    r().symbols.UnloadImageColorsW(ptr as any);
+    r().symbols.UnloadImageColorsW(ptr as unknown as Buffer);
   }
   static unloadImagePalette(ptr: number): void {
-    r().symbols.UnloadImagePaletteW(ptr as any);
+    r().symbols.UnloadImagePaletteW(ptr as unknown as Buffer);
   }
 
   static loadImageAnimFromMemory(
@@ -3717,13 +3728,13 @@ export class Raylib {
   }
 
   static unloadFontData(ptr: number, glyphCount: number): void {
-    r().symbols.UnloadFontDataW(ptr as any, i(glyphCount));
+    r().symbols.UnloadFontDataW(ptr as unknown as Buffer, i(glyphCount));
   }
   static unloadUTF8(ptr: number): void {
-    r().symbols.UnloadUTF8W(ptr as any);
+    r().symbols.UnloadUTF8W(ptr as unknown as Buffer);
   }
   static unloadCodepoints(ptr: number): void {
-    r().symbols.UnloadCodepointsW(ptr as any);
+    r().symbols.UnloadCodepointsW(ptr as unknown as Buffer);
   }
 
   static textCopy(dst: Uint8Array, src: string): number {
@@ -3735,7 +3746,7 @@ export class Raylib {
   static textAppend(text: Uint8Array, append: string, position: number): number {
     this._textAppendPos[0] = position;
     r().symbols.TextAppendW(text, cstr(append), this._textAppendPos);
-    return this._textAppendPos[0]!;
+    return this._textAppendPos[0];
   }
 
   static genImageFontAtlas(
@@ -3754,7 +3765,14 @@ export class Raylib {
       glyphData[idx * 5 + 4] = glyphs[idx]!.image;
     }
     const recs = new Float32Array(glyphCount * 4);
-    const img = r().symbols.GenImageFontAtlasW(recs, glyphData, i(glyphCount), i(fontSize), i(padding), i(packMethod));
+    const img = r().symbols.GenImageFontAtlasW(
+      recs,
+      glyphData,
+      i(glyphCount),
+      i(fontSize),
+      i(padding),
+      i(packMethod),
+    );
     return { image: img, glyphRecs: recs };
   }
 
@@ -3765,12 +3783,19 @@ export class Raylib {
     fontSize: number,
     spacing: number,
   ): Vec2 {
-    r().symbols.MeasureTextCodepointsW(this._vec2Buf, i(font), codepoints, i(length), f(fontSize), f(spacing));
+    r().symbols.MeasureTextCodepointsW(
+      this._vec2Buf,
+      i(font),
+      codepoints,
+      i(length),
+      f(fontSize),
+      f(spacing),
+    );
     return { x: this._vec2Buf[0]!, y: this._vec2Buf[1]! };
   }
 
   static unloadTextLines(text: number, lineCount: number): void {
-    r().symbols.UnloadTextLinesW(text as any, i(lineCount));
+    r().symbols.UnloadTextLinesW(text as unknown as Buffer, i(lineCount));
   }
 
   static updateMeshBuffer(
@@ -3826,20 +3851,24 @@ export class Raylib {
   }
 
   static loadWaveSamples(wave: Wave): number {
-    return r().symbols.LoadWaveSamplesW(wave) as number;
+    return r().symbols.LoadWaveSamplesW(wave) as unknown as number;
   }
   static unloadWaveSamples(ptr: number): void {
-    r().symbols.UnloadWaveSamplesW(ptr as any);
+    r().symbols.UnloadWaveSamplesW(ptr as unknown as Buffer);
   }
   static setWindowIcons(images: number, count: number): void {
-    r().symbols.SetWindowIconsW(images as any, i(count));
+    r().symbols.SetWindowIconsW(images as unknown as Buffer, i(count));
   }
 
   static updateSound(sound: Sound, data: Buffer | Uint8Array, frameCount: number): void {
     r().symbols.UpdateSoundW(i(sound), data, i(frameCount));
   }
 
-  static updateAudioStream(stream: AudioStream, data: Buffer | Uint8Array, frameCount: number): void {
+  static updateAudioStream(
+    stream: AudioStream,
+    data: Buffer | Uint8Array,
+    frameCount: number,
+  ): void {
     r().symbols.UpdateAudioStreamW(i(stream), data, i(frameCount));
   }
 

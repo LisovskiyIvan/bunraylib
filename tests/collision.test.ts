@@ -298,7 +298,7 @@ describe("Fuzz: point collision", () => {
             { x: x + 100, y: 0 },
             threshold,
           );
-          return onLine === true;
+          return onLine;
         },
       ),
       { numRuns: 200 },

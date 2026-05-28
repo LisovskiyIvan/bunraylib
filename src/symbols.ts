@@ -95,7 +95,9 @@ function generateConfigHeader(config: Required<Omit<RaylibConfig, 'raylibPath'>>
 function buildCC(config: RaylibConfig): SymbolsType {
   const resolved = { ...defaults };
   for (const key of Object.keys(defaults) as (keyof typeof defaults)[]) {
-    if (config[key] != null) (resolved as any)[key] = config[key];
+    if (config[key] !== null && config[key] !== undefined) {
+      (resolved as unknown as Record<string, number>)[key] = config[key];
+    }
   }
 
   const configHeader = generateConfigHeader(resolved);

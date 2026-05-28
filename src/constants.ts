@@ -1,6 +1,6 @@
 import { color } from './utils';
 
-export const PI = 3.141592653589793;
+export const PI = Math.PI;
 export const DEG2RAD = PI / 180;
 export const RAD2DEG = 180 / PI;
 

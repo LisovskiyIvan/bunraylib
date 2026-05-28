@@ -1,5 +1,5 @@
 import { FFIType } from 'bun:ffi';
-const { i32, cstring, bool, f32, ptr, } = FFIType;
+const { i32, cstring, bool, f32, ptr } = FFIType;
 
 export const inputSymbols = {
   IsKeyPressedW: { args: [i32], returns: bool },

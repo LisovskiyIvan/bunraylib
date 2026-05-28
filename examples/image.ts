@@ -7,8 +7,8 @@ Raylib.setTargetFPS(60);
 const texDir = join(import.meta.dir, "../assets/textures");
 const baseImage = Raylib.loadTexture(join(texDir, "texture_01.png"));
 
-let imgWidth = 200;
-let imgHeight = 200;
+const imgWidth = 200;
+const imgHeight = 200;
 
 let currentImg = Raylib.genImageColor(imgWidth, imgHeight, COLORS.DARKGRAY);
 
