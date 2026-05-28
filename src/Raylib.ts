@@ -52,6 +52,15 @@ export class Raylib {
   private static _vec2Buf = new Float32Array(2);
   private static _matBuf = new Float32Array(16);
 
+  private static _validatePoints(name: string, points: Float32Array, stride: number, minPoints: number): void {
+    if (points.length % stride !== 0) {
+      throw new Error(`${name}: points length must be a multiple of ${stride} (got ${points.length})`);
+    }
+    if (points.length < stride * minPoints) {
+      throw new Error(`${name}: points must contain at least ${minPoints} points (got ${points.length / stride})`);
+    }
+  }
+
   /** Initialize window and OpenGL context */
   static initWindow(width: number, height: number, title: string): void {
     r().symbols.InitWindowW(i(width), i(height), cstr(title));
@@ -175,6 +184,7 @@ export class Raylib {
 
   /** Draw lines sequence as a strip. Points are packed as [x0,y0, x1,y1, ...] in Float32Array */
   static drawLineStrip(points: Float32Array, col: Color): void {
+    this._validatePoints('drawLineStrip', points, 2, 2);
     r().symbols.DrawLineStripW(points, i(points.length / 2), i(col));
   }
 
@@ -541,11 +551,13 @@ export class Raylib {
 
   /** Draw a triangle fan. Points are packed as [x0,y0, x1,y1, ...] in Float32Array */
   static drawTriangleFan(points: Float32Array, col: Color): void {
+    this._validatePoints('drawTriangleFan', points, 2, 3);
     r().symbols.DrawTriangleFanW(points, i(points.length / 2), i(col));
   }
 
   /** Draw a triangle strip. Points are packed as [x0,y0, x1,y1, ...] in Float32Array */
   static drawTriangleStrip(points: Float32Array, col: Color): void {
+    this._validatePoints('drawTriangleStrip', points, 2, 2);
     r().symbols.DrawTriangleStripW(points, i(points.length / 2), i(col));
   }
 
@@ -590,6 +602,7 @@ export class Raylib {
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
   static drawSplineLinear(points: Float32Array, thick: number, col: Color): void {
+    this._validatePoints('drawSplineLinear', points, 2, 2);
     r().symbols.DrawSplineLinearW(points, i(points.length / 2), f(thick), i(col));
   }
 
@@ -598,6 +611,7 @@ export class Raylib {
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
   static drawSplineBasis(points: Float32Array, thick: number, col: Color): void {
+    this._validatePoints('drawSplineBasis', points, 2, 4);
     r().symbols.DrawSplineBasisW(points, i(points.length / 2), f(thick), i(col));
   }
 
@@ -606,6 +620,7 @@ export class Raylib {
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
   static drawSplineCatmullRom(points: Float32Array, thick: number, col: Color): void {
+    this._validatePoints('drawSplineCatmullRom', points, 2, 4);
     r().symbols.DrawSplineCatmullRomW(points, i(points.length / 2), f(thick), i(col));
   }
 
@@ -614,6 +629,7 @@ export class Raylib {
    * Points layout: [p1, c2, p3, c4, ...] packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
   static drawSplineBezierQuadratic(points: Float32Array, thick: number, col: Color): void {
+    this._validatePoints('drawSplineBezierQuadratic', points, 2, 3);
     r().symbols.DrawSplineBezierQuadraticW(points, i(points.length / 2), f(thick), i(col));
   }
 
@@ -622,6 +638,7 @@ export class Raylib {
    * Points layout: [p1, c2, c3, p4, c5, c6, ...] packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
   static drawSplineBezierCubic(points: Float32Array, thick: number, col: Color): void {
+    this._validatePoints('drawSplineBezierCubic', points, 2, 4);
     r().symbols.DrawSplineBezierCubicW(points, i(points.length / 2), f(thick), i(col));
   }
 
@@ -947,6 +964,7 @@ export class Raylib {
    * Points are packed as [x0,y0, x1,y1, ...] in Float32Array.
    */
   static checkCollisionPointPoly(point: Vec2, points: Float32Array): boolean {
+    this._validatePoints('checkCollisionPointPoly', points, 2, 3);
     return r().symbols.CheckCollisionPointPolyW(
       f(point.x),
       f(point.y),
@@ -1057,6 +1075,7 @@ export class Raylib {
 
   /** Draw a triangle strip defined by points. Points packed as [x0,y0,z0, x1,y1,z1, ...] in Float32Array */
   static drawTriangleStrip3D(points: Float32Array, col: Color): void {
+    this._validatePoints('drawTriangleStrip3D', points, 3, 2);
     r().symbols.DrawTriangleStrip3DW(points, i(points.length / 3), i(col));
   }
 
@@ -2423,6 +2442,9 @@ export class Raylib {
   }
 
   static setShaderValueMatrix(shader: Shader, locIndex: number, mat: Float32Array): void {
+    if (mat.length !== 16) {
+      throw new Error(`setShaderValueMatrix: mat must have exactly 16 elements (got ${mat.length})`);
+    }
     r().symbols.SetShaderValueMatrixW(i(shader), i(locIndex), mat);
   }
 
