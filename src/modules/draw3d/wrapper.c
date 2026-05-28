@@ -1,4 +1,4 @@
-#include "common.h"
+#include "../../c/common.h"
 
 void DrawLine3DW(float sx, float sy, float sz, float ex, float ey, float ez, Color color) {
     DrawLine3D((Vector3){sx, sy, sz}, (Vector3){ex, ey, ez}, color);

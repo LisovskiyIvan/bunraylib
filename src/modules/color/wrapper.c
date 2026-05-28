@@ -1,4 +1,4 @@
-#include "common.h"
+#include "../../c/common.h"
 
 int ColorToIntW(Color color) { return ColorToInt(color); }
 

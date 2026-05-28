@@ -1,4 +1,4 @@
-#include "common.h"
+#include "../../c/common.h"
 
 void LoadTextureW(unsigned int* outId, int* outW, int* outH, const char* fileName) {
     Texture2D tex = LoadTexture(fileName);

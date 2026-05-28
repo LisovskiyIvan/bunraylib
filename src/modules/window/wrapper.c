@@ -1,4 +1,4 @@
-#include "common.h"
+#include "../../c/common.h"
 
 void InitWindowW(int width, int height, const char* title) {
     InitWindow(width, height, title);

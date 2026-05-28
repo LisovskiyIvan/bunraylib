@@ -1,4 +1,4 @@
-#include "common.h"
+#include "../../c/common.h"
 
 int LoadModelW(const char* fileName) {
     int slot = modelAlloc();

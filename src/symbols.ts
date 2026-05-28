@@ -3,19 +3,19 @@ import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { tmpdir } from 'os';
 
-import { windowSymbols } from './symbols/window';
-import { shapesSymbols } from './symbols/shapes';
-import { collisionSymbols } from './symbols/collision';
-import { cameraSymbols } from './symbols/camera';
-import { draw3dSymbols } from './symbols/draw3d';
-import { textureSymbols } from './symbols/texture';
-import { modelSymbols } from './symbols/model';
-import { imageSymbols } from './symbols/image';
-import { colorSymbols } from './symbols/color';
-import { fontSymbols } from './symbols/font';
-import { inputSymbols } from './symbols/input';
-import { audioSymbols } from './symbols/audio';
-import { shaderSymbols } from './symbols/shader';
+import { windowSymbols } from './modules/window/symbols';
+import { shapesSymbols } from './modules/shapes/symbols';
+import { collisionSymbols } from './modules/collision/symbols';
+import { cameraSymbols } from './modules/camera/symbols';
+import { draw3dSymbols } from './modules/draw3d/symbols';
+import { textureSymbols } from './modules/texture/symbols';
+import { modelSymbols } from './modules/model/symbols';
+import { imageSymbols } from './modules/image/symbols';
+import { colorSymbols } from './modules/color/symbols';
+import { fontSymbols } from './modules/font/symbols';
+import { inputSymbols } from './modules/input/symbols';
+import { audioSymbols } from './modules/audio/symbols';
+import { shaderSymbols } from './modules/shader/symbols';
 
 const allSymbols = {
   ...windowSymbols,
@@ -110,8 +110,9 @@ function buildCC(config: RaylibConfig): SymbolsType {
 
   const srcDir = dirname(new URL(import.meta.url).pathname);
   const cDir = join(srcDir, 'c');
+  const modulesDir = join(srcDir, 'modules');
 
-  const wrapperSrc = `#include "${headerPath}"\n#include "${cDir}/registries.c"\n#include "${cDir}/window.c"\n#include "${cDir}/shapes.c"\n#include "${cDir}/collision.c"\n#include "${cDir}/camera.c"\n#include "${cDir}/draw3d.c"\n#include "${cDir}/texture.c"\n#include "${cDir}/model.c"\n#include "${cDir}/image.c"\n#include "${cDir}/color.c"\n#include "${cDir}/font.c"\n#include "${cDir}/input.c"\n#include "${cDir}/audio.c"\n#include "${cDir}/shader.c"\n`;
+  const wrapperSrc = `#include "${headerPath}"\n#include "${cDir}/registries.c"\n#include "${modulesDir}/window/wrapper.c"\n#include "${modulesDir}/shapes/wrapper.c"\n#include "${modulesDir}/collision/wrapper.c"\n#include "${modulesDir}/camera/wrapper.c"\n#include "${modulesDir}/draw3d/wrapper.c"\n#include "${modulesDir}/texture/wrapper.c"\n#include "${modulesDir}/model/wrapper.c"\n#include "${modulesDir}/image/wrapper.c"\n#include "${modulesDir}/color/wrapper.c"\n#include "${modulesDir}/font/wrapper.c"\n#include "${modulesDir}/input/wrapper.c"\n#include "${modulesDir}/audio/wrapper.c"\n#include "${modulesDir}/shader/wrapper.c"\n`;
 
   const wrapperPath = join(cacheDir, `main_${configHash}.c`);
   writeFileSync(wrapperPath, wrapperSrc);

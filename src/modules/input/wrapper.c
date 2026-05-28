@@ -1,4 +1,4 @@
-#include "common.h"
+#include "../../c/common.h"
 
 bool IsKeyPressedW(int key) { return IsKeyPressed(key); }
 bool IsKeyPressedRepeatW(int key) { return IsKeyPressedRepeat(key); }

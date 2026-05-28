@@ -1,4 +1,4 @@
-#include "common.h"
+#include "../../c/common.h"
 
 int LoadImageW(const char* fileName) {
     int slot = imageAlloc();

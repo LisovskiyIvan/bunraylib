@@ -1,4 +1,4 @@
-#include "common.h"
+#include "../../c/common.h"
 
 void InitAudioDeviceW() {
     InitAudioDevice();

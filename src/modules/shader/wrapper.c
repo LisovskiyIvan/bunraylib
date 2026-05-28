@@ -1,4 +1,4 @@
-#include "common.h"
+#include "../../c/common.h"
 
 int LoadShaderW(const char* vsFileName, const char* fsFileName) {
     int slot = shaderAlloc();

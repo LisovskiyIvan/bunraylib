@@ -1,4 +1,4 @@
-#include "common.h"
+#include "../../c/common.h"
 #include <stdlib.h>
 
 int LoadFontW(const char* fileName) {
