@@ -1,5 +1,5 @@
 import { getSymbols } from '../../symbols';
-import { bufs, cstr, f, i } from '../../utils';
+import { bufs as b, cstr, f, i } from '../../utils';
 import { CString } from 'bun:ffi';
 import type {
   Vec2,
@@ -168,8 +168,8 @@ export class WindowModule {
     return r().symbols.GetCurrentMonitorW();
   }
   static getMonitorPosition(monitor: number): Vec2 {
-    r().symbols.GetMonitorPositionW(bufs._vec2Buf, i(monitor));
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    r().symbols.GetMonitorPositionW(b._vec2Buf, i(monitor));
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static getMonitorWidth(monitor: number): number {
     return r().symbols.GetMonitorWidthW(i(monitor));
@@ -187,12 +187,12 @@ export class WindowModule {
     return r().symbols.GetMonitorRefreshRateW(i(monitor));
   }
   static getWindowPosition(): Vec2 {
-    r().symbols.GetWindowPositionW(bufs._vec2Buf);
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    r().symbols.GetWindowPositionW(b._vec2Buf);
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static getWindowScaleDPI(): Vec2 {
-    r().symbols.GetWindowScaleDPIW(bufs._vec2Buf);
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    r().symbols.GetWindowScaleDPIW(b._vec2Buf);
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static getMonitorName(monitor: number): string {
     const ptr = r().symbols.GetMonitorNameW(i(monitor));

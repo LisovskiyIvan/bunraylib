@@ -1,5 +1,5 @@
 import { getSymbols } from '../../symbols';
-import { bufs, cstr, f, i } from '../../utils';
+import { bufs as b, cstr, f, i } from '../../utils';
 import { CString } from 'bun:ffi';
 import type {
   Vec2,
@@ -83,12 +83,12 @@ export class InputModule {
     return r().symbols.GetMouseYW();
   }
   static getMousePosition(): Vec2 {
-    r().symbols.GetMousePositionW(bufs._vec2Buf);
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    r().symbols.GetMousePositionW(b._vec2Buf);
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static getMouseDelta(): Vec2 {
-    r().symbols.GetMouseDeltaW(bufs._vec2Buf);
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    r().symbols.GetMouseDeltaW(b._vec2Buf);
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static setMousePosition(x: number, y: number): void {
     r().symbols.SetMousePositionW(i(x), i(y));
@@ -103,8 +103,8 @@ export class InputModule {
     return r().symbols.GetMouseWheelMoveW();
   }
   static getMouseWheelMoveV(): Vec2 {
-    r().symbols.GetMouseWheelMoveVW(bufs._vec2Buf);
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    r().symbols.GetMouseWheelMoveVW(b._vec2Buf);
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static setMouseCursor(cursor: number): void {
     r().symbols.SetMouseCursorW(i(cursor));
@@ -116,8 +116,8 @@ export class InputModule {
     return r().symbols.GetTouchYW();
   }
   static getTouchPosition(index: number): Vec2 {
-    r().symbols.GetTouchPositionW(bufs._vec2Buf, i(index));
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    r().symbols.GetTouchPositionW(b._vec2Buf, i(index));
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static getTouchPointId(index: number): number {
     return r().symbols.GetTouchPointIdW(i(index));
@@ -138,15 +138,15 @@ export class InputModule {
     return r().symbols.GetGestureHoldDurationW();
   }
   static getGestureDragVector(): Vec2 {
-    r().symbols.GetGestureDragVectorW(bufs._vec2Buf);
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    r().symbols.GetGestureDragVectorW(b._vec2Buf);
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static getGestureDragAngle(): number {
     return r().symbols.GetGestureDragAngleW();
   }
   static getGesturePinchVector(): Vec2 {
-    r().symbols.GetGesturePinchVectorW(bufs._vec2Buf);
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    r().symbols.GetGesturePinchVectorW(b._vec2Buf);
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static getGesturePinchAngle(): number {
     return r().symbols.GetGesturePinchAngleW();

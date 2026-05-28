@@ -1,5 +1,5 @@
 import { getSymbols } from '../../symbols';
-import { bufs, f, i, validatePoints } from '../../utils';
+import { bufs as b, f, i, validatePoints } from '../../utils';
 import type {
   Vec2,
   Vec3,
@@ -135,7 +135,7 @@ export class CollisionModule {
     endPos2: Vec2,
   ): { collides: boolean; collisionPoint: Vec2 } {
     const collides = r().symbols.CheckCollisionLinesW(
-      bufs._colPtBuf,
+      b._colPtBuf,
       f(startPos1.x),
       f(startPos1.y),
       f(endPos1.x),
@@ -145,12 +145,12 @@ export class CollisionModule {
       f(endPos2.x),
       f(endPos2.y),
     );
-    return { collides, collisionPoint: { x: bufs._colPtBuf[0]!, y: bufs._colPtBuf[1]! } };
+    return { collides, collisionPoint: { x: b._colPtBuf[0]!, y: b._colPtBuf[1]! } };
   }
   /** Get collision rectangle for two rectangles collision. Returns null if no overlap */
   static getCollisionRec(rec1: Rectangle, rec2: Rectangle): Rectangle {
     r().symbols.GetCollisionRecW(
-      bufs._recBuf,
+      b._recBuf,
       f(rec1.x),
       f(rec1.y),
       f(rec1.width),
@@ -161,10 +161,10 @@ export class CollisionModule {
       f(rec2.height),
     );
     return {
-      x: bufs._recBuf[0]!,
-      y: bufs._recBuf[1]!,
-      width: bufs._recBuf[2]!,
-      height: bufs._recBuf[3]! };
+      x: b._recBuf[0]!,
+      y: b._recBuf[1]!,
+      width: b._recBuf[2]!,
+      height: b._recBuf[3]! };
   }
   static checkCollisionSpheres(
     center1: Vec3,
@@ -215,10 +215,10 @@ export class CollisionModule {
   }
   static getRayCollisionSphere(ray: Ray, center: Vec3, radius: number): RayCollision {
     r().symbols.GetRayCollisionSphereW(
-      bufs._rcHit,
-      bufs._rcDist,
-      bufs._rcPt,
-      bufs._rcNorm,
+      b._rcHit,
+      b._rcDist,
+      b._rcPt,
+      b._rcNorm,
       f(ray.position.x),
       f(ray.position.y),
       f(ray.position.z),
@@ -231,17 +231,17 @@ export class CollisionModule {
       f(radius),
     );
     return {
-      hit: bufs._rcHit[0]! !== 0,
-      distance: bufs._rcDist[0]!,
-      point: { x: bufs._rcPt[0]!, y: bufs._rcPt[1]!, z: bufs._rcPt[2]! },
-      normal: { x: bufs._rcNorm[0]!, y: bufs._rcNorm[1]!, z: bufs._rcNorm[2]! } };
+      hit: b._rcHit[0]! !== 0,
+      distance: b._rcDist[0]!,
+      point: { x: b._rcPt[0]!, y: b._rcPt[1]!, z: b._rcPt[2]! },
+      normal: { x: b._rcNorm[0]!, y: b._rcNorm[1]!, z: b._rcNorm[2]! } };
   }
   static getRayCollisionBox(ray: Ray, box: BoundingBox): RayCollision {
     r().symbols.GetRayCollisionBoxW(
-      bufs._rcHit,
-      bufs._rcDist,
-      bufs._rcPt,
-      bufs._rcNorm,
+      b._rcHit,
+      b._rcDist,
+      b._rcPt,
+      b._rcNorm,
       f(ray.position.x),
       f(ray.position.y),
       f(ray.position.z),
@@ -256,17 +256,17 @@ export class CollisionModule {
       f(box.max.z),
     );
     return {
-      hit: bufs._rcHit[0]! !== 0,
-      distance: bufs._rcDist[0]!,
-      point: { x: bufs._rcPt[0]!, y: bufs._rcPt[1]!, z: bufs._rcPt[2]! },
-      normal: { x: bufs._rcNorm[0]!, y: bufs._rcNorm[1]!, z: bufs._rcNorm[2]! } };
+      hit: b._rcHit[0]! !== 0,
+      distance: b._rcDist[0]!,
+      point: { x: b._rcPt[0]!, y: b._rcPt[1]!, z: b._rcPt[2]! },
+      normal: { x: b._rcNorm[0]!, y: b._rcNorm[1]!, z: b._rcNorm[2]! } };
   }
   static getRayCollisionTriangle(ray: Ray, p1: Vec3, p2: Vec3, p3: Vec3): RayCollision {
     r().symbols.GetRayCollisionTriangleW(
-      bufs._rcHit,
-      bufs._rcDist,
-      bufs._rcPt,
-      bufs._rcNorm,
+      b._rcHit,
+      b._rcDist,
+      b._rcPt,
+      b._rcNorm,
       f(ray.position.x),
       f(ray.position.y),
       f(ray.position.z),
@@ -284,17 +284,17 @@ export class CollisionModule {
       f(p3.z),
     );
     return {
-      hit: bufs._rcHit[0]! !== 0,
-      distance: bufs._rcDist[0]!,
-      point: { x: bufs._rcPt[0]!, y: bufs._rcPt[1]!, z: bufs._rcPt[2]! },
-      normal: { x: bufs._rcNorm[0]!, y: bufs._rcNorm[1]!, z: bufs._rcNorm[2]! } };
+      hit: b._rcHit[0]! !== 0,
+      distance: b._rcDist[0]!,
+      point: { x: b._rcPt[0]!, y: b._rcPt[1]!, z: b._rcPt[2]! },
+      normal: { x: b._rcNorm[0]!, y: b._rcNorm[1]!, z: b._rcNorm[2]! } };
   }
   static getRayCollisionQuad(ray: Ray, p1: Vec3, p2: Vec3, p3: Vec3, p4: Vec3): RayCollision {
     r().symbols.GetRayCollisionQuadW(
-      bufs._rcHit,
-      bufs._rcDist,
-      bufs._rcPt,
-      bufs._rcNorm,
+      b._rcHit,
+      b._rcDist,
+      b._rcPt,
+      b._rcNorm,
       f(ray.position.x),
       f(ray.position.y),
       f(ray.position.z),
@@ -315,10 +315,10 @@ export class CollisionModule {
       f(p4.z),
     );
     return {
-      hit: bufs._rcHit[0]! !== 0,
-      distance: bufs._rcDist[0]!,
-      point: { x: bufs._rcPt[0]!, y: bufs._rcPt[1]!, z: bufs._rcPt[2]! },
-      normal: { x: bufs._rcNorm[0]!, y: bufs._rcNorm[1]!, z: bufs._rcNorm[2]! } };
+      hit: b._rcHit[0]! !== 0,
+      distance: b._rcDist[0]!,
+      point: { x: b._rcPt[0]!, y: b._rcPt[1]!, z: b._rcPt[2]! },
+      normal: { x: b._rcNorm[0]!, y: b._rcNorm[1]!, z: b._rcNorm[2]! } };
   }
   static getRayCollisionMesh(
     ray: Ray,
@@ -327,10 +327,10 @@ export class CollisionModule {
   ): RayCollision {
     const m = transform instanceof Float32Array ? transform : transform.m;
     r().symbols.GetRayCollisionMeshW(
-      bufs._rcHit,
-      bufs._rcDist,
-      bufs._rcPt,
-      bufs._rcNorm,
+      b._rcHit,
+      b._rcDist,
+      b._rcPt,
+      b._rcNorm,
       f(ray.position.x),
       f(ray.position.y),
       f(ray.position.z),
@@ -356,9 +356,9 @@ export class CollisionModule {
       f(m[15]!),
     );
     return {
-      hit: bufs._rcHit[0]! !== 0,
-      distance: bufs._rcDist[0]!,
-      point: { x: bufs._rcPt[0]!, y: bufs._rcPt[1]!, z: bufs._rcPt[2]! },
-      normal: { x: bufs._rcNorm[0]!, y: bufs._rcNorm[1]!, z: bufs._rcNorm[2]! } };
+      hit: b._rcHit[0]! !== 0,
+      distance: b._rcDist[0]!,
+      point: { x: b._rcPt[0]!, y: b._rcPt[1]!, z: b._rcPt[2]! },
+      normal: { x: b._rcNorm[0]!, y: b._rcNorm[1]!, z: b._rcNorm[2]! } };
   }
 }

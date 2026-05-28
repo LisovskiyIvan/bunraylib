@@ -1,5 +1,5 @@
 import { getSymbols } from '../../symbols';
-import { bufs, f, i, validatePoints } from '../../utils';
+import { bufs as b, f, i, validatePoints } from '../../utils';
 import type {
   Vec2,
   Rectangle,
@@ -559,14 +559,14 @@ export class ShapesModule {
    */
   static getSplinePointLinear(startPos: Vec2, endPos: Vec2, t: number): Vec2 {
     r().symbols.GetSplinePointLinearW(
-      bufs._vec2Buf,
+      b._vec2Buf,
       f(startPos.x),
       f(startPos.y),
       f(endPos.x),
       f(endPos.y),
       f(t),
     );
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   /**
    * Get (evaluate) spline point: B-Spline.
@@ -579,7 +579,7 @@ export class ShapesModule {
    */
   static getSplinePointBasis(p1: Vec2, p2: Vec2, p3: Vec2, p4: Vec2, t: number): Vec2 {
     r().symbols.GetSplinePointBasisW(
-      bufs._vec2Buf,
+      b._vec2Buf,
       f(p1.x),
       f(p1.y),
       f(p2.x),
@@ -590,7 +590,7 @@ export class ShapesModule {
       f(p4.y),
       f(t),
     );
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   /**
    * Get (evaluate) spline point: Catmull-Rom.
@@ -603,7 +603,7 @@ export class ShapesModule {
    */
   static getSplinePointCatmullRom(p1: Vec2, p2: Vec2, p3: Vec2, p4: Vec2, t: number): Vec2 {
     r().symbols.GetSplinePointCatmullRomW(
-      bufs._vec2Buf,
+      b._vec2Buf,
       f(p1.x),
       f(p1.y),
       f(p2.x),
@@ -614,7 +614,7 @@ export class ShapesModule {
       f(p4.y),
       f(t),
     );
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   /**
    * Get (evaluate) spline point: Quadratic Bezier.
@@ -626,7 +626,7 @@ export class ShapesModule {
    */
   static getSplinePointBezierQuad(p1: Vec2, c2: Vec2, p3: Vec2, t: number): Vec2 {
     r().symbols.GetSplinePointBezierQuadW(
-      bufs._vec2Buf,
+      b._vec2Buf,
       f(p1.x),
       f(p1.y),
       f(c2.x),
@@ -635,7 +635,7 @@ export class ShapesModule {
       f(p3.y),
       f(t),
     );
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   /**
    * Get (evaluate) spline point: Cubic Bezier.
@@ -648,7 +648,7 @@ export class ShapesModule {
    */
   static getSplinePointBezierCubic(p1: Vec2, c2: Vec2, c3: Vec2, p4: Vec2, t: number): Vec2 {
     r().symbols.GetSplinePointBezierCubicW(
-      bufs._vec2Buf,
+      b._vec2Buf,
       f(p1.x),
       f(p1.y),
       f(c2.x),
@@ -659,7 +659,7 @@ export class ShapesModule {
       f(p4.y),
       f(t),
     );
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static setShapesTexture(texture: Texture2D, source: Rectangle): void {
     r().symbols.SetShapesTextureW(
@@ -673,15 +673,15 @@ export class ShapesModule {
     );
   }
   static getShapesTexture(): Texture2D {
-    r().symbols.GetShapesTextureW(bufs._shapesTexId, bufs._shapesTexW, bufs._shapesTexH);
-    return { id: bufs._shapesTexId[0]!, width: bufs._shapesTexW[0]!, height: bufs._shapesTexH[0]! };
+    r().symbols.GetShapesTextureW(b._shapesTexId, b._shapesTexW, b._shapesTexH);
+    return { id: b._shapesTexId[0]!, width: b._shapesTexW[0]!, height: b._shapesTexH[0]! };
   }
   static getShapesTextureRectangle(): Rectangle {
-    r().symbols.GetShapesTextureRectangleW(bufs._recBuf);
+    r().symbols.GetShapesTextureRectangleW(b._recBuf);
     return {
-      x: bufs._recBuf[0]!,
-      y: bufs._recBuf[1]!,
-      width: bufs._recBuf[2]!,
-      height: bufs._recBuf[3]! };
+      x: b._recBuf[0]!,
+      y: b._recBuf[1]!,
+      width: b._recBuf[2]!,
+      height: b._recBuf[3]! };
   }
 }

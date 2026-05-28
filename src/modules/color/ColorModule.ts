@@ -1,5 +1,5 @@
 import { getSymbols } from '../../symbols';
-import { bufs, f, i } from '../../utils';
+import { bufs as b, f, i } from '../../utils';
 import type {
   Color } from '../../types';
 
@@ -10,12 +10,12 @@ export class ColorModule {
     return r().symbols.ColorToIntW(i(c));
   }
   static colorNormalize(c: Color): { x: number; y: number; z: number; w: number } {
-    r().symbols.ColorNormalizeW(bufs._vec4Buf, i(c));
+    r().symbols.ColorNormalizeW(b._vec4Buf, i(c));
     return {
-      x: bufs._vec4Buf[0]!,
-      y: bufs._vec4Buf[1]!,
-      z: bufs._vec4Buf[2]!,
-      w: bufs._vec4Buf[3]! };
+      x: b._vec4Buf[0]!,
+      y: b._vec4Buf[1]!,
+      z: b._vec4Buf[2]!,
+      w: b._vec4Buf[3]! };
   }
   static colorFromNormalized(normalized: { x: number; y: number; z: number; w: number }): Color {
     return r().symbols.ColorFromNormalizedW(
@@ -26,8 +26,8 @@ export class ColorModule {
     );
   }
   static colorToHSV(c: Color): { h: number; s: number; v: number } {
-    r().symbols.ColorToHSVW(bufs._vec3Buf2, i(c));
-    return { h: bufs._vec3Buf2[0]!, s: bufs._vec3Buf2[1]!, v: bufs._vec3Buf2[2]! };
+    r().symbols.ColorToHSVW(b._vec3Buf2, i(c));
+    return { h: b._vec3Buf2[0]!, s: b._vec3Buf2[1]!, v: b._vec3Buf2[2]! };
   }
   static colorFromHSV(hue: number, saturation: number, value: number): Color {
     return r().symbols.ColorFromHSVW(f(hue), f(saturation), f(value));

@@ -1,5 +1,5 @@
 import { getSymbols } from '../../symbols';
-import { bufs, cstr, f, i } from '../../utils';
+import { bufs as b, cstr, f, i } from '../../utils';
 import type {
   Vec2,
   Rectangle,
@@ -35,8 +35,8 @@ export class FontModule {
     return r().symbols.MeasureTextW(cstr(text), i(fontSize));
   }
   static measureTextEx(font: Font, text: string, fontSize: number, spacing: number): Vec2 {
-    r().symbols.MeasureTextExW(bufs._vec2Buf, i(font), cstr(text), f(fontSize), f(spacing));
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    r().symbols.MeasureTextExW(b._vec2Buf, i(font), cstr(text), f(fontSize), f(spacing));
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static drawTextEx(
     font: Font,
@@ -137,42 +137,42 @@ export class FontModule {
   }
   static getGlyphInfo(font: Font, codepoint: number): GlyphInfo {
     r().symbols.GetGlyphInfoW(
-      bufs._glyphValue,
-      bufs._glyphOffsetX,
-      bufs._glyphOffsetY,
-      bufs._glyphAdvanceX,
-      bufs._glyphImageSlot,
+      b._glyphValue,
+      b._glyphOffsetX,
+      b._glyphOffsetY,
+      b._glyphAdvanceX,
+      b._glyphImageSlot,
       i(font),
       i(codepoint),
     );
     return {
-      value: bufs._glyphValue[0]!,
-      offsetX: bufs._glyphOffsetX[0]!,
-      offsetY: bufs._glyphOffsetY[0]!,
-      advanceX: bufs._glyphAdvanceX[0]!,
-      image: bufs._glyphImageSlot[0]!,
+      value: b._glyphValue[0]!,
+      offsetX: b._glyphOffsetX[0]!,
+      offsetY: b._glyphOffsetY[0]!,
+      advanceX: b._glyphAdvanceX[0]!,
+      image: b._glyphImageSlot[0]!,
     };
   }
   static getGlyphAtlasRec(font: Font, codepoint: number): Rectangle {
-    r().symbols.GetGlyphAtlasRecW(bufs._recBuf, i(font), i(codepoint));
+    r().symbols.GetGlyphAtlasRecW(b._recBuf, i(font), i(codepoint));
     return {
-      x: bufs._recBuf[0]!,
-      y: bufs._recBuf[1]!,
-      width: bufs._recBuf[2]!,
-      height: bufs._recBuf[3]!,
+      x: b._recBuf[0]!,
+      y: b._recBuf[1]!,
+      width: b._recBuf[2]!,
+      height: b._recBuf[3]!,
     };
   }
   static getCodepoint(text: string): { codepoint: number; size: number } {
-    const cp = r().symbols.GetCodepointW(cstr(text), bufs._cpSize);
-    return { codepoint: cp, size: bufs._cpSize[0]! };
+    const cp = r().symbols.GetCodepointW(cstr(text), b._cpSize);
+    return { codepoint: cp, size: b._cpSize[0]! };
   }
   static getCodepointNext(text: string): { codepoint: number; size: number } {
-    const cp = r().symbols.GetCodepointNextW(cstr(text), bufs._cpSize);
-    return { codepoint: cp, size: bufs._cpSize[0]! };
+    const cp = r().symbols.GetCodepointNextW(cstr(text), b._cpSize);
+    return { codepoint: cp, size: b._cpSize[0]! };
   }
   static getCodepointPrevious(text: string): { codepoint: number; size: number } {
-    const cp = r().symbols.GetCodepointPreviousW(cstr(text), bufs._cpSize);
-    return { codepoint: cp, size: bufs._cpSize[0]! };
+    const cp = r().symbols.GetCodepointPreviousW(cstr(text), b._cpSize);
+    return { codepoint: cp, size: b._cpSize[0]! };
   }
   static getCodepointCount(text: string): number {
     return r().symbols.GetCodepointCountW(cstr(text));
@@ -205,9 +205,9 @@ export class FontModule {
     return r().symbols.TextCopyW(dst, cstr(src));
   }
   static textAppend(text: Uint8Array, append: string, position: number): number {
-    bufs._textAppendPos[0] = position;
-    r().symbols.TextAppendW(text, cstr(append), bufs._textAppendPos);
-    return bufs._textAppendPos[0];
+    b._textAppendPos[0] = position;
+    r().symbols.TextAppendW(text, cstr(append), b._textAppendPos);
+    return b._textAppendPos[0];
   }
   static genImageFontAtlas(
     glyphs: GlyphInfo[],
@@ -243,14 +243,14 @@ export class FontModule {
     spacing: number,
   ): Vec2 {
     r().symbols.MeasureTextCodepointsW(
-      bufs._vec2Buf,
+      b._vec2Buf,
       i(font),
       codepoints,
       i(length),
       f(fontSize),
       f(spacing),
     );
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static unloadTextLines(text: number, lineCount: number): void {
     r().symbols.UnloadTextLinesW(text as unknown as Buffer, i(lineCount));

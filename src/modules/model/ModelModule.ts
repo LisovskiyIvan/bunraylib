@@ -1,5 +1,5 @@
 import { getSymbols } from '../../symbols';
-import { bufs, cstr, f, i } from '../../utils';
+import { bufs as b, cstr, f, i } from '../../utils';
 import type {
   Vec3,
   Texture2D,
@@ -25,10 +25,10 @@ export class ModelModule {
     return r().symbols.IsModelValidW(i(model));
   }
   static getModelBoundingBox(model: Model): BoundingBox {
-    r().symbols.GetModelBoundingBoxW(bufs._bbMin, bufs._bbMax, i(model));
+    r().symbols.GetModelBoundingBoxW(b._bbMin, b._bbMax, i(model));
     return {
-      min: { x: bufs._bbMin[0]!, y: bufs._bbMin[1]!, z: bufs._bbMin[2]! },
-      max: { x: bufs._bbMax[0]!, y: bufs._bbMax[1]!, z: bufs._bbMax[2]! },
+      min: { x: b._bbMin[0]!, y: b._bbMin[1]!, z: b._bbMin[2]! },
+      max: { x: b._bbMax[0]!, y: b._bbMax[1]!, z: b._bbMax[2]! },
     };
   }
   static drawModel(model: Model, position: Vec3, scale: number, tint: Color): void {
@@ -118,10 +118,10 @@ export class ModelModule {
     r().symbols.UploadMeshW(i(mesh), dynamic);
   }
   static getMeshBoundingBox(mesh: Mesh): BoundingBox {
-    r().symbols.GetMeshBoundingBoxW(bufs._bbMin, bufs._bbMax, i(mesh));
+    r().symbols.GetMeshBoundingBoxW(b._bbMin, b._bbMax, i(mesh));
     return {
-      min: { x: bufs._bbMin[0]!, y: bufs._bbMin[1]!, z: bufs._bbMin[2]! },
-      max: { x: bufs._bbMax[0]!, y: bufs._bbMax[1]!, z: bufs._bbMax[2]! },
+      min: { x: b._bbMin[0]!, y: b._bbMin[1]!, z: b._bbMin[2]! },
+      max: { x: b._bbMax[0]!, y: b._bbMax[1]!, z: b._bbMax[2]! },
     };
   }
   static genMeshTangents(mesh: Mesh): void {
@@ -188,8 +188,8 @@ export class ModelModule {
     r().symbols.SetModelMeshMaterialW(i(model), i(meshId), i(materialId));
   }
   static loadModelAnimations(fileName: string): { startSlot: number; count: number } {
-    r().symbols.LoadModelAnimationsW(bufs._animSlotStart, bufs._animCount, cstr(fileName));
-    return { startSlot: bufs._animSlotStart[0]!, count: bufs._animCount[0]! };
+    r().symbols.LoadModelAnimationsW(b._animSlotStart, b._animCount, cstr(fileName));
+    return { startSlot: b._animSlotStart[0]!, count: b._animCount[0]! };
   }
   static updateModelAnimation(model: Model, anim: ModelAnimation, frame: number): void {
     r().symbols.UpdateModelAnimationW(i(model), i(anim), f(frame));

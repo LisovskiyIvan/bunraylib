@@ -1,5 +1,5 @@
 import { getSymbols } from '../../symbols';
-import { bufs, cstr, f, i } from '../../utils';
+import { bufs as b, cstr, f, i } from '../../utils';
 import type {
   Vec2,
   Rectangle,
@@ -13,11 +13,11 @@ const r = () => getSymbols();
 
 export class TextureModule {
   static loadTexture(fileName: string): Texture2D {
-    r().symbols.LoadTextureW(bufs._texOutId, bufs._texOutW, bufs._texOutH, cstr(fileName));
+    r().symbols.LoadTextureW(b._texOutId, b._texOutW, b._texOutH, cstr(fileName));
     return {
-      id: bufs._texOutId[0]!,
-      width: bufs._texOutW[0]!,
-      height: bufs._texOutH[0]!,
+      id: b._texOutId[0]!,
+      width: b._texOutW[0]!,
+      height: b._texOutH[0]!,
     };
   }
   static unloadTexture(texture: Texture2D): void {
@@ -28,19 +28,19 @@ export class TextureModule {
   }
   static loadRenderTexture(width: number, height: number): RenderTexture2D {
     r().symbols.LoadRenderTextureW(
-      bufs._texOutId,
-      bufs._texOutTexId,
-      bufs._texOutW,
-      bufs._texOutH,
+      b._texOutId,
+      b._texOutTexId,
+      b._texOutW,
+      b._texOutH,
       i(width),
       i(height),
     );
     return {
-      id: bufs._texOutId[0]!,
+      id: b._texOutId[0]!,
       texture: {
-        id: bufs._texOutTexId[0]!,
-        width: bufs._texOutW[0]!,
-        height: bufs._texOutH[0]!,
+        id: b._texOutTexId[0]!,
+        width: b._texOutW[0]!,
+        height: b._texOutH[0]!,
       },
     };
   }
@@ -128,18 +128,18 @@ export class TextureModule {
     );
   }
   static loadTextureFromImage(image: Image): Texture2D {
-    r().symbols.LoadTextureFromImageW(bufs._texOutId, bufs._texOutW, bufs._texOutH, i(image));
-    return { id: bufs._texOutId[0]!, width: bufs._texOutW[0]!, height: bufs._texOutH[0]! };
+    r().symbols.LoadTextureFromImageW(b._texOutId, b._texOutW, b._texOutH, i(image));
+    return { id: b._texOutId[0]!, width: b._texOutW[0]!, height: b._texOutH[0]! };
   }
   static loadTextureCubemap(image: Image, layout: number): Texture2D {
     r().symbols.LoadTextureCubemapW(
-      bufs._texOutId,
-      bufs._texOutW,
-      bufs._texOutH,
+      b._texOutId,
+      b._texOutW,
+      b._texOutH,
       i(image),
       i(layout),
     );
-    return { id: bufs._texOutId[0]!, width: bufs._texOutW[0]!, height: bufs._texOutH[0]! };
+    return { id: b._texOutId[0]!, width: b._texOutW[0]!, height: b._texOutH[0]! };
   }
   static updateTexture(texture: Texture2D, pixels: Uint8Array): void {
     r().symbols.UpdateTextureW(i(texture.id), i(texture.width), i(texture.height), pixels);

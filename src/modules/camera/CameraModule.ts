@@ -1,5 +1,5 @@
 import { getSymbols } from '../../symbols';
-import { bufs, f, i } from '../../utils';
+import { bufs as b, f, i } from '../../utils';
 import type {
   Vec2,
   Vec3,
@@ -77,7 +77,7 @@ export class CameraModule {
   }
   static getWorldToScreen(position: Vec3, camera: Camera3D): Vec2 {
     r().symbols.GetWorldToScreenW(
-      bufs._vec2Buf,
+      b._vec2Buf,
       f(position.x),
       f(position.y),
       f(position.z),
@@ -93,11 +93,11 @@ export class CameraModule {
       f(camera.fovy),
       i(camera.projection),
     );
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static getWorldToScreen2D(position: Vec2, camera: Camera2D): Vec2 {
     r().symbols.GetWorldToScreen2DW(
-      bufs._vec2Buf,
+      b._vec2Buf,
       f(position.x),
       f(position.y),
       f(camera.offset.x),
@@ -107,11 +107,11 @@ export class CameraModule {
       f(camera.rotation),
       f(camera.zoom),
     );
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static getScreenToWorld2D(position: Vec2, camera: Camera2D): Vec2 {
     r().symbols.GetScreenToWorld2DW(
-      bufs._vec2Buf,
+      b._vec2Buf,
       f(position.x),
       f(position.y),
       f(camera.offset.x),
@@ -121,7 +121,7 @@ export class CameraModule {
       f(camera.rotation),
       f(camera.zoom),
     );
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static getScreenToWorldRayEx(
     position: Vec2,
@@ -130,8 +130,8 @@ export class CameraModule {
     height: number,
   ): Ray {
     r().symbols.GetScreenToWorldRayExW(
-      bufs._rayPosBuf2,
-      bufs._rayDirBuf2,
+      b._rayPosBuf2,
+      b._rayDirBuf2,
       i(position.x),
       i(position.y),
       i(width),
@@ -149,12 +149,12 @@ export class CameraModule {
       i(camera.projection),
     );
     return {
-      position: { x: bufs._rayPosBuf2[0]!, y: bufs._rayPosBuf2[1]!, z: bufs._rayPosBuf2[2]! },
-      direction: { x: bufs._rayDirBuf2[0]!, y: bufs._rayDirBuf2[1]!, z: bufs._rayDirBuf2[2]! } };
+      position: { x: b._rayPosBuf2[0]!, y: b._rayPosBuf2[1]!, z: b._rayPosBuf2[2]! },
+      direction: { x: b._rayDirBuf2[0]!, y: b._rayDirBuf2[1]!, z: b._rayDirBuf2[2]! } };
   }
   static getWorldToScreenEx(position: Vec3, camera: Camera3D, width: number, height: number): Vec2 {
     r().symbols.GetWorldToScreenExW(
-      bufs._vec2Buf,
+      b._vec2Buf,
       f(position.x),
       f(position.y),
       f(position.z),
@@ -172,11 +172,11 @@ export class CameraModule {
       i(width),
       i(height),
     );
-    return { x: bufs._vec2Buf[0]!, y: bufs._vec2Buf[1]! };
+    return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static getCameraMatrix(camera: Camera3D): Float32Array {
     r().symbols.GetCameraMatrixW(
-      bufs._matBuf,
+      b._matBuf,
       f(camera.position.x),
       f(camera.position.y),
       f(camera.position.z),
@@ -189,11 +189,11 @@ export class CameraModule {
       f(camera.fovy),
       i(camera.projection),
     );
-    return new Float32Array(bufs._matBuf);
+    return new Float32Array(b._matBuf);
   }
   static getCameraMatrix2D(camera: Camera2D): Float32Array {
     r().symbols.GetCameraMatrix2DW(
-      bufs._matBuf,
+      b._matBuf,
       camera.offset.x,
       camera.offset.y,
       camera.target.x,
@@ -201,6 +201,6 @@ export class CameraModule {
       f(camera.rotation),
       f(camera.zoom),
     );
-    return new Float32Array(bufs._matBuf);
+    return new Float32Array(b._matBuf);
   }
 }

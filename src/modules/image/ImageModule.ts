@@ -1,5 +1,5 @@
 import { getSymbols } from '../../symbols';
-import { bufs, cstr, f, i } from '../../utils';
+import { bufs as b, cstr, f, i } from '../../utils';
 import type {
   Vec2,
   Rectangle,
@@ -25,8 +25,8 @@ export class ImageModule {
     return r().symbols.LoadImageRawW(cstr(fileName), i(width), i(height), i(format), i(headerSize));
   }
   static loadImageAnim(fileName: string): { image: Image; frames: number } {
-    r().symbols.LoadImageAnimW(bufs._imgAnimSlot, bufs._imgAnimFrames, cstr(fileName));
-    return { image: bufs._imgAnimSlot[0]!, frames: bufs._imgAnimFrames[0]! };
+    r().symbols.LoadImageAnimW(b._imgAnimSlot, b._imgAnimFrames, cstr(fileName));
+    return { image: b._imgAnimSlot[0]!, frames: b._imgAnimFrames[0]! };
   }
   static loadImageFromMemory(fileType: string, fileData: Uint8Array, dataSize: number): Image {
     return r().symbols.LoadImageFromMemoryW(cstr(fileType), fileData, i(dataSize));
@@ -219,12 +219,12 @@ export class ImageModule {
     r().symbols.ImageColorReplaceW(i(image), i(color), i(replace));
   }
   static getImageAlphaBorder(image: Image, threshold: number): Rectangle {
-    r().symbols.GetImageAlphaBorderW(bufs._recBuf, i(image), f(threshold));
+    r().symbols.GetImageAlphaBorderW(b._recBuf, i(image), f(threshold));
     return {
-      x: bufs._recBuf[0]!,
-      y: bufs._recBuf[1]!,
-      width: bufs._recBuf[2]!,
-      height: bufs._recBuf[3]!,
+      x: b._recBuf[0]!,
+      y: b._recBuf[1]!,
+      width: b._recBuf[2]!,
+      height: b._recBuf[3]!,
     };
   }
   static getImageColor(image: Image, x: number, y: number): Color {
