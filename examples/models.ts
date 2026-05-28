@@ -6,6 +6,8 @@ Raylib.initWindow(1200, 800, "Model Demo");
 Raylib.setTargetFPS(60);
 
 const dir = join(import.meta.dir, "../assets/models/GLB format");
+const texDir = join(import.meta.dir, "../assets/textures");
+const billboardTex = Raylib.loadTexture(join(texDir, "texture_01.png"));
 
 const models = [
   { name: "Sedan", model: Raylib.loadModel(join(dir, "sedan.glb")) },
@@ -51,6 +53,8 @@ while (!Raylib.windowShouldClose()) {
   Raylib.beginMode3D(camera);
   Raylib.drawGrid(20, 1);
 
+  Raylib.drawBoundingBox(bb, COLORS.RED);
+
   if (wireframe) {
     Raylib.drawModelWiresEx(
       m.model,
@@ -68,6 +72,10 @@ while (!Raylib.windowShouldClose()) {
       COLORS.WHITE,
     );
   }
+
+  Raylib.drawBillboard(camera, billboardTex, { x: 5, y: 2, z: 0 }, 2, COLORS.WHITE);
+  Raylib.drawBillboardRec(camera, billboardTex, { x: 0, y: 0, width: 32, height: 32 }, { x: -5, y: 2, z: 0 }, { x: 2, y: 2 }, COLORS.WHITE);
+  Raylib.drawBillboardPro(camera, billboardTex, { x: 0, y: 0, width: billboardTex.width, height: billboardTex.height }, { x: 0, y: 4, z: 5 }, { x: 0, y: 1, z: 0 }, { x: 3, y: 3 }, { x: 0, y: 0 }, 0, COLORS.WHITE);
 
   Raylib.endMode3D();
 
@@ -92,4 +100,5 @@ while (!Raylib.windowShouldClose()) {
 }
 
 for (const m of models) Raylib.unloadModel(m.model);
+Raylib.unloadTexture(billboardTex);
 Raylib.closeWindow();

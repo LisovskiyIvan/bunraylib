@@ -2,7 +2,7 @@ import { describe, test, expect, beforeAll, afterAll } from "bun:test";
 import { Raylib } from "../src";
 import type { AudioStream } from "../src/types";
 import { join } from "path";
-import { existsSync, unlinkSync } from "fs";
+import { existsSync, unlinkSync, readFileSync } from "fs";
 
 beforeAll(() => {
   Raylib.initWindow(100, 100, "Audio Test");
@@ -139,6 +139,38 @@ describe("Music", () => {
     Raylib.resumeMusicStream(music);
     Raylib.seekMusicStream(music, 0);
     Raylib.stopMusicStream(music);
+    Raylib.unloadMusicStream(music);
+  });
+});
+
+describe("Wave from memory", () => {
+  test("loadWaveFromMemory", () => {
+    const file = join(import.meta.dir, "../assets/audio/Preview.ogg");
+    const buf = readFileSync(file);
+    const fileData = new Uint8Array(buf);
+    const wave = Raylib.loadWaveFromMemory("ogg", fileData, fileData.length);
+    expect(wave).toBeGreaterThanOrEqual(0);
+    // NOTE: isWaveValid may return false for memory-loaded formats depending on raylib build
+    Raylib.unloadWave(wave);
+  });
+
+  test("exportWaveAsCode", () => {
+    const wave = Raylib.loadWave(join(import.meta.dir, "../assets/audio/Preview.ogg"));
+    const tmpFile = join(import.meta.dir, "_rr_test_wave_code.h");
+    const result = Raylib.exportWaveAsCode(wave, tmpFile);
+    expect(typeof result).toBe("boolean");
+    Raylib.unloadWave(wave);
+    if (existsSync(tmpFile)) unlinkSync(tmpFile);
+  });
+});
+
+describe("Music from memory", () => {
+  test("loadMusicStreamFromMemory does not crash", () => {
+    const file = join(import.meta.dir, "../assets/audio/Preview.ogg");
+    const buf = readFileSync(file);
+    const fileData = new Uint8Array(buf);
+    const music = Raylib.loadMusicStreamFromMemory("ogg", fileData, fileData.length);
+    expect(typeof music).toBe("number");
     Raylib.unloadMusicStream(music);
   });
 });

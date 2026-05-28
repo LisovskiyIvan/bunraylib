@@ -111,6 +111,24 @@ describe("Material", () => {
   });
 });
 
+describe("Mesh generation from images", () => {
+  test("genMeshHeightmap", () => {
+    const img = Raylib.genImageColor(16, 16, 0xFFFFFFFF);
+    const mesh = Raylib.genMeshHeightmap(img, { x: 10, y: 2, z: 10 });
+    expect(mesh).toBeGreaterThanOrEqual(0);
+    Raylib.unloadMesh(mesh);
+    Raylib.unloadImage(img);
+  });
+
+  test("genMeshCubicmap", () => {
+    const img = Raylib.genImageColor(4, 4, 0xFFFFFFFF);
+    const mesh = Raylib.genMeshCubicmap(img, { x: 1, y: 1, z: 1 });
+    expect(mesh).toBeGreaterThanOrEqual(0);
+    Raylib.unloadMesh(mesh);
+    Raylib.unloadImage(img);
+  });
+});
+
 describe("Model from mesh", () => {
   test("loadModelFromMesh", () => {
     const mesh = Raylib.genMeshCube(2, 2, 2);

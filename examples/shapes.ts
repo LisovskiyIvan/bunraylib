@@ -129,6 +129,11 @@ while (!Raylib.windowShouldClose()) {
   Raylib.drawSplineSegmentBezierQuadratic({ x: 50, y: 800 }, { x: 100, y: 820 }, { x: 150, y: 750 }, 3, COLORS.BLUE)
   Raylib.drawSplineSegmentBezierCubic({ x: 50, y: 850 }, { x: 100, y: 880 }, { x: 150, y: 800 }, { x: 200, y: 850 }, 3, COLORS.MAGENTA)
 
+  const shapesTex = Raylib.getShapesTexture();
+  const shapesTexRec = Raylib.getShapesTextureRectangle();
+  Raylib.drawText(`ShapesTex: ${shapesTex.id} ${shapesTex.width}x${shapesTex.height}`, 1050, 10, 16, COLORS.LIGHTGRAY);
+  Raylib.drawText(`ShapesRec: ${shapesTexRec.x.toFixed(0)} ${shapesTexRec.y.toFixed(0)} ${shapesTexRec.width.toFixed(0)}x${shapesTexRec.height.toFixed(0)}`, 1050, 30, 16, COLORS.LIGHTGRAY);
+
   Raylib.drawFPS(Raylib.getScreenWidth() - 100, 10);
 
   Raylib.endDrawing();

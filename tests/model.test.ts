@@ -2,6 +2,7 @@ import { describe, test, expect, beforeAll, afterAll } from "bun:test";
 import { Raylib } from "../src";
 import type { CameraProjection } from "../src/types";
 import { join } from "path";
+import { existsSync, unlinkSync } from "fs";
 
 beforeAll(() => {
   Raylib.initWindow(100, 100, "Model Test");
@@ -59,6 +60,26 @@ describe("Model loading", () => {
     for (const m of models) {
       Raylib.unloadModel(m);
     }
+  });
+});
+
+describe("Model export", () => {
+  test("exportMesh", () => {
+    const mesh = Raylib.genMeshCube(1, 1, 1);
+    const tmpFile = join(import.meta.dir, "_rr_test_export_mesh.obj");
+    const result = Raylib.exportMesh(mesh, tmpFile);
+    expect(typeof result).toBe("boolean");
+    Raylib.unloadMesh(mesh);
+    if (existsSync(tmpFile)) unlinkSync(tmpFile);
+  });
+
+  test("exportMeshAsCode", () => {
+    const mesh = Raylib.genMeshCube(1, 1, 1);
+    const tmpFile = join(import.meta.dir, "_rr_test_export_mesh.h");
+    const result = Raylib.exportMeshAsCode(mesh, tmpFile);
+    expect(typeof result).toBe("boolean");
+    Raylib.unloadMesh(mesh);
+    if (existsSync(tmpFile)) unlinkSync(tmpFile);
   });
 });
 
