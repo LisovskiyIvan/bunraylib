@@ -1,8 +1,14 @@
 {
   "name": "@dayme/bunraylib",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "TypeScript FFI bindings for raylib — zero dependencies, powered by Bun",
-  "keywords": ["raylib", "ffi", "bun", "gamedev", "graphics"],
+  "keywords": [
+    "raylib",
+    "ffi",
+    "bun",
+    "gamedev",
+    "graphics"
+  ],
   "license": "MIT",
   "type": "module",
   "module": "src/index.ts",
