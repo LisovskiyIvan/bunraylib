@@ -3,24 +3,37 @@ const { i32, ptr, f32 } = FFIType;
 
 export const shapesDirectSymbols = {
   DrawFPS: { args: [i32, i32], returns: FFIType.void },
+  DrawRectangle: { args: [i32, i32, i32, i32, i32], returns: FFIType.void },
+  DrawText: { args: [FFIType.cstring, i32, i32, i32, i32], returns: FFIType.void },
+  DrawPixel: { args: [i32, i32, i32], returns: FFIType.void },
+  DrawLine: { args: [i32, i32, i32, i32, i32], returns: FFIType.void },
+  DrawLineStrip: { args: [ptr, i32, i32], returns: FFIType.void },
+  DrawCircle: { args: [i32, i32, f32, i32], returns: FFIType.void },
+  DrawCircleLines: { args: [i32, i32, f32, i32], returns: FFIType.void },
+  DrawEllipse: { args: [i32, i32, f32, f32, i32], returns: FFIType.void },
+  DrawEllipseLines: { args: [i32, i32, f32, f32, i32], returns: FFIType.void },
+  DrawRectangleGradientV: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+  DrawRectangleGradientH: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
+  DrawRectangleLines: { args: [i32, i32, i32, i32, i32], returns: FFIType.void },
+  DrawTriangleFan: { args: [ptr, i32, i32], returns: FFIType.void },
+  DrawTriangleStrip: { args: [ptr, i32, i32], returns: FFIType.void },
+  DrawSplineLinear: { args: [ptr, i32, f32, i32], returns: FFIType.void },
+  DrawSplineBasis: { args: [ptr, i32, f32, i32], returns: FFIType.void },
+  DrawSplineCatmullRom: { args: [ptr, i32, f32, i32], returns: FFIType.void },
+  DrawSplineBezierQuadratic: { args: [ptr, i32, f32, i32], returns: FFIType.void },
+  DrawSplineBezierCubic: { args: [ptr, i32, f32, i32], returns: FFIType.void },
 } as const;
 
 export const shapesWrapperSymbols = {
-  DrawRectangleW: { args: [i32, i32, i32, i32, i32], returns: FFIType.void },
-  DrawTextW: { args: [FFIType.cstring, i32, i32, i32, i32], returns: FFIType.void },
-  DrawPixelW: { args: [i32, i32, i32], returns: FFIType.void },
-  DrawLineW: { args: [i32, i32, i32, i32, i32], returns: FFIType.void },
   DrawLineExW: {
     args: [f32, f32, f32, f32, f32, i32],
     returns: FFIType.void,
   },
-  DrawLineStripW: { args: [ptr, i32, i32], returns: FFIType.void },
   DrawLineBezierW: {
     args: [f32, f32, f32, f32, f32, i32],
     returns: FFIType.void,
   },
   DrawLineDashedW: { args: [f32, f32, f32, f32, i32, i32, i32], returns: FFIType.void },
-  DrawCircleW: { args: [i32, i32, f32, i32], returns: FFIType.void },
   DrawCircleSectorW: {
     args: [f32, f32, f32, f32, f32, i32, i32],
     returns: FFIType.void,
@@ -33,11 +46,8 @@ export const shapesWrapperSymbols = {
     args: [f32, f32, f32, i32, i32],
     returns: FFIType.void,
   },
-  DrawCircleLinesW: { args: [i32, i32, f32, i32], returns: FFIType.void },
-  DrawEllipseW: { args: [i32, i32, f32, f32, i32], returns: FFIType.void },
   DrawEllipseVW: { args: [f32, f32, f32, f32, i32], returns: FFIType.void },
   DrawEllipseLinesVW: { args: [f32, f32, f32, f32, i32], returns: FFIType.void },
-  DrawEllipseLinesW: { args: [i32, i32, f32, f32, i32], returns: FFIType.void },
   DrawRingW: {
     args: [f32, f32, f32, f32, f32, f32, i32, i32],
     returns: FFIType.void,
@@ -50,13 +60,10 @@ export const shapesWrapperSymbols = {
     args: [f32, f32, f32, f32, f32, f32, f32, i32],
     returns: FFIType.void,
   },
-  DrawRectangleGradientVW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
-  DrawRectangleGradientHW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
   DrawRectangleGradientExW: {
     args: [f32, f32, f32, f32, i32, i32, i32, i32],
     returns: FFIType.void,
   },
-  DrawRectangleLinesW: { args: [i32, i32, i32, i32, i32], returns: FFIType.void },
   DrawRectangleLinesExW: {
     args: [f32, f32, f32, f32, f32, i32],
     returns: FFIType.void,
@@ -81,8 +88,6 @@ export const shapesWrapperSymbols = {
     args: [f32, f32, f32, f32, f32, f32, i32],
     returns: FFIType.void,
   },
-  DrawTriangleFanW: { args: [ptr, i32, i32], returns: FFIType.void },
-  DrawTriangleStripW: { args: [ptr, i32, i32], returns: FFIType.void },
   DrawPolyW: {
     args: [f32, f32, i32, f32, f32, i32],
     returns: FFIType.void,
@@ -95,11 +100,6 @@ export const shapesWrapperSymbols = {
     args: [f32, f32, i32, f32, f32, f32, i32],
     returns: FFIType.void,
   },
-  DrawSplineLinearW: { args: [ptr, i32, f32, i32], returns: FFIType.void },
-  DrawSplineBasisW: { args: [ptr, i32, f32, i32], returns: FFIType.void },
-  DrawSplineCatmullRomW: { args: [ptr, i32, f32, i32], returns: FFIType.void },
-  DrawSplineBezierQuadraticW: { args: [ptr, i32, f32, i32], returns: FFIType.void },
-  DrawSplineBezierCubicW: { args: [ptr, i32, f32, i32], returns: FFIType.void },
   DrawSplineSegmentLinearW: {
     args: [f32, f32, f32, f32, f32, i32],
     returns: FFIType.void,

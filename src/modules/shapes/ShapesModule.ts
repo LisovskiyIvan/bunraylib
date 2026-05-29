@@ -7,14 +7,14 @@ const r = () => getSymbols();
 export class ShapesModule {
   /** Draw a color-filled rectangle */
   static drawRectangle(x: number, y: number, width: number, height: number, col: Color): void {
-    r().symbols.DrawRectangleW(i(x), i(y), i(width), i(height), i(col));
+    r().symbols.DrawRectangle(i(x), i(y), i(width), i(height), i(col));
   } 
   static drawFPS(x: number, y: number): void {
     r().symbols.DrawFPS(i(x), i(y))
   }
   /** Draw a pixel */
   static drawPixel(x: number, y: number, col: Color): void {
-    r().symbols.DrawPixelW(i(x), i(y), i(col));
+    r().symbols.DrawPixel(i(x), i(y), i(col));
   }
   /** Draw a pixel (using vector position) */
   static drawPixelV(position: Vec2, col: Color): void {
@@ -22,7 +22,7 @@ export class ShapesModule {
   }
   /** Draw a line */
   static drawLine(startX: number, startY: number, endX: number, endY: number, col: Color): void {
-    r().symbols.DrawLineW(i(startX), i(startY), i(endX), i(endY), i(col));
+    r().symbols.DrawLine(i(startX), i(startY), i(endX), i(endY), i(col));
   }
   /** Draw a line (using vector positions) */
   static drawLineV(startPos: Vec2, endPos: Vec2, col: Color): void {
@@ -42,7 +42,7 @@ export class ShapesModule {
   /** Draw lines sequence as a strip. Points are packed as [x0,y0, x1,y1, ...] in Float32Array */
   static drawLineStrip(points: Float32Array, col: Color): void {
     validatePoints('drawLineStrip', points, 2, 2);
-    r().symbols.DrawLineStripW(points, i(points.length / 2), i(col));
+    r().symbols.DrawLineStrip(points, i(points.length / 2), i(col));
   }
   /** Draw line segment with Bezier easing */
   static drawLineBezier(startPos: Vec2, endPos: Vec2, thick: number, col: Color): void {
@@ -74,7 +74,7 @@ export class ShapesModule {
   }
   /** Draw a color-filled circle */
   static drawCircle(centerX: number, centerY: number, radius: number, col: Color): void {
-    r().symbols.DrawCircleW(i(centerX), i(centerY), f(radius), i(col));
+    r().symbols.DrawCircle(i(centerX), i(centerY), f(radius), i(col));
   }
   /** Draw a color-filled circle (using vector center) */
   static drawCircleV(center: Vec2, radius: number, col: Color): void {
@@ -146,7 +146,7 @@ export class ShapesModule {
   }
   /** Draw circle outline */
   static drawCircleLines(centerX: number, centerY: number, radius: number, col: Color): void {
-    r().symbols.DrawCircleLinesW(i(centerX), i(centerY), f(radius), i(col));
+    r().symbols.DrawCircleLines(i(centerX), i(centerY), f(radius), i(col));
   }
   /** Draw circle outline (using vector center) */
   static drawCircleLinesV(center: Vec2, radius: number, col: Color): void {
@@ -160,7 +160,7 @@ export class ShapesModule {
     radiusV: number,
     col: Color,
   ): void {
-    r().symbols.DrawEllipseW(i(centerX), i(centerY), f(radiusH), f(radiusV), i(col));
+    r().symbols.DrawEllipse(i(centerX), i(centerY), f(radiusH), f(radiusV), i(col));
   }
   /** Draw a color-filled ellipse */
   static drawEllipseV(center: Vec2, radiusH: number, radiusV: number, col: Color): void {
@@ -178,7 +178,7 @@ export class ShapesModule {
     radiusV: number,
     col: Color,
   ): void {
-    r().symbols.DrawEllipseLinesW(i(centerX), i(centerY), f(radiusH), f(radiusV), i(col));
+    r().symbols.DrawEllipseLines(i(centerX), i(centerY), f(radiusH), f(radiusV), i(col));
   }
   /**
    * Draw a ring (donut shape).
@@ -269,7 +269,7 @@ export class ShapesModule {
     top: Color,
     bottom: Color,
   ): void {
-    r().symbols.DrawRectangleGradientVW(i(x), i(y), i(width), i(height), i(top), i(bottom));
+    r().symbols.DrawRectangleGradientV(i(x), i(y), i(width), i(height), i(top), i(bottom));
   }
   /** Draw a horizontal-gradient-filled rectangle */
   static drawRectangleGradientH(
@@ -280,7 +280,7 @@ export class ShapesModule {
     left: Color,
     right: Color,
   ): void {
-    r().symbols.DrawRectangleGradientHW(i(x), i(y), i(width), i(height), i(left), i(right));
+    r().symbols.DrawRectangleGradientH(i(x), i(y), i(width), i(height), i(left), i(right));
   }
   /** Draw a gradient-filled rectangle with custom gradient colors for each corner */
   static drawRectangleGradientEx(
@@ -303,7 +303,7 @@ export class ShapesModule {
   }
   /** Draw rectangle outline */
   static drawRectangleLines(x: number, y: number, width: number, height: number, col: Color): void {
-    r().symbols.DrawRectangleLinesW(i(x), i(y), i(width), i(height), i(col));
+    r().symbols.DrawRectangleLines(i(x), i(y), i(width), i(height), i(col));
   }
   /** Draw rectangle outline with extended parameters (custom line thickness) */
   static drawRectangleLinesEx(rec: Rectangle, lineThick: number, col: Color): void {
@@ -380,12 +380,12 @@ export class ShapesModule {
   /** Draw a triangle fan. Points are packed as [x0,y0, x1,y1, ...] in Float32Array */
   static drawTriangleFan(points: Float32Array, col: Color): void {
     validatePoints('drawTriangleFan', points, 2, 3);
-    r().symbols.DrawTriangleFanW(points, i(points.length / 2), i(col));
+    r().symbols.DrawTriangleFan(points, i(points.length / 2), i(col));
   }
   /** Draw a triangle strip. Points are packed as [x0,y0, x1,y1, ...] in Float32Array */
   static drawTriangleStrip(points: Float32Array, col: Color): void {
     validatePoints('drawTriangleStrip', points, 2, 2);
-    r().symbols.DrawTriangleStripW(points, i(points.length / 2), i(col));
+    r().symbols.DrawTriangleStrip(points, i(points.length / 2), i(col));
   }
   /** Draw a regular polygon (color-filled) */
   static drawPoly(center: Vec2, sides: number, radius: number, rotation: number, col: Color): void {
@@ -426,7 +426,7 @@ export class ShapesModule {
    */
   static drawSplineLinear(points: Float32Array, thick: number, col: Color): void {
     validatePoints('drawSplineLinear', points, 2, 2);
-    r().symbols.DrawSplineLinearW(points, i(points.length / 2), f(thick), i(col));
+    r().symbols.DrawSplineLinear(points, i(points.length / 2), f(thick), i(col));
   }
   /**
    * Draw spline: B-Spline. Minimum 4 points.
@@ -434,7 +434,7 @@ export class ShapesModule {
    */
   static drawSplineBasis(points: Float32Array, thick: number, col: Color): void {
     validatePoints('drawSplineBasis', points, 2, 4);
-    r().symbols.DrawSplineBasisW(points, i(points.length / 2), f(thick), i(col));
+    r().symbols.DrawSplineBasis(points, i(points.length / 2), f(thick), i(col));
   }
   /**
    * Draw spline: Catmull-Rom. Minimum 4 points.
@@ -442,7 +442,7 @@ export class ShapesModule {
    */
   static drawSplineCatmullRom(points: Float32Array, thick: number, col: Color): void {
     validatePoints('drawSplineCatmullRom', points, 2, 4);
-    r().symbols.DrawSplineCatmullRomW(points, i(points.length / 2), f(thick), i(col));
+    r().symbols.DrawSplineCatmullRom(points, i(points.length / 2), f(thick), i(col));
   }
   /**
    * Draw spline: Quadratic Bezier. Minimum 3 points (1 control point).
@@ -450,7 +450,7 @@ export class ShapesModule {
    */
   static drawSplineBezierQuadratic(points: Float32Array, thick: number, col: Color): void {
     validatePoints('drawSplineBezierQuadratic', points, 2, 3);
-    r().symbols.DrawSplineBezierQuadraticW(points, i(points.length / 2), f(thick), i(col));
+    r().symbols.DrawSplineBezierQuadratic(points, i(points.length / 2), f(thick), i(col));
   }
   /**
    * Draw spline: Cubic Bezier. Minimum 4 points (2 control points).
@@ -458,7 +458,7 @@ export class ShapesModule {
    */
   static drawSplineBezierCubic(points: Float32Array, thick: number, col: Color): void {
     validatePoints('drawSplineBezierCubic', points, 2, 4);
-    r().symbols.DrawSplineBezierCubicW(points, i(points.length / 2), f(thick), i(col));
+    r().symbols.DrawSplineBezierCubic(points, i(points.length / 2), f(thick), i(col));
   }
   /** Draw spline segment: Linear, 2 points */
   static drawSplineSegmentLinear(p1: Vec2, p2: Vec2, thick: number, col: Color): void {

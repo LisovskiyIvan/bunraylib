@@ -1,23 +1,7 @@
-#include "../../c/common.h"
-
-void DrawRectangleW(int posX, int posY, int width, int height, Color color) {
-    DrawRectangle(posX, posY, width, height, color);
-}
-
-void DrawTextW(const char* text, int posX, int posY, int fontSize, Color color) {
-    DrawText(text, posX, posY, fontSize, color);
-}
-
-void DrawPixelW(int posX, int posY, Color color) {
-    DrawPixel(posX, posY, color);
-}
+#include <raylib.h>
 
 void DrawPixelVW(float x, float y, Color color) {
     DrawPixelV((Vector2){x, y}, color);
-}
-
-void DrawLineW(int startPosX, int startPosY, int endPosX, int endPosY, Color color) {
-    DrawLine(startPosX, startPosY, endPosX, endPosY, color);
 }
 
 void DrawLineVW(float startX, float startY, float endX, float endY, Color color) {
@@ -28,20 +12,12 @@ void DrawLineExW(float startX, float startY, float endX, float endY, float thick
     DrawLineEx((Vector2){startX, startY}, (Vector2){endX, endY}, thick, color);
 }
 
-void DrawLineStripW(const float* points, int pointCount, Color color) {
-    DrawLineStrip((const Vector2*)points, pointCount, color);
-}
-
 void DrawLineBezierW(float startX, float startY, float endX, float endY, float thick, Color color) {
     DrawLineBezier((Vector2){startX, startY}, (Vector2){endX, endY}, thick, color);
 }
 
 void DrawLineDashedW(float startX, float startY, float endX, float endY, int dashSize, int spaceSize, Color color) {
   DrawLineDashed((Vector2){startX, startY}, (Vector2){endX, endY}, dashSize, spaceSize, color);
-}
-
-void DrawCircleW(int centerX, int centerY, float radius, Color color) {
-    DrawCircle(centerX, centerY, radius, color);
 }
 
 void DrawCircleVW(int x, int y, float radius, Color color) {
@@ -60,16 +36,8 @@ void DrawCircleGradientW(float centerX, float centerY, float radius, Color inner
     DrawCircleGradient((Vector2){centerX, centerY}, radius, inner, outer);
 }
 
-void DrawCircleLinesW(int centerX, int centerY, float radius, Color color) {
-    DrawCircleLines(centerX, centerY, radius, color);
-}
-
 void DrawCircleLinesVW(float x, float y, float radius, Color color) {
     DrawCircleLinesV((Vector2){x, y}, radius, color);
-}
-
-void DrawEllipseW(int centerX, int centerY, float radiusH, float radiusV, Color color) {
-    DrawEllipse(centerX, centerY, radiusH, radiusV, color);
 }
 
 void DrawEllipseVW(float centerX, float centerY, float radiusH, float radiusV, Color color) {
@@ -78,10 +46,6 @@ void DrawEllipseVW(float centerX, float centerY, float radiusH, float radiusV, C
 
 void DrawEllipseLinesVW(float centerX, float centerY, float radiusH, float radiusV, Color color) {
   DrawEllipseLinesV((Vector2){ centerX, centerY }, radiusH, radiusV, color);
-}
-
-void DrawEllipseLinesW(int centerX, int centerY, float radiusH, float radiusV, Color color) {
-    DrawEllipseLines(centerX, centerY, radiusH, radiusV, color);
 }
 
 void DrawRingW(float centerX, float centerY, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, Color color) {
@@ -105,21 +69,9 @@ void DrawRectangleProW(float x, float y, float width, float height, float origin
     DrawRectanglePro(rec, (Vector2){originX, originY}, rotation, color);
 }
 
-void DrawRectangleGradientVW(int posX, int posY, int width, int height, Color top, Color bottom) {
-    DrawRectangleGradientV(posX, posY, width, height, top, bottom);
-}
-
-void DrawRectangleGradientHW(int posX, int posY, int width, int height, Color left, Color right) {
-    DrawRectangleGradientH(posX, posY, width, height, left, right);
-}
-
 void DrawRectangleGradientExW(float x, float y, float width, float height, Color topLeft, Color bottomLeft, Color topRight, Color bottomRight) {
     Rectangle rec = {x, y, width, height};
     DrawRectangleGradientEx(rec, topLeft, bottomLeft, topRight, bottomRight);
-}
-
-void DrawRectangleLinesW(int posX, int posY, int width, int height, Color color) {
-    DrawRectangleLines(posX, posY, width, height, color);
 }
 
 void DrawRectangleLinesExW(float x, float y, float width, float height, float lineThick, Color color) {
@@ -150,14 +102,6 @@ void DrawTriangleLinesW(float x1, float y1, float x2, float y2, float x3, float 
     DrawTriangleLines((Vector2){x1, y1}, (Vector2){x2, y2}, (Vector2){x3, y3}, color);
 }
 
-void DrawTriangleFanW(const float* points, int pointCount, Color color) {
-    DrawTriangleFan((const Vector2*)points, pointCount, color);
-}
-
-void DrawTriangleStripW(const float* points, int pointCount, Color color) {
-    DrawTriangleStrip((const Vector2*)points, pointCount, color);
-}
-
 void DrawPolyW(float centerX, float centerY, int sides, float radius, float rotation, Color color) {
     DrawPoly((Vector2){centerX, centerY}, sides, radius, rotation, color);
 }
@@ -168,26 +112,6 @@ void DrawPolyLinesW(float centerX, float centerY, int sides, float radius, float
 
 void DrawPolyLinesExW(float centerX, float centerY, int sides, float radius, float rotation, float lineThick, Color color) {
     DrawPolyLinesEx((Vector2){centerX, centerY}, sides, radius, rotation, lineThick, color);
-}
-
-void DrawSplineLinearW(const float* points, int pointCount, float thick, Color color) {
-    DrawSplineLinear((const Vector2*)points, pointCount, thick, color);
-}
-
-void DrawSplineBasisW(const float* points, int pointCount, float thick, Color color) {
-    DrawSplineBasis((const Vector2*)points, pointCount, thick, color);
-}
-
-void DrawSplineCatmullRomW(const float* points, int pointCount, float thick, Color color) {
-    DrawSplineCatmullRom((const Vector2*)points, pointCount, thick, color);
-}
-
-void DrawSplineBezierQuadraticW(const float* points, int pointCount, float thick, Color color) {
-    DrawSplineBezierQuadratic((const Vector2*)points, pointCount, thick, color);
-}
-
-void DrawSplineBezierCubicW(const float* points, int pointCount, float thick, Color color) {
-    DrawSplineBezierCubic((const Vector2*)points, pointCount, thick, color);
 }
 
 void DrawSplineSegmentLinearW(float p1x, float p1y, float p2x, float p2y, float thick, Color color) {
@@ -240,8 +164,6 @@ void GetSplinePointBezierCubicW(float* out, float p1x, float p1y, float c2x, flo
     out[1] = result.y;
 }
 
-
-
 void SetShapesTextureW(unsigned int texId, int texW, int texH, int recX, int recY, int recW, int recH) {
     Texture2D tex = { texId, texW, texH, 1, 7 };
     Rectangle rec = { recX, recY, recW, recH };
@@ -259,4 +181,3 @@ void GetShapesTextureRectangleW(float* out) {
     Rectangle rec = GetShapesTextureRectangle();
     out[0] = rec.x; out[1] = rec.y; out[2] = rec.width; out[3] = rec.height;
 }
-

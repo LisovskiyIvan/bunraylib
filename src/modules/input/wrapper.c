@@ -1,4 +1,4 @@
-#include "../../c/common.h"
+#include <raylib.h>
 
 void GetMousePositionW(float* out) {
     Vector2 v = GetMousePosition();

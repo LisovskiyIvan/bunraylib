@@ -6,7 +6,7 @@ const r = () => getSymbols();
 
 export class FontModule {
   static drawText(text: string, x: number, y: number, fontSize: number, col: Color): void {
-    r().symbols.DrawTextW(cstr(text), i(x), i(y), i(fontSize), i(col));
+    r().symbols.DrawText(cstr(text), i(x), i(y), i(fontSize), i(col));
   }
   static loadFont(fileName: string): Font {
     return r().symbols.LoadFontW(cstr(fileName));
