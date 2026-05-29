@@ -96,13 +96,6 @@ void GetGlyphAtlasRecW(float* out, int fontId, int codepoint) {
     out[0] = rec.x; out[1] = rec.y; out[2] = rec.width; out[3] = rec.height;
 }
 
-void UnloadFontDataW(void* ptr, int glyphCount) {
-    UnloadFontData((GlyphInfo*)ptr, glyphCount);
-}
-
-void UnloadUTF8W(char* text) { UnloadUTF8(text); }
-void UnloadCodepointsW(int* codepoints) { UnloadCodepoints(codepoints); }
-
 int GenImageFontAtlasW(float* outRecs, int* glyphData, int glyphCount, int fontSize, int padding, int packMethod) {
     GlyphInfo* glyphs = (GlyphInfo*)RL_MALLOC(glyphCount * sizeof(GlyphInfo));
     for (int i = 0; i < glyphCount; i++) {
@@ -147,8 +140,4 @@ void MeasureTextCodepointsW(float* out, int fontId, const int* codepoints, int l
     }
     Vector2 v = MeasureTextCodepoints(fontRegistry[fontId], codepoints, length, fontSize, spacing);
     out[0] = v.x; out[1] = v.y;
-}
-
-void UnloadTextLinesW(char** text, int lineCount) {
-    UnloadTextLines(text, lineCount);
 }

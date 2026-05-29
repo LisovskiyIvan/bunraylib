@@ -68,7 +68,7 @@ export class Draw3DModule {
   /** Draw a triangle strip defined by points. Points packed as [x0,y0,z0, x1,y1,z1, ...] in Float32Array */
   static drawTriangleStrip3D(points: Float32Array, col: Color): void {
     validatePoints('drawTriangleStrip3D', points, 3, 2);
-    r().symbols.DrawTriangleStrip3DW(points, i(points.length / 3), i(col));
+    r().symbols.DrawTriangleStrip3D(points, i(points.length / 3), i(col));
   }
   /** Draw cube */
   static drawCube(position: Vec3, width: number, height: number, length: number, col: Color): void {
@@ -317,7 +317,7 @@ export class Draw3DModule {
   }
   /** Draw a grid */
   static drawGrid(slices: number, spacing: number): void {
-    r().symbols.DrawGridW(i(slices), f(spacing));
+    r().symbols.DrawGrid(i(slices), f(spacing));
   }
   static drawBoundingBox(box: BoundingBox, color: Color): void {
     r().symbols.DrawBoundingBoxW(

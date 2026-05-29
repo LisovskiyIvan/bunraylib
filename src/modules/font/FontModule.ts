@@ -185,13 +185,13 @@ export class FontModule {
     return r().symbols.TextFindIndex(cstr(text), cstr(find));
   }
   static unloadFontData(ptr: number, glyphCount: number): void {
-    r().symbols.UnloadFontDataW(ptr as unknown as Buffer, i(glyphCount));
+    r().symbols.UnloadFontData(ptr as unknown as Buffer, i(glyphCount));
   }
   static unloadUTF8(ptr: number): void {
-    r().symbols.UnloadUTF8W(ptr as unknown as Buffer);
+    r().symbols.UnloadUTF8(ptr as unknown as Buffer);
   }
   static unloadCodepoints(ptr: number): void {
-    r().symbols.UnloadCodepointsW(ptr as unknown as Buffer);
+    r().symbols.UnloadCodepoints(ptr as unknown as Buffer);
   }
   static textCopy(dst: Uint8Array, src: string): number {
     return r().symbols.TextCopy(dst, cstr(src));
@@ -245,6 +245,6 @@ export class FontModule {
     return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static unloadTextLines(text: number, lineCount: number): void {
-    r().symbols.UnloadTextLinesW(text as unknown as Buffer, i(lineCount));
+    r().symbols.UnloadTextLines(text as unknown as Buffer, i(lineCount));
   }
 }

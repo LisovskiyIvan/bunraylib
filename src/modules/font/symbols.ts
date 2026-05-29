@@ -15,6 +15,10 @@ export const fontDirectSymbols = {
   TextFindIndex: { args: [cstring, cstring], returns: i32 },
   TextCopy: { args: [ptr, cstring], returns: i32 },
   TextAppend: { args: [ptr, cstring, ptr], returns: FFIType.void },
+  UnloadUTF8: { args: [ptr], returns: FFIType.void },
+  UnloadCodepoints: { args: [ptr], returns: FFIType.void },
+  UnloadFontData: { args: [ptr, i32], returns: FFIType.void },
+  UnloadTextLines: { args: [ptr, i32], returns: FFIType.void },
 } as const;
 
 export const fontWrapperSymbols = {
@@ -37,10 +41,6 @@ export const fontWrapperSymbols = {
   GetGlyphIndexW: { args: [i32, i32], returns: i32 },
   GetGlyphInfoW: { args: [ptr, ptr, ptr, ptr, ptr, i32, i32], returns: FFIType.void },
   GetGlyphAtlasRecW: { args: [ptr, i32, i32], returns: FFIType.void },
-  UnloadFontDataW: { args: [ptr, i32], returns: FFIType.void },
-  UnloadUTF8W: { args: [ptr], returns: FFIType.void },
-  UnloadCodepointsW: { args: [ptr], returns: FFIType.void },
   GenImageFontAtlasW: { args: [ptr, ptr, i32, i32, i32, i32], returns: i32 },
   MeasureTextCodepointsW: { args: [ptr, i32, ptr, i32, f32, f32], returns: FFIType.void },
-  UnloadTextLinesW: { args: [ptr, i32], returns: FFIType.void },
 } as const;

@@ -21,10 +21,6 @@ void DrawTriangle3DW(float v1x, float v1y, float v1z, float v2x, float v2y, floa
     );
 }
 
-void DrawTriangleStrip3DW(const float* points, int pointCount, Color color) {
-    DrawTriangleStrip3D((const Vector3*)points, pointCount, color);
-}
-
 void DrawCubeW(float px, float py, float pz, float w, float h, float l, Color color) {
     DrawCube((Vector3){px, py, pz}, w, h, l, color);
 }
@@ -84,10 +80,6 @@ void DrawPlaneW(float cx, float cy, float cz, float sw, float sh, Color color) {
 void DrawRayW(float px, float py, float pz, float dx, float dy, float dz, Color color) {
     Ray ray = {{px, py, pz}, {dx, dy, dz}};
     DrawRay(ray, color);
-}
-
-void DrawGridW(int slices, float spacing) {
-    DrawGrid(slices, spacing);
 }
 
 void DrawModelW(int id, float posX, float posY, float posZ, float scale, Color tint) {

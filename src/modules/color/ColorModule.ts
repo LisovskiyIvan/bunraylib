@@ -28,33 +28,33 @@ export class ColorModule {
   static colorToHSV(c: Color): { h: number; s: number; v: number } {
     r().symbols.ColorToHSVW(b._vec3Buf2, i(c));
     return { h: b._vec3Buf2[0]!, s: b._vec3Buf2[1]!, v: b._vec3Buf2[2]! };
-  }
+  } 
   static colorFromHSV(hue: number, saturation: number, value: number): Color {
-    return r().symbols.ColorFromHSVW(f(hue), f(saturation), f(value));
+    return r().symbols.ColorFromHSV(f(hue), f(saturation), f(value));
   }
   static colorTint(color: Color, tint: Color): Color {
-    return r().symbols.ColorTintW(i(color), i(tint));
+    return r().symbols.ColorTint(i(color), i(tint));
   }
   static colorBrightness(color: Color, factor: number): Color {
-    return r().symbols.ColorBrightnessW(i(color), f(factor));
+    return r().symbols.ColorBrightness(i(color), f(factor));
   }
   static colorContrast(color: Color, contrast: number): Color {
-    return r().symbols.ColorContrastW(i(color), f(contrast));
+    return r().symbols.ColorContrast(i(color), f(contrast));
   }
   static colorAlpha(color: Color, alpha: number): Color {
-    return r().symbols.ColorAlphaW(i(color), f(alpha));
+    return r().symbols.ColorAlpha(i(color), f(alpha));
   }
   static colorAlphaBlend(dst: Color, src: Color, tint: Color): Color {
-    return r().symbols.ColorAlphaBlendW(i(dst), i(src), i(tint));
+    return r().symbols.ColorAlphaBlend(i(dst), i(src), i(tint));
   }
   static colorLerp(color1: Color, color2: Color, factor: number): Color {
-    return r().symbols.ColorLerpW(i(color1), i(color2), f(factor));
+    return r().symbols.ColorLerp(i(color1), i(color2), f(factor));
   }
   static getColor(hexValue: number): Color {
-    return r().symbols.GetColorW(i(hexValue));
+    return r().symbols.GetColor(i(hexValue));
   }
   static fade(color: Color, alpha: number): Color {
-    return r().symbols.FadeW(i(color), f(alpha));
+    return r().symbols.Fade(i(color), f(alpha));
   }
   static colorIsEqual(col1: Color, col2: Color): boolean {
     return r().symbols.ColorIsEqual(i(col1), i(col2));
