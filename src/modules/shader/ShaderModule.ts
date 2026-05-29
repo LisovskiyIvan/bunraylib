@@ -41,11 +41,19 @@ export class ShaderModule {
     uniformType: number,
     count: number,
   ): void {
-    r().symbols.SetShaderValueVW(i(shader), i(locIndex), value as unknown as Buffer, i(uniformType), i(count));
+    r().symbols.SetShaderValueVW(
+      i(shader),
+      i(locIndex),
+      value as unknown as Buffer,
+      i(uniformType),
+      i(count),
+    );
   }
   static setShaderValueMatrix(shader: Shader, locIndex: number, mat: Float32Array): void {
     if (mat.length !== 16) {
-      throw new Error(`setShaderValueMatrix: mat must have exactly 16 elements (got ${mat.length})`);
+      throw new Error(
+        `setShaderValueMatrix: mat must have exactly 16 elements (got ${mat.length})`,
+      );
     }
     r().symbols.SetShaderValueMatrixW(i(shader), i(locIndex), mat);
   }

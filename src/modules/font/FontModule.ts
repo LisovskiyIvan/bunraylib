@@ -1,18 +1,10 @@
 import { getSymbols } from '../../symbols';
 import { bufs as b, cstr, f, i } from '../../utils';
-import type {
-  Vec2,
-  Rectangle,
-  Font,
-  Image,
-  GlyphInfo,
-  Color,
-} from '../../types';
+import type { Vec2, Rectangle, Font, Image, GlyphInfo, Color } from '../../types';
 
 const r = () => getSymbols();
 
 export class FontModule {
-  /** Draw text (using default font) */
   static drawText(text: string, x: number, y: number, fontSize: number, col: Color): void {
     r().symbols.DrawTextW(cstr(text), i(x), i(y), i(fontSize), i(col));
   }
@@ -32,7 +24,7 @@ export class FontModule {
     return r().symbols.IsFontValidW(i(font));
   }
   static measureText(text: string, fontSize: number): number {
-    return r().symbols.MeasureTextW(cstr(text), i(fontSize));
+    return r().symbols.MeasureText(cstr(text), i(fontSize));
   }
   static measureTextEx(font: Font, text: string, fontSize: number, spacing: number): Vec2 {
     r().symbols.MeasureTextExW(b._vec2Buf, i(font), cstr(text), f(fontSize), f(spacing));
@@ -80,7 +72,7 @@ export class FontModule {
     );
   }
   static setTextLineSpacing(spacing: number): void {
-    r().symbols.SetTextLineSpacingW(i(spacing));
+    r().symbols.SetTextLineSpacing(i(spacing));
   }
   static loadFontFromImage(image: Image, key: Color, firstChar: number): Font {
     return r().symbols.LoadFontFromImageW(i(image), i(key), i(firstChar));
@@ -163,34 +155,34 @@ export class FontModule {
     };
   }
   static getCodepoint(text: string): { codepoint: number; size: number } {
-    const cp = r().symbols.GetCodepointW(cstr(text), b._cpSize);
+    const cp = r().symbols.GetCodepoint(cstr(text), b._cpSize);
     return { codepoint: cp, size: b._cpSize[0]! };
   }
   static getCodepointNext(text: string): { codepoint: number; size: number } {
-    const cp = r().symbols.GetCodepointNextW(cstr(text), b._cpSize);
+    const cp = r().symbols.GetCodepointNext(cstr(text), b._cpSize);
     return { codepoint: cp, size: b._cpSize[0]! };
   }
   static getCodepointPrevious(text: string): { codepoint: number; size: number } {
-    const cp = r().symbols.GetCodepointPreviousW(cstr(text), b._cpSize);
+    const cp = r().symbols.GetCodepointPrevious(cstr(text), b._cpSize);
     return { codepoint: cp, size: b._cpSize[0]! };
   }
   static getCodepointCount(text: string): number {
-    return r().symbols.GetCodepointCountW(cstr(text));
+    return r().symbols.GetCodepointCount(cstr(text));
   }
   static textIsEqual(text1: string, text2: string): boolean {
-    return r().symbols.TextIsEqualW(cstr(text1), cstr(text2));
+    return r().symbols.TextIsEqual(cstr(text1), cstr(text2));
   }
   static textLength(text: string): number {
-    return r().symbols.TextLengthW(cstr(text));
+    return r().symbols.TextLength(cstr(text));
   }
   static textToInteger(text: string): number {
-    return r().symbols.TextToIntegerW(cstr(text));
+    return r().symbols.TextToInteger(cstr(text));
   }
   static textToFloat(text: string): number {
-    return r().symbols.TextToFloatW(cstr(text));
+    return r().symbols.TextToFloat(cstr(text));
   }
   static textFindIndex(text: string, find: string): number {
-    return r().symbols.TextFindIndexW(cstr(text), cstr(find));
+    return r().symbols.TextFindIndex(cstr(text), cstr(find));
   }
   static unloadFontData(ptr: number, glyphCount: number): void {
     r().symbols.UnloadFontDataW(ptr as unknown as Buffer, i(glyphCount));
@@ -202,11 +194,11 @@ export class FontModule {
     r().symbols.UnloadCodepointsW(ptr as unknown as Buffer);
   }
   static textCopy(dst: Uint8Array, src: string): number {
-    return r().symbols.TextCopyW(dst, cstr(src));
+    return r().symbols.TextCopy(dst, cstr(src));
   }
   static textAppend(text: Uint8Array, append: string, position: number): number {
     b._textAppendPos[0] = position;
-    r().symbols.TextAppendW(text, cstr(append), b._textAppendPos);
+    r().symbols.TextAppend(text, cstr(append), b._textAppendPos);
     return b._textAppendPos[0];
   }
   static genImageFontAtlas(

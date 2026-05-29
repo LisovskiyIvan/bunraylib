@@ -1,13 +1,6 @@
 import { getSymbols } from '../../symbols';
 import { bufs as b, cstr, f, i } from '../../utils';
-import type {
-  Vec2,
-  Rectangle,
-  Texture2D,
-  RenderTexture2D,
-  Image,
-  Color,
-} from '../../types';
+import type { Vec2, Rectangle, Texture2D, RenderTexture2D, Image, Color } from '../../types';
 
 const r = () => getSymbols();
 
@@ -132,13 +125,7 @@ export class TextureModule {
     return { id: b._texOutId[0]!, width: b._texOutW[0]!, height: b._texOutH[0]! };
   }
   static loadTextureCubemap(image: Image, layout: number): Texture2D {
-    r().symbols.LoadTextureCubemapW(
-      b._texOutId,
-      b._texOutW,
-      b._texOutH,
-      i(image),
-      i(layout),
-    );
+    r().symbols.LoadTextureCubemapW(b._texOutId, b._texOutW, b._texOutH, i(image), i(layout));
     return { id: b._texOutId[0]!, width: b._texOutW[0]!, height: b._texOutH[0]! };
   }
   static updateTexture(texture: Texture2D, pixels: Uint8Array): void {

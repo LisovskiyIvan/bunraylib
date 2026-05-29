@@ -1,13 +1,6 @@
 import { getSymbols } from '../../symbols';
 import { bufs as b, cstr, f, i } from '../../utils';
-import type {
-  Vec2,
-  Rectangle,
-  Texture2D,
-  Font,
-  Image,
-  Color,
-} from '../../types';
+import type { Vec2, Rectangle, Texture2D, Font, Image, Color } from '../../types';
 
 const r = () => getSymbols();
 

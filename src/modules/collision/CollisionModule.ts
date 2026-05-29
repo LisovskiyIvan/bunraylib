@@ -1,13 +1,6 @@
 import { getSymbols } from '../../symbols';
 import { bufs as b, f, i, validatePoints } from '../../utils';
-import type {
-  Vec2,
-  Vec3,
-  Rectangle,
-  Ray,
-  BoundingBox,
-  Mesh,
-  RayCollision } from '../../types';
+import type { Vec2, Vec3, Rectangle, Ray, BoundingBox, Mesh, RayCollision } from '../../types';
 
 const r = () => getSymbols();
 
@@ -164,7 +157,8 @@ export class CollisionModule {
       x: b._recBuf[0]!,
       y: b._recBuf[1]!,
       width: b._recBuf[2]!,
-      height: b._recBuf[3]! };
+      height: b._recBuf[3]!,
+    };
   }
   static checkCollisionSpheres(
     center1: Vec3,
@@ -234,7 +228,8 @@ export class CollisionModule {
       hit: b._rcHit[0]! !== 0,
       distance: b._rcDist[0]!,
       point: { x: b._rcPt[0]!, y: b._rcPt[1]!, z: b._rcPt[2]! },
-      normal: { x: b._rcNorm[0]!, y: b._rcNorm[1]!, z: b._rcNorm[2]! } };
+      normal: { x: b._rcNorm[0]!, y: b._rcNorm[1]!, z: b._rcNorm[2]! },
+    };
   }
   static getRayCollisionBox(ray: Ray, box: BoundingBox): RayCollision {
     r().symbols.GetRayCollisionBoxW(
@@ -259,7 +254,8 @@ export class CollisionModule {
       hit: b._rcHit[0]! !== 0,
       distance: b._rcDist[0]!,
       point: { x: b._rcPt[0]!, y: b._rcPt[1]!, z: b._rcPt[2]! },
-      normal: { x: b._rcNorm[0]!, y: b._rcNorm[1]!, z: b._rcNorm[2]! } };
+      normal: { x: b._rcNorm[0]!, y: b._rcNorm[1]!, z: b._rcNorm[2]! },
+    };
   }
   static getRayCollisionTriangle(ray: Ray, p1: Vec3, p2: Vec3, p3: Vec3): RayCollision {
     r().symbols.GetRayCollisionTriangleW(
@@ -287,7 +283,8 @@ export class CollisionModule {
       hit: b._rcHit[0]! !== 0,
       distance: b._rcDist[0]!,
       point: { x: b._rcPt[0]!, y: b._rcPt[1]!, z: b._rcPt[2]! },
-      normal: { x: b._rcNorm[0]!, y: b._rcNorm[1]!, z: b._rcNorm[2]! } };
+      normal: { x: b._rcNorm[0]!, y: b._rcNorm[1]!, z: b._rcNorm[2]! },
+    };
   }
   static getRayCollisionQuad(ray: Ray, p1: Vec3, p2: Vec3, p3: Vec3, p4: Vec3): RayCollision {
     r().symbols.GetRayCollisionQuadW(
@@ -318,7 +315,8 @@ export class CollisionModule {
       hit: b._rcHit[0]! !== 0,
       distance: b._rcDist[0]!,
       point: { x: b._rcPt[0]!, y: b._rcPt[1]!, z: b._rcPt[2]! },
-      normal: { x: b._rcNorm[0]!, y: b._rcNorm[1]!, z: b._rcNorm[2]! } };
+      normal: { x: b._rcNorm[0]!, y: b._rcNorm[1]!, z: b._rcNorm[2]! },
+    };
   }
   static getRayCollisionMesh(
     ray: Ray,
@@ -359,6 +357,7 @@ export class CollisionModule {
       hit: b._rcHit[0]! !== 0,
       distance: b._rcDist[0]!,
       point: { x: b._rcPt[0]!, y: b._rcPt[1]!, z: b._rcPt[2]! },
-      normal: { x: b._rcNorm[0]!, y: b._rcNorm[1]!, z: b._rcNorm[2]! } };
+      normal: { x: b._rcNorm[0]!, y: b._rcNorm[1]!, z: b._rcNorm[2]! },
+    };
   }
 }

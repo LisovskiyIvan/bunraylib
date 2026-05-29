@@ -1,39 +1,26 @@
 import { getSymbols } from '../../symbols';
 import { bufs as b, cstr, f, i } from '../../utils';
 import { CString } from 'bun:ffi';
-import type {
-  Vec2,
-  Camera2D,
-  Camera3D,
-  RenderTexture2D,
-  Image,
-  Color,
-} from '../../types';
+import type { Vec2, Camera2D, Camera3D, RenderTexture2D, Image, Color } from '../../types';
 
 const r = () => getSymbols();
 
 export class WindowModule {
-  /** Initialize window and OpenGL context */
   static initWindow(width: number, height: number, title: string): void {
-    r().symbols.InitWindowW(i(width), i(height), cstr(title));
+    r().symbols.InitWindow(i(width), i(height), cstr(title));
   }
-  /** Close window and unload OpenGL context */
   static closeWindow(): void {
-    r().symbols.CloseWindowW();
+    r().symbols.CloseWindow();
   }
-  /** Check if application should close (KEY_ESCAPE pressed or window close button) */
   static windowShouldClose(): boolean {
-    return r().symbols.WindowShouldCloseW();
+    return r().symbols.WindowShouldClose();
   }
-  /** Setup canvas (framebuffer) to start drawing */
   static beginDrawing(): void {
-    r().symbols.BeginDrawingW();
+    r().symbols.BeginDrawing();
   }
-  /** End canvas drawing and swap buffers (double buffering) */
   static endDrawing(): void {
-    r().symbols.EndDrawingW();
+    r().symbols.EndDrawing();
   }
-  /** Begin 2D mode with custom camera */
   static beginMode2D(camera: Camera2D): void {
     r().symbols.BeginMode2DW(
       f(camera.offset.x),
@@ -44,11 +31,9 @@ export class WindowModule {
       f(camera.zoom),
     );
   }
-  /** Ends 2D mode with custom camera */
   static endMode2D(): void {
     r().symbols.EndMode2DW();
   }
-  /** Begin 3D mode with custom camera */
   static beginMode3D(camera: Camera3D): void {
     r().symbols.BeginMode3DW(
       f(camera.position.x),
@@ -64,127 +49,123 @@ export class WindowModule {
       i(camera.projection),
     );
   }
-  /** Ends 3D mode with custom camera */
   static endMode3D(): void {
     r().symbols.EndMode3DW();
   }
-  /** Set background color (used before drawing) */
   static clearBackground(col: Color): void {
     r().symbols.ClearBackgroundW(i(col));
   }
-  /** Set target FPS (frames per second) */
   static setTargetFPS(fps: number): void {
-    r().symbols.SetTargetFPSW(i(fps));
+    r().symbols.SetTargetFPS(i(fps));
   }
-  /** Get time in seconds for last frame drawn (delta time) */
   static getFrameTime(): number {
-    return r().symbols.GetFrameTimeW();
+    return r().symbols.GetFrameTime();
   }
   static isWindowReady(): boolean {
-    return r().symbols.IsWindowReadyW();
+    return r().symbols.IsWindowReady();
   }
   static isWindowFullscreen(): boolean {
-    return r().symbols.IsWindowFullscreenW();
+    return r().symbols.IsWindowFullscreen();
   }
   static isWindowHidden(): boolean {
-    return r().symbols.IsWindowHiddenW();
+    return r().symbols.IsWindowHidden();
   }
   static isWindowMinimized(): boolean {
-    return r().symbols.IsWindowMinimizedW();
+    return r().symbols.IsWindowMinimized();
   }
   static isWindowMaximized(): boolean {
-    return r().symbols.IsWindowMaximizedW();
+    return r().symbols.IsWindowMaximized();
   }
   static isWindowFocused(): boolean {
-    return r().symbols.IsWindowFocusedW();
+    return r().symbols.IsWindowFocused();
   }
   static isWindowResized(): boolean {
-    return r().symbols.IsWindowResizedW();
+    return r().symbols.IsWindowResized();
   }
   static isWindowState(flag: number): boolean {
-    return r().symbols.IsWindowStateW(i(flag));
+    return r().symbols.IsWindowState(i(flag));
   }
   static setWindowState(flags: number): void {
-    r().symbols.SetWindowStateW(i(flags));
+    r().symbols.SetWindowState(i(flags));
   }
   static clearWindowState(flags: number): void {
-    r().symbols.ClearWindowStateW(i(flags));
+    r().symbols.ClearWindowState(i(flags));
   }
   static toggleFullscreen(): void {
-    r().symbols.ToggleFullscreenW();
+    r().symbols.ToggleFullscreen();
   }
   static toggleBorderlessWindowed(): void {
-    r().symbols.ToggleBorderlessWindowedW();
+    r().symbols.ToggleBorderlessWindowed();
   }
   static maximizeWindow(): void {
-    r().symbols.MaximizeWindowW();
+    r().symbols.MaximizeWindow();
   }
   static minimizeWindow(): void {
-    r().symbols.MinimizeWindowW();
+    r().symbols.MinimizeWindow();
   }
   static restoreWindow(): void {
-    r().symbols.RestoreWindowW();
+    r().symbols.RestoreWindow();
   }
   static setWindowTitle(title: string): void {
-    r().symbols.SetWindowTitleW(cstr(title));
+    r().symbols.SetWindowTitle(cstr(title));
   }
   static setWindowPosition(x: number, y: number): void {
-    r().symbols.SetWindowPositionW(i(x), i(y));
+    r().symbols.SetWindowPosition(i(x), i(y));
   }
   static setWindowMonitor(monitor: number): void {
-    r().symbols.SetWindowMonitorW(i(monitor));
+    r().symbols.SetWindowMonitor(i(monitor));
   }
   static setWindowMinSize(w: number, h: number): void {
-    r().symbols.SetWindowMinSizeW(i(w), i(h));
+    r().symbols.SetWindowMinSize(i(w), i(h));
   }
   static setWindowMaxSize(w: number, h: number): void {
-    r().symbols.SetWindowMaxSizeW(i(w), i(h));
+    r().symbols.SetWindowMaxSize(i(w), i(h));
   }
   static setWindowSize(w: number, h: number): void {
-    r().symbols.SetWindowSizeW(i(w), i(h));
+    r().symbols.SetWindowSize(i(w), i(h));
   }
   static setWindowOpacity(opacity: number): void {
-    r().symbols.SetWindowOpacityW(f(opacity));
+    r().symbols.SetWindowOpacity(f(opacity));
   }
   static setWindowFocused(): void {
-    r().symbols.SetWindowFocusedW();
+    r().symbols.SetWindowFocused();
   }
   static getScreenWidth(): number {
-    return r().symbols.GetScreenWidthW();
+    return r().symbols.GetScreenWidth();
   }
   static getScreenHeight(): number {
-    return r().symbols.GetScreenHeightW();
+    return r().symbols.GetScreenHeight();
   }
   static getRenderWidth(): number {
-    return r().symbols.GetRenderWidthW();
+    return r().symbols.GetRenderWidth();
   }
   static getRenderHeight(): number {
-    return r().symbols.GetRenderHeightW();
+    return r().symbols.GetRenderHeight();
   }
   static getMonitorCount(): number {
-    return r().symbols.GetMonitorCountW();
+    return r().symbols.GetMonitorCount();
   }
   static getCurrentMonitor(): number {
-    return r().symbols.GetCurrentMonitorW();
+    return r().symbols.GetCurrentMonitor();
   }
   static getMonitorPosition(monitor: number): Vec2 {
     r().symbols.GetMonitorPositionW(b._vec2Buf, i(monitor));
     return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static getMonitorWidth(monitor: number): number {
-    return r().symbols.GetMonitorWidthW(i(monitor));
+    return r().symbols.GetMonitorWidth(i(monitor));
   }
   static getMonitorHeight(monitor: number): number {
-    return r().symbols.GetMonitorHeightW(i(monitor));
+    return r().symbols.GetMonitorHeight(i(monitor));
   }
   static getMonitorPhysicalWidth(monitor: number): number {
-    return r().symbols.GetMonitorPhysicalWidthW(i(monitor));
+    return r().symbols.GetMonitorPhysicalWidth(i(monitor));
   }
   static getMonitorPhysicalHeight(monitor: number): number {
-    return r().symbols.GetMonitorPhysicalHeightW(i(monitor));
+    return r().symbols.GetMonitorPhysicalHeight(i(monitor));
   }
   static getMonitorRefreshRate(monitor: number): number {
-    return r().symbols.GetMonitorRefreshRateW(i(monitor));
+    return r().symbols.GetMonitorRefreshRate(i(monitor));
   }
   static getWindowPosition(): Vec2 {
     r().symbols.GetWindowPositionW(b._vec2Buf);
@@ -195,62 +176,62 @@ export class WindowModule {
     return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static getMonitorName(monitor: number): string {
-    const ptr = r().symbols.GetMonitorNameW(i(monitor));
+    const ptr = r().symbols.GetMonitorName(i(monitor));
     if (!ptr) return '';
     return new CString(ptr).toString();
   }
   static setClipboardText(text: string): void {
-    r().symbols.SetClipboardTextW(cstr(text));
+    r().symbols.SetClipboardText(cstr(text));
   }
   static getClipboardText(): string {
-    const ptr = r().symbols.GetClipboardTextW();
+    const ptr = r().symbols.GetClipboardText();
     if (!ptr) return '';
     return new CString(ptr).toString();
   }
   static enableEventWaiting(): void {
-    r().symbols.EnableEventWaitingW();
+    r().symbols.EnableEventWaiting();
   }
   static disableEventWaiting(): void {
-    r().symbols.DisableEventWaitingW();
+    r().symbols.DisableEventWaiting();
   }
   static showCursor(): void {
-    r().symbols.ShowCursorW();
+    r().symbols.ShowCursor();
   }
   static hideCursor(): void {
-    r().symbols.HideCursorW();
+    r().symbols.HideCursor();
   }
   static isCursorHidden(): boolean {
-    return r().symbols.IsCursorHiddenW();
+    return r().symbols.IsCursorHidden();
   }
   static enableCursor(): void {
-    r().symbols.EnableCursorW();
+    r().symbols.EnableCursor();
   }
   static disableCursor(): void {
-    r().symbols.DisableCursorW();
+    r().symbols.DisableCursor();
   }
   static isCursorOnScreen(): boolean {
-    return r().symbols.IsCursorOnScreenW();
+    return r().symbols.IsCursorOnScreen();
   }
   static beginTextureMode(target: RenderTexture2D): void {
     r().symbols.BeginTextureModeW(i(target.id), i(target.texture.width), i(target.texture.height));
   }
   static endTextureMode(): void {
-    r().symbols.EndTextureModeW();
+    r().symbols.EndTextureMode();
   }
   static beginBlendMode(mode: number): void {
-    r().symbols.BeginBlendModeW(i(mode));
+    r().symbols.BeginBlendMode(i(mode));
   }
   static endBlendMode(): void {
-    r().symbols.EndBlendModeW();
+    r().symbols.EndBlendMode();
   }
   static beginScissorMode(x: number, y: number, w: number, h: number): void {
-    r().symbols.BeginScissorModeW(i(x), i(y), i(w), i(h));
+    r().symbols.BeginScissorMode(i(x), i(y), i(w), i(h));
   }
   static endScissorMode(): void {
-    r().symbols.EndScissorModeW();
+    r().symbols.EndScissorMode();
   }
   static setConfigFlags(flags: number): void {
-    r().symbols.SetConfigFlagsW(i(flags));
+    r().symbols.SetConfigFlags(i(flags));
   }
   static setWindowIcon(image: Image): void {
     r().symbols.SetWindowIconW(i(image));
@@ -260,5 +241,38 @@ export class WindowModule {
   }
   static setWindowIcons(images: number, count: number): void {
     r().symbols.SetWindowIconsW(images as unknown as Buffer, i(count));
+  }
+  static getTime(): number {
+    return r().symbols.GetTime();
+  }
+  static getFPS(): number {
+    return r().symbols.GetFPS();
+  }
+  static swapScreenBuffer(): void {
+    r().symbols.SwapScreenBuffer();
+  }
+  static pollInputEvents(): void {
+    r().symbols.PollInputEvents();
+  }
+  static waitTime(seconds: number): void {
+    r().symbols.WaitTime(seconds);
+  }
+  static setRandomSeed(seed: number): void {
+    r().symbols.SetRandomSeed(i(seed));
+  }
+  static getRandomValue(min: number, max: number): number {
+    return r().symbols.GetRandomValue(i(min), i(max));
+  }
+  static takeScreenshot(fileName: string): void {
+    r().symbols.TakeScreenshot(cstr(fileName));
+  }
+  static openURL(url: string): void {
+    r().symbols.OpenURL(cstr(url));
+  }
+  static setTraceLogLevel(logLevel: number): void {
+    r().symbols.SetTraceLogLevel(i(logLevel));
+  }
+  static traceLog(logLevel: number, text: string): void {
+    r().symbols.TraceLogW(i(logLevel), cstr(text));
   }
 }

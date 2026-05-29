@@ -1,11 +1,6 @@
 import { getSymbols } from '../../symbols';
 import { bufs as b, f, i } from '../../utils';
-import type {
-  Vec2,
-  Vec3,
-  Camera2D,
-  Camera3D,
-  Ray } from '../../types';
+import type { Vec2, Vec3, Camera2D, Camera3D, Ray } from '../../types';
 
 const r = () => getSymbols();
 
@@ -22,7 +17,8 @@ export class CameraModule {
       target: { x: tar[0]!, y: tar[1]!, z: tar[2]! },
       up: { x: up[0]!, y: up[1]!, z: up[2]! },
       fovy: fovy[0]!,
-      projection: proj[0]! as Camera3D['projection'] };
+      projection: proj[0]! as Camera3D['projection'],
+    };
   }
   static updateCameraPro(camera: Camera3D, movement: Vec3, rotation: Vec3, zoom: number): Camera3D {
     const pos = new Float32Array([camera.position.x, camera.position.y, camera.position.z]);
@@ -49,7 +45,8 @@ export class CameraModule {
       target: { x: tar[0]!, y: tar[1]!, z: tar[2]! },
       up: { x: up[0]!, y: up[1]!, z: up[2]! },
       fovy: fovy[0]!,
-      projection: proj[0]! as Camera3D['projection'] };
+      projection: proj[0]! as Camera3D['projection'],
+    };
   }
   static getScreenToWorldRay(position: Vec2, camera: Camera3D): Ray {
     const outPos = new Float32Array(3);
@@ -73,7 +70,8 @@ export class CameraModule {
     );
     return {
       position: { x: outPos[0]!, y: outPos[1]!, z: outPos[2]! },
-      direction: { x: outDir[0]!, y: outDir[1]!, z: outDir[2]! } };
+      direction: { x: outDir[0]!, y: outDir[1]!, z: outDir[2]! },
+    };
   }
   static getWorldToScreen(position: Vec3, camera: Camera3D): Vec2 {
     r().symbols.GetWorldToScreenW(
@@ -150,7 +148,8 @@ export class CameraModule {
     );
     return {
       position: { x: b._rayPosBuf2[0]!, y: b._rayPosBuf2[1]!, z: b._rayPosBuf2[2]! },
-      direction: { x: b._rayDirBuf2[0]!, y: b._rayDirBuf2[1]!, z: b._rayDirBuf2[2]! } };
+      direction: { x: b._rayDirBuf2[0]!, y: b._rayDirBuf2[1]!, z: b._rayDirBuf2[2]! },
+    };
   }
   static getWorldToScreenEx(position: Vec3, camera: Camera3D, width: number, height: number): Vec2 {
     r().symbols.GetWorldToScreenExW(

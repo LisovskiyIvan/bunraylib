@@ -1,5 +1,4 @@
 import { WindowModule } from './modules/window/WindowModule';
-import { CoreModule } from './modules/core/CoreModule';
 import { ShapesModule } from './modules/shapes/ShapesModule';
 import { CollisionModule } from './modules/collision/CollisionModule';
 import { CameraModule } from './modules/camera/CameraModule';
@@ -13,9 +12,7 @@ import { ModelModule } from './modules/model/ModelModule';
 import { AudioModule } from './modules/audio/AudioModule';
 import { ShaderModule } from './modules/shader/ShaderModule';
 
-export type Raylib =
-  typeof WindowModule &
-  typeof CoreModule &
+export type Raylib = typeof WindowModule &
   typeof ShapesModule &
   typeof CollisionModule &
   typeof CameraModule &
@@ -45,7 +42,6 @@ function applyMixins(derivedCtor: unknown, constructors: unknown[]) {
 const _RaylibBase = class {};
 applyMixins(_RaylibBase, [
   WindowModule,
-  CoreModule,
   ShapesModule,
   CollisionModule,
   CameraModule,

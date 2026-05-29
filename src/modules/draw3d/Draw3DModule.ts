@@ -8,7 +8,8 @@ import type {
   Ray,
   Texture2D,
   BoundingBox,
-  Color } from '../../types';
+  Color,
+} from '../../types';
 
 const r = () => getSymbols();
 

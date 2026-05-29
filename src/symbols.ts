@@ -1,9 +1,9 @@
-import { cc } from 'bun:ffi';
+import { cc, dlopen, suffix } from 'bun:ffi';
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { tmpdir } from 'os';
 
-import { windowSymbols } from './modules/window/symbols';
+import { windowDirectSymbols, windowWrapperSymbols } from './modules/window/symbols';
 import { shapesSymbols } from './modules/shapes/symbols';
 import { collisionSymbols } from './modules/collision/symbols';
 import { cameraSymbols } from './modules/camera/symbols';
@@ -12,13 +12,13 @@ import { textureSymbols } from './modules/texture/symbols';
 import { modelSymbols } from './modules/model/symbols';
 import { imageSymbols } from './modules/image/symbols';
 import { colorSymbols } from './modules/color/symbols';
-import { fontSymbols } from './modules/font/symbols';
-import { inputSymbols } from './modules/input/symbols';
-import { audioSymbols } from './modules/audio/symbols';
+import { inputDirectSymbols, inputWrapperSymbols } from './modules/input/symbols';
+import { fontDirectSymbols, fontWrapperSymbols } from './modules/font/symbols';
+import { audioDirectSymbols, audioWrapperSymbols } from './modules/audio/symbols';
 import { shaderSymbols } from './modules/shader/symbols';
 
-const allSymbols = {
-  ...windowSymbols,
+const allWrapperSymbols = {
+  ...windowWrapperSymbols,
   ...shapesSymbols,
   ...collisionSymbols,
   ...cameraSymbols,
@@ -27,13 +27,21 @@ const allSymbols = {
   ...modelSymbols,
   ...imageSymbols,
   ...colorSymbols,
-  ...fontSymbols,
-  ...inputSymbols,
-  ...audioSymbols,
+  ...fontWrapperSymbols,
+  ...inputWrapperSymbols,
+  ...audioWrapperSymbols,
   ...shaderSymbols,
 };
 
-type SymbolsType = ReturnType<typeof cc<typeof allSymbols>>;
+const allDirectSymbols = {
+  ...windowDirectSymbols,
+  ...inputDirectSymbols,
+  ...fontDirectSymbols,
+  ...audioDirectSymbols,
+};
+
+type WrapperSymbolsType = ReturnType<typeof cc<typeof allWrapperSymbols>>;
+type DirectSymbolsType = ReturnType<typeof dlopen<typeof allDirectSymbols>>;
 
 export type RaylibConfig = {
   maxModels?: number;
@@ -47,6 +55,13 @@ export type RaylibConfig = {
   maxSounds?: number;
   maxMusic?: number;
   maxAudioStreams?: number;
+  /** Path or library name for raylib. Examples:
+   *  - `"libraylib.so"` (Linux)
+   *  - `"libraylib.dylib"` (macOS)
+   *  - `"raylib.dll"` (Windows)
+   *  - `"/usr/local/lib/libraylib.so"` (absolute path)
+   *  - `"raylib"` (bare name — works for cc linking, dlopen resolves via platform default)
+   */
   raylibPath?: string;
 };
 
@@ -65,7 +80,7 @@ const defaults: Required<Omit<RaylibConfig, 'raylibPath'>> = {
 };
 
 let _config: RaylibConfig = {};
-let _r: SymbolsType | null = null;
+let _r: { symbols: WrapperSymbolsType['symbols'] & DirectSymbolsType['symbols'] } | null = null;
 
 export function configure(config: RaylibConfig): void {
   if (_r) throw new Error('Raylib already initialized. Call configure() before any Raylib method.');
@@ -92,7 +107,16 @@ function generateConfigHeader(config: Required<Omit<RaylibConfig, 'raylibPath'>>
 `;
 }
 
-function buildCC(config: RaylibConfig): SymbolsType {
+function resolveDlopenPath(raylibPath?: string): string {
+  if (raylibPath) {
+    if (raylibPath.includes('/') || raylibPath.includes('\\') || raylibPath.includes('.')) {
+      return raylibPath;
+    }
+  }
+  return `libraylib.${suffix}`;
+}
+
+function buildCC(config: RaylibConfig) {
   const resolved = { ...defaults };
   for (const key of Object.keys(defaults) as (keyof typeof defaults)[]) {
     if (config[key] !== null && config[key] !== undefined) {
@@ -117,16 +141,26 @@ function buildCC(config: RaylibConfig): SymbolsType {
   const wrapperPath = join(cacheDir, `main_${configHash}.c`);
   writeFileSync(wrapperPath, wrapperSrc);
 
-  const library = config.raylibPath ? [config.raylibPath] : ['raylib'];
+  const ccLibrary = config.raylibPath ? [config.raylibPath] : [`libraylib.${suffix}`];
 
-  return cc({
+  const wrapperHandle = cc({
     source: wrapperPath,
-    library,
-    symbols: allSymbols,
+    library: ccLibrary,
+    symbols: allWrapperSymbols,
   });
+
+  const dlopenPath = resolveDlopenPath(config.raylibPath);
+  const directHandle = dlopen(dlopenPath, allDirectSymbols);
+
+  return {
+    symbols: {
+      ...directHandle.symbols,
+      ...wrapperHandle.symbols,
+    },
+  };
 }
 
-export function getSymbols(): SymbolsType {
+export function getSymbols() {
   if (!_r) _r = buildCC(_config);
   return _r;
 }

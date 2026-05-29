@@ -1,7 +1,6 @@
 import { getSymbols } from '../../symbols';
 import { bufs as b, f, i } from '../../utils';
-import type {
-  Color } from '../../types';
+import type { Color } from '../../types';
 
 const r = () => getSymbols();
 
@@ -15,7 +14,8 @@ export class ColorModule {
       x: b._vec4Buf[0]!,
       y: b._vec4Buf[1]!,
       z: b._vec4Buf[2]!,
-      w: b._vec4Buf[3]! };
+      w: b._vec4Buf[3]!,
+    };
   }
   static colorFromNormalized(normalized: { x: number; y: number; z: number; w: number }): Color {
     return r().symbols.ColorFromNormalizedW(

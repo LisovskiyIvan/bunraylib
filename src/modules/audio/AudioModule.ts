@@ -1,28 +1,23 @@
 import { getSymbols } from '../../symbols';
 import { cstr, f, i } from '../../utils';
-import type {
-  Wave,
-  Sound,
-  Music,
-  AudioStream,
-} from '../../types';
+import type { Wave, Sound, Music, AudioStream } from '../../types';
 const r = () => getSymbols();
 
 export class AudioModule {
   static initAudioDevice(): void {
-    r().symbols.InitAudioDeviceW();
+    r().symbols.InitAudioDevice();
   }
   static closeAudioDevice(): void {
-    r().symbols.CloseAudioDeviceW();
+    r().symbols.CloseAudioDevice();
   }
   static isAudioDeviceReady(): boolean {
-    return r().symbols.IsAudioDeviceReadyW();
+    return r().symbols.IsAudioDeviceReady();
   }
   static setMasterVolume(volume: number): void {
-    r().symbols.SetMasterVolumeW(f(volume));
+    r().symbols.SetMasterVolume(f(volume));
   }
   static getMasterVolume(): number {
-    return r().symbols.GetMasterVolumeW();
+    return r().symbols.GetMasterVolume();
   }
   static loadWave(fileName: string): Wave {
     return r().symbols.LoadWaveW(cstr(fileName));
@@ -178,7 +173,7 @@ export class AudioModule {
     r().symbols.SetAudioStreamPanW(i(stream), f(pan));
   }
   static setAudioStreamBufferSizeDefault(size: number): void {
-    r().symbols.SetAudioStreamBufferSizeDefaultW(i(size));
+    r().symbols.SetAudioStreamBufferSizeDefault(i(size));
   }
   static loadWaveSamples(wave: Wave): number {
     return r().symbols.LoadWaveSamplesW(wave) as unknown as number;
@@ -197,7 +192,6 @@ export class AudioModule {
     r().symbols.UpdateAudioStreamW(i(stream), data, i(frameCount));
   }
   static setAudioStreamCallback(stream: AudioStream, callback: number): void {
-    // FFI callback pointer — passed as raw number
     r().symbols.SetAudioStreamCallbackW(i(stream), callback as unknown as Buffer);
   }
 }

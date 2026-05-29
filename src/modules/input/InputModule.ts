@@ -1,86 +1,84 @@
 import { getSymbols } from '../../symbols';
 import { bufs as b, cstr, f, i } from '../../utils';
 import { CString } from 'bun:ffi';
-import type {
-  Vec2,
-} from '../../types';
+import type { Vec2 } from '../../types';
 
 const r = () => getSymbols();
 
 export class InputModule {
   static isKeyPressed(key: number): boolean {
-    return r().symbols.IsKeyPressedW(i(key));
+    return r().symbols.IsKeyPressed(i(key));
   }
   static isKeyPressedRepeat(key: number): boolean {
-    return r().symbols.IsKeyPressedRepeatW(i(key));
+    return r().symbols.IsKeyPressedRepeat(i(key));
   }
   static isKeyDown(key: number): boolean {
-    return r().symbols.IsKeyDownW(i(key));
+    return r().symbols.IsKeyDown(i(key));
   }
   static isKeyReleased(key: number): boolean {
-    return r().symbols.IsKeyReleasedW(i(key));
+    return r().symbols.IsKeyReleased(i(key));
   }
   static isKeyUp(key: number): boolean {
-    return r().symbols.IsKeyUpW(i(key));
+    return r().symbols.IsKeyUp(i(key));
   }
   static getKeyPressed(): number {
-    return r().symbols.GetKeyPressedW();
+    return r().symbols.GetKeyPressed();
   }
   static getCharPressed(): number {
-    return r().symbols.GetCharPressedW();
+    return r().symbols.GetCharPressed();
   }
   static setExitKey(key: number): void {
-    r().symbols.SetExitKeyW(i(key));
+    r().symbols.SetExitKey(i(key));
   }
   static isGamepadAvailable(gamepad: number): boolean {
-    return r().symbols.IsGamepadAvailableW(i(gamepad));
+    return r().symbols.IsGamepadAvailable(i(gamepad));
   }
   static getGamepadName(gamepad: number): string {
-    const ptr = r().symbols.GetGamepadNameW(i(gamepad));
+    const ptr = r().symbols.GetGamepadName(i(gamepad));
     if (!ptr) return '';
     return new CString(ptr).toString();
   }
   static isGamepadButtonPressed(gamepad: number, button: number): boolean {
-    return r().symbols.IsGamepadButtonPressedW(i(gamepad), i(button));
+    return r().symbols.IsGamepadButtonPressed(i(gamepad), i(button));
   }
   static isGamepadButtonDown(gamepad: number, button: number): boolean {
-    return r().symbols.IsGamepadButtonDownW(i(gamepad), i(button));
+    return r().symbols.IsGamepadButtonDown(i(gamepad), i(button));
   }
   static isGamepadButtonReleased(gamepad: number, button: number): boolean {
-    return r().symbols.IsGamepadButtonReleasedW(i(gamepad), i(button));
+    return r().symbols.IsGamepadButtonReleased(i(gamepad), i(button));
   }
   static isGamepadButtonUp(gamepad: number, button: number): boolean {
-    return r().symbols.IsGamepadButtonUpW(i(gamepad), i(button));
+    return r().symbols.IsGamepadButtonUp(i(gamepad), i(button));
   }
   static getGamepadButtonPressed(): number {
-    return r().symbols.GetGamepadButtonPressedW();
+    return r().symbols.GetGamepadButtonPressed();
   }
   static getGamepadAxisCount(gamepad: number): number {
-    return r().symbols.GetGamepadAxisCountW(i(gamepad));
+    return r().symbols.GetGamepadAxisCount(i(gamepad));
   }
   static getGamepadAxisMovement(gamepad: number, axis: number): number {
-    return r().symbols.GetGamepadAxisMovementW(i(gamepad), i(axis));
+    return r().symbols.GetGamepadAxisMovement(i(gamepad), i(axis));
   }
   static setGamepadMappings(mappings: string): number {
-    return r().symbols.SetGamepadMappingsW(cstr(mappings));
+    return r().symbols.SetGamepadMappings(cstr(mappings));
   }
   static isMouseButtonPressed(button: number): boolean {
-    return r().symbols.IsMouseButtonPressedW(i(button));
+    return r().symbols.IsMouseButtonPressed(i(button));
   }
   static isMouseButtonDown(button: number): boolean {
-    return r().symbols.IsMouseButtonDownW(i(button));
+    return r().symbols.IsMouseButtonDown(i(button));
   }
   static isMouseButtonReleased(button: number): boolean {
-    return r().symbols.IsMouseButtonReleasedW(i(button));
+    return r().symbols.IsMouseButtonReleased(i(button));
   }
   static isMouseButtonUp(button: number): boolean {
-    return r().symbols.IsMouseButtonUpW(i(button));
+    return r().symbols.IsMouseButtonUp(i(button));
   }
   static getMouseX(): number {
-    return r().symbols.GetMouseXW();
+    return r().symbols.GetMouseX();
   }
   static getMouseY(): number {
-    return r().symbols.GetMouseYW();
+    return r().symbols.GetMouseY();
   }
   static getMousePosition(): Vec2 {
     r().symbols.GetMousePositionW(b._vec2Buf);
@@ -91,65 +89,65 @@ export class InputModule {
     return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static setMousePosition(x: number, y: number): void {
-    r().symbols.SetMousePositionW(i(x), i(y));
+    r().symbols.SetMousePosition(i(x), i(y));
   }
   static setMouseOffset(x: number, y: number): void {
-    r().symbols.SetMouseOffsetW(i(x), i(y));
+    r().symbols.SetMouseOffset(i(x), i(y));
   }
   static setMouseScale(scaleX: number, scaleY: number): void {
-    r().symbols.SetMouseScaleW(f(scaleX), f(scaleY));
+    r().symbols.SetMouseScale(f(scaleX), f(scaleY));
   }
   static getMouseWheelMove(): number {
-    return r().symbols.GetMouseWheelMoveW();
+    return r().symbols.GetMouseWheelMove();
   }
   static getMouseWheelMoveV(): Vec2 {
     r().symbols.GetMouseWheelMoveVW(b._vec2Buf);
     return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static setMouseCursor(cursor: number): void {
-    r().symbols.SetMouseCursorW(i(cursor));
+    r().symbols.SetMouseCursor(i(cursor));
   }
   static getTouchX(): number {
-    return r().symbols.GetTouchXW();
+    return r().symbols.GetTouchX();
   }
   static getTouchY(): number {
-    return r().symbols.GetTouchYW();
+    return r().symbols.GetTouchY();
   }
   static getTouchPosition(index: number): Vec2 {
     r().symbols.GetTouchPositionW(b._vec2Buf, i(index));
     return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static getTouchPointId(index: number): number {
-    return r().symbols.GetTouchPointIdW(i(index));
+    return r().symbols.GetTouchPointId(i(index));
   }
   static getTouchPointCount(): number {
-    return r().symbols.GetTouchPointCountW();
+    return r().symbols.GetTouchPointCount();
   }
   static setGesturesEnabled(flags: number): void {
-    r().symbols.SetGesturesEnabledW(i(flags));
+    r().symbols.SetGesturesEnabled(i(flags));
   }
   static isGestureDetected(gesture: number): boolean {
-    return r().symbols.IsGestureDetectedW(i(gesture));
+    return r().symbols.IsGestureDetected(i(gesture));
   }
   static getGestureDetected(): number {
-    return r().symbols.GetGestureDetectedW();
+    return r().symbols.GetGestureDetected();
   }
   static getGestureHoldDuration(): number {
-    return r().symbols.GetGestureHoldDurationW();
+    return r().symbols.GetGestureHoldDuration();
   }
   static getGestureDragVector(): Vec2 {
     r().symbols.GetGestureDragVectorW(b._vec2Buf);
     return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static getGestureDragAngle(): number {
-    return r().symbols.GetGestureDragAngleW();
+    return r().symbols.GetGestureDragAngle();
   }
   static getGesturePinchVector(): Vec2 {
     r().symbols.GetGesturePinchVectorW(b._vec2Buf);
     return { x: b._vec2Buf[0]!, y: b._vec2Buf[1]! };
   }
   static getGesturePinchAngle(): number {
-    return r().symbols.GetGesturePinchAngleW();
+    return r().symbols.GetGesturePinchAngle();
   }
   static setGamepadVibration(
     gamepad: number,
@@ -157,6 +155,6 @@ export class InputModule {
     rightMotor: number,
     duration: number,
   ): void {
-    r().symbols.SetGamepadVibrationW(i(gamepad), f(leftMotor), f(rightMotor), f(duration));
+    r().symbols.SetGamepadVibration(i(gamepad), f(leftMotor), f(rightMotor), f(duration));
   }
 }

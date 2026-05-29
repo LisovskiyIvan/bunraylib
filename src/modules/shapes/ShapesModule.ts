@@ -1,10 +1,6 @@
 import { getSymbols } from '../../symbols';
 import { bufs as b, f, i, validatePoints } from '../../utils';
-import type {
-  Vec2,
-  Rectangle,
-  Texture2D,
-  Color } from '../../types';
+import type { Vec2, Rectangle, Texture2D, Color } from '../../types';
 
 const r = () => getSymbols();
 
@@ -682,6 +678,7 @@ export class ShapesModule {
       x: b._recBuf[0]!,
       y: b._recBuf[1]!,
       width: b._recBuf[2]!,
-      height: b._recBuf[3]! };
+      height: b._recBuf[3]!,
+    };
   }
 }

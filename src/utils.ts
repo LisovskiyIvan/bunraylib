@@ -54,11 +54,20 @@ export const bufs = {
   _bbMax: new Float32Array(3),
 };
 
-export function validatePoints(name: string, points: Float32Array, stride: number, minPoints: number): void {
+export function validatePoints(
+  name: string,
+  points: Float32Array,
+  stride: number,
+  minPoints: number,
+): void {
   if (points.length % stride !== 0) {
-    throw new Error(`${name}: points length must be a multiple of ${stride} (got ${points.length})`);
+    throw new Error(
+      `${name}: points length must be a multiple of ${stride} (got ${points.length})`,
+    );
   }
   if (points.length < stride * minPoints) {
-    throw new Error(`${name}: points must contain at least ${minPoints} points (got ${points.length / stride})`);
+    throw new Error(
+      `${name}: points must contain at least ${minPoints} points (got ${points.length / stride})`,
+    );
   }
 }

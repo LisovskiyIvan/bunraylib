@@ -33,10 +33,6 @@ bool IsFontValidW(int id) {
     return IsFontValid(fontRegistry[id]);
 }
 
-int MeasureTextW(const char* text, int fontSize) {
-    return MeasureText(text, fontSize);
-}
-
 void MeasureTextExW(float* out, int fontId, const char* text, float fontSize, float spacing) {
     Vector2 v = MeasureTextEx(fontRegistry[fontId], text, fontSize, spacing);
     out[0] = v.x; out[1] = v.y;
@@ -49,8 +45,6 @@ void DrawTextExW(int fontId, const char* text, float posX, float posY, float fon
 void DrawTextProW(int fontId, const char* text, float posX, float posY, float originX, float originY, float rotation, float fontSize, float spacing, Color tint) {
     DrawTextPro(fontRegistry[fontId], text, (Vector2){posX, posY}, (Vector2){originX, originY}, rotation, fontSize, spacing, tint);
 }
-
-void SetTextLineSpacingW(int spacing) { SetTextLineSpacing(spacing); }
 
 int LoadFontFromImageW(int imageId, Color key, int firstChar) {
     if (imageId < 0 || imageId >= MAX_IMAGES || !imageUsed[imageId]) return -1;
@@ -102,54 +96,12 @@ void GetGlyphAtlasRecW(float* out, int fontId, int codepoint) {
     out[0] = rec.x; out[1] = rec.y; out[2] = rec.width; out[3] = rec.height;
 }
 
-int GetCodepointW(const char* text, int* outSize) {
-    return GetCodepoint(text, outSize);
-}
-
-int GetCodepointNextW(const char* text, int* outSize) {
-    return GetCodepointNext(text, outSize);
-}
-
-int GetCodepointPreviousW(const char* text, int* outSize) {
-    return GetCodepointPrevious(text, outSize);
-}
-
-int GetCodepointCountW(const char* text) {
-    return GetCodepointCount(text);
-}
-
-bool TextIsEqualW(const char* text1, const char* text2) {
-    return TextIsEqual(text1, text2);
-}
-
-unsigned int TextLengthW(const char* text) {
-    return TextLength(text);
-}
-
-int TextToIntegerW(const char* text) {
-    return TextToInteger(text);
-}
-
-float TextToFloatW(const char* text) {
-    return TextToFloat(text);
-}
-
-int TextFindIndexW(const char* text, const char* find) {
-    return TextFindIndex(text, find);
-}
-
 void UnloadFontDataW(void* ptr, int glyphCount) {
     UnloadFontData((GlyphInfo*)ptr, glyphCount);
 }
 
 void UnloadUTF8W(char* text) { UnloadUTF8(text); }
 void UnloadCodepointsW(int* codepoints) { UnloadCodepoints(codepoints); }
-
-int TextCopyW(char* dst, const char* src) { return TextCopy(dst, src); }
-
-void TextAppendW(char* text, const char* append, int* position) {
-    TextAppend(text, append, position);
-}
 
 int GenImageFontAtlasW(float* outRecs, int* glyphData, int glyphCount, int fontSize, int padding, int packMethod) {
     GlyphInfo* glyphs = (GlyphInfo*)RL_MALLOC(glyphCount * sizeof(GlyphInfo));

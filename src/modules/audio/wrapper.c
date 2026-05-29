@@ -1,25 +1,5 @@
 #include "../../c/common.h"
 
-void InitAudioDeviceW() {
-    InitAudioDevice();
-}
-
-void CloseAudioDeviceW() {
-    CloseAudioDevice();
-}
-
-bool IsAudioDeviceReadyW() {
-    return IsAudioDeviceReady();
-}
-
-void SetMasterVolumeW(float volume) {
-    SetMasterVolume(volume);
-}
-
-float GetMasterVolumeW() {
-    return GetMasterVolume();
-}
-
 int LoadWaveW(const char* fileName) {
     int slot = waveAlloc();
     if (slot < 0) return -1;
@@ -299,10 +279,6 @@ void SetAudioStreamPitchW(int id, float pitch) {
 void SetAudioStreamPanW(int id, float pan) {
     if (id < 0 || id >= MAX_AUDIOSTREAMS || !audioStreamUsed[id]) return;
     SetAudioStreamPan(audioStreamRegistry[id], pan);
-}
-
-void SetAudioStreamBufferSizeDefaultW(int size) {
-    SetAudioStreamBufferSizeDefault(size);
 }
 
 float* LoadWaveSamplesW(int waveId) {
