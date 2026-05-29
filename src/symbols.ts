@@ -11,7 +11,7 @@ import { draw3dSymbols } from './modules/draw3d/symbols';
 import { textureSymbols } from './modules/texture/symbols';
 import { modelSymbols } from './modules/model/symbols';
 import { imageSymbols } from './modules/image/symbols';
-import { colorSymbols } from './modules/color/symbols';
+import { colorSymbols, colorDirectSymbols } from './modules/color/symbols';
 import { inputDirectSymbols, inputWrapperSymbols } from './modules/input/symbols';
 import { fontDirectSymbols, fontWrapperSymbols } from './modules/font/symbols';
 import { audioDirectSymbols, audioWrapperSymbols } from './modules/audio/symbols';
@@ -40,6 +40,7 @@ const allDirectSymbols = {
   ...fontDirectSymbols,
   ...audioDirectSymbols,
   ...cameraDirectSymbols,
+  ...colorDirectSymbols,
 };
 
 type WrapperSymbolsType = ReturnType<typeof cc<typeof allWrapperSymbols>>;

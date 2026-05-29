@@ -1,7 +1,5 @@
 #include "../../c/common.h"
 
-int ColorToIntW(Color color) { return ColorToInt(color); }
-
 void ColorNormalizeW(float* out, Color color) {
     Vector4 v = ColorNormalize(color);
     out[0] = v.x; out[1] = v.y; out[2] = v.z; out[3] = v.w;
@@ -61,10 +59,6 @@ int FadeW(Color color, float alpha) {
     Color c = Fade(color, alpha);
     return *((int*)&c);
 }
-
-bool ColorIsEqualW(Color col1, Color col2) { return ColorIsEqual(col1, col2); }
-
-int GetPixelDataSizeW(int width, int height, int format) { return GetPixelDataSize(width, height, format); }
 
 void ColorToHSVW(float* out, Color color) {
     Vector3 v = ColorToHSV(color);

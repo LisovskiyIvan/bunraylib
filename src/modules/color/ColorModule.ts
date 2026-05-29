@@ -6,7 +6,7 @@ const r = () => getSymbols();
 
 export class ColorModule {
   static colorToInt(c: Color): number {
-    return r().symbols.ColorToIntW(i(c));
+    return r().symbols.ColorToInt(i(c));
   }
   static colorNormalize(c: Color): { x: number; y: number; z: number; w: number } {
     r().symbols.ColorNormalizeW(b._vec4Buf, i(c));
@@ -57,9 +57,9 @@ export class ColorModule {
     return r().symbols.FadeW(i(color), f(alpha));
   }
   static colorIsEqual(col1: Color, col2: Color): boolean {
-    return r().symbols.ColorIsEqualW(i(col1), i(col2));
+    return r().symbols.ColorIsEqual(i(col1), i(col2));
   }
   static getPixelDataSize(width: number, height: number, format: number): number {
-    return r().symbols.GetPixelDataSizeW(i(width), i(height), i(format));
+    return r().symbols.GetPixelDataSize(i(width), i(height), i(format));
   }
 }
