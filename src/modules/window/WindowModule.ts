@@ -1,7 +1,7 @@
 import { getSymbols } from '../../symbols';
 import { bufs as b, cstr, f, i } from '../../utils';
 import { CString } from 'bun:ffi';
-import type { Vec2, Camera2D, Camera3D, RenderTexture2D, Image, Color } from '../../types';
+import type { Vec2, RenderTexture2D, Image, Color } from '../../types';
 
 const r = () => getSymbols();
 
@@ -21,37 +21,7 @@ export class WindowModule {
   static endDrawing(): void {
     r().symbols.EndDrawing();
   }
-  static beginMode2D(camera: Camera2D): void {
-    r().symbols.BeginMode2DW(
-      f(camera.offset.x),
-      f(camera.offset.y),
-      f(camera.target.x),
-      f(camera.target.y),
-      f(camera.rotation),
-      f(camera.zoom),
-    );
-  }
-  static endMode2D(): void {
-    r().symbols.EndMode2DW();
-  }
-  static beginMode3D(camera: Camera3D): void {
-    r().symbols.BeginMode3DW(
-      f(camera.position.x),
-      f(camera.position.y),
-      f(camera.position.z),
-      f(camera.target.x),
-      f(camera.target.y),
-      f(camera.target.z),
-      f(camera.up.x),
-      f(camera.up.y),
-      f(camera.up.z),
-      f(camera.fovy),
-      i(camera.projection),
-    );
-  }
-  static endMode3D(): void {
-    r().symbols.EndMode3DW();
-  }
+
   static clearBackground(col: Color): void {
     r().symbols.ClearBackgroundW(i(col));
   }

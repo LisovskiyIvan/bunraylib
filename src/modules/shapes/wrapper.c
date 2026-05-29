@@ -260,4 +260,3 @@ void GetShapesTextureRectangleW(float* out) {
     out[0] = rec.x; out[1] = rec.y; out[2] = rec.width; out[3] = rec.height;
 }
 
-void DrawFPSW(int posX, int posY) { DrawFPS(posX, posY); }

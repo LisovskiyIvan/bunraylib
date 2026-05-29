@@ -5,6 +5,38 @@ import type { Vec2, Vec3, Camera2D, Camera3D, Ray } from '../../types';
 const r = () => getSymbols();
 
 export class CameraModule {
+  static beginMode2D(camera: Camera2D): void {
+    r().symbols.BeginMode2DW(
+      f(camera.offset.x),
+      f(camera.offset.y),
+      f(camera.target.x),
+      f(camera.target.y),
+      f(camera.rotation),
+      f(camera.zoom),
+    );
+  }
+  static endMode2D(): void {
+    r().symbols.EndMode2D();
+  }
+  static beginMode3D(camera: Camera3D): void {
+    r().symbols.BeginMode3DW(
+      f(camera.position.x),
+      f(camera.position.y),
+      f(camera.position.z),
+      f(camera.target.x),
+      f(camera.target.y),
+      f(camera.target.z),
+      f(camera.up.x),
+      f(camera.up.y),
+      f(camera.up.z),
+      f(camera.fovy),
+      i(camera.projection),
+    );
+  }
+  static endMode3D(): void {
+    r().symbols.EndMode3D();
+  }
+
   static updateCamera(camera: Camera3D, mode: number): Camera3D {
     const pos = new Float32Array([camera.position.x, camera.position.y, camera.position.z]);
     const tar = new Float32Array([camera.target.x, camera.target.y, camera.target.z]);
@@ -20,6 +52,7 @@ export class CameraModule {
       projection: proj[0]! as Camera3D['projection'],
     };
   }
+
   static updateCameraPro(camera: Camera3D, movement: Vec3, rotation: Vec3, zoom: number): Camera3D {
     const pos = new Float32Array([camera.position.x, camera.position.y, camera.position.z]);
     const tar = new Float32Array([camera.target.x, camera.target.y, camera.target.z]);
@@ -48,6 +81,7 @@ export class CameraModule {
       projection: proj[0]! as Camera3D['projection'],
     };
   }
+
   static getScreenToWorldRay(position: Vec2, camera: Camera3D): Ray {
     const outPos = new Float32Array(3);
     const outDir = new Float32Array(3);

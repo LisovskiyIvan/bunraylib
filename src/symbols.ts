@@ -4,9 +4,9 @@ import { join, dirname } from 'path';
 import { tmpdir } from 'os';
 
 import { windowDirectSymbols, windowWrapperSymbols } from './modules/window/symbols';
-import { shapesSymbols } from './modules/shapes/symbols';
+import { shapesDirectSymbols, shapesWrapperSymbols } from './modules/shapes/symbols';
 import { collisionSymbols } from './modules/collision/symbols';
-import { cameraSymbols } from './modules/camera/symbols';
+import { cameraWrapperSymbols, cameraDirectSymbols } from './modules/camera/symbols';
 import { draw3dSymbols } from './modules/draw3d/symbols';
 import { textureSymbols } from './modules/texture/symbols';
 import { modelSymbols } from './modules/model/symbols';
@@ -19,9 +19,9 @@ import { shaderSymbols } from './modules/shader/symbols';
 
 const allWrapperSymbols = {
   ...windowWrapperSymbols,
-  ...shapesSymbols,
+  ...shapesWrapperSymbols,
   ...collisionSymbols,
-  ...cameraSymbols,
+  ...cameraWrapperSymbols,
   ...draw3dSymbols,
   ...textureSymbols,
   ...modelSymbols,
@@ -35,9 +35,11 @@ const allWrapperSymbols = {
 
 const allDirectSymbols = {
   ...windowDirectSymbols,
+  ...shapesDirectSymbols,
   ...inputDirectSymbols,
   ...fontDirectSymbols,
   ...audioDirectSymbols,
+  ...cameraDirectSymbols,
 };
 
 type WrapperSymbolsType = ReturnType<typeof cc<typeof allWrapperSymbols>>;

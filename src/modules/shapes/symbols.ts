@@ -1,7 +1,11 @@
 import { FFIType } from 'bun:ffi';
 const { i32, ptr, f32 } = FFIType;
 
-export const shapesSymbols = {
+export const shapesDirectSymbols = {
+  DrawFPS: { args: [i32, i32], returns: FFIType.void },
+} as const;
+
+export const shapesWrapperSymbols = {
   DrawRectangleW: { args: [i32, i32, i32, i32, i32], returns: FFIType.void },
   DrawTextW: { args: [FFIType.cstring, i32, i32, i32, i32], returns: FFIType.void },
   DrawPixelW: { args: [i32, i32, i32], returns: FFIType.void },
@@ -154,5 +158,4 @@ export const shapesSymbols = {
   SetShapesTextureW: { args: [i32, i32, i32, i32, i32, i32, i32], returns: FFIType.void },
   GetShapesTextureW: { args: [ptr, ptr, ptr], returns: FFIType.void },
   GetShapesTextureRectangleW: { args: [ptr], returns: FFIType.void },
-  DrawFPSW: { args: [i32, i32], returns: FFIType.void },
 } as const;

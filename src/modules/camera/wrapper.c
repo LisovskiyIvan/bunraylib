@@ -1,21 +1,13 @@
-#include "raylib.h"
+#include "../../c/common.h"
 
 void BeginMode2DW(float offX, float offY, float tarX, float tarY, float rotation, float zoom) {
     Camera2D cam = { {offX, offY}, {tarX, tarY}, rotation, zoom };
     BeginMode2D(cam);
 }
 
-void EndMode2DW() {
-    EndMode2D();
-}
-
 void BeginMode3DW(float posX, float posY, float posZ, float tarX, float tarY, float tarZ, float upX, float upY, float upZ, float fovy, int projection) {
     Camera3D cam = { {posX, posY, posZ}, {tarX, tarY, tarZ}, {upX, upY, upZ}, fovy, projection };
     BeginMode3D(cam);
-}
-
-void EndMode3DW() {
-    EndMode3D();
 }
 
 void UpdateCameraW(float* pos, float* tar, float* up, float* fovy, int* projection, int mode) {
