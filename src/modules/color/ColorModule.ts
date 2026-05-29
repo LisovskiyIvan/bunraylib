@@ -28,7 +28,7 @@ export class ColorModule {
   static colorToHSV(c: Color): { h: number; s: number; v: number } {
     r().symbols.ColorToHSVW(b._vec3Buf2, i(c));
     return { h: b._vec3Buf2[0]!, s: b._vec3Buf2[1]!, v: b._vec3Buf2[2]! };
-  } 
+  }
   static colorFromHSV(hue: number, saturation: number, value: number): Color {
     return r().symbols.ColorFromHSV(f(hue), f(saturation), f(value));
   }

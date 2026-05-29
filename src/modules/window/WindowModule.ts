@@ -23,7 +23,7 @@ export class WindowModule {
   }
 
   static clearBackground(col: Color): void {
-    r().symbols.ClearBackgroundW(i(col));
+    r().symbols.ClearBackground(i(col));
   }
   static setTargetFPS(fps: number): void {
     r().symbols.SetTargetFPS(i(fps));

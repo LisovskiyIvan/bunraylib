@@ -182,9 +182,9 @@ export class TextureModule {
     );
   }
   static getPixelColor(srcPtr: number, format: number): Color {
-    return r().symbols.GetPixelColorW(srcPtr as unknown as Buffer, i(format));
+    return r().symbols.GetPixelColor(srcPtr as unknown as Buffer, i(format));
   }
   static setPixelColor(dstPtr: number, color: Color, format: number): void {
-    r().symbols.SetPixelColorW(dstPtr as unknown as Buffer, i(color), i(format));
+    r().symbols.SetPixelColor(dstPtr as unknown as Buffer, i(color), i(format));
   }
 }

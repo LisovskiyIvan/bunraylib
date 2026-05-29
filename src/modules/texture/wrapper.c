@@ -122,11 +122,3 @@ void DrawTextureNPatchW(unsigned int id, int w, int h,
     DrawTextureNPatch(tex, npi, dst, (Vector2){originX, originY}, rotation, tint);
 }
 
-int GetPixelColorW(const void* srcPtr, int format) {
-    Color c = GetPixelColor((void*)srcPtr, format);
-    return *((int*)&c);
-}
-
-void SetPixelColorW(void* dstPtr, Color color, int format) {
-    SetPixelColor(dstPtr, color, format);
-}

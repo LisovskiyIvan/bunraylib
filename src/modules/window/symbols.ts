@@ -6,6 +6,7 @@ export const windowDirectSymbols = {
   CloseWindow: { args: [], returns: FFIType.void },
   WindowShouldClose: { args: [], returns: bool },
   BeginDrawing: { args: [], returns: FFIType.void },
+  ClearBackground: { args: [i32], returns: FFIType.void },
   EndDrawing: { args: [], returns: FFIType.void },
   SetTargetFPS: { args: [i32], returns: FFIType.void },
   GetFrameTime: { args: [], returns: f32 },
@@ -73,7 +74,6 @@ export const windowDirectSymbols = {
 } as const;
 
 export const windowWrapperSymbols = {
-  ClearBackgroundW: { args: [i32], returns: FFIType.void },
   GetMonitorPositionW: { args: [ptr, i32], returns: FFIType.void },
   GetWindowPositionW: { args: [ptr], returns: FFIType.void },
   GetWindowScaleDPIW: { args: [ptr], returns: FFIType.void },

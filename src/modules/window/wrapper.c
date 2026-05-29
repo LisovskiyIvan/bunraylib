@@ -1,9 +1,5 @@
 #include "../../c/common.h"
 
-void ClearBackgroundW(Color color) {
-    ClearBackground(color);
-}
-
 void GetMonitorPositionW(float* out, int monitor) {
     Vector2 v = GetMonitorPosition(monitor);
     out[0] = v.x; out[1] = v.y;

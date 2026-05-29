@@ -8,7 +8,7 @@ import { shapesDirectSymbols, shapesWrapperSymbols } from './modules/shapes/symb
 import { collisionSymbols } from './modules/collision/symbols';
 import { cameraWrapperSymbols, cameraDirectSymbols } from './modules/camera/symbols';
 import { draw3dDirectSymbols, draw3dSymbols } from './modules/draw3d/symbols';
-import { textureSymbols } from './modules/texture/symbols';
+import { textureDirectSymbols, textureWrapperSymbols } from './modules/texture/symbols';
 import { modelSymbols } from './modules/model/symbols';
 import { imageSymbols } from './modules/image/symbols';
 import { colorSymbols, colorDirectSymbols } from './modules/color/symbols';
@@ -23,7 +23,7 @@ const allWrapperSymbols = {
   ...collisionSymbols,
   ...cameraWrapperSymbols,
   ...draw3dSymbols,
-  ...textureSymbols,
+  ...textureWrapperSymbols,
   ...modelSymbols,
   ...imageSymbols,
   ...colorSymbols,
@@ -37,6 +37,7 @@ const allDirectSymbols = {
   ...windowDirectSymbols,
   ...shapesDirectSymbols,
   ...draw3dDirectSymbols,
+  ...textureDirectSymbols,
   ...inputDirectSymbols,
   ...fontDirectSymbols,
   ...audioDirectSymbols,

@@ -1,8 +1,13 @@
 import { FFIType } from 'bun:ffi';
-const { i32, ptr, bool } = FFIType;
+const { i32, ptr, bool, cstring, f32 } = FFIType;
 
-export const textureSymbols = {
-  LoadTextureW: { args: [ptr, ptr, ptr, FFIType.cstring], returns: FFIType.void },
+export const textureDirectSymbols = {
+  GetPixelColor: { args: [ptr, i32], returns: i32 },
+  SetPixelColor: { args: [ptr, i32, i32], returns: FFIType.void },
+} as const;
+
+export const textureWrapperSymbols = {
+  LoadTextureW: { args: [ptr, ptr, ptr, cstring], returns: FFIType.void },
   UnloadTextureW: { args: [i32], returns: FFIType.void },
   IsTextureValidW: { args: [i32, i32, i32], returns: bool },
   LoadRenderTextureW: { args: [ptr, ptr, ptr, ptr, i32, i32], returns: FFIType.void },
@@ -14,7 +19,7 @@ export const textureSymbols = {
   DrawTextureW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
   DrawTextureVW: { args: [i32, i32, i32, i32, i32, i32], returns: FFIType.void },
   DrawTextureExW: {
-    args: [i32, i32, i32, i32, i32, FFIType.f32, FFIType.f32, i32],
+    args: [i32, i32, i32, i32, i32, f32, f32, i32],
     returns: FFIType.void,
   },
   DrawTextureRecW: {
@@ -22,7 +27,7 @@ export const textureSymbols = {
     returns: FFIType.void,
   },
   DrawTextureProW: {
-    args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, FFIType.f32, i32],
+    args: [i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, f32, i32],
     returns: FFIType.void,
   },
   LoadTextureFromImageW: { args: [ptr, ptr, ptr, i32], returns: FFIType.void },
@@ -49,11 +54,9 @@ export const textureSymbols = {
       i32,
       i32,
       i32,
-      FFIType.f32,
+      f32,
       i32,
     ],
     returns: FFIType.void,
   },
-  GetPixelColorW: { args: [ptr, i32], returns: i32 },
-  SetPixelColorW: { args: [ptr, i32, i32], returns: FFIType.void },
 } as const;

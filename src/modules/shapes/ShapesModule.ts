@@ -8,9 +8,9 @@ export class ShapesModule {
   /** Draw a color-filled rectangle */
   static drawRectangle(x: number, y: number, width: number, height: number, col: Color): void {
     r().symbols.DrawRectangle(i(x), i(y), i(width), i(height), i(col));
-  } 
+  }
   static drawFPS(x: number, y: number): void {
-    r().symbols.DrawFPS(i(x), i(y))
+    r().symbols.DrawFPS(i(x), i(y));
   }
   /** Draw a pixel */
   static drawPixel(x: number, y: number, col: Color): void {
